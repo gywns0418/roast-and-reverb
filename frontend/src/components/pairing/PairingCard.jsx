@@ -1,0 +1,1 @@
+export default function PairingCard() { return <article className="log-card">페어링</article>; }

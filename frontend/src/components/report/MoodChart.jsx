@@ -1,0 +1,1 @@
+export default function MoodChart() { return <section className="panel">무드 차트</section>; }

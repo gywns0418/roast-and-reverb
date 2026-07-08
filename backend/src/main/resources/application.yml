@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: roast-and-reverb
+  datasource:
+    url: jdbc:h2:mem:roastreverb;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+mybatis:
+  mapper-locations: classpath:/mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

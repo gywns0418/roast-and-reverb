@@ -1,0 +1,1 @@
+export default function MusicCard() { return <article className="log-card">음악 로그</article>; }

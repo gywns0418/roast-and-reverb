@@ -1,0 +1,1 @@
+export default function CoffeeTasteSlider() { return <input type="range" min="1" max="5" />; }

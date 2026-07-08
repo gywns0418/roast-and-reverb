@@ -1,0 +1,1 @@
+export const formatDate = (value) => new Intl.DateTimeFormat("ko-KR").format(new Date(value));

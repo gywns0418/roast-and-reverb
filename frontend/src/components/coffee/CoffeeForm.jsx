@@ -1,0 +1,1 @@
+export default function CoffeeForm() { return <form className="panel">커피 입력 폼</form>; }

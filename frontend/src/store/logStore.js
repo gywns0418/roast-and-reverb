@@ -1,0 +1,1 @@
+export const logStore = { selectedCoffeeId: null, selectedMusicId: null };

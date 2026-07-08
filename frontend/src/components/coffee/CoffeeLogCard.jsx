@@ -1,0 +1,1 @@
+export default function CoffeeLogCard() { return <article className="log-card">커피 로그</article>; }

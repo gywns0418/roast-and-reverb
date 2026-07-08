@@ -1,0 +1,1 @@
+export function useAuth() { return { user: { nickname: "demo" }, isLoggedIn: true }; }

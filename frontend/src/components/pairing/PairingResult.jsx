@@ -1,0 +1,1 @@
+export default function PairingResult() { return <section className="hero-panel">페어링 결과</section>; }

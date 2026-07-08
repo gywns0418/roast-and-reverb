@@ -1,0 +1,1 @@
+export default function MonthlyReportCard() { return <section className="panel">월간 리포트</section>; }

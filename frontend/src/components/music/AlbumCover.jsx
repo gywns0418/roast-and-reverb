@@ -1,0 +1,1 @@
+export default function AlbumCover() { return <div className="album-cover">Album</div>; }

@@ -1,0 +1,1 @@
+export default function ApiLogTable() { return <section className="panel">API 로그 테이블</section>; }

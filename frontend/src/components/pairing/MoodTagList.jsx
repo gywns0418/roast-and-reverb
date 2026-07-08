@@ -1,0 +1,1 @@
+export default function MoodTagList() { return <div className="tag-row">무드 태그</div>; }

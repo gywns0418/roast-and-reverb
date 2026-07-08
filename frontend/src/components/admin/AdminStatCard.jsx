@@ -1,0 +1,1 @@
+export default function AdminStatCard() { return <article className="log-card">관리 지표</article>; }

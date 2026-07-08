@@ -1,0 +1,1 @@
+export default function CoffeeCalendar() { return <div className="panel">커피 캘린더</div>; }

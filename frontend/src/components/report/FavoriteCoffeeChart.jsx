@@ -1,0 +1,1 @@
+export default function FavoriteCoffeeChart() { return <section className="panel">원두 차트</section>; }

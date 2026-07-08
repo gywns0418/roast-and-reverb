@@ -1,0 +1,1 @@
+export default function FavoriteArtistChart() { return <section className="panel">아티스트 차트</section>; }

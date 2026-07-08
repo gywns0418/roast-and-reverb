@@ -1,0 +1,1 @@
+export default function MusicSearchBox() { return <input className="input" placeholder="곡 또는 아티스트 검색" />; }
