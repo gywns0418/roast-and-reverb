@@ -5,7 +5,7 @@ spring:
   application:
     name: roast-and-reverb
   datasource:
-    url: jdbc:h2:mem:roastreverb;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    url: jdbc:h2:mem:roastreverb;MODE=MySQL;DATABASE_TO_LOWER=TRUE;NON_KEYWORDS=MEMBER,BODY
     driver-class-name: org.h2.Driver
     username: sa
     password:

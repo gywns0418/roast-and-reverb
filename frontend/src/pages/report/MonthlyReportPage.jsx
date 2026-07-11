@@ -1,16 +1,27 @@
 import PageShell from "../../components/common/PageShell.jsx";
+import Tag from "../../components/common/Tag.jsx";
+import { monthlyReport } from "../../data/sampleData.js";
 
 export default function MonthlyReportPage() {
   return (
-    <PageShell title="월간 리포트" eyebrow="Roast & Reverb" subtitle="누적 로그로 취향 패턴을 요약합니다.">
+    <PageShell title="취향 리포트" eyebrow="Monthly report" subtitle="쌓인 기록에서 커피 취향과 음악 취향의 반복 패턴을 찾습니다.">
       <div className="panel-grid">
         <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
+          <h3>AI 월간 코멘트</h3>
+          <p>{monthlyReport.summary} 특히 밝은 산미와 포스트록/앰비언트 계열 음악의 조합이 자주 등장했습니다.</p>
+          <div className="tag-row">
+            <Tag variant="warm">밝은 산미</Tag>
+            <Tag variant="cool">포스트록</Tag>
+            <Tag variant="cool">몽환적</Tag>
+          </div>
         </section>
         <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
+          <h3>취향 지표</h3>
+          <div className="insight-list">
+            <p><strong>자주 마신 원두</strong><span>{monthlyReport.favoriteCoffee}</span></p>
+            <p><strong>자주 들은 아티스트</strong><span>{monthlyReport.favoriteArtist}</span></p>
+            <p><strong>대표 무드</strong><span>{monthlyReport.frequentMood}</span></p>
+          </div>
         </section>
       </div>
     </PageShell>

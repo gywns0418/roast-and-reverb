@@ -1,18 +1,14 @@
 import PageShell from "../../components/common/PageShell.jsx";
+import Tag from "../../components/common/Tag.jsx";
 
 export default function AdminMemberPage() {
   return (
-    <PageShell title="회원 관리" eyebrow="Roast & Reverb" subtitle="회원 상태와 권한을 관리합니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
-      </div>
+    <PageShell title="회원 관리" eyebrow="Admin" subtitle="회원 상태와 기록 활동을 확인합니다.">
+      <section className="panel">
+        <div className="table-row table-head"><span>닉네임</span><span>상태</span><span>최근 기록</span></div>
+        <div className="table-row"><span>slow brew</span><Tag>ACTIVE</Tag><span>2026.07.09</span></div>
+        <div className="table-row"><span>night cup</span><Tag>ACTIVE</Tag><span>2026.07.08</span></div>
+      </section>
     </PageShell>
   );
 }

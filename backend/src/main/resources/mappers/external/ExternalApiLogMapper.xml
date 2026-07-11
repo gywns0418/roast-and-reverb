@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roastreverb.domain.external.mapper.ExternalApiLogMapper">
+  <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="apiLogId">
+    INSERT INTO external_api_log (
+      member_id, provider, endpoint, request_summary, response_status, success, error_message
+    )
+    VALUES (
+      #{memberId}, #{provider}, #{endpoint}, #{requestSummary}, #{responseStatus}, #{success}, #{errorMessage}
+    )
+  </insert>
+
+  <select id="findAll" resultType="map">
+    SELECT api_log_id, member_id, provider, endpoint, request_summary, response_status,
+           success, error_message, created_at
+    FROM external_api_log
+    WHERE 1 = 1
+    <if test="memberId != null">AND member_id = #{memberId}</if>
+    <if test="provider != null and provider != ''">AND provider = #{provider}</if>
+    <if test="success != null">AND success = #{success}</if>
+    ORDER BY created_at DESC, api_log_id DESC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+</mapper>

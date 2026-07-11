@@ -1,1 +1,3 @@
-export default function Tag({ children }) { return <span className="tag">{children}</span>; }
+export default function Tag({ children, variant = "neutral" }) {
+  return <span className={`tag tag-${variant}`}>{children}</span>;
+}

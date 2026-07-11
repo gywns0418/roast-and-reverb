@@ -2,15 +2,15 @@ import PageShell from "../../components/common/PageShell.jsx";
 
 export default function AdminStatisticsPage() {
   return (
-    <PageShell title="로그 통계" eyebrow="Roast & Reverb" subtitle="커피, 음악, 페어링 누적 통계를 봅니다.">
+    <PageShell title="로그 통계" eyebrow="Admin statistics" subtitle="커피, 음악, 페어링 누적 흐름을 운영 관점에서 봅니다.">
       <div className="panel-grid">
         <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
+          <h3>인기 커피 키워드</h3>
+          <p>예가체프, 케냐 AA, 라이트 로스팅, 핸드드립</p>
         </section>
         <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
+          <h3>인기 음악 키워드</h3>
+          <p>포스트록, 앰비언트, 재즈, 몽환적</p>
         </section>
       </div>
     </PageShell>

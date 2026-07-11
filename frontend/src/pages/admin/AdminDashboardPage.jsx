@@ -1,17 +1,22 @@
 import PageShell from "../../components/common/PageShell.jsx";
 
+const stats = [
+  ["회원", "128"],
+  ["커피 로그", "1,842"],
+  ["음악 로그", "1,536"],
+  ["AI 분석", "923"]
+];
+
 export default function AdminDashboardPage() {
   return (
-    <PageShell title="관리자 대시보드" eyebrow="Roast & Reverb" subtitle="서비스 지표와 운영 로그를 확인합니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
+    <PageShell title="관리자 대시보드" eyebrow="Admin" subtitle="서비스 사용량과 AI 분석 상태를 확인합니다.">
+      <div className="stat-grid admin-stat-grid">
+        {stats.map(([label, value]) => (
+          <div className="stat-tile" key={label}>
+            <span>{label}</span>
+            <strong>{value}</strong>
+          </div>
+        ))}
       </div>
     </PageShell>
   );

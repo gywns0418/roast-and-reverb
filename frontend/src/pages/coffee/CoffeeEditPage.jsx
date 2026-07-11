@@ -1,18 +1,23 @@
 import PageShell from "../../components/common/PageShell.jsx";
+import Button from "../../components/common/Button.jsx";
+import Input from "../../components/common/Input.jsx";
+import { coffeeLogs } from "../../data/sampleData.js";
 
 export default function CoffeeEditPage() {
+  const coffee = coffeeLogs[0];
+
   return (
-    <PageShell title="커피 기록 수정" eyebrow="Roast & Reverb" subtitle="이미 저장된 커피 로그를 다듬습니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
-      </div>
+    <PageShell title="커피 기록 수정" eyebrow="Edit coffee" subtitle="원두 정보와 맛 평가를 다듬어 페어링 정확도를 높입니다.">
+      <section className="panel compose-panel">
+        <div className="form-grid">
+          <Input defaultValue={coffee.bean} />
+          <Input defaultValue={coffee.roastery} />
+          <Input defaultValue={coffee.brew} />
+          <Input defaultValue={coffee.roast} />
+        </div>
+        <textarea className="textarea" defaultValue={coffee.memo} />
+        <Button>수정 저장</Button>
+      </section>
     </PageShell>
   );
 }

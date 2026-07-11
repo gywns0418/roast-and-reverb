@@ -1,17 +1,18 @@
 import PageShell from "../../components/common/PageShell.jsx";
+import Button from "../../components/common/Button.jsx";
+import CoffeeLogCard from "../../components/coffee/CoffeeLogCard.jsx";
+import MusicCard from "../../components/music/MusicCard.jsx";
+import { coffeeLogs, musicLogs } from "../../data/sampleData.js";
 
 export default function PairingWritePage() {
   return (
-    <PageShell title="AI 페어링 생성" eyebrow="Roast & Reverb" subtitle="커피 로그와 음악 로그를 선택해 분석을 요청합니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
+    <PageShell title="AI 페어링 생성" eyebrow="Analyze" subtitle="커피 로그와 음악 로그를 선택해 AI 인사이트를 생성합니다.">
+      <div className="compose-layout">
+        <CoffeeLogCard item={coffeeLogs[0]} />
+        <MusicCard item={musicLogs[0]} />
+      </div>
+      <div className="action-row">
+        <Button>선택한 기록으로 분석</Button>
       </div>
     </PageShell>
   );

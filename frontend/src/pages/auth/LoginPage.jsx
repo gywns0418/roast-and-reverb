@@ -1,18 +1,15 @@
 import PageShell from "../../components/common/PageShell.jsx";
+import Button from "../../components/common/Button.jsx";
+import Input from "../../components/common/Input.jsx";
 
 export default function LoginPage() {
   return (
-    <PageShell title="로그인" eyebrow="Roast & Reverb" subtitle="이메일과 비밀번호로 Roast & Reverb에 접속합니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
-      </div>
+    <PageShell title="로그인" eyebrow="Roast & Reverb" subtitle="커피와 음악 취향 데이터를 이어서 기록합니다.">
+      <section className="auth-panel">
+        <Input type="email" placeholder="이메일" defaultValue="brewer@example.com" />
+        <Input type="password" placeholder="비밀번호" defaultValue="password" />
+        <Button>로그인</Button>
+      </section>
     </PageShell>
   );
 }

@@ -1,18 +1,17 @@
 import PageShell from "../../components/common/PageShell.jsx";
+import Input from "../../components/common/Input.jsx";
+import MusicCard from "../../components/music/MusicCard.jsx";
+import { musicLogs } from "../../data/sampleData.js";
 
 export default function MusicSearchPage() {
   return (
-    <PageShell title="음악 검색" eyebrow="Roast & Reverb" subtitle="Last.fm과 Discogs 검색 연동을 붙일 화면입니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
-      </div>
+    <PageShell title="음악 검색" eyebrow="Last.fm · Discogs" subtitle="곡과 앨범 메타데이터를 찾아 음악 로그에 연결합니다.">
+      <section className="panel compose-panel">
+        <Input placeholder="곡 또는 아티스트 검색" defaultValue="Sigur Ros" />
+        <div className="card-grid">
+          {musicLogs.slice(0, 2).map((item) => <MusicCard item={item} key={item.id} />)}
+        </div>
+      </section>
     </PageShell>
   );
 }
