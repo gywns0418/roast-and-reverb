@@ -2,6 +2,7 @@ package com.roastreverb.domain.collection.controller;
 
 import com.roastreverb.domain.collection.service.CollectionService;
 import com.roastreverb.global.response.ApiResponse;
+import com.roastreverb.global.security.SecurityUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -32,7 +33,7 @@ public class CollectionController {
 
     @PostMapping
     public ApiResponse<?> create(@RequestBody Map<String, Object> collection) {
-        collection.putIfAbsent("memberId", DEFAULT_MEMBER_ID);
+        collection.put("memberId", SecurityUtil.currentMemberId(DEFAULT_MEMBER_ID));
         return ApiResponse.ok(collectionService.create(collection));
     }
 

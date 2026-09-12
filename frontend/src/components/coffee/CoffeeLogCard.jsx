@@ -12,8 +12,8 @@ export default function CoffeeLogCard({ item }) {
   return (
     <article className="log-card">
       <div className="card-head">
-        <span>{item.date}</span>
-        <Tag>{item.roast}</Tag>
+        <span className="oldnum">{item.date}</span>
+        <Tag variant="warm">{item.roast}</Tag>
       </div>
       <h3>{item.bean}</h3>
       <p>{item.roastery} · {item.brew}</p>
@@ -26,7 +26,7 @@ export default function CoffeeLogCard({ item }) {
           </div>
         ))}
       </div>
-      <p>{item.memo}</p>
+      <p className="log-card-note">{item.memo}</p>
     </article>
   );
 }

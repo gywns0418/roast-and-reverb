@@ -11,7 +11,7 @@ export default function PairingCard({ item, compact = false }) {
   return (
     <Link to={`/pairing/${item.id}`} className={compact ? "pairing-card pairing-card-compact" : "pairing-card"} style={{ display: "grid" }}>
       <div className="card-head">
-        <span>{item.date}</span>
+        <span className="oldnum">{item.date}</span>
         <span className="specimen-no">no. <span className="oldnum">{item.score}</span></span>
       </div>
       <div className="pairing-names">

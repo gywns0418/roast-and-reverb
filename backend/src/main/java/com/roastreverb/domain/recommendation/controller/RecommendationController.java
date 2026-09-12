@@ -2,6 +2,7 @@ package com.roastreverb.domain.recommendation.controller;
 
 import com.roastreverb.domain.recommendation.service.RecommendationService;
 import com.roastreverb.global.response.ApiResponse;
+import com.roastreverb.global.security.SecurityUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -26,7 +27,7 @@ public class RecommendationController {
 
     @PostMapping
     public ApiResponse<?> create(@RequestBody Map<String, Object> recommendation) {
-        recommendation.putIfAbsent("memberId", DEFAULT_MEMBER_ID);
+        recommendation.put("memberId", SecurityUtil.currentMemberId(DEFAULT_MEMBER_ID));
         return ApiResponse.ok(recommendationService.create(recommendation));
     }
 

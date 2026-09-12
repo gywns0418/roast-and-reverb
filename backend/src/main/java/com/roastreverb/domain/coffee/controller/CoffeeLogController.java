@@ -2,6 +2,7 @@ package com.roastreverb.domain.coffee.controller;
 
 import com.roastreverb.domain.coffee.service.CoffeeLogService;
 import com.roastreverb.global.response.ApiResponse;
+import com.roastreverb.global.security.SecurityUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,7 @@ public class CoffeeLogController {
 
     @PostMapping
     public ApiResponse<?> create(@RequestBody Map<String, Object> coffeeLog) {
-        coffeeLog.putIfAbsent("memberId", DEFAULT_MEMBER_ID);
+        coffeeLog.put("memberId", SecurityUtil.currentMemberId(DEFAULT_MEMBER_ID));
         return ApiResponse.ok(coffeeLogService.create(coffeeLog));
     }
 
