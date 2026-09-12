@@ -1,7 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout/Layout.jsx";
+import HomePage from "../pages/HomePage.jsx";
 import LoginPage from "../pages/auth/LoginPage.jsx";
 import JoinPage from "../pages/auth/JoinPage.jsx";
+import FindIdPage from "../pages/auth/FindIdPage.jsx";
+import FindPasswordPage from "../pages/auth/FindPasswordPage.jsx";
 import DashboardPage from "../pages/dashboard/DashboardPage.jsx";
 import CoffeeLogPage from "../pages/coffee/CoffeeLogPage.jsx";
 import CoffeeWritePage from "../pages/coffee/CoffeeWritePage.jsx";
@@ -17,6 +20,7 @@ import PairingDetailPage from "../pages/pairing/PairingDetailPage.jsx";
 import MonthlyReportPage from "../pages/report/MonthlyReportPage.jsx";
 import RecommendPage from "../pages/recommend/RecommendPage.jsx";
 import CollectionPage from "../pages/collection/CollectionPage.jsx";
+import CollectionWritePage from "../pages/collection/CollectionWritePage.jsx";
 import MyPage from "../pages/mypage/MyPage.jsx";
 import AdminDashboardPage from "../pages/admin/AdminDashboardPage.jsx";
 import AdminMemberPage from "../pages/admin/AdminMemberPage.jsx";
@@ -26,14 +30,16 @@ import AdminStatisticsPage from "../pages/admin/AdminStatisticsPage.jsx";
 export default function AppRouter() {
   return (
     <Routes>
+      <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<Navigate to="/auth/login" replace />} />
       <Route path="/join" element={<Navigate to="/auth/join" replace />} />
       <Route path="/signup" element={<Navigate to="/auth/join" replace />} />
+      <Route path="/home" element={<HomePage />} />
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/join" element={<JoinPage />} />
+      <Route path="/auth/find-id" element={<FindIdPage />} />
+      <Route path="/auth/find-password" element={<FindPasswordPage />} />
       <Route element={<Layout />}>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/home" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<DashboardPage />} />
 
         <Route path="/today" element={<Navigate to="/coffee/write" replace />} />
@@ -81,6 +87,8 @@ export default function AppRouter() {
         <Route path="/collection" element={<CollectionPage />} />
         <Route path="/collections" element={<CollectionPage />} />
         <Route path="/crate" element={<CollectionPage />} />
+        <Route path="/collection/write" element={<CollectionWritePage />} />
+        <Route path="/collection/new" element={<Navigate to="/collection/write" replace />} />
 
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/my" element={<MyPage />} />

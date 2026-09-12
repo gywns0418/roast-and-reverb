@@ -2,6 +2,7 @@ package com.roastreverb.domain.pairing.controller;
 
 import com.roastreverb.domain.pairing.service.PairingService;
 import com.roastreverb.global.response.ApiResponse;
+import com.roastreverb.global.security.SecurityUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -43,7 +44,7 @@ public class PairingController {
 
     @PostMapping
     public ApiResponse<?> create(@RequestBody Map<String, Object> pairing) {
-        pairing.putIfAbsent("memberId", DEFAULT_MEMBER_ID);
+        pairing.put("memberId", SecurityUtil.currentMemberId(DEFAULT_MEMBER_ID));
         return ApiResponse.ok(pairingService.create(pairing));
     }
 

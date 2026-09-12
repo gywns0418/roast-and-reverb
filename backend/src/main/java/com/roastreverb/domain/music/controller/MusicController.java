@@ -1,7 +1,10 @@
 package com.roastreverb.domain.music.controller;
 
+import com.roastreverb.domain.music.service.DiscogsService;
+import com.roastreverb.domain.music.service.LastfmService;
 import com.roastreverb.domain.music.service.MusicService;
 import com.roastreverb.global.response.ApiResponse;
+import com.roastreverb.global.security.SecurityUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +17,13 @@ public class MusicController {
     private static final Long DEFAULT_MEMBER_ID = 1L;
 
     private final MusicService musicService;
+    private final LastfmService lastfmService;
+    private final DiscogsService discogsService;
 
-    public MusicController(MusicService musicService) {
+    public MusicController(MusicService musicService, LastfmService lastfmService, DiscogsService discogsService) {
         this.musicService = musicService;
+        this.lastfmService = lastfmService;
+        this.discogsService = discogsService;
     }
 
     @GetMapping
@@ -37,7 +44,7 @@ public class MusicController {
 
     @PostMapping
     public ApiResponse<?> create(@RequestBody Map<String, Object> musicLog) {
-        musicLog.putIfAbsent("memberId", DEFAULT_MEMBER_ID);
+        musicLog.put("memberId", SecurityUtil.currentMemberId(DEFAULT_MEMBER_ID));
         return ApiResponse.ok(musicService.create(musicLog));
     }
 
@@ -58,5 +65,15 @@ public class MusicController {
     public ApiResponse<?> recentTags(@RequestParam(defaultValue = "1") Long memberId,
                                      @RequestParam(defaultValue = "12") int limit) {
         return ApiResponse.ok(musicService.findRecentTags(memberId, limit));
+    }
+
+    @GetMapping("/search/lastfm")
+    public ApiResponse<?> searchLastfm(@RequestParam String keyword) {
+        return ApiResponse.ok(lastfmService.searchTrack(keyword));
+    }
+
+    @GetMapping("/search/discogs")
+    public ApiResponse<?> searchDiscogs(@RequestParam String keyword) {
+        return ApiResponse.ok(discogsService.searchRelease(keyword));
     }
 }
