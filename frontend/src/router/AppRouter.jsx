@@ -16,6 +16,7 @@ import PairingWritePage from "../pages/pairing/PairingWritePage.jsx";
 import PairingDetailPage from "../pages/pairing/PairingDetailPage.jsx";
 import MonthlyReportPage from "../pages/report/MonthlyReportPage.jsx";
 import RecommendPage from "../pages/recommend/RecommendPage.jsx";
+import MonthlyPickPage from "../pages/monthlypick/MonthlyPickPage.jsx";
 import CollectionPage from "../pages/collection/CollectionPage.jsx";
 import MyPage from "../pages/mypage/MyPage.jsx";
 import AdminDashboardPage from "../pages/admin/AdminDashboardPage.jsx";
@@ -44,6 +45,7 @@ export default function AppRouter() {
         <Route path="/pairing/:id" element={<PairingDetailPage />} />
         <Route path="/report/monthly" element={<MonthlyReportPage />} />
         <Route path="/recommend" element={<RecommendPage />} />
+        <Route path="/monthly-pick" element={<MonthlyPickPage />} />
         <Route path="/collection" element={<CollectionPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/admin" element={<AdminDashboardPage />} />

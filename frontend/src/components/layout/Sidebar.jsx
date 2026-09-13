@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { BarChart3, Coffee, Disc3, Headphones, Home, Library, Sparkles, UserRound } from "lucide-react";
+import { BarChart3, Coffee, Disc3, Headphones, Home, Library, ShoppingBasket, Sparkles, UserRound } from "lucide-react";
 
 const links = [
   ["/dashboard", Home, "대시보드"],
@@ -8,6 +8,7 @@ const links = [
   ["/pairing", Sparkles, "AI 페어링"],
   ["/report/monthly", BarChart3, "취향 리포트"],
   ["/recommend", Disc3, "추천"],
+  ["/monthly-pick", ShoppingBasket, "이달의 픽"],
   ["/collection", Library, "컬렉션"],
   ["/mypage", UserRound, "마이페이지"]
 ];
