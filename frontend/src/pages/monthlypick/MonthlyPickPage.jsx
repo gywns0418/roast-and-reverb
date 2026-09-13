@@ -41,7 +41,7 @@ function OptionCard({ option }) {
 
 function OptionRow({ options }) {
   return (
-    <div className="pick-list">
+    <div className="mp-option-list">
       {options.map((o) => <OptionCard option={o} key={o.option_id} />)}
     </div>
   );

@@ -1,17 +1,63 @@
+import { Link, useNavigate } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
+import Button from "../../components/common/Button.jsx";
+import Tag from "../../components/common/Tag.jsx";
+import { authStore } from "../../store/authStore.js";
+import { monthlyReport } from "../../data/sampleData.js";
+import { reportApi } from "../../api/reportApi.js";
+import { adaptMonthlyReport } from "../../api/adapters.js";
+import { useApiResource } from "../../hooks/useApiResource.js";
 
 export default function MyPage() {
+  const navigate = useNavigate();
+  const user = authStore.user || { nickname: "slow brew", email: "brewer@example.com" };
+  const fallback = adaptMonthlyReport({
+    summary: {
+      latestMoodSummary: monthlyReport.summary,
+      coffeeDays: 18,
+      pairingCount: 12,
+      avgPairingScore: 88
+    },
+    favoriteCoffees: [{ beanName: monthlyReport.favoriteCoffee }],
+    favoriteArtists: [{ artistName: monthlyReport.favoriteArtist }],
+    moodStats: [{ moodTags: monthlyReport.frequentMood }]
+  });
+  const { data: report } = useApiResource(
+    () => reportApi.monthly().then(adaptMonthlyReport),
+    fallback,
+    []
+  );
+
+  function handleLogout() {
+    authStore.clear();
+    navigate("/auth/login");
+  }
+
   return (
-    <PageShell title="마이페이지" eyebrow="Roast & Reverb" subtitle="프로필과 계정 정보를 관리합니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
+    <PageShell title="마이페이지" eyebrow="Profile" subtitle="나의 기록 수와 자주 등장한 취향 키워드를 확인합니다.">
+      <section className="panel profile-panel">
+        <div className="profile-avatar">RR</div>
+        <div>
+          <h3>{user.nickname || user.email || "slow brew"}</h3>
+          <p>{user.email || "brewer@example.com"}</p>
+          <div className="tag-row">
+            <Tag variant="warm">밝은 산미</Tag>
+            <Tag variant="cool">포스트록</Tag>
+            <Tag variant="cool">몽환적</Tag>
+          </div>
+          <div className="action-row">
+            <Link to="/admin" className="ghost-button">관리자 화면</Link>
+            <Button onClick={handleLogout}>로그아웃</Button>
+          </div>
+        </div>
+      </section>
+      <div className="stat-grid">
+        {report.stats.map((stat) => (
+          <div className="stat-tile" key={stat.label}>
+            <span>{stat.label}</span>
+            <strong className="oldnum">{stat.value}</strong>
+          </div>
+        ))}
       </div>
     </PageShell>
   );

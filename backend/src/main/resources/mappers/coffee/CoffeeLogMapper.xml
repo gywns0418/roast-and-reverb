@@ -1,4 +1,104 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.roastreverb.domain.coffee.mapper.CoffeeLogMapper">
+  <sql id="CoffeeLogColumns">
+    coffee_log_id, member_id, bean_name, roastery, origin_country, region, process,
+    roast_level, brew_method, water_temp, grind_size, brew_time, taste_note,
+    acidity, sweetness, bitterness, body, aroma, memo, image_url, drink_date,
+    created_at, updated_at
+  </sql>
+
+  <select id="findAll" resultType="map">
+    SELECT <include refid="CoffeeLogColumns" />
+    FROM coffee_log
+    WHERE member_id = #{memberId}
+    <if test="keyword != null and keyword != ''">
+      AND (
+        bean_name LIKE CONCAT('%', #{keyword}, '%')
+        OR roastery LIKE CONCAT('%', #{keyword}, '%')
+        OR origin_country LIKE CONCAT('%', #{keyword}, '%')
+        OR taste_note LIKE CONCAT('%', #{keyword}, '%')
+        OR memo LIKE CONCAT('%', #{keyword}, '%')
+      )
+    </if>
+    <if test="from != null">AND drink_date &gt;= #{from}</if>
+    <if test="to != null">AND drink_date &lt;= #{to}</if>
+    ORDER BY drink_date DESC, coffee_log_id DESC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="findById" resultType="map">
+    SELECT <include refid="CoffeeLogColumns" />
+    FROM coffee_log
+    WHERE coffee_log_id = #{coffeeLogId}
+      AND member_id = #{memberId}
+  </select>
+
+  <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="coffeeLogId">
+    INSERT INTO coffee_log (
+      member_id, bean_name, roastery, origin_country, region, process, roast_level,
+      brew_method, water_temp, grind_size, brew_time, taste_note, acidity, sweetness,
+      bitterness, body, aroma, memo, image_url, drink_date
+    )
+    VALUES (
+      #{memberId}, #{beanName}, #{roastery}, #{originCountry}, #{region}, #{process}, #{roastLevel},
+      #{brewMethod}, #{waterTemp}, #{grindSize}, #{brewTime}, #{tasteNote}, #{acidity}, #{sweetness},
+      #{bitterness}, #{body}, #{aroma}, #{memo}, #{imageUrl}, #{drinkDate}
+    )
+  </insert>
+
+  <update id="update" parameterType="map">
+    UPDATE coffee_log
+    SET bean_name = #{beanName},
+        roastery = #{roastery},
+        origin_country = #{originCountry},
+        region = #{region},
+        process = #{process},
+        roast_level = #{roastLevel},
+        brew_method = #{brewMethod},
+        water_temp = #{waterTemp},
+        grind_size = #{grindSize},
+        brew_time = #{brewTime},
+        taste_note = #{tasteNote},
+        acidity = #{acidity},
+        sweetness = #{sweetness},
+        bitterness = #{bitterness},
+        body = #{body},
+        aroma = #{aroma},
+        memo = #{memo},
+        image_url = #{imageUrl},
+        drink_date = #{drinkDate},
+        updated_at = CURRENT_TIMESTAMP
+    WHERE coffee_log_id = #{coffeeLogId}
+      AND member_id = #{memberId}
+  </update>
+
+  <delete id="delete">
+    DELETE FROM coffee_log
+    WHERE coffee_log_id = #{coffeeLogId}
+      AND member_id = #{memberId}
+  </delete>
+
+  <select id="findCalendar" resultType="map">
+    SELECT drink_date, COUNT(*) AS log_count
+    FROM coffee_log
+    WHERE member_id = #{memberId}
+      AND drink_date BETWEEN #{from} AND #{to}
+    GROUP BY drink_date
+    ORDER BY drink_date
+  </select>
+
+  <select id="findStatistics" resultType="map">
+    SELECT
+      COUNT(*) AS total_count,
+      AVG(acidity) AS avg_acidity,
+      AVG(sweetness) AS avg_sweetness,
+      AVG(bitterness) AS avg_bitterness,
+      AVG(body) AS avg_body,
+      AVG(aroma) AS avg_aroma
+    FROM coffee_log
+    WHERE member_id = #{memberId}
+    <if test="from != null">AND drink_date &gt;= #{from}</if>
+    <if test="to != null">AND drink_date &lt;= #{to}</if>
+  </select>
 </mapper>

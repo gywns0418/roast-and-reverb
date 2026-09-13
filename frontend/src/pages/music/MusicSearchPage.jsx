@@ -1,18 +1,57 @@
+import { useMemo, useState } from "react";
 import PageShell from "../../components/common/PageShell.jsx";
+import Button from "../../components/common/Button.jsx";
+import Input from "../../components/common/Input.jsx";
+import MusicCard from "../../components/music/MusicCard.jsx";
+import EmptyState from "../../components/common/EmptyState.jsx";
+import { musicApi } from "../../api/musicApi.js";
+import { adaptMusicLog } from "../../api/adapters.js";
+import { musicLogs } from "../../data/sampleData.js";
+
+const SHOWN_LIMIT = 6;
 
 export default function MusicSearchPage() {
+  const [keyword, setKeyword] = useState("Sigur Ros");
+  const [results, setResults] = useState(musicLogs.map(adaptMusicLog));
+  const [message, setMessage] = useState("");
+
+  const visible = useMemo(() => {
+    const normalized = keyword.trim().toLowerCase();
+    if (!normalized) return results;
+    return results.filter((item) => [item.track, item.artist, item.album, item.genre, item.memo].join(" ").toLowerCase().includes(normalized));
+  }, [keyword, results]);
+
+  async function handleSearch() {
+    setMessage("");
+    try {
+      const items = await musicApi.list({ keyword });
+      setResults(items.map(adaptMusicLog));
+    } catch {
+      setResults(musicLogs.map(adaptMusicLog));
+      setMessage("백엔드 검색에 연결하지 못해 로컬 기록에서 찾았습니다.");
+    }
+  }
+
   return (
-    <PageShell title="음악 검색" eyebrow="Roast & Reverb" subtitle="Last.fm과 Discogs 검색 연동을 붙일 화면입니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
-      </div>
+    <PageShell title="음악 검색" eyebrow="Last.fm · Discogs" subtitle="곡과 앨범 메타데이터를 찾아 음악 로그에 연결합니다.">
+      <section className="panel">
+        <div className="form-grid">
+          <Input placeholder="곡 또는 아티스트 검색" value={keyword} onChange={(event) => setKeyword(event.target.value)} />
+          <Button onClick={handleSearch}>검색</Button>
+        </div>
+        {message && <p className="muted">{message}</p>}
+        <div className="card-head" style={{ marginTop: 14, paddingBottom: 8, borderBottom: "1px dashed var(--line)" }}>
+          <span>검색 결과</span>
+          <span className="oldnum">{Math.min(visible.length, SHOWN_LIMIT)} / {visible.length}건</span>
+        </div>
+        {visible.length === 0
+          ? <EmptyState icon="wave">일치하는 곡을 찾지 못했어요. 다른 검색어로 시도해보세요.</EmptyState>
+          : (
+            <div className="card-grid">
+              {visible.slice(0, SHOWN_LIMIT).map((item) => <MusicCard item={item} key={item.id} />)}
+            </div>
+          )}
+      </section>
     </PageShell>
   );
 }

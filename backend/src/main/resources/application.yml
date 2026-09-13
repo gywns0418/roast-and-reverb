@@ -5,7 +5,7 @@ spring:
   application:
     name: roast-and-reverb
   datasource:
-    url: jdbc:h2:mem:roastreverb;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    url: jdbc:h2:mem:roastreverb;MODE=MySQL;DATABASE_TO_LOWER=TRUE;NON_KEYWORDS=MEMBER,BODY
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -14,3 +14,15 @@ mybatis:
   mapper-locations: classpath:/mappers/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:roast-and-reverb-local-dev-secret-key-change-me}
+    expiration-ms: 86400000
+  claude:
+    api-key: ${CLAUDE_API_KEY:}
+    model: claude-3-5-haiku-20241022
+  lastfm:
+    api-key: ${LASTFM_API_KEY:}
+  discogs:
+    token: ${DISCOGS_TOKEN:}

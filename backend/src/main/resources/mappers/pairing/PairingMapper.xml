@@ -1,4 +1,91 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.roastreverb.domain.pairing.mapper.PairingMapper">
+  <sql id="PairingProjection">
+    p.pairing_id,
+    p.member_id,
+    p.coffee_log_id,
+    p.music_log_id,
+    c.bean_name,
+    c.brew_method,
+    c.drink_date,
+    m.track_name,
+    m.artist_name,
+    m.album_name,
+    m.listened_date,
+    p.mood_summary,
+    p.mood_tags,
+    p.pairing_score,
+    p.pairing_text,
+    p.ai_reason,
+    p.created_at
+  </sql>
+
+  <select id="findAll" resultType="map">
+    SELECT <include refid="PairingProjection" />
+    FROM pairing p
+    JOIN coffee_log c ON c.coffee_log_id = p.coffee_log_id
+    JOIN music_log m ON m.music_log_id = p.music_log_id
+    WHERE p.member_id = #{memberId}
+    ORDER BY p.created_at DESC, p.pairing_id DESC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="findById" resultType="map">
+    SELECT <include refid="PairingProjection" />
+    FROM pairing p
+    JOIN coffee_log c ON c.coffee_log_id = p.coffee_log_id
+    JOIN music_log m ON m.music_log_id = p.music_log_id
+    WHERE p.pairing_id = #{pairingId}
+      AND p.member_id = #{memberId}
+  </select>
+
+  <select id="findLatest" resultType="map">
+    SELECT <include refid="PairingProjection" />
+    FROM pairing p
+    JOIN coffee_log c ON c.coffee_log_id = p.coffee_log_id
+    JOIN music_log m ON m.music_log_id = p.music_log_id
+    WHERE p.member_id = #{memberId}
+    ORDER BY p.created_at DESC, p.pairing_id DESC
+    LIMIT 1
+  </select>
+
+  <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="pairingId">
+    INSERT INTO pairing (
+      member_id, coffee_log_id, music_log_id, mood_summary, mood_tags,
+      pairing_score, pairing_text, ai_reason
+    )
+    VALUES (
+      #{memberId}, #{coffeeLogId}, #{musicLogId}, #{moodSummary}, #{moodTags},
+      #{pairingScore}, #{pairingText}, #{aiReason}
+    )
+  </insert>
+
+  <delete id="delete">
+    DELETE FROM pairing
+    WHERE pairing_id = #{pairingId}
+      AND member_id = #{memberId}
+  </delete>
+
+  <select id="findRecentCrate" resultType="map">
+    SELECT 'coffee' AS item_type,
+           c.coffee_log_id AS item_id,
+           c.drink_date AS recorded_date,
+           c.bean_name AS title,
+           CONCAT(c.brew_method, ' · ', COALESCE(c.memo, '')) AS description,
+           CONCAT('no. ', LPAD(c.coffee_log_id, 3, '0')) AS catalog_no
+    FROM coffee_log c
+    WHERE c.member_id = #{memberId}
+    UNION ALL
+    SELECT 'music' AS item_type,
+           m.music_log_id AS item_id,
+           m.listened_date AS recorded_date,
+           CONCAT(m.artist_name, ' — ', m.track_name) AS title,
+           CONCAT(m.genre, ' · ', COALESCE(m.memo, '')) AS description,
+           CONCAT('no. ', LPAD(m.music_log_id, 3, '0')) AS catalog_no
+    FROM music_log m
+    WHERE m.member_id = #{memberId}
+    ORDER BY recorded_date DESC, item_id DESC
+    LIMIT #{limit}
+  </select>
 </mapper>

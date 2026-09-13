@@ -1,16 +1,55 @@
 import PageShell from "../../components/common/PageShell.jsx";
+import Tag from "../../components/common/Tag.jsx";
+import Motif from "../../components/common/Motif.jsx";
+import { monthlyReport } from "../../data/sampleData.js";
+import { reportApi } from "../../api/reportApi.js";
+import { adaptMonthlyReport } from "../../api/adapters.js";
+import { useApiResource } from "../../hooks/useApiResource.js";
 
 export default function MonthlyReportPage() {
+  const fallback = adaptMonthlyReport({
+    summary: {
+      latestMoodSummary: monthlyReport.summary,
+      coffeeDays: 18,
+      pairingCount: 12,
+      avgPairingScore: 88
+    },
+    favoriteCoffees: [{ beanName: monthlyReport.favoriteCoffee }],
+    favoriteArtists: [{ artistName: monthlyReport.favoriteArtist }],
+    moodStats: [{ moodTags: monthlyReport.frequentMood }]
+  });
+  const { data: report } = useApiResource(
+    () => reportApi.monthly().then(adaptMonthlyReport),
+    fallback,
+    []
+  );
+
+  const avgScore = report.stats?.[3]?.value ?? 0;
+
   return (
-    <PageShell title="월간 리포트" eyebrow="Roast & Reverb" subtitle="누적 로그로 취향 패턴을 요약합니다.">
+    <PageShell title="취향 리포트" eyebrow="Monthly report" subtitle="쌓인 기록에서 커피 취향과 음악 취향의 반복 패턴을 찾습니다.">
+      <div className="specimen-card">
+        <Motif variant="blend" />
+        <div className="names">{report.favoriteCoffee}<span>&</span>{report.favoriteArtist}</div>
+        <p className="catalog smcp">이달의 베스트 페어링 · Avg <span className="oldnum">{avgScore}</span></p>
+      </div>
       <div className="panel-grid">
         <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
+          <h3>AI 월간 코멘트</h3>
+          <p>{report.summary}</p>
+          <div className="tag-row">
+            <Tag variant="warm">밝은 산미</Tag>
+            <Tag variant="cool">포스트록</Tag>
+            <Tag variant="cool">몽환적</Tag>
+          </div>
         </section>
         <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
+          <h3>취향 지표</h3>
+          <div className="insight-list">
+            <p><strong>자주 마신 원두</strong><span>{report.favoriteCoffee}</span></p>
+            <p><strong>자주 들은 아티스트</strong><span>{report.favoriteArtist}</span></p>
+            <p><strong>대표 무드</strong><span>{report.frequentMood}</span></p>
+          </div>
         </section>
       </div>
     </PageShell>

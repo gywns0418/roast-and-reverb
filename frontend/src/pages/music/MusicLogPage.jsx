@@ -1,17 +1,42 @@
+import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
+import EmptyState from "../../components/common/EmptyState.jsx";
+import { musicLogs } from "../../data/sampleData.js";
+import { musicApi } from "../../api/musicApi.js";
+import { adaptMusicLog } from "../../api/adapters.js";
+import { useApiResource } from "../../hooks/useApiResource.js";
 
 export default function MusicLogPage() {
+  const fallback = musicLogs.map(adaptMusicLog);
+  const { data: logs } = useApiResource(
+    () => musicApi.list().then((items) => items.map(adaptMusicLog)),
+    fallback,
+    []
+  );
+
   return (
-    <PageShell title="음악 로그" eyebrow="Roast & Reverb" subtitle="곡, 아티스트, 앨범, 장르와 태그를 기록합니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
+    <PageShell title="음악 로그" eyebrow="Side B" subtitle="곡, 아티스트, 앨범, 장르와 감상 태그를 기록합니다.">
+      <div className="action-row">
+        <Link to="/music/search" className="primary-button">음악 검색</Link>
+        <Link to="/music/write" className="ghost-button">음악 로그 작성</Link>
+      </div>
+      <div className="ledger">
+        <div className="ledger-head">
+          <span className="book smcp">Music Log</span>
+          <span className="vol oldnum">{logs.length} entries</span>
+        </div>
+        {logs.length === 0
+          ? <EmptyState icon="wave">아직 채워지지 않은 첫 장이에요.</EmptyState>
+          : logs.map((item, i) => (
+            <Link to={`/music/${item.id}`} className="ledger-line fresh" key={item.id}>
+              <time className="oldnum">{item.date.slice(5)}.</time>
+              <span className="entry">
+                <span className="type-dot music" />
+                <strong>{item.artist} — {item.track}</strong> — {item.album} · {item.genre}
+              </span>
+              <span className="no oldnum">no. {String(logs.length - i).padStart(3, "0")}</span>
+            </Link>
+          ))}
       </div>
     </PageShell>
   );
