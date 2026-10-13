@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roastreverb.domain.admin.mapper.AdminMapper">
+  <select id="findDashboardStats" resultType="map">
+    SELECT
+      (SELECT COUNT(*) FROM member) AS member_count,
+      (SELECT COUNT(*) FROM coffee_log) AS coffee_log_count,
+      (SELECT COUNT(*) FROM music_log) AS music_log_count,
+      (SELECT COUNT(*) FROM pairing) AS pairing_count,
+      (SELECT COUNT(*) FROM external_api_log WHERE success = FALSE) AS api_error_count
+  </select>
+
+  <select id="findMembers" resultType="map">
+    SELECT member_id, email, nickname, profile_image, role, status, created_at, updated_at
+    FROM member
+    WHERE 1 = 1
+    <if test="keyword != null and keyword != ''">
+      AND (
+        email LIKE CONCAT('%', #{keyword}, '%')
+        OR nickname LIKE CONCAT('%', #{keyword}, '%')
+      )
+    </if>
+    <if test="status != null and status != ''">
+      AND status = #{status}
+    </if>
+    ORDER BY created_at DESC, member_id DESC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="findApiLogs" resultType="map">
+    SELECT api_log_id, member_id, provider, endpoint, request_summary, response_status,
+           success, error_message, created_at
+    FROM external_api_log
+    WHERE 1 = 1
+    <if test="provider != null and provider != ''">
+      AND provider = #{provider}
+    </if>
+    <if test="status != null and status == 'SUCCESS'">AND success = TRUE</if>
+    <if test="status != null and status == 'FAIL'">AND success = FALSE</if>
+    ORDER BY created_at DESC, api_log_id DESC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="findDailyStatistics" resultType="map">
+    SELECT stat_date,
+           SUM(coffee_count) AS coffee_count,
+           SUM(music_count) AS music_count,
+           SUM(pairing_count) AS pairing_count
+    FROM (
+      SELECT drink_date AS stat_date, COUNT(*) AS coffee_count, 0 AS music_count, 0 AS pairing_count
+      FROM coffee_log
+      WHERE drink_date BETWEEN #{from} AND #{to}
+      GROUP BY drink_date
+      UNION ALL
+      SELECT listened_date AS stat_date, 0 AS coffee_count, COUNT(*) AS music_count, 0 AS pairing_count
+      FROM music_log
+      WHERE listened_date BETWEEN #{from} AND #{to}
+      GROUP BY listened_date
+      UNION ALL
+      SELECT CAST(created_at AS DATE) AS stat_date, 0 AS coffee_count, 0 AS music_count, COUNT(*) AS pairing_count
+      FROM pairing
+      WHERE CAST(created_at AS DATE) BETWEEN #{from} AND #{to}
+      GROUP BY CAST(created_at AS DATE)
+    ) stats
+    GROUP BY stat_date
+    ORDER BY stat_date
+  </select>
+</mapper>

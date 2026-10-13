@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roastreverb.domain.collection.mapper.CollectionMapper">
+  <sql id="CollectionColumns">
+    collection_id, member_id, title, artist_name, format, release_year,
+    cover_image_url, linked_pairing_id, note, created_at, updated_at
+  </sql>
+
+  <select id="findAll" resultType="map">
+    SELECT c.collection_id,
+           c.member_id,
+           c.title,
+           c.artist_name,
+           c.format,
+           c.release_year,
+           c.cover_image_url,
+           c.linked_pairing_id,
+           c.note,
+           p.pairing_score,
+           c.created_at,
+           c.updated_at
+    FROM collection c
+    LEFT JOIN pairing p ON p.pairing_id = c.linked_pairing_id
+    WHERE c.member_id = #{memberId}
+    <if test="format != null and format != '' and format != 'ALL'">
+      AND c.format = #{format}
+    </if>
+    <if test="keyword != null and keyword != ''">
+      AND (
+        c.title LIKE CONCAT('%', #{keyword}, '%')
+        OR c.artist_name LIKE CONCAT('%', #{keyword}, '%')
+        OR c.note LIKE CONCAT('%', #{keyword}, '%')
+      )
+    </if>
+    ORDER BY c.created_at DESC, c.collection_id DESC
+  </select>
+
+  <select id="findById" resultType="map">
+    SELECT <include refid="CollectionColumns" />
+    FROM collection
+    WHERE collection_id = #{collectionId}
+      AND member_id = #{memberId}
+  </select>
+
+  <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="collectionId">
+    INSERT INTO collection (
+      member_id, title, artist_name, format, release_year, cover_image_url, linked_pairing_id, note
+    )
+    VALUES (
+      #{memberId}, #{title}, #{artistName}, #{format}, #{releaseYear}, #{coverImageUrl}, #{linkedPairingId}, #{note}
+    )
+  </insert>
+
+  <update id="update" parameterType="map">
+    UPDATE collection
+    SET title = #{title},
+        artist_name = #{artistName},
+        format = #{format},
+        release_year = #{releaseYear},
+        cover_image_url = #{coverImageUrl},
+        linked_pairing_id = #{linkedPairingId},
+        note = #{note},
+        updated_at = CURRENT_TIMESTAMP
+    WHERE collection_id = #{collectionId}
+      AND member_id = #{memberId}
+  </update>
+
+  <delete id="delete">
+    DELETE FROM collection
+    WHERE collection_id = #{collectionId}
+      AND member_id = #{memberId}
+  </delete>
+</mapper>

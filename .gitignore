@@ -7,3 +7,6 @@ target/
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Local Codex/agent working instructions
+AGENTS.md

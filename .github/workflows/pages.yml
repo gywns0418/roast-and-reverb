@@ -1,0 +1,64 @@
+name: Deploy production and development previews
+on:
+  push:
+    branches: [main, dev]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: production
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: development
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            production/frontend/package-lock.json
+            development/frontend/package-lock.json
+      - uses: actions/configure-pages@v5
+      - name: Build main for production
+        run: npm ci && npm run test && npm run build
+        working-directory: production/frontend
+        env:
+          VITE_BASE_PATH: /roast-and-reverb/
+          VITE_USE_REAL_API: 'false'
+      - name: Build dev for development
+        run: npm ci && npm run test && npm run build
+        working-directory: development/frontend
+        env:
+          VITE_BASE_PATH: /roast-and-reverb/dev/
+          VITE_USE_REAL_API: 'false'
+      - name: Assemble both sites
+        run: |
+          mkdir -p site/dev
+          cp -a production/frontend/dist/. site/
+          cp -a development/frontend/dist/. site/dev/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

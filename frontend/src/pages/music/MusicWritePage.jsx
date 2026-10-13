@@ -1,18 +1,59 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
+import Button from "../../components/common/Button.jsx";
+import Input from "../../components/common/Input.jsx";
+import { musicApi } from "../../api/musicApi.js";
 
 export default function MusicWritePage() {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    trackName: "",
+    artistName: "",
+    albumName: "",
+    genre: "",
+    listenedDate: new Date().toLocaleDateString("sv-SE"),
+    memo: ""
+  });
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const update = (key) => (event) => setForm((prev) => ({ ...prev, [key]: event.target.value }));
+
+  async function handleSave() {
+    if (!form.trackName.trim() || !form.artistName.trim() || !form.listenedDate) {
+      setMessage("곡명, 아티스트와 들은 날짜를 입력해 주세요.");
+      return;
+    }
+    setSaving(true);
+    setMessage("");
+    try {
+      const created = await musicApi.create({
+        ...form,
+        trackName: form.trackName.trim(), artistName: form.artistName.trim()
+      });
+      navigate(`/music/${created.musicLogId || created.music_log_id || created.id}`);
+    } catch (error) {
+      setMessage(error.message || "음악을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
-    <PageShell title="음악 기록 작성" eyebrow="Roast & Reverb" subtitle="오늘 들은 음악과 메모를 남깁니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
-      </div>
+    <PageShell title="음악 기록 작성" eyebrow="Music log" subtitle="오늘 들은 음악과 그때의 감상을 남깁니다.">
+      <form className="panel" onSubmit={event => { event.preventDefault(); handleSave(); }}>
+        <div className="form-grid">
+          <Input required label="곡명" placeholder="곡명" value={form.trackName} onChange={update("trackName")} />
+          <Input required label="아티스트" placeholder="아티스트" value={form.artistName} onChange={update("artistName")} />
+          <Input required type="date" label="들은 날짜" value={form.listenedDate} onChange={update("listenedDate")} />
+          <Input label="앨범" placeholder="앨범" value={form.albumName} onChange={update("albumName")} />
+          <Input label="장르" placeholder="장르" value={form.genre} onChange={update("genre")} />
+        </div>
+        <label className="input-field"><span>그때의 감상</span><textarea className="textarea" placeholder="기억에 남는 가사, 리듬, 그날의 기분을 적어보세요." value={form.memo} onChange={update("memo")} /></label>
+        <Button type="submit" disabled={saving} loading={saving}>{saving ? "저장 중" : "음악 로그 저장"}</Button>
+        {message && <p role="alert" className="muted">{message}</p>}
+      </form>
     </PageShell>
   );
 }

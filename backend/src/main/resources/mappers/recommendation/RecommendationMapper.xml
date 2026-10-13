@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roastreverb.domain.recommendation.mapper.RecommendationMapper">
+  <select id="findAll" resultType="map">
+    SELECT recommendation_id, member_id, direction, source_title, target_title, reason, score, created_at
+    FROM recommendation
+    WHERE member_id = #{memberId}
+    <if test="direction != null and direction != ''">
+      AND direction = #{direction}
+    </if>
+    ORDER BY created_at DESC, recommendation_id DESC
+    LIMIT #{limit}
+  </select>
+
+  <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="recommendationId">
+    INSERT INTO recommendation (member_id, direction, source_title, target_title, reason, score)
+    VALUES (#{memberId}, #{direction}, #{sourceTitle}, #{targetTitle}, #{reason}, #{score})
+  </insert>
+
+  <delete id="delete">
+    DELETE FROM recommendation
+    WHERE recommendation_id = #{recommendationId}
+      AND member_id = #{memberId}
+  </delete>
+</mapper>

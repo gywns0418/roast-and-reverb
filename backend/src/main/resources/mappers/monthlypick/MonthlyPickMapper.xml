@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roastreverb.domain.monthlypick.mapper.MonthlyPickMapper">
+
+  <select id="findAllPicks" resultType="map">
+    SELECT monthly_pick_id, member_id, pick_month, roastery, source_url, created_at
+    FROM monthly_pick
+    WHERE member_id = #{memberId}
+    ORDER BY pick_month DESC, monthly_pick_id DESC
+  </select>
+
+  <select id="findPickById" resultType="map">
+    SELECT monthly_pick_id, member_id, pick_month, roastery, source_url, created_at
+    FROM monthly_pick
+    WHERE monthly_pick_id = #{monthlyPickId}
+      AND member_id = #{memberId}
+  </select>
+
+  <insert id="insertPick" parameterType="map" useGeneratedKeys="true" keyProperty="monthlyPickId">
+    INSERT INTO monthly_pick (member_id, pick_month, roastery, source_url)
+    VALUES (#{memberId}, #{pickMonth}, #{roastery}, #{sourceUrl})
+  </insert>
+
+  <select id="findOptionsByPick" resultType="map">
+    SELECT option_id, monthly_pick_id, raw_text, origin, producer, variety, process,
+           dark_roast, decaf, sold_out, already_purchased, score, score_reason, created_at
+    FROM monthly_pick_option
+    WHERE monthly_pick_id = #{monthlyPickId}
+    ORDER BY score DESC, option_id ASC
+  </select>
+
+  <insert id="insertOption" parameterType="map" useGeneratedKeys="true" keyProperty="optionId">
+    INSERT INTO monthly_pick_option (
+      monthly_pick_id, raw_text, origin, producer, variety, process,
+      dark_roast, decaf, sold_out, already_purchased
+    )
+    VALUES (
+      #{monthlyPickId}, #{rawText}, #{origin}, #{producer}, #{variety}, #{process},
+      #{darkRoast}, #{decaf}, #{soldOut}, #{alreadyPurchased}
+    )
+  </insert>
+
+  <update id="updateOptionScore">
+    UPDATE monthly_pick_option
+    SET score = #{score},
+        score_reason = #{scoreReason}
+    WHERE option_id = #{optionId}
+  </update>
+
+  <select id="findTasteRules" resultType="map">
+    SELECT taste_rule_id, member_id, rule_type, tag, match_keywords, weight, reason
+    FROM taste_rule
+    WHERE member_id = #{memberId}
+  </select>
+
+</mapper>

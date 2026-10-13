@@ -1,4 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.roastreverb.domain.music.mapper.MusicMapper">
+  <sql id="MusicLogColumns">
+    music_log_id, member_id, track_name, artist_name, album_name, genre, tags,
+    lastfm_track_url, discogs_release_id, cover_image_url, listened_date, memo,
+    created_at, updated_at
+  </sql>
+
+  <select id="findAll" resultType="map">
+    SELECT <include refid="MusicLogColumns" />
+    FROM music_log
+    WHERE member_id = #{memberId}
+    <if test="keyword != null and keyword != ''">
+      AND (
+        track_name LIKE CONCAT('%', #{keyword}, '%')
+        OR artist_name LIKE CONCAT('%', #{keyword}, '%')
+        OR album_name LIKE CONCAT('%', #{keyword}, '%')
+        OR genre LIKE CONCAT('%', #{keyword}, '%')
+        OR tags LIKE CONCAT('%', #{keyword}, '%')
+        OR memo LIKE CONCAT('%', #{keyword}, '%')
+      )
+    </if>
+    <if test="from != null">AND listened_date &gt;= #{from}</if>
+    <if test="to != null">AND listened_date &lt;= #{to}</if>
+    ORDER BY listened_date DESC, music_log_id DESC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="findById" resultType="map">
+    SELECT <include refid="MusicLogColumns" />
+    FROM music_log
+    WHERE music_log_id = #{musicLogId}
+      AND member_id = #{memberId}
+  </select>
+
+  <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="musicLogId">
+    INSERT INTO music_log (
+      member_id, track_name, artist_name, album_name, genre, tags, lastfm_track_url,
+      discogs_release_id, cover_image_url, listened_date, memo
+    )
+    VALUES (
+      #{memberId}, #{trackName}, #{artistName}, #{albumName}, #{genre}, #{tags}, #{lastfmTrackUrl},
+      #{discogsReleaseId}, #{coverImageUrl}, #{listenedDate}, #{memo}
+    )
+  </insert>
+
+  <update id="update" parameterType="map">
+    UPDATE music_log
+    SET track_name = #{trackName},
+        artist_name = #{artistName},
+        album_name = #{albumName},
+        genre = #{genre},
+        tags = #{tags},
+        lastfm_track_url = #{lastfmTrackUrl},
+        discogs_release_id = #{discogsReleaseId},
+        cover_image_url = #{coverImageUrl},
+        listened_date = #{listenedDate},
+        memo = #{memo},
+        updated_at = CURRENT_TIMESTAMP
+    WHERE music_log_id = #{musicLogId}
+      AND member_id = #{memberId}
+  </update>
+
+  <delete id="delete">
+    DELETE FROM music_log
+    WHERE music_log_id = #{musicLogId}
+      AND member_id = #{memberId}
+  </delete>
+
+  <select id="findRecentTags" resultType="map">
+    SELECT tags, COUNT(*) AS usage_count
+    FROM music_log
+    WHERE member_id = #{memberId}
+      AND tags IS NOT NULL
+      AND tags != ''
+    GROUP BY tags
+    ORDER BY MAX(listened_date) DESC
+    LIMIT #{limit}
+  </select>
 </mapper>

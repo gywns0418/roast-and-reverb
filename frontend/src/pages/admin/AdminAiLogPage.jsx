@@ -1,17 +1,38 @@
 import PageShell from "../../components/common/PageShell.jsx";
+import Tag from "../../components/common/Tag.jsx";
+import EmptyState from "../../components/common/EmptyState.jsx";
+import { adminApi } from "../../api/adminApi.js";
+import { useApiResource } from "../../hooks/useApiResource.js";
+
+const fallbackLogs = [
+  { api_log_id: 1, request_summary: "PAIRING_ANALYSIS", provider: "Claude", success: true },
+  { api_log_id: 2, request_summary: "NATURAL_LOG_PARSE", provider: "Claude", success: true }
+];
 
 export default function AdminAiLogPage() {
+  const { data: logs } = useApiResource(
+    () => adminApi.apiLogs({ limit: 50 }),
+    fallbackLogs,
+    []
+  );
+
   return (
-    <PageShell title="AI 호출 로그" eyebrow="Roast & Reverb" subtitle="Claude API 요청과 응답 상태를 추적합니다.">
-      <div className="panel-grid">
-        <section className="panel">
-          <h3>핵심 작업</h3>
-          <p>이 화면은 API 연동 전에도 흐름을 확인할 수 있도록 샘플 데이터 기반으로 구성했습니다.</p>
-        </section>
-        <section className="panel">
-          <h3>다음 구현</h3>
-          <p>백엔드 엔드포인트와 연결한 뒤 등록, 수정, 삭제, 상세 조회 로직을 채우면 됩니다.</p>
-        </section>
+    <PageShell title="AI 호출 로그" eyebrow="Claude API" subtitle="자연어 파싱, 무드 추론, 페어링 생성 요청을 추적합니다.">
+      <div className="ledger">
+        <div className="ledger-head">
+          <span className="book smcp">AI Calls</span>
+          <span className="vol oldnum">{logs.length} · Admin</span>
+        </div>
+        <div className="table-row table-head"><span>요청</span><span>모델</span><span>상태</span></div>
+        {logs.length === 0
+          ? <EmptyState>아직 기록된 AI 호출이 없어요.</EmptyState>
+          : logs.map((log) => (
+            <div className="table-row" key={log.api_log_id || log.apiLogId || log.created_at}>
+              <span>{log.request_summary || log.requestSummary || log.endpoint}</span>
+              <span>{log.provider || "Claude"}</span>
+              <Tag variant={log.success === false ? "warm" : "cool"}>{log.success === false ? "FAIL" : "SUCCESS"}</Tag>
+            </div>
+          ))}
       </div>
     </PageShell>
   );
