@@ -57,3 +57,9 @@
   .bean-visual > b { font-size: 28px; }
 }
 .workspace-back { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; color: #53603f; margin-bottom: 10px; }
+/* Keep record facts beside each other; artwork supports the reading flow. */
+.page-workspace .compose-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.page-workspace .log-card > .record-art { height: 190px; aspect-ratio: auto; }
+.page-workspace .log-card .art-title { font-size: 25px; }
+.page-workspace .log-card .art-caption, .page-workspace .log-card .art-bottom { display: none; }
+@media (max-width: 760px) { .page-workspace .compose-layout { grid-template-columns: minmax(0, 1fr); } }
