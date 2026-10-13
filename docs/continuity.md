@@ -21,7 +21,7 @@ Roast & Reverb는 **커피 기록 × 음악 청취 기록을 연결하는 취향
 - 공유 원본 checkout: `C:/Users/gywns/Documents/project/roast-and-reverb`
 - 개인 커피 원본: `C:/Users/gywns/Documents/project/coffe_brew_log`
 - 현재 작업: `feature/coffee-records-handoff`. `origin/main`에서 생성한 뒤 이전 구현 브랜치 `feature/service-redesign`의 완료된 코드를 통합했다.
-- 후속 커밋: `bf19b6a`, dev PR #4 생성. 컨테이너 빌드/기동은 확인했고 마지막 CI 검사와 dev 병합 상태는 후속 확인한다.
+- 후속 커밋: `bf19b6a`, dev PR #4 생성. `8242f44`에서 프론트·서버·운영 재시작·컨테이너 실행 CI와 Pages 배포가 모두 성공했다. PR #4의 현재 병합 상태는 링크와 원격 Git을 확인한다.
 - 이전 작업: 커밋 `6413f54`, `7feb820`, `180a153`, `bc06e0c`; PR #2는 `dev`에 병합됨. PR #3은 이전 디자인/배포 구성의 `main` 반영용이며 현재 후속 변경 전체를 담는다고 가정하지 않는다.
 - 원본 checkout에는 월픽 관련 미커밋 변경 5개가 있다. 이 checkout의 파일이나 브랜치를 덮어쓰지 않는다. 별도 checkout을 계속 사용한다.
 - 작업 단위마다 `main`에서 새 feature 브랜치를 만든다. `feature → dev` PR과 병합은 기존 사용자 승인 범위에서 진행할 수 있다. `main` PR·병합은 현재 사용자 지시와 원본 AGENTS 규칙을 함께 확인하며, `dev` 전체를 무조건 승격하지 않는다.

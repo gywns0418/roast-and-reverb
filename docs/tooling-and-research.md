@@ -19,14 +19,14 @@
 
 [프로젝트 열기](https://railway.com/project/5b3ed910-315b-42fa-bdfc-f1531a692c75)
 
-현재 서비스·200MB `/data` 볼륨·운영 환경변수·GitHub 소스를 배포 전 대기 변경으로 준비했다. 대기 변경은 11개이고, 초기 코드 커밋 `bf19b6a`에 소스를 고정했다. 신규 소스 커밋으로 갱신할 때 실제 검증된 SHA를 사용한다. 실제 실행 인스턴스나 공개 운영 URL이 확인되기 전에는 운영 완료로 기록하지 않는다. 컨테이너 한 개에 프론트와 API를 함께 넣어 별도 프론트 서버 비용과 CORS 설정을 줄이는 구성을 적용했다.
+현재 서비스·200MB `/data` 볼륨·운영 환경변수·GitHub 소스를 배포 전 대기 변경으로 준비했다. 대기 변경은 11개이고, 최종 검증된 커밋 `8242f44`에 소스를 고정했다. 신규 소스 커밋으로 갱신할 때 실제 검증된 SHA를 사용한다. 실제 실행 인스턴스나 공개 운영 URL이 확인되기 전에는 운영 완료로 기록하지 않는다. 컨테이너 한 개에 프론트와 API를 함께 넣어 별도 프론트 서버 비용과 CORS 설정을 줄이는 구성을 적용했다.
 
 - `railway.json`: Docker 빌드, `/healthz`, 필수 `/data`, replica 1, CPU 1, RAM 500MB, 유휴 정지, 제한된 재시작.
 - JWT 키는 Railway 환경변수에만 준비. AI/음악 API 키는 미설정.
 - 최초 서비스가 대기 상태일 때 설정 API가 인스턴스를 찾지 못했으므로, 동등한 배포 설정을 공식 JSON 스키마가 지원하는 `railway.json`에 선언했다.
 - **CPU/RAM 제한과 유휴 정지는 월 비용 상한이 아니다.** 과금/크레딧 조건은 계정에서 별도로 확인해야 한다.
 - 공식 문서 확인 시 Free는 월 $1 크레딧, Hobby는 월 $5 기본 요금에 사용량 과금 조건이 있다. 무료로 Spring 서버를 무기한 운영할 수 있다고 보장하지 않는다. [공식 요금](https://docs.railway.com/pricing/plans), [비용 제어](https://docs.railway.com/pricing/cost-control)
-- 실제 배포 시 사용자가 허용하는 비용 범위를 확인하고 대기 변경을 적용한다. 유료 업그레이드나 결제 동의는 대신 수행하지 않는다.
+- 실제 배포 실행을 위해 사용자의 현재 Trial/Free 플랜 여부와 허용 비용 범위를 질문한 상태다. 답이 없는 동안은 대기 변경을 실행하지 않는다. 승인된 범위에서만 적용한다. 유료 업그레이드나 결제 동의는 대신 수행하지 않는다.
 
 공식 구성 근거: [Spring Boot 배포](https://docs.railway.com/guides/spring-boot), [Config as Code](https://docs.railway.com/config-as-code), [JSON 스키마](https://railway.com/railway.schema.json).
 
