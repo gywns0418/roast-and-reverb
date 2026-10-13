@@ -67,7 +67,8 @@ export default function HomePage() {
           <div
             className="studio-art"
             role="img"
-            aria-label="청록빛 앨범 재킷, 검은 레코드와 커피잔이 놓인 테이블"
+            aria-label="햇살 아래 커피와 레코드, 헤드폰이 놓인 장면"
+            style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/ritual-editorial.png)` }}
           >
             <span className="art-edition">THE DAILY SESSION / 001</span>
             <div className="art-record">

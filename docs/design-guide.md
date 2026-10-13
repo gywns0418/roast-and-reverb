@@ -23,3 +23,20 @@
 - 760px 이하는 가로 탐색, 520px 이하는 한 열 카드. 탐색 내부의 가로 스크롤과 페이지 전체의 가로 넘침을 구분한다. reduced-motion과 키보드 포커스를 유지한다.
 
 디자인 개편으로 Railway 배포나 외부 API 연결 상태가 바뀌지 않는다.
+
+## 2026-10-13 최신 디자인: Discovery Studio
+
+사용자가 전면 수정과 현대적인 내부 디자인을 다시 요청했다. 이전 컵·레코드 반복 카드 개선 기록은 역사이며, 현재 기준은 discovery.css다. 검정에 가까운 탐색 영역, 밝은 중립색 본문, 올리브 활성 메뉴, 오렌지 편집 사진을 사용한다. 세리프는 작은 브랜드에만 남기고 한국어 제목/본문은 산세리프로 읽기 쉽게 구성한다.
+
+실제로 확인한 참고 내부 화면:
+- [Awwwards White Coffee](https://www.awwwards.com/sites/white-coffee), [Moon Ride 상품 상세](https://www.awwwards.com/inspiration/moon-ride-coffeee-white-coffee): 큰 제품 영역과 우측 구매/정보 영역, 명확한 타이포그래피 계층을 참고했다.
+- [GDWEB 카누 한정판 사례](https://www.gdweb.co.kr/sub/view.asp?Txt_fgbn=5&str_no=27796&Txt_word=): 커피 산지를 크게 보여주는 대비와 정보 구획을 참고했다.
+
+참고 사이트의 디자인/이미지를 복제하지 않았다. 월픽은 실제 자료가 담긴 카드·검색·분류·비교·상세 모달을 중심으로 재구성했다. 홈과 대시보드에는 자체 브랜드 연출 이미지를 사용하고 대시보드에서 실제 당월 카탈로그로 연결한다. 상세·작성·리포트·인증도 공통 색/타이포/상호작용을 적용한다. 경로 이동 때 스크롤을 초기화한다.
+
+### 자체 이미지 기록
+
+imagegen 스킬의 built-in image_gen 도구 사용. 결과는 `frontend/public/images/ritual-editorial.png`에 저장했다. API 키나 추가 다운로드는 필요하지 않았다. 원두나 특정 로스터리의 실사 사진이라고 표시하지 않는다.
+
+사용한 최종 프롬프트:
+> Use case: photorealistic-natural. Asset type: original editorial hero photograph for Roast & Reverb, a modern Korean coffee and music journal. Wide 3:2 landscape. Top-down slightly angled art-directed still life: warm ivory ceramic cup of black filter coffee, a black vinyl record partly inside a plain burnt-orange sleeve, brushed silver over-ear headphones, a small glass pour-over carafe on a warm cream desk. Bright natural afternoon sun, long crisp diagonal shadows, tactile paper, ceramic and metal textures, muted warm neutral palette with punchy burnt-orange accent and charcoal. Sophisticated contemporary magazine photography, no rustic clutter, no people, no logos, no writing, no watermark, no web UI. Balanced composition with the cup at lower center and headphones to the right, no artificial coffee foam. This is brand editorial art, not a real product photograph.

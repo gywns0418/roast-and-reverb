@@ -6,6 +6,7 @@ export default function RecordArtwork({ kind = "music", seed = "", label = "", s
     <div className="art-disc"><i>r&amp;r</i></div>
     {kind !== "music" && <div className="art-cup"><i /></div>}
     <span className="art-wave">∿</span>
+    {kind === "coffee" && <div className="art-beans"><i/><i/></div>}
     <span className="art-title">{label || (kind === "coffee" ? "A cup.\nA moment." : kind === "blend" ? "Brew.\nListen.\nFeel." : "On\nrepeat.")}</span>
     <span className="art-bottom">GOOD COFFEE. GOOD MUSIC.</span>
   </div>;

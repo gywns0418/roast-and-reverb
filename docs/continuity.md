@@ -77,3 +77,9 @@ node backend/scripts/verify-production.mjs
 대시보드 세션·실기록 수치·최근 기록, 커피/음악 아카이브 검색·정렬 카드, 페어링과 소장품 아트워크, 월별 실기록 그래프와 빈도 순위, 작성/상세의 안내 영역을 적용했다. 기준은 design-guide.md 내부 개선 섹션을 따른다. Pages 자동 배포 대상은 feature/interior-studio로 이동했다. Railway는 배포 승인 취소 상태를 유지한다.
 
 내부 개편은 커밋 b594be0과 dev PR #5에 담았다: https://github.com/gywns0418/roast-and-reverb/pull/5 . 공개 내부 진입 주소는 https://gywns0418.github.io/roast-and-reverb/#/dashboard . Pages 배포 성공과 실제 공개 화면 확인 완료. 현재 PR 병합 여부는 원격 상태를 확인한다.
+
+## 최신 후속 작업: Discovery / 월픽 자동 수집
+
+현재 브랜치는 feature/discovery-monthly-sync다. main에서 생성하고 이전 interior-studio 구현을 통합했다. 월픽 수집/자동 작업은 docs/monthly-source.md, 새 디자인은 docs/design-guide.md 마지막 섹션을 읽는다. 실제 10월 유에프오커피 52개 자료와 source endpoint, 링크 가져오기/비교/상세/관심 원두를 구현했다. 월간 자동 작업은 이 대화에 연결됐고 PC와 앱이 실행 중이어야 한다. Pages 배포 대상은 현재 기능 브랜치와 feature/monthly-refresh-*다. Railway 운영 상태는 그대로 미배포다.
+
+현재 작업의 dev PR은 #6이다: https://github.com/gywns0418/roast-and-reverb/pull/6 . 공개 월픽 진입은 https://gywns0418.github.io/roast-and-reverb/#/monthly-pick . 최신 CI/배포/병합 상태는 원격 확인이 우선이다.
