@@ -162,18 +162,22 @@ function createCoffee(payload) {
     coffeeLogId: coffeeSeq++,
     memberId: 1,
     beanName: payload.beanName || "오늘의 커피",
-    roastery: payload.roastery || "Roast & Reverb",
+    roastery: payload.roastery || "",
     originCountry: payload.originCountry || "",
     region: payload.region || "",
     process: payload.process || "",
-    roastLevel: payload.roastLevel || "Medium",
-    brewMethod: payload.brewMethod || "Hand drip",
+    brewDetails: payload.brewDetails || {},
+    waterTemp: payload.waterTemp ?? null,
+    grindSize: payload.grindSize || "",
+    brewTime: payload.brewTime ?? null,
+    roastLevel: payload.roastLevel || "",
+    brewMethod: payload.brewMethod || "",
     tasteNote: payload.tasteNote || payload.memo || "",
-    acidity: Number(payload.acidity ?? 3),
-    sweetness: Number(payload.sweetness ?? 3),
-    bitterness: Number(payload.bitterness ?? 2),
-    body: Number(payload.body ?? 3),
-    aroma: Number(payload.aroma ?? 3),
+    acidity: payload.acidity ?? null,
+    sweetness: payload.sweetness ?? null,
+    bitterness: payload.bitterness ?? null,
+    body: payload.body ?? null,
+    aroma: payload.aroma ?? null,
     memo: payload.memo || payload.tasteNote || "",
     drinkDate: payload.drinkDate || today
   };
@@ -239,7 +243,7 @@ async function dispatchRequest(path, options = {}) {
   }
   if (route === "/auth/logout") return { ok: true };
 
-  if (route === "/coffee" && method === "GET") return coffeeLogs;
+  if (route === "/coffee" && method === "GET") return coffeeLogs.slice().sort((a,b)=>b.drinkDate.localeCompare(a.drinkDate));
   if (route === "/coffee" && method === "POST") return createCoffee(payload);
   if (route.startsWith("/coffee/") && route !== "/coffee/calendar" && route !== "/coffee/statistics") {
     const id = route.split("/")[2];

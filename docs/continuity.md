@@ -1,0 +1,72 @@
+# Roast & Reverb — 다음 대화를 위한 작업 맥락
+
+최종 갱신: 2026-10-13 (Asia/Seoul)
+
+## 반드시 유지할 주제
+
+Roast & Reverb는 **커피 기록 × 음악 청취 기록을 연결하는 취향 다이어리**다. 한 잔의 추출 조건과 맛, 실제로 들은 곡·아티스트·무드를 기록하고 사용자가 조합을 선택한다. AI는 구조화와 페어링 설명을 돕지만 관찰이나 음악 이력을 만들어내지 않는다. 커피만 먼저 기록하고 나중에 음악을 연결할 수 있다.
+
+## 이 문서를 읽은 뒤 확인할 것
+
+1. 현재 checkout의 `git status --short`, `git branch --show-current`, 원격 브랜치 상태를 확인한다. 이 문서의 상태보다 실제 Git과 배포 상태가 우선한다.
+2. 작업에 맞는 문서만 추가로 읽는다: 커피 형식은 [coffee-records.md](coffee-records.md), 도구·계정·연구는 [tooling-and-research.md](tooling-and-research.md), 변경 이력은 [change-log.md](change-log.md), 디자인은 [design-guide.md](design-guide.md).
+3. 기존 실제 기록의 날짜·시간·측정값·취향을 추정해서 채우지 않는다. 미기록 값은 미기록으로 유지한다.
+4. 실제 API 실패를 데모 로그인, 예시 데이터, 이메일 발송 성공, AI 분석 성공으로 바꾸지 않는다.
+5. 작업을 마칠 때 변경 파일, 검증 결과, 남은 문제, Git/PR/배포 상태와 필요한 사용자 행동을 이 문서와 변경 이력에 갱신한다. 비밀키·토큰은 문서에 적지 않는다.
+
+## 작업 폴더와 Git 상태
+
+- 원격: `https://github.com/gywns0418/roast-and-reverb.git`
+- 현재 구현 checkout: `C:/Users/gywns/Documents/project/roast-and-reverb-service`
+- 공유 원본 checkout: `C:/Users/gywns/Documents/project/roast-and-reverb`
+- 개인 커피 원본: `C:/Users/gywns/Documents/project/coffe_brew_log`
+- 현재 작업: `feature/coffee-records-handoff`. `origin/main`에서 생성한 뒤 이전 구현 브랜치 `feature/service-redesign`의 완료된 코드를 통합했다.
+- 후속 커밋: `bf19b6a`, dev PR #4 생성. `8242f44`에서 프론트·서버·운영 재시작·컨테이너 실행 CI와 Pages 배포가 모두 성공했다. PR #4의 현재 병합 상태는 링크와 원격 Git을 확인한다.
+- 이전 작업: 커밋 `6413f54`, `7feb820`, `180a153`, `bc06e0c`; PR #2는 `dev`에 병합됨. PR #3은 이전 디자인/배포 구성의 `main` 반영용이며 현재 후속 변경 전체를 담는다고 가정하지 않는다.
+- 원본 checkout에는 월픽 관련 미커밋 변경 5개가 있다. 이 checkout의 파일이나 브랜치를 덮어쓰지 않는다. 별도 checkout을 계속 사용한다.
+- 작업 단위마다 `main`에서 새 feature 브랜치를 만든다. `feature → dev` PR과 병합은 기존 사용자 승인 범위에서 진행할 수 있다. `main` PR·병합은 현재 사용자 지시와 원본 AGENTS 규칙을 함께 확인하며, `dev` 전체를 무조건 승격하지 않는다.
+
+## 현재 구현
+
+React 19/Vite 프론트와 Spring Boot/MyBatis/H2 서버를 유지한다. 기존 대시보드, 커피·음악 로그, 페어링, 취향 리포트, 추천, 컬렉션, 월픽 페이지가 있다.
+
+- 홈과 공통 UI는 밝은 회백색·짙은 녹색·청록 디자인. CSS 아트워크는 자체 제작이고 외부 디자인 에셋을 복제하지 않았다.
+- GitHub Pages는 **명시적인 체험 모드**다. 기록은 해당 브라우저 저장소에 남고 AI 결과·추천 일부는 예시다. 실제 계정이나 동기화를 제공하는 서버가 아니다.
+- 실제 서버 모드는 JWT 인증과 ADMIN 권한, 회원별 데이터 격리, 페어링 연결 대상 소유권을 검사한다. 프로필 응답에 비밀번호 해시를 내보내지 않는다.
+- AI 키가 없어도 커피를 저장할 수 있다. 실제 AI 분석 불가 시 503을 표시한다. 비밀번호 복구 메일은 아직 구현되지 않았다.
+- 운영 프로필은 `/data/roastreverb` 파일 DB, `WRITE_DELAY=0`, 예시 회원 없는 초기화를 사용한다. 단일 인스턴스 구성이다.
+- 커피 상세 추출 기록, 기존 Markdown 가져오기, 부분 수정 시 추출 정보 보존을 이번 작업에 추가했다.
+
+## 배포를 구분할 것
+
+- 공개 체험: `https://gywns0418.github.io/roast-and-reverb/`
+- 두 컨테이너 로컬/서버 구성: `compose.yaml` + 프론트 Nginx + 백엔드 Dockerfile.
+- Railway용 단일 컨테이너: 루트 `Dockerfile`이 프론트를 빌드해 Spring 정적 리소스로 포함한다. `railway.json`에 `/healthz`, `/data` 필수 마운트, 단일 replica, idle sleep, CPU 1 / RAM 500MB 한도를 선언했다.
+- Railway 연결은 확인했다. 프로젝트·서비스·200MB 볼륨·운영 환경변수를 **배포 전 대기 상태**로 준비 중이다. 실제 배포 승인/요금 범위 확인 전에는 서버가 운영 중이라고 말하지 않는다.
+- Railway 프로젝트: `5b3ed910-315b-42fa-bdfc-f1531a692c75`; production 환경: `368c4b5f-8d55-4353-b11c-89c5745616aa`; 서비스: `b2f33a1e-c31f-4cfc-9cea-9a0ebac62881`.
+- JWT 키는 생성해 Railway의 대기 환경변수에 넣었으며 저장소·이 문서에는 포함하지 않는다. Claude/Last.fm/Discogs 키는 아직 연결하지 않았다.
+
+## 검증 명령
+
+```powershell
+npm.cmd run test --prefix frontend
+npm.cmd run build --prefix frontend
+$env:JAVA_HOME = 'C:/Program Files/Java/jdk-21'
+mvn -B -f backend/pom.xml verify
+node backend/scripts/verify-production.mjs
+```
+
+이 Windows PC의 기본 PATH Java는 10일 수 있다. Java 21을 명시한다. 로컬 Maven을 설치하지 않았으면 이전 작업에서 받은 임시 Maven은 `$env:TEMP/rr-maven/apache-maven-3.9.11/bin/mvn.cmd`에 있다. CI는 Java 21과 Maven을 사용한다.
+
+브라우저에서는 기록 작성·수정·가져오기·새로고침 유지와 모바일 가로 넘침을 확인한다. CI는 프론트 테스트/빌드, Java 통합 테스트, 운영 프로필 저장 후 서버 재시작 검사와 배포 이미지 빌드를 수행한다.
+
+## 남은 작업의 우선순위
+
+1. Railway 배포 시 무료/체험 크레딧만 사용할지 사용자가 허용하는 비용 범위를 확인하고, 승인된 범위에서 대기 설정을 적용한다. 실행 후 health, 회원가입, 저장·재시작·재조회와 HTTPS를 확인한다.
+2. 실제 AI 및 외부 음악 검색 키를 서버 환경변수로 연결한다. 음악 검색 UI는 현재 내 기록 검색이며 외부 API 검색 UX 연결은 별도 작업이다.
+3. 월픽 취향 규칙을 회원이 직접 관리하도록 한다. 소유자의 디카페인/다크 로스팅 선호를 모든 회원의 고정 취향으로 만들지 않는다.
+4. 브라우저 체험 데이터의 내보내기/복구, 서버 백업·복구 검증, 계정 복구를 구현한다. 저장소가 삭제되거나 체험 크레딧이 끝나도 개인 기록을 잃지 않도록 해야 한다.
+
+## 새 대화에 붙일 짧은 요청
+
+> Roast & Reverb를 이어서 작업해 주세요. 먼저 `roast-and-reverb-service/docs/continuity.md`와 현재 Git 상태를 확인해 주세요. 주제는 음악 × 커피이며, 실제 커피 기록은 `coffe_brew_log`를 참고합니다. 변경 내역과 남은 작업도 프로젝트 문서에 갱신해 주세요.

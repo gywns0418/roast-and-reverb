@@ -14,7 +14,7 @@ const SHOWN_LIMIT = 6;
 export default function MusicSearchPage() {
   const [params] = useSearchParams();
   const [keyword, setKeyword] = useState(params.get("q") || "");
-  const [results, setResults] = useState(musicLogs.map(adaptMusicLog));
+  const [results, setResults] = useState(import.meta.env.VITE_USE_REAL_API === "true" ? [] : musicLogs.map(adaptMusicLog));
   const [message, setMessage] = useState("");
 
   const visible = useMemo(() => {

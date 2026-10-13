@@ -822,3 +822,121 @@ h1 {
     overflow-wrap: anywhere;
   }
 }
+.brew-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.brew-field {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 16px;
+  font-size: 13px;
+  min-width: 0;
+}
+.brew-field > span {
+  color: var(--ink-faint);
+  font-size: 12px;
+}
+.brew-field .input {
+  width: 100%;
+  min-width: 0;
+}
+.brew-more {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 18px;
+}
+.brew-more > summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+.brew-hint {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--ink-faint);
+}
+.brew-calculation {
+  display: grid;
+  gap: 8px;
+  background: var(--music-tint);
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+.brew-detail {
+  border-top: 1px solid var(--line);
+  margin-top: 20px;
+  padding-top: 10px;
+}
+.brew-detail h4 {
+  font-size: 14px;
+}
+.brew-detail dl > div {
+  display: grid;
+  grid-template-columns: 125px minmax(0, 1fr);
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+.brew-detail dt {
+  color: var(--ink-faint);
+}
+.brew-detail dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.8;
+}
+.brew-detail details {
+  margin-top: 18px;
+  font-size: 12px;
+}
+.brew-detail summary {
+  cursor: pointer;
+}
+.brew-notes {
+  white-space: pre-wrap;
+  line-height: 1.8;
+}
+.import-records article {
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+.import-records article > label {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  align-items: start;
+}
+.import-records article p {
+  font-size: 12px;
+}
+.coffee-form {
+  min-width: 0;
+}
+@media (max-width: 650px) {
+  .brew-fields {
+    grid-template-columns: 1fr;
+  }
+  .brew-detail dl > div {
+    grid-template-columns: 100px minmax(0, 1fr);
+  }
+  .today-log-layout,
+  .analysis-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.brew-preset {
+  margin: 0 0 18px;
+  font-size: 12px;
+}
+.coffee-fields {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}

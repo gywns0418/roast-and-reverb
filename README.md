@@ -2,6 +2,12 @@
 
 커피와 음악을 함께 기록하는 React/Vite + Spring Boot/MyBatis 다이어리입니다.
 
+## 다른 대화에서 이어가기
+
+먼저 [프로젝트 맥락](docs/continuity.md)을 읽고 현재 브랜치를 확인하세요. [변경 이력](docs/change-log.md), [커피 기록 반영](docs/coffee-records.md), [도구·연구·필요한 사용자 도움](docs/tooling-and-research.md)을 함께 유지합니다. 프로젝트 전용 스킬은 `.agents/skills/roast-reverb-continuity/SKILL.md`입니다.
+
+기존 `coffe_brew_log/logs/*.md`는 커피 로그의 **Markdown 기록 가져오기**에서 선택·미리보기 후 추가할 수 있습니다.
+
 ## 공개 체험
 
 GitHub Pages는 브라우저에 저장하는 체험 프론트입니다. AI 결과는 예시이며 실제 계정 서버, 외부 음악 검색, 사용자 간 동기화를 제공하지 않습니다. 개인 기록은 브라우저 저장소를 지우면 삭제됩니다.
@@ -26,3 +32,7 @@ Docker와 Docker Compose가 설치된 서버에서 `.env.example`을 `.env`로 �
 - 백엔드: Java 21 + Maven 3.9 (`mvn -f backend/pom.xml verify`).
 
 공개 체험 배포와 실제 서버 운영은 별도입니다. 이 저장소에는 운영용 Docker 구성이 포함되어 있지만 운영 서버와 API 키를 연결하기 전에는 실제 회원 서비스가 배포된 것이 아닙니다.
+
+## Railway용 단일 서비스
+
+루트 `Dockerfile`은 React 빌드를 Spring 서버에 포함합니다. `railway.json`은 `/data` 영구 볼륨을 요구하며 `PORT` 환경변수를 따릅니다. 서비스와 볼륨을 준비한 것과 실제 배포 완료는 구분합니다. 현재 상태와 요금/키 연결 요구사항은 [도구·연구 문서](docs/tooling-and-research.md)에 기록합니다.

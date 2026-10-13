@@ -41,3 +41,20 @@ test("local accounts never claim administrator access", async () => {
   assert.equal(user.role, "USER");
   assert.equal(user.demo, true);
 });
+
+test("imported unknown brew method and ratings stay unknown on save", async () => {
+  const created = await mockRequest("/coffee", {
+    method: "POST",
+    body: JSON.stringify({
+      beanName: "Unrated imported coffee",
+      drinkDate: "2026-10-07",
+      brewMethod: "",
+      roastLevel: "",
+      brewDetails: { doseGrams: 16, waterGrams: 245 },
+    }),
+  });
+  assert.equal(created.acidity, null);
+  assert.equal(created.brewMethod, "");
+  assert.equal(created.roastLevel, "");
+  assert.equal(created.brewDetails.waterGrams, 245);
+});

@@ -2,7 +2,7 @@ name: Verify
 on:
   pull_request:
   push:
-    branches: [main, dev, feature/service-redesign]
+    branches: [main, dev, feature/service-redesign, feature/coffee-records-handoff]
 permissions:
   contents: read
 jobs:
@@ -33,3 +33,29 @@ jobs:
           cache: maven
       - run: mvn -B -f backend/pom.xml verify
       - run: node backend/scripts/verify-production.mjs
+
+  deployment-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t roast-reverb-service:check .
+
+      - name: Verify hosted app starts with persistent storage
+        run: |
+          mkdir -p "$RUNNER_TEMP/rr-volume"
+          docker run -d --name rr-check --memory=500m --cpus=1 \
+            -e SPRING_PROFILES_ACTIVE=production \
+            -e JWT_SECRET="$(openssl rand -hex 48)" \
+            -p 127.0.0.1:8187:8080 \
+            -v "$RUNNER_TEMP/rr-volume:/data" roast-reverb-service:check
+          for attempt in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:8187/healthz > /dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8187/healthz
+          curl -fsS http://127.0.0.1:8187/ | grep -F 'Roast & Reverb'
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8187/api/coffee)" = 401
+      - if: failure()
+        run: docker logs rr-check
+      - if: always()
+        run: docker rm -f rr-check || true
