@@ -39,3 +39,7 @@ test('rock and post-rock keep distinct genre cues, explicit ratings override tex
  assert.equal(post.evidence.music.includes('rock'),false);
  assert.equal(post.evidence.features[0],0.35);
 });
+
+test('plain Korean record wording does not invent a rock genre',()=>{
+ assert.throws(()=>analyzePairing({coffee:{tasteNote:'레몬'},music:{memo:'오늘 들은 음악을 기록'}}),/맛 노트/);
+});
