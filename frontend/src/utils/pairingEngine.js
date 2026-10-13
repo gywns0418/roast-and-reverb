@@ -2,7 +2,7 @@ const VERSION = "rr-local-v1";
 export const axes = ["밝기", "깊이", "부드러움", "공간감"];
 const lexicon = [
   ["산미|시트러스|레몬|라임|자몽|청사과|밝|상큼|citrus|lemon|bright|upbeat|경쾌|팝|pop|dance|댄스|funk|펑크", [0.9,0.2,0.4,0.4]],
-  ["초콜릿|카카오|견과|고소|다크|묵직|쓴맛|dark|chocolate|nut|베이스|bass|블루스|blues|힙합|hip.?hop|(?<!post-)(?<!post )\\brock\\b|(?<!포스트)록", [0.2,0.9,0.5,0.3]],
+  ["초콜릿|카카오|견과|고소|다크|묵직|쓴맛|dark|chocolate|nut|베이스|bass|블루스|blues|힙합|hip.?hop|(?<!post-)(?<!post )\\brock\\b|(?<![가-힣])록(?![가-힣])", [0.2,0.9,0.5,0.3]],
   ["달콤|단맛|꿀|캐러멜|크리미|부드|sweet|honey|caramel|smooth|재즈|jazz|soul|소울|피아노|piano|acoustic|어쿠스틱", [0.5,0.5,0.9,0.5]],
   ["플로럴|꽃|재스민|자스민|차분|차 같은|맑|floral|tea|clean|ambient|앰비언트|몽환|고요|공기감|잔향|공간감|클래식|classical|post.?rock|포스트록", [0.65,0.3,0.7,0.95]]
 ];
