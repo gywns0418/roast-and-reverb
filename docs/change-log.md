@@ -108,3 +108,10 @@
 
 
 2026-10-14 최신 배포 방식: 원격 main의 운영/개발 분리를 통합했다. 이번 기능은 dev PR #12로 반영하고 /roast-and-reverb/dev/에 배포한다. feature 직접 배포를 중단했으며 main은 변경하지 않는다.
+
+- 추가 검증: 모바일 내부 주요 10개 경로(대시보드/내 원두/커피/음악/페어링/리포트/추천/월픽/컬렉션/마이페이지) 가로 넘침 없음. 추천→작성에서 원두/곡의 사실 정보는 유지하고 추출 방법/관찰 맛/감상은 비운다. 실제 MusicBrainz upstream 호출은 공개 곡 검색 결과 11개 반환 확인. YouTube 실제 조회는 키가 없어 실행하지 않았다.
+- 원격에서 별도 작업의 main/dev 배포 분리(PR #10/#11)를 발견해 origin/main을 기능 브랜치로 통합했다. 이전 feature 배포 실행은 취소했으나 deploy 단계가 이미 성공해 잠시 이전 단일 경로 구성으로 배포될 수 있었고, main/dev 분리 workflow 재실행과 dev 배포로 복구한다. environment policy는 main/dev만 허용하도록 feature 정책을 제거했다. main 코드 변경 없음.
+- 구현 442feec의 Verify 38419622704 성공: 프론트 테스트/빌드/audit, 백엔드 verify/영속성 검사, Docker 빌드/인증/volume 실행 통과. PR #12 dev 병합 a314370. 공개 배포 최종 검증은 후속 기록을 확인한다.
+
+- 최종 원격 검증: dev a314370의 Verify 38419921891 및 Pages 38419921942 성공. main/dev 복구 재배포 38419796759도 성공. 운영 루트에서는 기존 main 빌드 유지, /dev/#/recommend에서는 내 원두 메뉴·고정 의미 모델의 실제 추천 3개·모바일 넘침 없음 확인. 공개 증거는 docs/qa/discovery-public-desktop.png, discovery-public-mobile.png이며 개인 원두 내용은 포함하지 않는다.
+- 사용자가 지정한 개인 원두 원본을 파일 chooser로 읽어 공개 개발 페이지의 이 브라우저 localStorage에만 저장했다. 파일 미리보기/저장과 보유 후보 연결 확인, 원본 파일/개인 checkout 미수정·서버 전송 없음. 개인 데이터는 Git/시드/QA에 포함하지 않았다. 다른 브라우저에는 파일 가져오기를 별도로 해야 한다.

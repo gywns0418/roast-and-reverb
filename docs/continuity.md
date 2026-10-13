@@ -117,3 +117,10 @@ feature/editorial-pairing-engine. 5개 새 브랜드 이미지, 전체 월픽의
 
 
 2026-10-14 최신 배포 방식: 원격 main의 운영/개발 분리를 통합했다. 이번 기능은 dev PR #12로 반영하고 /roast-and-reverb/dev/에 배포한다. feature 직접 배포를 중단했으며 main은 변경하지 않는다.
+
+
+## 2026-10-14 최종 인수인계
+
+PR #12 dev 병합 완료(a314370), 구현 442feec CI 전체 성공. dev의 Verify 38419921891 / Pages 38419921942 성공. 이번 기능의 공개 개발 진입은 https://gywns0418.github.io/roast-and-reverb/dev/#/recommend 이며 원두 관리는 /dev/#/beans. 운영 루트는 main 빌드이고 이번 기능을 main에 병합하지 않았다. Pages는 main/dev 각각 빌드하며 feature 정책을 제거했다. 실제 서버/YouTube API 키는 계속 미연결, 유료 비용 없음.
+
+공개 개발 화면에서 실제 다국어 의미 AI 결과·모바일·원두 파일 가져오기/보유 후보 연결 확인. 개인 원본은 브라우저 안에서만 읽고 기기에 저장했다. QA 이미지는 개인 원두 가져오기 전 공개 월픽/체험 음악 조합만 포함한다. 다른 브라우저로 개인 원두 저장이 자동 전달되지 않는다. 세부 구현/제약은 recommendation-direction.md와 pairing-engine.md 최신 섹션, 검증은 change-log.md 마지막 항목. 현재 작업 브랜치는 feature/bean-discovery이며 후속 문서/QA 커밋은 이 브랜치에 보존한다.
