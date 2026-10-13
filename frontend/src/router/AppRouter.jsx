@@ -7,6 +7,7 @@ import FindIdPage from "../pages/auth/FindIdPage.jsx";
 import FindPasswordPage from "../pages/auth/FindPasswordPage.jsx";
 import DashboardPage from "../pages/dashboard/DashboardPage.jsx";
 import CoffeeLogPage from "../pages/coffee/CoffeeLogPage.jsx";
+import CoffeeImportPage from "../pages/coffee/CoffeeImportPage.jsx";
 import CoffeeWritePage from "../pages/coffee/CoffeeWritePage.jsx";
 import CoffeeDetailPage from "../pages/coffee/CoffeeDetailPage.jsx";
 import CoffeeEditPage from "../pages/coffee/CoffeeEditPage.jsx";
@@ -49,6 +50,7 @@ export default function AppRouter() {
         <Route path="/coffee" element={<CoffeeLogPage />} />
         <Route path="/coffee-logs" element={<CoffeeLogPage />} />
         <Route path="/logs/coffee" element={<CoffeeLogPage />} />
+        <Route path="/coffee/import" element={<CoffeeImportPage />} />
         <Route path="/coffee/write" element={<CoffeeWritePage />} />
         <Route path="/coffee/new" element={<Navigate to="/coffee/write" replace />} />
         <Route path="/coffee-logs/new" element={<Navigate to="/coffee/write" replace />} />

@@ -7,12 +7,13 @@ import { musicApi } from "../../api/musicApi.js";
 
 export default function MusicWritePage() {
   const navigate = useNavigate();
+  const local = import.meta.env.VITE_USE_REAL_API !== "true";
   const [form, setForm] = useState({
-    trackName: "Svefn-g-englar",
-    artistName: "Sigur Ros",
-    albumName: "Agaetis byrjun",
-    genre: "Post-rock",
-    memo: "느리게 번지는 기타와 보컬이 오늘 마신 커피의 플로럴한 향과 잘 어울렸다."
+    trackName: local ? "Svefn-g-englar" : "",
+    artistName: local ? "Sigur Ros" : "",
+    albumName: local ? "Agaetis byrjun" : "",
+    genre: local ? "Post-rock" : "",
+    memo: ""
   });
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");

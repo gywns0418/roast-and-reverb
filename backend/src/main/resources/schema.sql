@@ -153,3 +153,6 @@ CREATE TABLE IF NOT EXISTS taste_rule (
 CREATE INDEX IF NOT EXISTS idx_monthly_pick_member ON monthly_pick(member_id);
 CREATE INDEX IF NOT EXISTS idx_monthly_pick_option_pick ON monthly_pick_option(monthly_pick_id);
 CREATE INDEX IF NOT EXISTS idx_taste_rule_member ON taste_rule(member_id);
+
+-- Additive migration: preserve existing coffee and music records.
+ALTER TABLE coffee_log ADD COLUMN IF NOT EXISTS brew_details TEXT;

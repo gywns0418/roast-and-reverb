@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
 import Input from "../../components/common/Input.jsx";
+import CoffeeForm from "../../components/coffee/CoffeeForm.jsx";
+import { coffeePayload } from "../../utils/brewDetails.js";
 import Tag from "../../components/common/Tag.jsx";
 import { coffeeApi } from "../../api/coffeeApi.js";
 import { musicApi } from "../../api/musicApi.js";
@@ -22,13 +24,15 @@ export default function CoffeeWritePage() {
     roastLevel: "Light",
     tasteNote: local ? "플로럴, 밝은 산미" : "",
     memo: "",
+    drinkDate: new Date().toLocaleDateString("sv-SE"),
+    brewDetails: {},
   });
   const [music, setMusic] = useState({
     trackName: local ? "Svefn-g-englar" : "",
     artistName: local ? "Sigur Ros" : "",
-    genre: "Post-rock",
-    tags: "몽환적, 차분함",
-    memo: "몽환적, 차분함",
+    genre: local ? "Post-rock" : "",
+    tags: local ? "몽환적, 차분함" : "",
+    memo: "",
   });
   const [saving, setSaving] = useState(false);
   const [parsing, setParsing] = useState(false);
@@ -62,10 +66,7 @@ export default function CoffeeWritePage() {
     setSaving(true);
     setMessage("");
     try {
-      const item = await coffeeApi.create({
-        ...coffee,
-        drinkDate: new Date().toISOString().slice(0, 10),
-      });
+      const item = await coffeeApi.create(coffeePayload(coffee));
       navigate(`/coffee/${item.coffeeLogId || item.coffee_log_id || item.id}`);
     } catch (error) {
       setMessage(error.message || "기록을 저장하지 못했습니다.");
@@ -93,13 +94,8 @@ export default function CoffeeWritePage() {
       });
       const today = new Date().toISOString().slice(0, 10);
       const createdCoffee = await coffeeApi.create({
-        ...coffee,
-        acidity: 4,
-        sweetness: 4,
-        bitterness: 2,
-        body: 3,
-        aroma: 4,
-        drinkDate: today,
+        ...coffeePayload(coffee),
+        drinkDate: coffee.drinkDate || today,
       });
       const createdMusic = await musicApi.create({
         ...music,
@@ -158,28 +154,7 @@ export default function CoffeeWritePage() {
         <section className="analysis-grid">
           <div className="ai-field ai-field-coffee">
             <h3>추출된 커피 정보</h3>
-            <div className="form-grid">
-              <Input
-                placeholder="원두명"
-                value={coffee.beanName}
-                onChange={updateCoffee("beanName")}
-              />
-              <Input
-                placeholder="추출 방식"
-                value={coffee.brewMethod}
-                onChange={updateCoffee("brewMethod")}
-              />
-              <Input
-                placeholder="로스팅"
-                value={coffee.roastLevel}
-                onChange={updateCoffee("roastLevel")}
-              />
-              <Input
-                placeholder="무드"
-                value={coffee.tasteNote}
-                onChange={updateCoffee("tasteNote")}
-              />
-            </div>
+            <CoffeeForm value={coffee} onChange={setCoffee} />
           </div>
           <div className="ai-field ai-field-music">
             <h3>추출된 음악 정보</h3>

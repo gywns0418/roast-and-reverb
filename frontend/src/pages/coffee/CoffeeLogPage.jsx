@@ -18,6 +18,7 @@ export default function CoffeeLogPage() {
     <PageShell title="커피 로그" eyebrow="Side A" subtitle="원두, 추출 방식, 맛 평가와 그날의 감각을 기록합니다.">
       <div className="action-row">
         <Link to="/coffee/write" className="primary-button">커피 로그 작성</Link>
+        <Link to="/coffee/import" className="ghost-button">Markdown 기록 가져오기</Link>
       </div>
       <div className="ledger">
         <div className="ledger-head">

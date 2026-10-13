@@ -4,7 +4,7 @@
   <sql id="CoffeeLogColumns">
     coffee_log_id, member_id, bean_name, roastery, origin_country, region, process,
     roast_level, brew_method, water_temp, grind_size, brew_time, taste_note,
-    acidity, sweetness, bitterness, body, aroma, memo, image_url, drink_date,
+    acidity, sweetness, bitterness, body, aroma, memo, image_url, drink_date, brew_details,
     created_at, updated_at
   </sql>
 
@@ -38,12 +38,12 @@
     INSERT INTO coffee_log (
       member_id, bean_name, roastery, origin_country, region, process, roast_level,
       brew_method, water_temp, grind_size, brew_time, taste_note, acidity, sweetness,
-      bitterness, body, aroma, memo, image_url, drink_date
+      bitterness, body, aroma, memo, image_url, drink_date, brew_details
     )
     VALUES (
       #{memberId}, #{beanName}, #{roastery}, #{originCountry}, #{region}, #{process}, #{roastLevel},
       #{brewMethod}, #{waterTemp}, #{grindSize}, #{brewTime}, #{tasteNote}, #{acidity}, #{sweetness},
-      #{bitterness}, #{body}, #{aroma}, #{memo}, #{imageUrl}, #{drinkDate}
+      #{bitterness}, #{body}, #{aroma}, #{memo}, #{imageUrl}, #{drinkDate}, #{brewDetails}
     )
   </insert>
 
@@ -68,6 +68,7 @@
         memo = #{memo},
         image_url = #{imageUrl},
         drink_date = #{drinkDate},
+        brew_details = #{brewDetails},
         updated_at = CURRENT_TIMESTAMP
     WHERE coffee_log_id = #{coffeeLogId}
       AND member_id = #{memberId}

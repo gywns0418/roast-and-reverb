@@ -11,4 +11,5 @@ app:
   claude:
     model: ${CLAUDE_MODEL:claude-haiku-4-5-20251001}
 server:
+  port: ${PORT:8080}
   forward-headers-strategy: framework

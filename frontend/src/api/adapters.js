@@ -1,3 +1,4 @@
+import { readBrewDetails, optionalNumber } from "../utils/brewDetails.js";
 function pick(source, keys, fallback = "") {
   for (const key of keys) {
     if (source?.[key] !== undefined && source?.[key] !== null) return source[key];
@@ -28,12 +29,16 @@ export function adaptCoffeeLog(item = {}) {
     process: pick(item, ["process"]),
     roast: pick(item, ["roast", "roastLevel", "roast_level"]),
     brew: pick(item, ["brew", "brewMethod", "brew_method"]),
-    acidity: Number(pick(item, ["acidity"], 0)),
-    sweetness: Number(pick(item, ["sweetness"], 0)),
-    bitterness: Number(pick(item, ["bitterness"], 0)),
-    body: Number(pick(item, ["body"], 0)),
-    aroma: Number(pick(item, ["aroma"], 0)),
+    acidity: optionalNumber(pick(item, ["acidity"], null)),
+    sweetness: optionalNumber(pick(item, ["sweetness"], null)),
+    bitterness: optionalNumber(pick(item, ["bitterness"], null)),
+    body: optionalNumber(pick(item, ["body"], null)),
+    aroma: optionalNumber(pick(item, ["aroma"], null)),
     memo: pick(item, ["memo", "tasteNote", "taste_note"]),
+    brewDetails: readBrewDetails(pick(item, ["brewDetails", "brew_details"], {})),
+    waterTemp: optionalNumber(pick(item, ["waterTemp", "water_temp"], null)),
+    grindSize: pick(item, ["grindSize", "grind_size"]),
+    brewTime: optionalNumber(pick(item, ["brewTime", "brew_time"], null)),
     raw: item
   };
 }
