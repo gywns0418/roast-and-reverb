@@ -797,3 +797,28 @@ h1 {
     line-height: 1.7;
   }
 }
+@media (max-width: 650px) {
+  .app-shell {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+  .sidebar {
+    min-width: 0;
+  }
+  .sidebar nav {
+    width: 100%;
+    min-width: 0;
+  }
+  .topbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .topbar > div {
+    min-width: 0;
+  }
+  .topbar-search {
+    min-width: 0;
+  }
+  .demo-notice {
+    overflow-wrap: anywhere;
+  }
+}

@@ -1,1 +1,1 @@
--- Production intentionally contains no demo users or sample records.
+SELECT 1;

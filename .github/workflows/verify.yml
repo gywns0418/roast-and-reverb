@@ -32,3 +32,4 @@ jobs:
           java-version: 21
           cache: maven
       - run: mvn -B -f backend/pom.xml verify
+      - run: node backend/scripts/verify-production.mjs
