@@ -84,3 +84,8 @@
 - 후속 입력 경계 검사에서 한국어 기록의 록을 장르로 오인하지 않도록 단어 경계를 추가. 일반 Rock/Post-rock 분리와 직접 평점 우선 회귀 검사까지 총 19개 테스트 통과. 페어링 목록 카드도 특성 유사도/개인 선호 추정의 점수 종류를 표시한다.
 - 월픽 분류별 4개 다른 사진 경로, 전체 그룹 5/3/18/23/3, 보라 필터 11개, 보라+하우스 교집합 0개, 초기화 52개 확인. 재수집 CLI changed:false. 구현 28ccd68의 CI 전체와 Pages 배포 성공 확인, dev PR #9 생성: https://github.com/gywns0418/roast-and-reverb/pull/9 . 최신 후속 변경 CI는 별도 확인한다.
 - 공개 화면에서 전체 분류 5/3/18/23/3과 새 분류별 이미지를 확인했다. docs/qa/editorial-monthly-desktop.jpg, editorial-monthly-mobile.jpg, pairing-engine-public.jpg로 증거 저장. 최신 8430929 Pages 배포 성공. 새 브랜치의 Pages 환경 허용 정책을 추가했고 첫 배포의 정책 미등록 실패는 재실행 성공으로 해결했다.
+
+
+## 2026-10-13 — 운영 main / 개발 dev 분리
+
+사용자가 완료된 개발 기능의 main 반영을 승인했다. PR #9까지의 dev 코드와 main/dev 분리 Pages workflow를 함께 반영한다. 운영은 /roast-and-reverb/, 개발은 /roast-and-reverb/dev/이며 두 브랜치를 각각 빌드한다. feature 직접 배포는 environment branch policy로 차단한다. main 반영만 사용자 확인을 받으며 이번 반영은 이미 승인됨. bean-discovery 미커밋 파일과 개인 원본은 보존했다. 프론트 19개 테스트와 개발 경로 빌드 통과. GitHub CI/배포 최종 결과는 후속 상태로 기록한다. 실제 백엔드 운영과 독립 데이터베이스 환경을 제공하는 변경은 아니다.
