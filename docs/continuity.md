@@ -20,7 +20,7 @@ Roast & Reverb는 **커피 기록 × 음악 청취 기록을 연결하는 취향
 - 현재 구현 checkout: `C:/Users/gywns/Documents/project/roast-and-reverb-service`
 - 공유 원본 checkout: `C:/Users/gywns/Documents/project/roast-and-reverb`
 - 개인 커피 원본: `C:/Users/gywns/Documents/project/coffe_brew_log`
-- 현재 작업: `feature/coffee-records-handoff`. `origin/main`에서 생성한 뒤 이전 구현 브랜치 `feature/service-redesign`의 완료된 코드를 통합했다.
+- 현재 작업: `feature/interior-studio`. `origin/main`에서 생성한 뒤 `feature/coffee-records-handoff`의 구현과 배포 취소 문서를 통합했다. 이전 커피 기능 PR #4는 dev 병합 완료.
 - 후속 커밋: `bf19b6a`, dev PR #4 생성. `8242f44`에서 프론트·서버·운영 재시작·컨테이너 실행 CI와 Pages 배포가 모두 성공했다. PR #4의 현재 병합 상태는 링크와 원격 Git을 확인한다.
 - 이전 작업: 커밋 `6413f54`, `7feb820`, `180a153`, `bc06e0c`; PR #2는 `dev`에 병합됨. PR #3은 이전 디자인/배포 구성의 `main` 반영용이며 현재 후속 변경 전체를 담는다고 가정하지 않는다.
 - 원본 checkout에는 월픽 관련 미커밋 변경 5개가 있다. 이 checkout의 파일이나 브랜치를 덮어쓰지 않는다. 별도 checkout을 계속 사용한다.
@@ -70,3 +70,8 @@ node backend/scripts/verify-production.mjs
 ## 새 대화에 붙일 짧은 요청
 
 > Roast & Reverb를 이어서 작업해 주세요. 먼저 `roast-and-reverb-service/docs/continuity.md`와 현재 Git 상태를 확인해 주세요. 주제는 음악 × 커피이며, 실제 커피 기록은 `coffe_brew_log`를 참고합니다. 변경 내역과 남은 작업도 프로젝트 문서에 갱신해 주세요.
+
+
+## 내부 화면 개선 (2026-10-13)
+
+대시보드 세션·실기록 수치·최근 기록, 커피/음악 아카이브 검색·정렬 카드, 페어링과 소장품 아트워크, 월별 실기록 그래프와 빈도 순위, 작성/상세의 안내 영역을 적용했다. 기준은 design-guide.md 내부 개선 섹션을 따른다. Pages 자동 배포 대상은 feature/interior-studio로 이동했다. Railway는 배포 승인 취소 상태를 유지한다.

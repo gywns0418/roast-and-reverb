@@ -15,6 +15,7 @@ export default function CoffeeForm({ value, onChange }) {
     <label className="brew-field" key={key}>
       <span>{label}</span>
       <Input
+        bare
         value={(detail ? details : value)[key] ?? ""}
         onChange={detail ? changeDetail(key) : change(key)}
         {...props}

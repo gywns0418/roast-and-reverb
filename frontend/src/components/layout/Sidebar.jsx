@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { BarChart3, Coffee, Disc3, Headphones, Home, Library, ShoppingBasket, Sparkles, UserRound } from "lucide-react";
 import { authStore } from "../../store/authStore.js";
 
@@ -22,9 +22,10 @@ export default function Sidebar() {
       <NavLink className="brand" to="/dashboard">
         <span>Roast &amp; Reverb</span>
         <small>coffee × music log</small>
-        {isDemo && <em className="demo-badge smcp" title="로그인 서버에 연결하지 못해 임시 데모 계정으로 안내하고 있어요.">Demo</em>}
+        {isDemo && <em className="demo-badge smcp" title="체험 기록은 이 브라우저에 저장됩니다.">Demo</em>}
       </NavLink>
       <nav>
+        <p className="nav-caption">MY DAILY RITUAL</p>
         {links.map(([to, Icon, label, tone]) => (
           <NavLink key={to} to={to} className={({ isActive }) => isActive ? `nav-link ${tone} active` : `nav-link ${tone}`}>
             <Icon size={18} />
@@ -32,6 +33,8 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
+      <div className="sidebar-session"><div className="mini-vinyl" aria-hidden="true"><i>r&amp;r</i></div><p>좋은 커피와<br/>오래 듣는 음악.</p><Link to="/coffee/write">오늘의 기록 남기기 ↗</Link></div>
+      <div className="sidebar-foot">BREW. LISTEN. REMEMBER.</div>
     </aside>
   );
 }

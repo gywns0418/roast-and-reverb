@@ -1,8 +1,10 @@
 import Tag from "../common/Tag.jsx";
+import RecordArtwork from "../common/RecordArtwork.jsx";
 
 export default function MusicCard({ item }) {
   return (
     <article className="log-card">
+      <RecordArtwork seed={item.artist} label={item.album || item.track} />
       <div className="card-head">
         <span className="oldnum">{item.date}</span>
         <Tag variant="cool">{item.source}</Tag>

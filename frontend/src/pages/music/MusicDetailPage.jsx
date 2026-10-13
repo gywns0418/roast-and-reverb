@@ -32,7 +32,7 @@ export default function MusicDetailPage() {
     collections.map(adaptCollection),
     []
   );
-  const pairing = relatedPairings[0] || fallbackPairings[0];
+  const pairing = relatedPairings[0];
   const owned = collectionItems.find((item) => item.title === music.album || item.artist === music.artist);
 
   return (

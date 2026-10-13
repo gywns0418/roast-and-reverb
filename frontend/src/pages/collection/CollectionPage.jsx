@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import EmptyState from "../../components/common/EmptyState.jsx";
 import Motif from "../../components/common/Motif.jsx";
+import RecordArtwork from "../../components/common/RecordArtwork.jsx";
 import { collections } from "../../data/sampleData.js";
 import { adaptCollection } from "../../api/adapters.js";
 import { request, toQuery } from "../../api/http.js";
@@ -46,16 +47,9 @@ export default function CollectionPage() {
         </div>
         {filteredItems.length === 0
           ? <EmptyState icon="wave">{items.length === 0 ? "아직 채워지지 않은 컬렉션이에요." : `${format} 소장품이 아직 없어요.`}</EmptyState>
-          : filteredItems.map((item) => (
-            <div className="ledger-line fresh" key={item.id}>
-              <span className="format-chip smcp">{item.format}</span>
-              <span className="entry">
-                <span className="type-dot music" />
-                <strong>{item.title}</strong> — {item.artist} · {item.note}
-              </span>
-              <span className="no oldnum">no. {item.score || 0}</span>
-            </div>
-          ))}
+          : <div className="collection-shelf">{filteredItems.map((item) => (
+            <article className="collection-album" key={item.id}><RecordArtwork seed={item.artist + item.title} label={item.title}/><div className="card-head"><span className="format-chip">{item.format}</span><span>MY COLLECTION</span></div><h3>{item.title}</h3><p>{item.artist}</p>{item.note && <p className="album-note">{item.note}</p>}</article>
+          ))}<Link to="/collection/write" className="library-add"><span>+</span><h3>다음 소장 음반</h3><p>좋아하는 한 장을 선반에 더해요.</p><b>음반 추가 ↗</b></Link></div>}
       </div>
     </PageShell>
   );

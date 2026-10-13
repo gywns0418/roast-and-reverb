@@ -41,12 +41,10 @@ export default function MyPage() {
           <h3>{user.nickname || user.email || "slow brew"}</h3>
           <p>{user.email || "brewer@example.com"}</p>
           <div className="tag-row">
-            <Tag variant="warm">밝은 산미</Tag>
-            <Tag variant="cool">포스트록</Tag>
-            <Tag variant="cool">몽환적</Tag>
+            {report.frequentMood && report.frequentMood !== "기록 없음" && <Tag variant="cool">{report.frequentMood}</Tag>}
           </div>
           <div className="action-row">
-            <Link to="/admin" className="ghost-button">관리자 화면</Link>
+            {user.role === "ADMIN" && <Link to="/admin" className="ghost-button">관리자 화면</Link>}
             <Button onClick={handleLogout}>로그아웃</Button>
           </div>
         </div>

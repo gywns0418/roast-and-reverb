@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Tag from "../common/Tag.jsx";
+import RecordArtwork from "../common/RecordArtwork.jsx";
 
 function tagVariant(index) {
   if (index === 0) return "warm";
@@ -10,9 +11,10 @@ function tagVariant(index) {
 export default function PairingCard({ item, compact = false }) {
   return (
     <Link to={`/pairing/${item.id}`} className={compact ? "pairing-card pairing-card-compact" : "pairing-card"} style={{ display: "grid" }}>
+      <RecordArtwork kind="blend" seed={item.coffee + item.artist} small />
       <div className="card-head">
         <span className="oldnum">{item.date}</span>
-        <span className="specimen-no">no. <span className="oldnum">{item.score}</span></span>
+        <span className="specimen-no">페어링 <span className="oldnum">{item.score}</span></span>
       </div>
       <div className="pairing-names">
         <h3>{item.coffee}</h3>
