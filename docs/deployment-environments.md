@@ -10,3 +10,8 @@
 - 사용자가 이번 완료된 dev 구현의 main 반영을 승인했다. main/dev 빌드 중 하나라도 실패하면 배포하지 않아 기존 공개 사이트를 보존한다.
 - 기존 feature 브랜치의 workflow도 운영 배포를 계속 할 수 있으므로 전환 시 GitHub github-pages environment의 deployment branch policy를 main/dev로 제한해야 한다.
 - 이번 main 반영은 완료된 dev 구현(PR #9까지)과 배포 분리 설정이다. 진행 중인 bean-discovery의 미커밋 개발 파일은 보존했다.
+
+
+### 운영/개발 분리 완료 확인
+
+PR #10 dev 병합: 0222beba. PR #11 main 병합: 6a1e1f02. 두 PR의 Verify(38416190023, 38416186079)는 프론트·백엔드·컨테이너 모두 성공. Pages dev 실행 38416443528과 main 실행 38416451681 모두 성공. 운영/개발 HTML 및 각 JS/CSS 자산 HTTP 200 확인. github-pages deployment branch policy는 main/dev 두 개만 남았다. 다른 채팅의 bean-discovery 미커밋 구현은 이번 릴리스에 포함하지 않았고 변경하지 않았다. AGENTS.md는 세 로컬 checkout에서 main 반영 때만 확인받는 규칙으로 수정했다(ignored 로컬 지침). 실제 서버 배포는 여전히 별도 작업이다.

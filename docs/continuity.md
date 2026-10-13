@@ -103,3 +103,8 @@ feature/editorial-pairing-engine. 5개 새 브랜드 이미지, 전체 월픽의
 ## 2026-10-13 — 운영 main / 개발 dev 분리
 
 사용자가 완료된 개발 기능의 main 반영을 승인했다. PR #9까지의 dev 코드와 main/dev 분리 Pages workflow를 함께 반영한다. 운영은 /roast-and-reverb/, 개발은 /roast-and-reverb/dev/이며 두 브랜치를 각각 빌드한다. feature 직접 배포는 environment branch policy로 차단한다. main 반영만 사용자 확인을 받으며 이번 반영은 이미 승인됨. bean-discovery 미커밋 파일과 개인 원본은 보존했다. 프론트 19개 테스트와 개발 경로 빌드 통과. GitHub CI/배포 최종 결과는 후속 상태로 기록한다. 실제 백엔드 운영과 독립 데이터베이스 환경을 제공하는 변경은 아니다.
+
+
+### 운영/개발 분리 완료 확인
+
+PR #10 dev 병합: 0222beba. PR #11 main 병합: 6a1e1f02. 두 PR의 Verify(38416190023, 38416186079)는 프론트·백엔드·컨테이너 모두 성공. Pages dev 실행 38416443528과 main 실행 38416451681 모두 성공. 운영/개발 HTML 및 각 JS/CSS 자산 HTTP 200 확인. github-pages deployment branch policy는 main/dev 두 개만 남았다. 다른 채팅의 bean-discovery 미커밋 구현은 이번 릴리스에 포함하지 않았고 변경하지 않았다. AGENTS.md는 세 로컬 checkout에서 main 반영 때만 확인받는 규칙으로 수정했다(ignored 로컬 지침). 실제 서버 배포는 여전히 별도 작업이다.
