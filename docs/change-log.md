@@ -40,3 +40,4 @@
 - Railway 배포 승인 취소와 무료 크레딧 조건은 기존 상태 유지. 이번 작업은 Pages 체험 내부 화면 개편.
 
 - 내부 개편 커밋 b594be0, dev PR #5: https://github.com/gywns0418/roast-and-reverb/pull/5 . Pages 배포 성공 후 공개 대시보드의 새 제목과 구성 확인. PR 병합 상태는 GitHub에서 확인한다.
+- 후속 화면 조정: 아카이브 카드 열 수를 기록 수와 가용 폭에 맞춰 자동 배치해, 적은 기록에서 비어 있는 고정 열을 남기지 않도록 했다. 최초 코드 커밋 b594be0의 GitHub Verify 전체 검사도 성공했다.
