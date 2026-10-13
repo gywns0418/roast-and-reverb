@@ -40,3 +40,9 @@ imagegen 스킬의 built-in image_gen 도구 사용. 결과는 `frontend/public/
 
 사용한 최종 프롬프트:
 > Use case: photorealistic-natural. Asset type: original editorial hero photograph for Roast & Reverb, a modern Korean coffee and music journal. Wide 3:2 landscape. Top-down slightly angled art-directed still life: warm ivory ceramic cup of black filter coffee, a black vinyl record partly inside a plain burnt-orange sleeve, brushed silver over-ear headphones, a small glass pour-over carafe on a warm cream desk. Bright natural afternoon sun, long crisp diagonal shadows, tactile paper, ceramic and metal textures, muted warm neutral palette with punchy burnt-orange accent and charcoal. Sophisticated contemporary magazine photography, no rustic clutter, no people, no logos, no writing, no watermark, no web UI. Balanced composition with the cup at lower center and headphones to the right, no artificial coffee foam. This is brand editorial art, not a real product photograph.
+
+
+## 2026-10-13 가독성과 기록 흐름 개선
+
+Discovery Studio를 유지하며 마지막에 usability.css를 적용한다. 본문 14~15px, 월픽 사실 정보 최소 12px, 녹색 보조 텍스트 대비, 44px 주요 조작 영역을 사용한다. 520px 이하의 원두 카드는 한 열로 읽으며 모바일 안내 레일은 숨겨 본문에 집중한다. 검색 포커스, 본문 건너뛰기, 상세/작성의 목록 복귀, 키보드 가능한 페어링 선택을 제공한다. 음악 기록은 예시 초기값 대신 빈 입력과 들은 날짜를 제공한다. 체험 계정 화면은 서버 미배포 안내와 기록장 복귀를 제공하고 가입/로그인 제출을 비활성화한다.
+- 작성 폼은 구획 사이 24px 간격을 유지하고, 상세의 장식 아트워크 높이는 190px로 제한한다. 페어링 선택 결과는 데스크톱 2열, 모바일 1열이다.

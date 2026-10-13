@@ -1,0 +1,66 @@
+/* Discovery Studio: comfortable reading and deliberate controls. */
+.skip-link { position: fixed; top: -80px; left: 20px; z-index: 100; background: #252e23; color: white; padding: 14px 20px; border-radius: 8px; }
+.skip-link:focus { top: 12px; }
+.main:focus { outline: none; }
+.subtitle, .muted, .library-note, .library-card-content p, .ritual-guide p { color: #59634f; }
+.subtitle, .library-card-content p, .ritual-guide p { font-size: 14px; line-height: 1.8; }
+.demo-notice { color: #465139; font-size: 12px; line-height: 1.7; }
+.nav-link { min-height: 44px; font-size: 14px; }
+.primary-button, .ghost-button { min-height: 44px; font-size: 13px; }
+.input-field > span { font-size: 13px; color: #465139; }
+.input, .textarea, .input-field input, .input-field textarea { font-size: 15px; }
+.library-toolbar, .library-chips span, .library-counter span { font-size: 12px; }
+.library-toolbar input, .library-toolbar select { font-size: 14px; min-height: 44px; }
+.ledger-pick, .pick-row { width: 100%; font: inherit; text-align: left; }
+.pick-row { border: 0; border-bottom: 1px solid #dce1d5; background: #fff; min-height: 48px; }
+.pick-row:hover, .pick-row.active { background: #edf2dc; }
+.ledger-pick { min-height: 64px; }
+.trial-auth-notice { padding: 20px; background: #edf2dc; border: 1px solid #d4ddbe; border-radius: 10px; margin-bottom: 24px; }
+.trial-auth-notice p { font-size: 14px; line-height: 1.8; margin: 0 0 14px; color: #465139; }
+.bean-category, .bean-process, .bean-card-foot small, .bean-card-foot label, .monthly-source-line, .source-small { font-size: 12px; color: #59634f; }
+.flavor-row span { font-size: 12px; color: #59563f; }
+.monthly-search input, .monthly-filters, .monthly-categories button { font-size: 14px; }
+.bean-detail-copy dl > div, .bean-english, .bean-prices { font-size: 14px; }
+.bean-detail-copy dt { color: #59634f; }
+.bean-save, .dialog-close { min-width: 44px; min-height: 44px; }
+.saved-filter, .monthly-categories button { min-height: 44px; }
+.bean-card-foot label { min-height: 44px; cursor: pointer; }
+.monthly-filters > label { min-height: 44px; }
+.monthly-filters input[type="checkbox"], .bean-card-foot input { width: 18px; height: 18px; }
+.monthly-empty { color: #465139; }
+.topbar-search:focus-within, .monthly-search:focus-within, .library-search:focus-within { outline: 2px solid #536c38; outline-offset: 3px; }
+@media (max-width: 760px) {
+  .nav-link { font-size: 13px; }
+  .sidebar-session, .sidebar-foot { display: none; }
+  .page-heading { gap: 16px; }
+  .heading-signature { display: none; }
+  .workspace-rail { display: none; }
+  .page-workspace { grid-template-columns: minmax(0, 1fr); }
+  .topbar-search { display: flex; width: 100%; max-width: none; order: 3; }
+  .topbar { flex-wrap: wrap; gap: 12px; }
+  .topbar > div:first-child { flex: 1; }
+  .page { padding: 24px 18px; }
+}
+@media (max-width: 520px) {
+  .monthly-bean-grid { grid-template-columns: minmax(0, 1fr); }
+  .bean-visual { aspect-ratio: 1.8; }
+  .bean-card-copy { padding: 20px; }
+  .bean-title { font-size: 17px; min-height: 0; }
+  .bean-category, .bean-process, .flavor-row span, .bean-card-foot label, .bean-card-foot small { font-size: 12px; }
+  .bean-card-foot strong { font-size: 18px; }
+  .availability { font-size: 11px; }
+  .monthly-source-line, .source-small { font-size: 12px; }
+  .bean-save { top: 12px; right: 12px; }
+  .bean-save svg { width: 18px; }
+  .saved-filter { font-size: 12px; }
+  .bean-visual > span { font-size: 10px; }
+  .bean-visual > b { font-size: 28px; }
+}
+.workspace-back { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; color: #53603f; margin-bottom: 10px; }
+/* Keep record facts beside each other; artwork supports the reading flow. */
+.page-workspace .compose-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.page-workspace .log-card > .record-art { height: 190px; aspect-ratio: auto; }
+.page-workspace .log-card .art-title { font-size: 25px; }
+.page-workspace .log-card .art-caption, .page-workspace .log-card .art-bottom { display: none; }
+@media (max-width: 760px) { .page-workspace .compose-layout { grid-template-columns: minmax(0, 1fr); } }
+.page-music form.panel { display: grid; gap: 24px; }

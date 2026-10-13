@@ -33,8 +33,8 @@ export default function Header() {
         >
           <Search size={16} />
           <input
-            aria-label="곡 또는 아티스트 검색"
-            placeholder="곡, 아티스트 검색"
+            aria-label="내 음악 기록 검색"
+            placeholder="내 기록에서 곡, 아티스트 검색"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />

@@ -1,3 +1,4 @@
+import TrialNotice from "../../components/auth/TrialNotice.jsx";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/common/Button.jsx";
@@ -9,6 +10,7 @@ export default function FindIdPage() {
   return (
     <section className="page cover-page">
       <div className="cover-card">
+        <TrialNotice />
         <div className="cover-brand smcp">Roast &amp; Reverb</div>
         <p className="cover-vol oldnum">Coffee × Music</p>
         <h1>아이디 찾기</h1>

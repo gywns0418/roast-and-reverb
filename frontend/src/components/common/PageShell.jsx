@@ -15,6 +15,7 @@ export default function PageShell({ eyebrow, title, subtitle, children }) {
   const guide = guides[section] || guides.default;
   const withRail = /\/(write|import|search|\d+)(\/edit)?$/.test(pathname) || section === "mypage";
   return <section className={`page page-${section}`}>
+    {withRail && section !== "mypage" && <Link className="workspace-back" to={`/${section}`}>← {section === "coffee" ? "커피 기록" : section === "music" ? "음악 기록" : section === "pairing" ? "페어링" : "컬렉션"} 목록</Link>}
     <header className="page-heading"><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="subtitle">{subtitle}</p></div><div className="heading-signature" aria-hidden="true"><span>{kind === "coffee" ? "SIDE A" : kind === "music" ? "SIDE B" : "A + B"}</span><b>r&amp;r</b><small>YOUR DAILY RITUAL</small></div></header>
     <div className={withRail ? "page-workspace" : "page-content"}><div className="workspace-content">{children}</div>
       {withRail && <aside className="workspace-rail"><RecordArtwork kind={kind} seed={section} /><div className="ritual-guide"><p className="eyebrow">A LITTLE RITUAL</p><h3>{guide[0]}</h3><p>{guide[1]}</p><Link to={guide[2]}>{guide[3]} ↗</Link></div><div className="rail-index"><span>01 / BREW</span><span>02 / LISTEN</span><span>03 / REMEMBER</span></div></aside>}

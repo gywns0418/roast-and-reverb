@@ -15,8 +15,9 @@ export default function Layout() {
     return <Navigate to="/dashboard" replace />;
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content" onClick={event => { event.preventDefault(); document.getElementById("main-content")?.focus(); }}>본문으로 이동</a>
       <Sidebar />
-      <main className="main">
+      <main className="main" id="main-content" tabIndex={-1}>
         <Header />
         {local && (
           <div className="demo-notice" role="status">

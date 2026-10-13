@@ -83,3 +83,8 @@ node backend/scripts/verify-production.mjs
 현재 브랜치는 feature/discovery-monthly-sync다. main에서 생성하고 이전 interior-studio 구현을 통합했다. 월픽 수집/자동 작업은 docs/monthly-source.md, 새 디자인은 docs/design-guide.md 마지막 섹션을 읽는다. 실제 10월 유에프오커피 52개 자료와 source endpoint, 링크 가져오기/비교/상세/관심 원두를 구현했다. 월간 자동 작업은 이 대화에 연결됐고 PC와 앱이 실행 중이어야 한다. Pages 배포 대상은 현재 기능 브랜치와 feature/monthly-refresh-*다. Railway 운영 상태는 그대로 미배포다.
 
 현재 작업의 dev PR은 #6이다: https://github.com/gywns0418/roast-and-reverb/pull/6 . 공개 월픽 진입은 https://gywns0418.github.io/roast-and-reverb/#/monthly-pick . 최신 CI/배포/병합 상태는 원격 확인이 우선이다.
+
+
+## 최신 작업: 내부 사용성 점검
+
+feature/usability-audit는 origin/main에서 분기하고 PR #6 구현을 통합했다. PR #6은 dev 병합 완료(9d37b6d). Discovery 디자인은 usability.css로 가독성과 모바일 조작을 보완했다. 변경/검증 상세는 change-log.md 마지막 섹션을 확인한다. 음악 날짜 선택, 키보드 페어링 선택, 전체 기록 기반 마이페이지, 체험 인증 안내가 적용됐다. Pages workflow는 이 feature 브랜치와 monthly-refresh-*를 허용한다. main 승격은 수행하지 않는다. Railway는 실제 미배포이며 비용 조건은 무료 크레딧만 유지한다. 실제 관리자 로그인 UI, 실서버/외부 음악 API 및 백업/복구는 후속 과제다.

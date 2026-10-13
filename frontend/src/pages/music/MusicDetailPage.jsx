@@ -32,14 +32,12 @@ export default function MusicDetailPage() {
     collections.map(adaptCollection),
     []
   );
-  const pairing = relatedPairings[0];
   const owned = collectionItems.find((item) => item.title === music.album || item.artist === music.artist);
 
   return (
     <PageShell title="음악 기록 상세" eyebrow="Music detail" subtitle="앨범 정보와 이 음악에 연결된 커피 페어링을 확인합니다.">
       <div className="panel-grid">
         <MusicCard item={music} />
-        {pairing && <PairingCard item={pairing} />}
       </div>
 
       <div className="tabs" style={{ marginTop: 24 }}>

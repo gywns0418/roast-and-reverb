@@ -1,3 +1,4 @@
+import TrialNotice from "../../components/auth/TrialNotice.jsx";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button.jsx";
@@ -36,6 +37,7 @@ export default function JoinPage() {
   return (
     <section className="page cover-page">
       <div className="cover-card">
+        <TrialNotice />
         <div className="cover-brand smcp">Roast &amp; Reverb</div>
         <p className="cover-vol oldnum">Vol. I · 2026</p>
         <h1>노트 시작하기</h1>
@@ -44,7 +46,7 @@ export default function JoinPage() {
           <Input placeholder="닉네임" value={form.nickname} onChange={update("nickname")} />
           <Input type="email" placeholder="이메일" value={form.email} onChange={update("email")} />
           <Input type="password" placeholder="비밀번호" value={form.password} onChange={update("password")} />
-          <Button onClick={handleJoin} disabled={loading} loading={loading}>{loading ? "생성 중" : "계정 만들기"}</Button>
+          <Button onClick={handleJoin} disabled={loading || import.meta.env.VITE_USE_REAL_API !== "true"} loading={loading}>{loading ? "생성 중" : "계정 만들기"}</Button>
           {error && <p className="muted">{error}</p>}
         </div>
         <Link to="/auth/login" className="cover-switch">이미 계정이 있다면 — 로그인</Link>
