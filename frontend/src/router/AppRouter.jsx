@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout/Layout.jsx";
+import BeansPage from "../pages/beans/BeansPage.jsx";
 import HomePage from "../pages/HomePage.jsx";
 import LoginPage from "../pages/auth/LoginPage.jsx";
 import JoinPage from "../pages/auth/JoinPage.jsx";
@@ -47,6 +48,7 @@ export default function AppRouter() {
         <Route path="/today" element={<Navigate to="/coffee/write" replace />} />
         <Route path="/logs/today" element={<Navigate to="/coffee/write" replace />} />
 
+        <Route path="/beans" element={<BeansPage />} />
         <Route path="/coffee" element={<CoffeeLogPage />} />
         <Route path="/coffee-logs" element={<CoffeeLogPage />} />
         <Route path="/logs/coffee" element={<CoffeeLogPage />} />

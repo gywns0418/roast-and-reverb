@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import BeanArtwork from "../../components/beans/BeanArtwork.jsx";
 import { monthlyGroups, colorFamilies, hasColor, safeColor } from "../../utils/monthlyColors.js";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -36,13 +38,7 @@ const dateLabel = (value) =>
     : "확인 전";
 function BeanVisual({ item }) {
   const group = monthlyGroups[item.category] || monthlyGroups.easy;
-  const scene = item.category === "blend" ? "house" : item.category === "special single" ? "special" : item.category === "unspecialty blend" ? "pairing" : "coffee";
-  return <div className="bean-visual bean-editorial" style={{ "--group-color": group.color, "--group-tint": group.tint }} aria-hidden="true">
-    <img loading="lazy" src={`${import.meta.env.BASE_URL}images/${scene}-editorial.webp`} alt="" />
-    <span className="bean-group-label">{group.code}</span>
-    <b>{item.name.match(/#\d+/)?.[0] || item.nameEnglish}</b>
-    <div className="bean-color-ribbon">{(item.flavorColors || []).map((color,index) => <i key={index} style={{ backgroundColor: safeColor(color) || "#eee" }} />)}</div>
-  </div>;
+  return <div className="bean-visual bean-information" style={{"--group-color":group.color,"--group-tint":group.tint}}><span className="bean-group-label">{group.code}</span><BeanArtwork item={item}/></div>;
 }
 function FlavorColors({ item }) {
   return <div className="vendor-colors"><span>판매처 색감</span>{item.flavorColors?.length ? item.flavorColors.map((color,index) => <i key={index} title={color} aria-label={`판매처 색상 ${color}`} style={{backgroundColor:safeColor(color) || "#eee"}} />) : <small>미기재</small>}</div>;
@@ -114,6 +110,7 @@ function BeanDialog({ item, close, source }) {
               </span>
             ))}
           </div>
+          <div className="action-row"><Link className="ghost-button" to={`/recommend?source=monthly&bean=${encodeURIComponent(`catalog-${item.id}`)}`}>이 원두로 조합 발견 ↗</Link></div>
           <a
             href={source}
             target="_blank"
@@ -407,7 +404,7 @@ export default function MonthlyPickPage() {
         ))}
       </div>
       <div className="monthly-color-filters" aria-label="판매처 색감 필터"><span>어떤 색감의 커피?</span><button type="button" aria-pressed={color === "all"} onClick={() => setColor("all")}>모든 색</button>{colorFamilies.map(([key,label,hex]) => <button type="button" key={key} aria-pressed={color === key} onClick={() => setColor(key)}><i style={{backgroundColor:hex}} />{label}</button>)}</div>
-      <p className="color-help">색감은 판매처가 표현한 원두별 팔레트입니다. 향미를 고르는 시각적 단서로 활용해보세요. 사진은 서비스 연출 이미지입니다.</p>
+      <p className="color-help">색감은 판매처가 표현한 원두별 팔레트입니다. 향미를 고르는 시각적 단서로 활용해보세요. 원두 심볼은 상품 사진이 아닌 정보 그래픽입니다.</p>
       <div className="monthly-filters">
         <label className="monthly-search">
           <Search size={18} />

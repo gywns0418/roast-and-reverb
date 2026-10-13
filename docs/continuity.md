@@ -98,8 +98,22 @@ feature/usability-audit는 origin/main에서 분기하고 PR #6 구현을 통합
 
 feature/editorial-pairing-engine. 5개 새 브랜드 이미지, 전체 월픽의 분류별 색상 구획과 원문 HEX 팔레트/9색 필터, R&R 무료 로컬 페어링 분석·피드백 선호 학습을 추가했다. 엔진 구현/제약은 pairing-engine.md, 원문 색상은 monthly-source.md, 이미지 프롬프트/경로는 design-guide.md, 검증은 change-log.md 마지막 섹션. 실제 서버 미배포, 개인 원본 보호, 무료 크레딧만 허용 조건 유지. main 승격은 수행하지 않는다. 현재 공개 코드/PR/CI는 원격을 확인한다.
 - dev PR #9 생성. 공개 월픽/페어링 엔진 적용 확인, 최신 실행 코드 8430929 Pages 성공. 카드 사진과 분류색·팔레트·필터의 공개 증거는 docs/qa/editorial-monthly-*.jpg, pairing-engine-public.jpg. 최신 CI/병합 상태는 원격 확인을 우선한다.
+- 최종 PR #9 dev 병합 완료(17c7ece). 구현 8430929 Pages 성공/공개 확인, 후속 테스트·문서·QA 커밋 04838e4 Verify 성공(19개 프론트 테스트 포함); 실행 코드 동일. 해당 후속 Pages 재배포는 마지막 조회 queued이며 공개 실행 변경은 이미 적용됐다. 작업 브랜치 feature/editorial-pairing-engine, 상태 기록은 후속 문서 커밋에 보존. 실제 서버는 계속 미배포, 유료 결제/배포 없음.
+
+
+## 최신 사용자 피드백: 원두 이미지 / 추천 후보 확대
+
+현재 연출 사진은 인위적이라는 피드백. 원두만의 실제 매크로/권한 확인 사진 또는 원문 색감 중심 정보를 선호하는 방향을 제안했다. 선택식 페어링보다 보유 원두+월픽+접근 가능한 외부 플레이리스트에서 상황에 맞는 조합을 발견하는 흐름을 검토했다. beans.md는 구조 확인만 했으며 원본/개인 내용은 공개하지 않았다. YouTube 시청 이력은 공식 API 접근 불가, 재생목록/검색은 별도 키/연결 필요. 상세 조사와 미구현 범위는 recommendation-direction.md. 이번 문서 브랜치 feature/recommendation-direction은 main에서 분기하고 기존 구현을 통합했다. 사이트 실행 변경 없음.
+
+
+## 최신 개발: 2026-10-14 원두 기반 Discovery
+
+현재 feature/bean-discovery. 원두 선반/기기 파일 가져오기와 월픽·보유 원두 후보, 실제 브라우저 다국어 의미 모델 추천을 구현했다. UI·모델·로컬 테스트 검증은 change-log.md, 구현 범위/제약은 recommendation-direction.md 마지막 섹션을 따른다. 개인 원본 미수정/미공개, 비용은 무료만, Railway 실서버 미배포. Pages 배포 대상은 이 기능 브랜치로 변경했다. main 승격은 수행하지 않는다. 최신 원격 PR/CI/공개 검증은 후속 기록을 확인한다.
 
 
 ## 2026-10-13 — 운영 main / 개발 dev 분리
 
 사용자가 완료된 개발 기능의 main 반영을 승인했다. PR #9까지의 dev 코드와 main/dev 분리 Pages workflow를 함께 반영한다. 운영은 /roast-and-reverb/, 개발은 /roast-and-reverb/dev/이며 두 브랜치를 각각 빌드한다. feature 직접 배포는 environment branch policy로 차단한다. main 반영만 사용자 확인을 받으며 이번 반영은 이미 승인됨. bean-discovery 미커밋 파일과 개인 원본은 보존했다. 프론트 19개 테스트와 개발 경로 빌드 통과. GitHub CI/배포 최종 결과는 후속 상태로 기록한다. 실제 백엔드 운영과 독립 데이터베이스 환경을 제공하는 변경은 아니다.
+
+
+2026-10-14 최신 배포 방식: 원격 main의 운영/개발 분리를 통합했다. 이번 기능은 dev PR #12로 반영하고 /roast-and-reverb/dev/에 배포한다. feature 직접 배포를 중단했으며 main은 변경하지 않는다.
