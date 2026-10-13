@@ -2,6 +2,9 @@ package com.roastreverb.domain.monthlypick.service;
 
 import com.roastreverb.domain.monthlypick.mapper.MonthlyPickMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import com.roastreverb.global.exception.CustomException;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -45,7 +48,9 @@ public class MonthlyPickService {
     /**
      * 새 월픽을 만들고(rawOptionsText를 줄별로 분리해 옵션으로 저장), 바로 점수까지 계산해 반환한다.
      */
+    @Transactional
     public Map<String, Object> create(Long memberId, String month, String roastery, String sourceUrl, String rawOptionsText) {
+        if(month==null || !month.matches("\\d{4}-(0[1-9]|1[0-2])") || roastery==null || roastery.isBlank() || rawOptionsText==null || rawOptionsText.isBlank() || rawOptionsText.length()>30000) throw new CustomException(HttpStatus.BAD_REQUEST,"월, 로스터리와 원두 목록을 확인해 주세요.");
         Map<String, Object> pick = new LinkedHashMap<>();
         pick.put("memberId", memberId);
         pick.put("pickMonth", month);
@@ -77,6 +82,7 @@ public class MonthlyPickService {
      * 저장된 taste_rule을 기준으로 각 옵션의 점수/근거를 다시 계산해 저장한다.
      */
     public List<Map<String, Object>> score(Long memberId, Long monthlyPickId) {
+        if(monthlyPickMapper.findPickById(monthlyPickId,memberId)==null) throw new CustomException(HttpStatus.NOT_FOUND,"내 월픽 기록을 찾지 못했습니다.");
         List<Map<String, Object>> tasteRules = monthlyPickMapper.findTasteRules(memberId);
         List<Map<String, Object>> options = monthlyPickMapper.findOptionsByPick(monthlyPickId);
 

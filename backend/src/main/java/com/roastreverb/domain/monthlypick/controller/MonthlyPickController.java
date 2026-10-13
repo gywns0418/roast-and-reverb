@@ -1,6 +1,7 @@
 package com.roastreverb.domain.monthlypick.controller;
 
 import com.roastreverb.domain.monthlypick.service.MonthlyPickService;
+import com.roastreverb.domain.monthlypick.service.MonthlyPickSourceService;
 import com.roastreverb.global.response.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +11,16 @@ import java.util.Map;
 @RequestMapping("/api/monthly-picks")
 public class MonthlyPickController {
     private final MonthlyPickService monthlyPickService;
+    private final MonthlyPickSourceService sourceService;
 
-    public MonthlyPickController(MonthlyPickService monthlyPickService) {
+    public MonthlyPickController(MonthlyPickService monthlyPickService, MonthlyPickSourceService sourceService) {
         this.monthlyPickService = monthlyPickService;
+        this.sourceService = sourceService;
+    }
+
+    @PostMapping("/source")
+    public ApiResponse<?> source(@RequestBody Map<String,String> request) {
+        return ApiResponse.ok(sourceService.preview(request.get("url")));
     }
 
     @GetMapping

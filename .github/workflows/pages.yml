@@ -1,7 +1,7 @@
 name: Deploy diary preview
 on:
   push:
-    branches: [main, feature/interior-studio]
+    branches: [main, feature/discovery-monthly-sync, feature/monthly-refresh-*]
   workflow_dispatch:
 permissions:
   contents: read
@@ -39,3 +39,4 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
