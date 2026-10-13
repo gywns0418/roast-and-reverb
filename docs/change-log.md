@@ -25,4 +25,6 @@
 - 브라우저 검증: 실제 최근 기록 2개를 선택·미리보기·저장하고 수정·새로고침 후 측정값 유지와 음악 미연결 상태 확인. 390px 모바일에서 가로 넘침 없음.
 - 커밋 `bf19b6a`, [dev PR #4](https://github.com/gywns0418/roast-and-reverb/pull/4) 생성. 공개 체험의 이번 변경 배포 성공.
 - 후속 커밋: `8242f44` (CI 호환 명령과 검증 기록 갱신).
+- `1334f80`의 최신 Verify 검사와 공개 체험 배포 성공 확인 후 dev PR #4 병합.
+- 사용자 비용 조건: Trial/Free 무료 크레딧만 사용. Railway accept-deploy는 “Cancelled — the user did not approve this action. No changes were made.”를 반환했다. 재조회에서도 11개 변경은 STAGED, latestDeployment는 null이다. 서버 실행·HTTPS 검증은 아직 미완료이며 도구의 최종 배포 승인 후 이어가야 한다. 유료 플랜 전환이나 결제를 하지 않았다.
 - CI: 프론트/서버 검사와 컨테이너 빌드·기동·healthcheck 성공. root 응답 확인 명령에서 runner에 없는 rg를 사용해 이미지 검사가 실패했으며, 표준 grep으로 수정한 `8242f44`에서 모든 최신 CI 검사와 Pages 배포가 성공했다.
