@@ -1,7 +1,7 @@
 name: Deploy diary preview
 on:
   push:
-    branches: [main, feature/service-redesign, feature/coffee-records-handoff]
+    branches: [main, feature/interior-studio]
   workflow_dispatch:
 permissions:
   contents: read

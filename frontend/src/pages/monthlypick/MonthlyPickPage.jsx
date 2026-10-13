@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PageShell from "../../components/common/PageShell.jsx";
+import RecordArtwork from "../../components/common/RecordArtwork.jsx";
 import { monthlyPickApi } from "../../api/monthlyPickApi.js";
 
 // 실제 컵노트가 없어서, 공정(process)을 기준으로 월픽 패키지 같은 색 그라데이션을 근사한다.
@@ -113,6 +114,7 @@ export default function MonthlyPickPage() {
       eyebrow="Monthly Pick"
       subtitle="월픽 원두 목록을 붙여넣으면 내 취향 기준으로 순위를 매겨 드립니다."
     >
+      <div className="pairing-intro"><div><p className="eyebrow">THE NEXT CUP</p><h2>다음 달의 커피를 고르는 시간.</h2><p>후보를 한눈에 모아두고, 향미와 가공 방식의 차이를 살펴보세요.</p></div><RecordArtwork kind="coffee" seed="nextcup"/></div>
       <section className="panel">
         <h3>새 월픽 등록</h3>
         <form onSubmit={handleSubmit}>

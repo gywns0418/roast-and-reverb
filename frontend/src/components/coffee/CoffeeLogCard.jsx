@@ -1,5 +1,6 @@
 import BrewDetails from "./BrewDetails.jsx";
 import Tag from "../common/Tag.jsx";
+import RecordArtwork from "../common/RecordArtwork.jsx";
 
 export default function CoffeeLogCard({ item }) {
   const meters = [
@@ -12,6 +13,7 @@ export default function CoffeeLogCard({ item }) {
 
   return (
     <article className="log-card">
+      <RecordArtwork kind="coffee" seed={item.bean} label={item.bean} />
       <div className="card-head">
         <span className="oldnum">{item.date}</span>
         {item.roast && <Tag variant="warm">{item.roast}</Tag>}
