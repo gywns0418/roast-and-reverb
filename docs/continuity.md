@@ -91,3 +91,4 @@ feature/usability-audit는 origin/main에서 분기하고 PR #6 구현을 통합
 
 
 최종 확인: 구현 9fa5342의 Verify(38406582421)와 Pages(38406575199) 성공. PR #7은 dev에 병합 완료, dev merge SHA fff4d04. 공개 음악 작성 24px 폼 간격/날짜 입력과 모바일 월픽 52카드·1열·넘침 없음 확인. docs/qa의 공개 화면 이미지는 검증 증거이며 개인 기록을 포함하지 않는다. 후속 문서 커밋에는 동일 결과와 QA 이미지만 포함한다. 서버 운영 완료로 해석하지 않는다.
+- 검증 기록/QA 이미지 전달용 PR #8도 dev 병합 완료(04a0ef5). 작업 종료 브랜치 feature/usability-audit, 작업트리 clean. 마지막 상태 기록은 feature 브랜치의 문서 후속 커밋에 보존한다.

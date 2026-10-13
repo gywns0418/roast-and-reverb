@@ -69,3 +69,4 @@
 
 - 최종 구현 9fa5342의 GitHub Verify 전체 성공(프론트·서버·운영 재시작·Docker 기동/health), Pages 배포 성공. PR #7 dev 병합 완료: https://github.com/gywns0418/roast-and-reverb/pull/7 , merge fff4d04. main 변경 없음.
 - 공개 재검증: 음악 작성 폼 간격 24px, 음악 날짜 입력, 가로 넘침 없음. 390px 월픽 52카드/339px 단일 열/페이지 가로 넘침 없음. docs/qa/music-write-desktop.jpg, monthly-mobile.jpg 저장. 개인 원본이 아닌 공개 화면만 저장했다.
+- QA 문서 전용 PR #8 dev 병합 완료(04a0ef5). 마지막 Git 확인에서 feature/usability-audit와 clean 작업트리 확인. Pages의 실행 코드는 검증된 9fa5342이며 이후 커밋은 문서/공개 화면 증거뿐이다.
