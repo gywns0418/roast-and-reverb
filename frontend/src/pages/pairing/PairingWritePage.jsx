@@ -83,6 +83,7 @@ export default function PairingWritePage() {
   return (
     <PageShell title="AI 페어링 생성" eyebrow="Analyze" subtitle="커피 로그와 음악 로그를 선택해 AI 인사이트를 생성합니다.">
       {(!coffees.length || !musics.length) && <div className="panel"><p>한 잔과 한 곡의 기록이 있어야 연결할 수 있어요.</p><div className="action-row"><Link className="ghost-button" to="/coffee/write">커피 기록하기</Link><Link className="ghost-button" to="/music/write">음악 기록하기</Link></div></div>}
+      <div className="action-row"><Link className="primary-button" to="/recommend">내 원두·월픽과 새로운 음악으로 추천받기 ↗</Link></div>
       <section className="engine-intro"><p className="eyebrow">R&R PAIRING ENGINE</p><h2>내 취향에 맞춰, 한 잔과 한 곡.</h2><p>맛 노트와 음악의 장르·감상을 비교해 연결점을 찾습니다. 조합에 피드백을 남기면 이 기기에서 선호를 학습해요.</p><label className="input-field"><span>분석 방식</span><select aria-label="페어링 분석 방식" value={engine} onChange={event => setEngine(event.target.value)}><option value="local">R&R 로컬 엔진 · 무료</option>{!local && <option value="claude">Claude · 서버 연결 필요</option>}</select></label><small>로컬 엔진: 특성 규칙 + 개인 선호 학습. 학습된 대형 언어 모델이 아니며, 실제 음원을 듣거나 맛을 측정하지 않습니다.</small></section>
       <div className="picker-group">
         <button type="button" aria-expanded={openPicker === "coffee"} className={`ledger-pick coffee ${openPicker === "coffee" ? "open" : ""}`} onClick={() => setOpenPicker(openPicker === "coffee" ? null : "coffee")}>

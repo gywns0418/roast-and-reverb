@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
 import Input from "../../components/common/Input.jsx";
@@ -12,26 +12,32 @@ import { pairingApi } from "../../api/pairingApi.js";
 
 export default function CoffeeWritePage() {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const candidate=state?.coffeeCandidate;
+  const song=state?.musicCandidate;
   const local = import.meta.env.VITE_USE_REAL_API !== "true";
   const [naturalLog, setNaturalLog] = useState(
-    local
+    local && !candidate
       ? "오늘 예가체프를 핸드드립으로 진하게 내려 마시면서 시규어 로스를 들었다."
       : "",
   );
   const [coffee, setCoffee] = useState({
-    beanName: local ? "에티오피아 예가체프" : "",
-    brewMethod: "핸드드립",
-    roastLevel: "Light",
-    tasteNote: local ? "플로럴, 밝은 산미" : "",
+    beanName: candidate?.name || (local ? "에티오피아 예가체프" : ""),
+    roastery: candidate?.roastery || "",
+    originCountry: candidate?.origin || "",
+    process: candidate?.process || "",
+    brewMethod: candidate ? "" : "핸드드립",
+    roastLevel: candidate ? candidate.roast || "" : "Light",
+    tasteNote: candidate ? "" : local ? "플로럴, 밝은 산미" : "",
     memo: "",
     drinkDate: new Date().toLocaleDateString("sv-SE"),
     brewDetails: {},
   });
   const [music, setMusic] = useState({
-    trackName: local ? "Svefn-g-englar" : "",
-    artistName: local ? "Sigur Ros" : "",
-    genre: local ? "Post-rock" : "",
-    tags: local ? "몽환적, 차분함" : "",
+    trackName: song?.track || (candidate ? "" : local ? "Svefn-g-englar" : ""),
+    artistName: song?.artist || (candidate ? "" : local ? "Sigur Ros" : ""),
+    genre: song?.genre || (candidate ? "" : local ? "Post-rock" : ""),
+    tags: candidate ? "" : local ? "몽환적, 차분함" : "",
     memo: "",
   });
   const [saving, setSaving] = useState(false);
@@ -136,6 +142,7 @@ export default function CoffeeWritePage() {
       eyebrow="Natural log"
       subtitle="하루의 감각을 한 문장으로 남기면 AI가 커피와 음악 정보를 조용히 정리합니다."
     >
+      {candidate && <p className="device-message">추천한 원두 정보만 가져왔습니다. 판매처 컵노트: {(candidate.flavors || []).join(" · ") || "미기재"}. 내가 느낀 맛과 실제로 들은 음악을 확인한 뒤 저장해 주세요.</p>}
       <div className="today-log-layout">
         <section className="natural-log-panel">
           <span>자연어 입력</span>
@@ -183,9 +190,9 @@ export default function CoffeeWritePage() {
             </div>
           </div>
           <div className="mood-strip">
-            <Tag variant="warm">플로럴</Tag>
-            <Tag variant="cool">몽환적</Tag>
-            <Tag variant="neutral">집중</Tag>
+            {!candidate && <Tag variant="warm">플로럴</Tag>}
+            {!candidate && <Tag variant="cool">몽환적</Tag>}
+            {!candidate && <Tag variant="neutral">집중</Tag>}
             <Button
               onClick={handleSaveCoffee}
               disabled={saving}

@@ -65,3 +65,8 @@ Discovery Studio를 유지하며 마지막에 usability.css를 적용한다. 본
 - special: two clear tasting glasses of amber filter coffee, silver cupping spoon, glass server, muted lavender cloth, blank notebook edge; refined intimate tasting scene. 원본 exec-bac6a4e4-602f-43ea-8101-13c88662ea7e.png.
 
 판매처 색상은 https://unspecialty.com/product/detail.html?product_no=901 과 공개 UFO2/UFO2.json에서 확인했다. 아프리카노의 6247aa/cdb4db/ffb4a2 등은 그대로 보존한다. 색감별 필터 분류는 HSL 기반의 R&R 근사 분류이며 판매처가 지정한 의미 이름이라고 주장하지 않는다. 색상과 개별 컵노트의 대응을 임의로 일대일 연결하지 않는다.
+
+
+## 2026-10-14 원두 선반과 발견형 추천
+
+원두 카드의 인위적인 연출 사진을 원두 두 알의 형태·산지·품종과 판매처 원문 팔레트를 결합한 SVG 정보 그래픽으로 교체했다. 실제 상품 사진이라고 표시하지 않는다. 음악·페어링과 홈의 기존 브랜드 장면은 유지한다. 월픽의 분류 색상/컵노트/전체 분류 구획/색감 필터는 보존한다. 내 원두 선반은 재고 상태를 텍스트로 함께 표시하고, 추천은 자연어 상황 입력과 원두·음악 후보 범위를 중심으로 구성한다. 데스크톱 추천 3열, 모바일 1열.

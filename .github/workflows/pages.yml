@@ -1,7 +1,7 @@
 name: Deploy diary preview
 on:
   push:
-    branches: [main, feature/editorial-pairing-engine, feature/monthly-refresh-*]
+    branches: [main, feature/bean-discovery, feature/monthly-refresh-*]
   workflow_dispatch:
 permissions:
   contents: read

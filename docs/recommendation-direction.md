@@ -39,3 +39,14 @@ R&R v1은 등록한 커피/음악 기록의 규칙 기반 의미 특성과 소�
 ## 구현 순서 제안
 
 원두 중심 카드 → 내 원두 비공개 가져오기 + 월픽 후보 통합 → 접근 가능한 플레이리스트 후보 연결 → 상황 입력/개인화 추천 → 피드백/다양성 평가. 이미지 교체/가져오기/YouTube 연결/새 추천 모델은 아직 구현하지 않았다. 보유 원두를 먼저 활용하면 구매 없이 즉시 써볼 수 있어 서비스의 첫 사용 경험에 유리하다는 제품 판단이다.
+
+
+## 2026-10-14 구현 상태
+
+feature/bean-discovery에 원두 파일 미리보기/기기 저장/수정/백업, 보유·월픽·통합 후보, 음악 링크/TSV/백업 가져오기, 자연어 상황의 실제 임베딩 추천을 구현했다. 개인 beans.md를 공개 시드로 만들지 않는다. 원두는 보유 상태만 기본 후보로 사용하고 배송·소진·미확인은 제외한다. 남은 양의 원문과 추정/실측/미확인을 유지한다.
+
+브라우저 worker의 Xenova/multilingual-e5-small q8 모델(고정 revision 761b726dd34fb83930e26aab4e9ac3899aa1fa78)로 문장 임베딩을 계산한다. 사전 학습된 공개 모델 사용이며 새로 학습한 LLM이나 음원 분석기가 아니다. 첫 실행에 공개 모델/WASM 다운로드 및 브라우저 캐시가 필요하며 사용자 입력 문장은 로컬 추론한다. 모델 오류 시 성공 결과를 꾸미거나 기본 추천으로 자동 대체하지 않는다. 기본 규칙 추천은 별도 버튼이다.
+
+실서버용 MusicBrainz 공개 메타데이터 검색과 YouTube 검색/영상/공개 재생목록 API를 구현했다. Pages에서는 서버가 없어 자동 조회할 수 없고 곡명·링크/목록 추가는 가능하다. 계정 청취 이력은 읽지 않는다. YouTube 키는 서버 환경변수 YOUTUBE_API_KEY만 사용한다. 하루 60 upstream 요청 제한, 12시간 캐시, MusicBrainz 요청 간격 1.1초. 실제 서버 배포와 API 키 설정은 아직 미완료다.
+
+참고: https://huggingface.co/Xenova/multilingual-e5-small / https://huggingface.co/intfloat/multilingual-e5-small (MIT 모델 카드), https://huggingface.co/docs/transformers.js/en/pipelines , https://musicbrainz.org/doc/MusicBrainz_API , https://developers.google.com/youtube/v3/docs/search/list . MusicBrainz 무료 비상업 API 조건과 호출 제한을 따른다. 추천은 알려진 설명의 의미 연관성이고 실제 청취/맛 검증 결과가 아니다.
