@@ -20,8 +20,18 @@ export default function HomePage() {
           r&r<span>ROAST & REVERB</span>
         </Link>
         <nav>
-          <a href="#ritual">서비스 소개</a>
-          <a href="#notes">기록하는 방법</a>
+          <button
+            type="button"
+            onClick={() => document.getElementById("ritual")?.scrollIntoView()}
+          >
+            서비스 소개
+          </button>
+          <button
+            type="button"
+            onClick={() => document.getElementById("notes")?.scrollIntoView()}
+          >
+            기록하는 방법
+          </button>
           {!local && (
             <button onClick={() => setAuthMode("login")}>
               로그인 <ArrowUpRight size={16} />
