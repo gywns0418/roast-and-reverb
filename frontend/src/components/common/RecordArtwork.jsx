@@ -1,13 +1,9 @@
-// Original graphic artwork, not an official album cover.
-export default function RecordArtwork({ kind = "music", seed = "", label = "", small = false }) {
-  const tone = [...String(seed)].reduce((sum, char) => sum + char.charCodeAt(0), 0) % 5;
-  return <div className={`record-art art-${kind} tone-${tone} ${small ? "art-small" : ""}`} aria-hidden="true">
-    <span className="art-caption">ROAST & REVERB / {kind === "coffee" ? "BREW NOTES" : kind === "blend" ? "DAILY SESSION" : "LISTENING NOTES"}</span>
-    <div className="art-disc"><i>r&amp;r</i></div>
-    {kind !== "music" && <div className="art-cup"><i /></div>}
-    <span className="art-wave">∿</span>
-    {kind === "coffee" && <div className="art-beans"><i/><i/></div>}
-    <span className="art-title">{label || (kind === "coffee" ? "A cup.\nA moment." : kind === "blend" ? "Brew.\nListen.\nFeel." : "On\nrepeat.")}</span>
-    <span className="art-bottom">GOOD COFFEE. GOOD MUSIC.</span>
+// Original AI-generated brand editorial art; never an official album/product photograph.
+export default function RecordArtwork({ kind = "music", label = "", small = false }) {
+  const type = kind === "coffee" ? "coffee" : kind === "music" ? "music" : "pairing";
+  return <div className={`record-art editorial-art art-${kind} ${small ? "art-small" : ""}`} aria-hidden="true">
+    <img loading="lazy" src={`${import.meta.env.BASE_URL}images/${type}-editorial.webp`} alt="" />
+    <span className="editorial-caption">{type === "coffee" ? "BREW / A LITTLE RITUAL" : type === "music" ? "LISTEN / ON REPEAT" : "COFFEE × MUSIC"}</span>
+    {label && <span className="editorial-title">{label}</span>}
   </div>;
 }

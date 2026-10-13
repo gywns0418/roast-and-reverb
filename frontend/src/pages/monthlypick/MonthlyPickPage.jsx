@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { monthlyGroups, colorFamilies, hasColor, safeColor } from "../../utils/monthlyColors.js";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -15,13 +16,7 @@ import PageShell from "../../components/common/PageShell.jsx";
 import { monthlyCatalog, importMonthlyUrl } from "../../api/monthlyCatalog.js";
 import { monthlyPickApi } from "../../api/monthlyPickApi.js";
 
-const groups = {
-  "single origin": "싱글 오리진",
-  "special single": "스페셜 오리진",
-  blend: "하우스 블렌드",
-  "unspecialty blend": "언스페셜티 블렌드",
-  easy: "드립백",
-};
+const groups = Object.fromEntries(Object.entries(monthlyGroups).map(([key,value]) => [key,value.label]));
 const stateLabel = {
   available: "구매 가능",
   "sold-out": "품절",
@@ -40,28 +35,17 @@ const dateLabel = (value) =>
       })
     : "확인 전";
 function BeanVisual({ item }) {
-  const type = item.process.toLowerCase();
-  const theme = type.includes("honey")
-    ? "honey"
-    : type.includes("natural")
-      ? "natural"
-      : "washed";
-  const tone =
-    [...item.name].reduce((sum, char) => sum + char.charCodeAt(0), 0) % 5;
-  return (
-    <div
-      className={`bean-visual bean-${theme} bean-tone-${tone}`}
-      aria-hidden="true"
-    >
-      <span>{item.origin || "BLEND"}</span>
-      <div className="bean-orbit" />
-      <div className="bean-object">
-        <i />
-      </div>
-      <b>{item.name.match(/#\d+/)?.[0] || item.name.split(" ")[0]}</b>
-      <small>{item.variety || "COFFEE SELECTION"}</small>
-    </div>
-  );
+  const group = monthlyGroups[item.category] || monthlyGroups.easy;
+  const scene = item.category === "blend" ? "house" : item.category === "special single" ? "special" : item.category === "unspecialty blend" ? "pairing" : "coffee";
+  return <div className="bean-visual bean-editorial" style={{ "--group-color": group.color, "--group-tint": group.tint }} aria-hidden="true">
+    <img loading="lazy" src={`${import.meta.env.BASE_URL}images/${scene}-editorial.webp`} alt="" />
+    <span className="bean-group-label">{group.code}</span>
+    <b>{item.name.match(/#\d+/)?.[0] || item.nameEnglish}</b>
+    <div className="bean-color-ribbon">{(item.flavorColors || []).map((color,index) => <i key={index} style={{ backgroundColor: safeColor(color) || "#eee" }} />)}</div>
+  </div>;
+}
+function FlavorColors({ item }) {
+  return <div className="vendor-colors"><span>판매처 색감</span>{item.flavorColors?.length ? item.flavorColors.map((color,index) => <i key={index} title={color} aria-label={`판매처 색상 ${color}`} style={{backgroundColor:safeColor(color) || "#eee"}} />) : <small>미기재</small>}</div>;
 }
 function BeanDialog({ item, close, source }) {
   const dialog = useRef(null);
@@ -88,6 +72,7 @@ function BeanDialog({ item, close, source }) {
       <div className="bean-detail-layout">
         <BeanVisual item={item} />
         <div className="bean-detail-copy">
+          <FlavorColors item={item} />
           <p className="eyebrow">
             {groups[item.category]} / {stateLabel[item.availability]}
           </p>
@@ -152,6 +137,7 @@ export default function MonthlyPickPage() {
     [url, setUrl] = useState(
       "https://unspecialty.com/product/detail.html?product_no=901",
     );
+  const [color, setColor] = useState("all");
   const [query, setQuery] = useState(""),
     [category, setCategory] = useState("all"),
     [availableOnly, setAvailableOnly] = useState(false),
@@ -201,6 +187,7 @@ export default function MonthlyPickPage() {
       beans.filter(
         (item) =>
           (category === "all" || item.category === category) &&
+          hasColor(item, color) &&
           (!availableOnly || item.availability === "available") &&
           (!hideDecaf || !item.decaf) &&
           (!favoritesOnly || favorites.includes(item.id)) &&
@@ -218,6 +205,7 @@ export default function MonthlyPickPage() {
     [
       beans,
       category,
+      color,
       availableOnly,
       hideDecaf,
       favoritesOnly,
@@ -411,12 +399,15 @@ export default function MonthlyPickPage() {
           <button
             className={category === key ? "active" : ""}
             key={key}
+            aria-pressed={category === key}
             onClick={() => setCategory(key)}
           >
             {label}
           </button>
         ))}
       </div>
+      <div className="monthly-color-filters" aria-label="판매처 색감 필터"><span>어떤 색감의 커피?</span><button type="button" aria-pressed={color === "all"} onClick={() => setColor("all")}>모든 색</button>{colorFamilies.map(([key,label,hex]) => <button type="button" key={key} aria-pressed={color === key} onClick={() => setColor(key)}><i style={{backgroundColor:hex}} />{label}</button>)}</div>
+      <p className="color-help">색감은 판매처가 표현한 원두별 팔레트입니다. 향미를 고르는 시각적 단서로 활용해보세요. 사진은 서비스 연출 이미지입니다.</p>
       <div className="monthly-filters">
         <label className="monthly-search">
           <Search size={18} />
@@ -444,10 +435,14 @@ export default function MonthlyPickPage() {
           디카페인 숨기기
         </label>
       </div>
+      <div className="monthly-group-legend">{Object.entries(monthlyGroups).map(([key,group]) => <button type="button" key={key} onClick={() => setCategory(category === key ? "all" : key)} aria-pressed={category === key}><i style={{backgroundColor:group.color}} />{group.label}<strong>{beans.filter(item => item.category === key).length}</strong></button>)}</div>
       <div className="monthly-bean-grid">
-        {visible.map((item) => (
+        {visible.map((item,index) => (
+          <Fragment key={item.id}>
+          {(index === 0 || visible[index-1].category !== item.category) && <div className="bean-group-heading" style={{"--group-color":monthlyGroups[item.category]?.color}}><span>{monthlyGroups[item.category]?.code}</span><h3>{groups[item.category]} <small>{visible.filter(bean => bean.category === item.category).length}종</small></h3></div>}
           <article
             className={`monthly-bean ${item.availability === "sold-out" ? "is-sold-out" : ""}`}
+            style={{"--group-color":monthlyGroups[item.category]?.color,"--group-tint":monthlyGroups[item.category]?.tint}}
             key={item.id}
           >
             <div className="bean-top">
@@ -473,7 +468,8 @@ export default function MonthlyPickPage() {
               </span>
             </div>
             <div className="bean-card-copy">
-              <p className="bean-category">{groups[item.category]}</p>
+              <p className="bean-category"><i />{groups[item.category]}</p>
+              <FlavorColors item={item} />
               <button className="bean-title" onClick={() => setActive(item)}>
                 {item.name}
               </button>
@@ -507,6 +503,7 @@ export default function MonthlyPickPage() {
               </div>
             </div>
           </article>
+          </Fragment>
         ))}
       </div>
       {!visible.length && (
@@ -514,7 +511,7 @@ export default function MonthlyPickPage() {
           <Search size={30} />
           <h3>찾는 원두가 아직 없어요.</h3>
           <p>검색어와 필터를 조정해보세요.</p>
-          <button type="button" className="ghost-button" onClick={() => { setQuery(""); setCategory("all"); setAvailableOnly(false); setHideDecaf(false); setFavoritesOnly(false); }}>필터 초기화</button>
+          <button type="button" className="ghost-button" onClick={() => { setQuery(""); setCategory("all"); setColor("all"); setAvailableOnly(false); setHideDecaf(false); setFavoritesOnly(false); }}>필터 초기화</button>
         </div>
       )}
       {compared.length > 0 && (
