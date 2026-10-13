@@ -75,3 +75,5 @@ node backend/scripts/verify-production.mjs
 ## 내부 화면 개선 (2026-10-13)
 
 대시보드 세션·실기록 수치·최근 기록, 커피/음악 아카이브 검색·정렬 카드, 페어링과 소장품 아트워크, 월별 실기록 그래프와 빈도 순위, 작성/상세의 안내 영역을 적용했다. 기준은 design-guide.md 내부 개선 섹션을 따른다. Pages 자동 배포 대상은 feature/interior-studio로 이동했다. Railway는 배포 승인 취소 상태를 유지한다.
+
+내부 개편은 커밋 b594be0과 dev PR #5에 담았다: https://github.com/gywns0418/roast-and-reverb/pull/5 . 공개 내부 진입 주소는 https://gywns0418.github.io/roast-and-reverb/#/dashboard . Pages 배포 성공과 실제 공개 화면 확인 완료. 현재 PR 병합 여부는 원격 상태를 확인한다.
