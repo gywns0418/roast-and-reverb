@@ -34,11 +34,11 @@ export default function CollectionWritePage() {
           <Input placeholder="아티스트" value={form.artist} onChange={update("artist")} />
         </div>
         <div className="filter-row">
-          <button type="button" className={form.format === "LP" ? "primary-button" : "ghost-button"} onClick={() => setForm((prev) => ({ ...prev, format: "LP" }))}>LP</button>
-          <button type="button" className={form.format === "CD" ? "primary-button" : "ghost-button"} onClick={() => setForm((prev) => ({ ...prev, format: "CD" }))}>CD</button>
+          <button type="button" aria-pressed={form.format === "LP"} className={form.format === "LP" ? "primary-button" : "ghost-button"} onClick={() => setForm((prev) => ({ ...prev, format: "LP" }))}>LP</button>
+          <button type="button" aria-pressed={form.format === "CD"} className={form.format === "CD" ? "primary-button" : "ghost-button"} onClick={() => setForm((prev) => ({ ...prev, format: "CD" }))}>CD</button>
         </div>
-        <textarea className="textarea" placeholder="메모 — 어떤 페어링에 자주 등장하는지, 왜 들였는지" value={form.note} onChange={update("note")} />
-        <Button onClick={handleSave} disabled={saving || !form.title} loading={saving}>{saving ? "저장 중" : "컬렉션에 등록"}</Button>
+        <label className="input-field"><span>소장 메모</span><textarea className="textarea" placeholder="메모 — 어떤 페어링에 자주 등장하는지, 왜 들였는지" value={form.note} onChange={update("note")} /></label>
+        <Button onClick={handleSave} disabled={saving || !form.title.trim()} loading={saving}>{saving ? "저장 중" : "컬렉션에 등록"}</Button>
         {message && <p className="muted">{message}</p>}
       </section>
     </PageShell>

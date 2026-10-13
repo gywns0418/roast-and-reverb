@@ -5,6 +5,7 @@ import "./styles/main.css";
 import "./styles/studio.css";
 import "./styles/interior.css";
 import "./styles/discovery.css";
+import "./styles/usability.css";
 
 function ScrollReset() {
   const { pathname } = useLocation();

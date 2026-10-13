@@ -1,3 +1,4 @@
+import TrialNotice from "../../components/auth/TrialNotice.jsx";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button.jsx";
@@ -36,6 +37,7 @@ export default function LoginPage() {
   return (
     <section className="page cover-page">
       <div className="cover-card">
+        <TrialNotice />
         <div className="cover-brand smcp">Roast &amp; Reverb</div>
         <p className="cover-vol oldnum">Coffee × Music</p>
         <h1>다시 펼치기</h1>
@@ -43,7 +45,7 @@ export default function LoginPage() {
         <div className="cover-form">
           <Input type="email" placeholder="이메일" value={form.email} onChange={update("email")} />
           <Input type="password" placeholder="비밀번호" value={form.password} onChange={update("password")} />
-          <Button onClick={handleLogin} disabled={loading} loading={loading}>{loading ? "로그인 중" : "로그인"}</Button>
+          <Button onClick={handleLogin} disabled={loading || import.meta.env.VITE_USE_REAL_API !== "true"} loading={loading}>{loading ? "로그인 중" : "로그인"}</Button>
           {error && <p className="muted">{error}</p>}
         </div>
         <div className="cover-links">

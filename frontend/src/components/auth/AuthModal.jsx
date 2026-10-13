@@ -33,7 +33,7 @@ export default function AuthModal({ initialMode = "login", onClose, onAuthentica
           setMessage(err.message || "요청에 실패했습니다.");
           return;
         }
-        user = devUser(form);
+        throw err;
       }
 
       const resolvedUser = user;

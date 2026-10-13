@@ -514,6 +514,7 @@ export default function MonthlyPickPage() {
           <Search size={30} />
           <h3>찾는 원두가 아직 없어요.</h3>
           <p>검색어와 필터를 조정해보세요.</p>
+          <button type="button" className="ghost-button" onClick={() => { setQuery(""); setCategory("all"); setAvailableOnly(false); setHideDecaf(false); setFavoritesOnly(false); }}>필터 초기화</button>
         </div>
       )}
       {compared.length > 0 && (

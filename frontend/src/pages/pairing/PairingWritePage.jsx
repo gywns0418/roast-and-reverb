@@ -1,5 +1,6 @@
+import { listDiaryRecords } from "../../utils/diaryRecords.js";
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
 import CoffeeLogCard from "../../components/coffee/CoffeeLogCard.jsx";
@@ -21,12 +22,12 @@ function readId(item, keys) {
 export default function PairingWritePage() {
   const navigate = useNavigate();
   const { data: coffees } = useApiResource(
-    () => coffeeApi.list({ limit: 20 }).then((items) => items.map(adaptCoffeeLog)),
+    () => listDiaryRecords(coffeeApi.list).then((items) => items.map(adaptCoffeeLog)),
     coffeeLogs.map(adaptCoffeeLog),
     []
   );
   const { data: musics } = useApiResource(
-    () => musicApi.list({ limit: 20 }).then((items) => items.map(adaptMusicLog)),
+    () => listDiaryRecords(musicApi.list).then((items) => items.map(adaptMusicLog)),
     musicLogs.map(adaptMusicLog),
     []
   );
@@ -78,39 +79,40 @@ export default function PairingWritePage() {
 
   return (
     <PageShell title="AI 페어링 생성" eyebrow="Analyze" subtitle="커피 로그와 음악 로그를 선택해 AI 인사이트를 생성합니다.">
+      {(!coffees.length || !musics.length) && <div className="panel"><p>한 잔과 한 곡의 기록이 있어야 연결할 수 있어요.</p><div className="action-row"><Link className="ghost-button" to="/coffee/write">커피 기록하기</Link><Link className="ghost-button" to="/music/write">음악 기록하기</Link></div></div>}
       <div className="picker-group">
-        <div className={`ledger-pick coffee ${openPicker === "coffee" ? "open" : ""}`} onClick={() => setOpenPicker(openPicker === "coffee" ? null : "coffee")}>
+        <button type="button" aria-expanded={openPicker === "coffee"} className={`ledger-pick coffee ${openPicker === "coffee" ? "open" : ""}`} onClick={() => setOpenPicker(openPicker === "coffee" ? null : "coffee")}>
           <div>
             <span className="meta smcp">Coffee</span>
             <span className="name">{selectedCoffee?.bean || "선택 없음"}</span>
           </div>
           <span className="chg">{openPicker === "coffee" ? "닫기" : "변경"}</span>
-        </div>
+        </button>
         {openPicker === "coffee" && (
           <div className="pick-list">
             {coffees.map((item) => (
-              <div className={`pick-row ${String(item.id) === String(selectedCoffee?.id) ? "active" : ""}`} key={item.id} onClick={() => pickCoffee(item.id)}>
+              <button type="button" className={`pick-row ${String(item.id) === String(selectedCoffee?.id) ? "active" : ""}`} key={item.id} onClick={() => pickCoffee(item.id)}>
                 <span>{item.bean}</span>
                 <span className="sub oldnum">{item.date}</span>
-              </div>
+              </button>
             ))}
           </div>
         )}
 
-        <div className={`ledger-pick music ${openPicker === "music" ? "open" : ""}`} onClick={() => setOpenPicker(openPicker === "music" ? null : "music")}>
+        <button type="button" aria-expanded={openPicker === "music"} className={`ledger-pick music ${openPicker === "music" ? "open" : ""}`} onClick={() => setOpenPicker(openPicker === "music" ? null : "music")}>
           <div>
             <span className="meta smcp">Music</span>
             <span className="name">{selectedMusic ? `${selectedMusic.artist} — ${selectedMusic.track}` : "선택 없음"}</span>
           </div>
           <span className="chg">{openPicker === "music" ? "닫기" : "변경"}</span>
-        </div>
+        </button>
         {openPicker === "music" && (
           <div className="pick-list">
             {musics.map((item) => (
-              <div className={`pick-row ${String(item.id) === String(selectedMusic?.id) ? "active" : ""}`} key={item.id} onClick={() => pickMusic(item.id)}>
+              <button type="button" className={`pick-row ${String(item.id) === String(selectedMusic?.id) ? "active" : ""}`} key={item.id} onClick={() => pickMusic(item.id)}>
                 <span>{item.artist} — {item.track}</span>
                 <span className="sub oldnum">{item.date}</span>
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -120,7 +122,7 @@ export default function PairingWritePage() {
         {selectedMusic && <MusicCard item={selectedMusic} />}
       </div>
       <div className="action-row">
-        <Button onClick={handleAnalyze} disabled={saving} loading={saving}>{saving ? "분석 중" : "선택한 기록으로 분석"}</Button>
+        <Button onClick={handleAnalyze} disabled={saving || !selectedCoffee || !selectedMusic} loading={saving}>{saving ? "분석 중" : "선택한 기록으로 분석"}</Button>
         {message && <span className="muted">{message}</span>}
       </div>
     </PageShell>
