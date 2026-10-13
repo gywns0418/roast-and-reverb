@@ -98,3 +98,4 @@ feature/usability-audit는 origin/main에서 분기하고 PR #6 구현을 통합
 
 feature/editorial-pairing-engine. 5개 새 브랜드 이미지, 전체 월픽의 분류별 색상 구획과 원문 HEX 팔레트/9색 필터, R&R 무료 로컬 페어링 분석·피드백 선호 학습을 추가했다. 엔진 구현/제약은 pairing-engine.md, 원문 색상은 monthly-source.md, 이미지 프롬프트/경로는 design-guide.md, 검증은 change-log.md 마지막 섹션. 실제 서버 미배포, 개인 원본 보호, 무료 크레딧만 허용 조건 유지. main 승격은 수행하지 않는다. 현재 공개 코드/PR/CI는 원격을 확인한다.
 - dev PR #9 생성. 공개 월픽/페어링 엔진 적용 확인, 최신 실행 코드 8430929 Pages 성공. 카드 사진과 분류색·팔레트·필터의 공개 증거는 docs/qa/editorial-monthly-*.jpg, pairing-engine-public.jpg. 최신 CI/병합 상태는 원격 확인을 우선한다.
+- 최종 PR #9 dev 병합 완료(17c7ece). 구현 8430929 Pages 성공/공개 확인, 후속 테스트·문서·QA 커밋 04838e4 Verify 성공(19개 프론트 테스트 포함); 실행 코드 동일. 해당 후속 Pages 재배포는 마지막 조회 queued이며 공개 실행 변경은 이미 적용됐다. 작업 브랜치 feature/editorial-pairing-engine, 상태 기록은 후속 문서 커밋에 보존. 실제 서버는 계속 미배포, 유료 결제/배포 없음.
