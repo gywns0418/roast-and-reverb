@@ -27,4 +27,5 @@
 - 후속 커밋: `8242f44` (CI 호환 명령과 검증 기록 갱신).
 - `1334f80`의 최신 Verify 검사와 공개 체험 배포 성공 확인 후 dev PR #4 병합.
 - 사용자 비용 조건: Trial/Free 무료 크레딧만 사용. Railway accept-deploy는 “Cancelled — the user did not approve this action. No changes were made.”를 반환했다. 재조회에서도 11개 변경은 STAGED, latestDeployment는 null이다. 서버 실행·HTTPS 검증은 아직 미완료이며 도구의 최종 배포 승인 후 이어가야 한다. 유료 플랜 전환이나 결제를 하지 않았다.
+- 사용자가 동일 배포 재요청을 명시적으로 승인했으나 두 번째 accept-deploy도 같은 취소 결과를 반환했다. 우회 배포하지 않았다. 다음 작업은 Railway의 최종 도구 승인 문제를 해결하거나 사용자가 프로젝트에서 대기 변경 적용을 직접 수행한 뒤 실제 배포를 검증하는 것이다.
 - CI: 프론트/서버 검사와 컨테이너 빌드·기동·healthcheck 성공. root 응답 확인 명령에서 runner에 없는 rg를 사용해 이미지 검사가 실패했으며, 표준 grep으로 수정한 `8242f44`에서 모든 최신 CI 검사와 Pages 배포가 성공했다.
