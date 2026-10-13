@@ -11,7 +11,7 @@ import { reportApi } from "../../api/reportApi.js";
 import { adaptCoffeeLog, adaptMonthlyReport, adaptMusicLog, adaptPairing } from "../../api/adapters.js";
 import { useApiResource } from "../../hooks/useApiResource.js";
 
-const FRESH_THRESHOLD = "07.09";
+const FRESH_THRESHOLD = new Date(Date.now()-7*86400000).toISOString().slice(5,10).replace("-",".");
 
 function buildRecentNotes(coffees, music) {
   return [
@@ -78,7 +78,7 @@ export default function DashboardPage() {
   const recentNotes = buildRecentNotes(coffees, music);
 
   return (
-    <PageShell title="Roast & Reverb" eyebrow="Field Ledger" subtitle="오늘 마신 커피와 들은 음악을 조용히 적어둡니다.">
+    <PageShell title="Roast & Reverb" eyebrow="Your daily ritual" subtitle="오늘 마신 커피와 들은 음악을 조용히 적어둡니다.">
       <div className="action-row">
         <Link to="/coffee/write" className="primary-button">오늘의 로그 작성</Link>
         <Link to="/music/search" className="ghost-button">음악 검색</Link>
@@ -88,7 +88,7 @@ export default function DashboardPage() {
         <div className="ledger">
           <div className="ledger-head">
             <span className="book smcp">Roast &amp; Reverb</span>
-            <span className="vol oldnum">Vol. II · 2026</span>
+            <span className="vol oldnum">Coffee × Music</span>
           </div>
 
           {latestPairing && latestPairing.id ? (
@@ -104,7 +104,7 @@ export default function DashboardPage() {
           )}
 
           <div className="ledger-line fresh">
-            <time className="oldnum">07.10.</time>
+            <time className="oldnum">{new Date().toLocaleDateString("ko-KR")}</time>
             <span className="entry">
               오늘의 기록을 기다리고 있어요. <Link to="/coffee/write" style={{ borderBottom: "1px solid currentColor" }}>오늘의 로그 쓰기 →</Link>
             </span>

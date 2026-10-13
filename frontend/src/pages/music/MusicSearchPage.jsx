@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
 import Input from "../../components/common/Input.jsx";
@@ -11,7 +12,8 @@ import { musicLogs } from "../../data/sampleData.js";
 const SHOWN_LIMIT = 6;
 
 export default function MusicSearchPage() {
-  const [keyword, setKeyword] = useState("Sigur Ros");
+  const [params] = useSearchParams();
+  const [keyword, setKeyword] = useState(params.get("q") || "");
   const [results, setResults] = useState(musicLogs.map(adaptMusicLog));
   const [message, setMessage] = useState("");
 
@@ -27,13 +29,13 @@ export default function MusicSearchPage() {
       const items = await musicApi.list({ keyword });
       setResults(items.map(adaptMusicLog));
     } catch {
-      setResults(musicLogs.map(adaptMusicLog));
-      setMessage("백엔드 검색에 연결하지 못해 로컬 기록에서 찾았습니다.");
+      setResults([]);
+      setMessage("검색에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   }
 
   return (
-    <PageShell title="음악 검색" eyebrow="Last.fm · Discogs" subtitle="곡과 앨범 메타데이터를 찾아 음악 로그에 연결합니다.">
+    <PageShell title="음악 검색" eyebrow="Music Library" subtitle="내 기록에서 곡과 앨범을 찾습니다.">
       <section className="panel">
         <div className="form-grid">
           <Input placeholder="곡 또는 아티스트 검색" value={keyword} onChange={(event) => setKeyword(event.target.value)} />

@@ -1,4 +1,4 @@
-const today = "2026-07-11";
+const today = new Date().toISOString().slice(0,10);
 
 let coffeeSeq = 4;
 let musicSeq = 4;
@@ -227,7 +227,7 @@ function createPairing(payload) {
   return enrichPairing(item);
 }
 
-export async function mockRequest(path, options = {}) {
+async function dispatchRequest(path, options = {}) {
   const method = (options.method || "GET").toUpperCase();
   const route = pathOnly(path);
   const payload = bodyOf(options);
@@ -235,7 +235,7 @@ export async function mockRequest(path, options = {}) {
   await new Promise((resolve) => setTimeout(resolve, 120));
 
   if (route === "/auth/login" || route === "/auth/join" || route === "/members/me") {
-    return { memberId: 1, email: payload.email || "demo@roastreverb.local", nickname: payload.nickname || "slow brew", role: "ADMIN" };
+    return { memberId: 1, email: payload.email || "demo@roastreverb.local", nickname: payload.nickname || "slow brew", role: "USER", demo: true };
   }
   if (route === "/auth/logout") return { ok: true };
 
@@ -319,4 +319,42 @@ export async function mockRequest(path, options = {}) {
   ];
 
   return {};
+}
+
+const monthlyPicks = [];
+const storageKey = "roast-reverb-demo-v1";
+const tables = { coffeeLogs, musicLogs, pairings, collections, monthlyPicks };
+try {
+ const saved = JSON.parse(localStorage.getItem(storageKey));
+ if (saved) for (const [key, items] of Object.entries(tables)) if (Array.isArray(saved[key])) items.splice(0,items.length,...saved[key]);
+} catch { /* A damaged local copy does not prevent opening the diary. */ }
+coffeeSeq = Math.max(0,...coffeeLogs.map(x=>x.coffeeLogId))+1;
+musicSeq = Math.max(0,...musicLogs.map(x=>x.musicLogId))+1;
+pairingSeq = Math.max(0,...pairings.map(x=>x.pairingId))+1;
+collectionSeq = Math.max(0,...collections.map(x=>x.collectionId))+1;
+export async function mockRequest(path, options={}) {
+ const method=(options.method||"GET").toUpperCase();
+ const route=pathOnly(path);
+ const match=route.match(/^\/(coffee|music|pairing)\/(\d+)$/);
+ let result;
+ if(route.startsWith("/monthly-picks")) {
+  const id=Number(route.split("/")[2]);
+  if(method==="POST" && !id) {
+   const payload=bodyOf(options);
+   result={monthly_pick_id:Date.now(),pick_month:payload.month,roastery:payload.roastery,source_url:payload.sourceUrl,options:payload.rawOptionsText.split(/\r?\n/).filter(Boolean).map((text,i)=>({monthly_pick_option_id:i+1,raw_text:text,option_name:text,score:null,score_reason:"체험 모드: 점수 분석은 서버 연결 후 제공됩니다.",dark_roast:false,decaf:false,sold_out:false}))};
+   monthlyPicks.unshift(result);
+  } else result=id?monthlyPicks.find(x=>x.monthly_pick_id===id):monthlyPicks;
+  if(method!=="GET") localStorage.setItem(storageKey,JSON.stringify(tables));
+  return result;
+ }
+ if(match && ["PUT","DELETE"].includes(method)) {
+   const [name,id]=match.slice(1); const list={coffee:coffeeLogs,music:musicLogs,pairing:pairings}[name];
+   const key={coffee:"coffeeLogId",music:"musicLogId",pairing:"pairingId"}[name];
+   const index=list.findIndex(x=>String(x[key])===id);
+   if(index<0) throw new Error("기록을 찾을 수 없습니다.");
+   if(method==="DELETE") { list.splice(index,1); result={deleted:true}; }
+   else { Object.assign(list[index],bodyOf(options)); result=list[index]; }
+ } else result=await dispatchRequest(path,options);
+ if(method!=="GET") localStorage.setItem(storageKey,JSON.stringify(tables));
+ return result;
 }

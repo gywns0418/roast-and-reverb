@@ -2,7 +2,7 @@ const STORAGE_KEY = "roast-reverb-log-selection";
 
 function readSelection() {
   const raw = window.localStorage.getItem(STORAGE_KEY);
-  return raw ? JSON.parse(raw) : { selectedCoffeeId: null, selectedMusicId: null };
+  try { return raw ? JSON.parse(raw) : { selectedCoffeeId: null, selectedMusicId: null }; } catch { return { selectedCoffeeId: null, selectedMusicId: null }; }
 }
 
 export const logStore = {

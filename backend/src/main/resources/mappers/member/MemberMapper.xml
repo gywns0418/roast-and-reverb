@@ -6,7 +6,7 @@
   </sql>
 
   <select id="findById" resultType="map">
-    SELECT <include refid="MemberColumns" />
+    SELECT member_id, email, nickname, profile_image, role, status, created_at, updated_at
     FROM member
     WHERE member_id = #{memberId}
   </select>

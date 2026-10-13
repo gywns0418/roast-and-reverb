@@ -1,7 +1,7 @@
 import { request } from "./http.js";
 
 function unwrap(promise) {
-  return promise.then((res) => res.data);
+  return promise.then((res) => res?.data ?? res);
 }
 
 export const monthlyPickApi = {

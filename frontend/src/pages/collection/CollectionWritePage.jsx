@@ -27,7 +27,7 @@ export default function CollectionWritePage() {
   }
 
   return (
-    <PageShell title="컬렉션 추가" eyebrow="New specimen" subtitle="새로 들인 LP/CD를 표본철에 등록합니다.">
+    <PageShell title="컬렉션 추가" eyebrow="New specimen" subtitle="새로 들인 LP/CD를 컬렉션에 등록합니다.">
       <section className="panel">
         <div className="form-grid">
           <Input placeholder="앨범명" value={form.title} onChange={update("title")} />
@@ -38,7 +38,7 @@ export default function CollectionWritePage() {
           <button type="button" className={form.format === "CD" ? "primary-button" : "ghost-button"} onClick={() => setForm((prev) => ({ ...prev, format: "CD" }))}>CD</button>
         </div>
         <textarea className="textarea" placeholder="메모 — 어떤 페어링에 자주 등장하는지, 왜 들였는지" value={form.note} onChange={update("note")} />
-        <Button onClick={handleSave} disabled={saving || !form.title} loading={saving}>{saving ? "저장 중" : "표본철에 등록"}</Button>
+        <Button onClick={handleSave} disabled={saving || !form.title} loading={saving}>{saving ? "저장 중" : "컬렉션에 등록"}</Button>
         {message && <p className="muted">{message}</p>}
       </section>
     </PageShell>

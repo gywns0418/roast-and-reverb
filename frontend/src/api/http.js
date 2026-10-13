@@ -1,7 +1,7 @@
 import { mockRequest } from "./mockApi.js";
 import { authStore } from "../store/authStore.js";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 const USE_REAL_API = import.meta.env.VITE_USE_REAL_API === "true";
 
 export async function request(path, options = {}) {
@@ -11,12 +11,12 @@ export async function request(path, options = {}) {
 
   const token = authStore.token;
   const response = await fetch(`${API_BASE_URL}${path}`, {
+    ...options,
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers
-    },
-    ...options
+    }
   });
   const payload = await response.json().catch(() => null);
   if (!response.ok) {

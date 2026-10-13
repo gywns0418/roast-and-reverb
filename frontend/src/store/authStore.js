@@ -3,7 +3,7 @@ const STORAGE_KEY = "roast-reverb-user";
 export const authStore = {
   get user() {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : null;
+    try { return raw ? JSON.parse(raw) : null; } catch { return null; }
   },
   get token() {
     return this.user?.token || null;
