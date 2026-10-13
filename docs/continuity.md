@@ -88,3 +88,6 @@ node backend/scripts/verify-production.mjs
 ## 최신 작업: 내부 사용성 점검
 
 feature/usability-audit는 origin/main에서 분기하고 PR #6 구현을 통합했다. PR #6은 dev 병합 완료(9d37b6d). Discovery 디자인은 usability.css로 가독성과 모바일 조작을 보완했다. 변경/검증 상세는 change-log.md 마지막 섹션을 확인한다. 음악 날짜 선택, 키보드 페어링 선택, 전체 기록 기반 마이페이지, 체험 인증 안내가 적용됐다. Pages workflow는 이 feature 브랜치와 monthly-refresh-*를 허용한다. main 승격은 수행하지 않는다. Railway는 실제 미배포이며 비용 조건은 무료 크레딧만 유지한다. 실제 관리자 로그인 UI, 실서버/외부 음악 API 및 백업/복구는 후속 과제다.
+
+
+최종 확인: 구현 9fa5342의 Verify(38406582421)와 Pages(38406575199) 성공. PR #7은 dev에 병합 완료, dev merge SHA fff4d04. 공개 음악 작성 24px 폼 간격/날짜 입력과 모바일 월픽 52카드·1열·넘침 없음 확인. docs/qa의 공개 화면 이미지는 검증 증거이며 개인 기록을 포함하지 않는다. 후속 문서 커밋에는 동일 결과와 QA 이미지만 포함한다. 서버 운영 완료로 해석하지 않는다.
