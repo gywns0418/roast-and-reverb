@@ -109,3 +109,11 @@ feature/editorial-pairing-engine. 5개 새 브랜드 이미지, 전체 월픽의
 ## 최신 개발: 2026-10-14 원두 기반 Discovery
 
 현재 feature/bean-discovery. 원두 선반/기기 파일 가져오기와 월픽·보유 원두 후보, 실제 브라우저 다국어 의미 모델 추천을 구현했다. UI·모델·로컬 테스트 검증은 change-log.md, 구현 범위/제약은 recommendation-direction.md 마지막 섹션을 따른다. 개인 원본 미수정/미공개, 비용은 무료만, Railway 실서버 미배포. Pages 배포 대상은 이 기능 브랜치로 변경했다. main 승격은 수행하지 않는다. 최신 원격 PR/CI/공개 검증은 후속 기록을 확인한다.
+
+
+## 2026-10-13 — 운영 main / 개발 dev 분리
+
+사용자가 완료된 개발 기능의 main 반영을 승인했다. PR #9까지의 dev 코드와 main/dev 분리 Pages workflow를 함께 반영한다. 운영은 /roast-and-reverb/, 개발은 /roast-and-reverb/dev/이며 두 브랜치를 각각 빌드한다. feature 직접 배포는 environment branch policy로 차단한다. main 반영만 사용자 확인을 받으며 이번 반영은 이미 승인됨. bean-discovery 미커밋 파일과 개인 원본은 보존했다. 프론트 19개 테스트와 개발 경로 빌드 통과. GitHub CI/배포 최종 결과는 후속 상태로 기록한다. 실제 백엔드 운영과 독립 데이터베이스 환경을 제공하는 변경은 아니다.
+
+
+2026-10-14 최신 배포 방식: 원격 main의 운영/개발 분리를 통합했다. 이번 기능은 dev PR #12로 반영하고 /roast-and-reverb/dev/에 배포한다. feature 직접 배포를 중단했으며 main은 변경하지 않는다.
