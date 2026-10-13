@@ -63,3 +63,4 @@
 .page-workspace .log-card .art-title { font-size: 25px; }
 .page-workspace .log-card .art-caption, .page-workspace .log-card .art-bottom { display: none; }
 @media (max-width: 760px) { .page-workspace .compose-layout { grid-template-columns: minmax(0, 1fr); } }
+.page-music form.panel { display: grid; gap: 24px; }
