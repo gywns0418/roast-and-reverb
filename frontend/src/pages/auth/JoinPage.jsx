@@ -5,15 +5,6 @@ import Input from "../../components/common/Input.jsx";
 import { authApi } from "../../api/authApi.js";
 import { authStore } from "../../store/authStore.js";
 
-function devUser(form) {
-  return {
-    memberId: 1,
-    email: form.email || "demo@roastreverb.local",
-    nickname: form.nickname || "slow brew",
-    role: "ADMIN",
-    demo: true
-  };
-}
 
 export default function JoinPage() {
   const navigate = useNavigate();
@@ -31,10 +22,9 @@ export default function JoinPage() {
       try {
         user = await authApi.join(form);
       } catch (err) {
-        if (err.status) throw err;
-        user = devUser(form);
+        throw err;
       }
-      authStore.setUser(user || devUser(form));
+      authStore.setUser(user);
       navigate("/dashboard");
     } catch (err) {
       setError(err.message || "계정 생성에 실패했습니다.");

@@ -19,6 +19,7 @@ import PairingWritePage from "../pages/pairing/PairingWritePage.jsx";
 import PairingDetailPage from "../pages/pairing/PairingDetailPage.jsx";
 import MonthlyReportPage from "../pages/report/MonthlyReportPage.jsx";
 import RecommendPage from "../pages/recommend/RecommendPage.jsx";
+import MonthlyPickPage from "../pages/monthlypick/MonthlyPickPage.jsx";
 import CollectionPage from "../pages/collection/CollectionPage.jsx";
 import CollectionWritePage from "../pages/collection/CollectionWritePage.jsx";
 import MyPage from "../pages/mypage/MyPage.jsx";
@@ -83,6 +84,7 @@ export default function AppRouter() {
 
         <Route path="/recommend" element={<RecommendPage />} />
         <Route path="/recommendations" element={<RecommendPage />} />
+        <Route path="/monthly-pick" element={<MonthlyPickPage />} />
 
         <Route path="/collection" element={<CollectionPage />} />
         <Route path="/collections" element={<CollectionPage />} />

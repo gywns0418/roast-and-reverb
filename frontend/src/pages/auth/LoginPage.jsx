@@ -5,19 +5,10 @@ import Input from "../../components/common/Input.jsx";
 import { authApi } from "../../api/authApi.js";
 import { authStore } from "../../store/authStore.js";
 
-function devUser(form) {
-  return {
-    memberId: 1,
-    email: form.email || "demo@roastreverb.local",
-    nickname: "slow brew",
-    role: "ADMIN",
-    demo: true
-  };
-}
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: "demo@roastreverb.local", password: "demo" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -31,10 +22,9 @@ export default function LoginPage() {
       try {
         user = await authApi.login(form);
       } catch (err) {
-        if (err.status) throw err;
-        user = devUser(form);
+        throw err;
       }
-      authStore.setUser(user || devUser(form));
+      authStore.setUser(user);
       navigate("/dashboard");
     } catch (err) {
       setError(err.message || "로그인에 실패했습니다.");
@@ -47,7 +37,7 @@ export default function LoginPage() {
     <section className="page cover-page">
       <div className="cover-card">
         <div className="cover-brand smcp">Roast &amp; Reverb</div>
-        <p className="cover-vol oldnum">Vol. II · 2026</p>
+        <p className="cover-vol oldnum">Coffee × Music</p>
         <h1>다시 펼치기</h1>
         <p className="subtitle">커피와 음악 취향 데이터를 이어서 기록합니다.</p>
         <div className="cover-form">

@@ -55,10 +55,10 @@
       member_id, coffee_log_id, music_log_id, mood_summary, mood_tags,
       pairing_score, pairing_text, ai_reason
     )
-    VALUES (
-      #{memberId}, #{coffeeLogId}, #{musicLogId}, #{moodSummary}, #{moodTags},
+    SELECT #{memberId}, #{coffeeLogId}, #{musicLogId}, #{moodSummary}, #{moodTags},
       #{pairingScore}, #{pairingText}, #{aiReason}
-    )
+    WHERE EXISTS (SELECT 1 FROM coffee_log WHERE coffee_log_id = #{coffeeLogId} AND member_id = #{memberId})
+      AND EXISTS (SELECT 1 FROM music_log WHERE music_log_id = #{musicLogId} AND member_id = #{memberId})
   </insert>
 
   <delete id="delete">

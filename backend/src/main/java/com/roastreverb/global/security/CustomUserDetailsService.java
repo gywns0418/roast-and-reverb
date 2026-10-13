@@ -18,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public MemberPrincipal loadUserByUsername(String email) {
         Map<String, Object> member = memberMapper.findByEmail(email);
-        if (member == null) {
+        if (member == null || !"ACTIVE".equals(String.valueOf(member.get("status")))) {
             throw new UsernameNotFoundException("가입되지 않은 이메일입니다.");
         }
         return MemberPrincipal.from(member);

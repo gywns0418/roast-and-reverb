@@ -4,6 +4,8 @@ import com.roastreverb.domain.external.service.ExternalApiLogService;
 import com.roastreverb.domain.pairing.mapper.PairingMapper;
 import com.roastreverb.global.security.SecurityUtil;
 import org.springframework.stereotype.Service;
+import com.roastreverb.global.exception.CustomException;
+import org.springframework.http.HttpStatus;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -34,7 +36,7 @@ public class PairingService {
     }
 
     public Map<String, Object> create(Map<String, Object> pairing) {
-        pairingMapper.insert(pairing);
+        if (pairingMapper.insert(pairing) != 1) throw new CustomException(HttpStatus.BAD_REQUEST, "본인의 커피와 음악 기록을 선택해 주세요.");
         return pairing;
     }
 
@@ -59,7 +61,7 @@ public class PairingService {
                 logClaudeCall("PAIRING_ANALYSIS", false, e.getMessage());
             }
         }
-        return heuristicAnalyze(request);
+        throw new CustomException(HttpStatus.SERVICE_UNAVAILABLE, "AI 분석을 사용할 수 없습니다. 서버 API 키와 연결 상태를 확인해 주세요.");
     }
 
     public Map<String, Object> parseNaturalLog(Map<String, Object> request) {
@@ -73,7 +75,7 @@ public class PairingService {
                 logClaudeCall("NATURAL_LOG_PARSE", false, e.getMessage());
             }
         }
-        return heuristicParseNaturalLog(request);
+        throw new CustomException(HttpStatus.SERVICE_UNAVAILABLE, "자연어 분석을 사용할 수 없습니다. 직접 기록하거나 나중에 다시 시도해 주세요.");
     }
 
     private Map<String, Object> heuristicAnalyze(Map<String, Object> request) {

@@ -4,19 +4,10 @@ import Input from "../common/Input.jsx";
 import { authApi } from "../../api/authApi.js";
 import { authStore } from "../../store/authStore.js";
 
-function devUser(form) {
-  return {
-    memberId: 1,
-    email: form.email || "demo@roastreverb.local",
-    nickname: form.nickname || "slow brew",
-    role: "ADMIN",
-    demo: true
-  };
-}
 
 export default function AuthModal({ initialMode = "login", onClose, onAuthenticated }) {
   const [mode, setMode] = useState(initialMode);
-  const [form, setForm] = useState({ nickname: "slow brew", email: "demo@roastreverb.local", password: "demo" });
+  const [form, setForm] = useState({ nickname: "slow brew", email: "", password: "" });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -30,7 +21,7 @@ export default function AuthModal({ initialMode = "login", onClose, onAuthentica
     setMessage("");
     try {
       if (isFindId || isFindPassword) {
-        setMessage("입력한 이메일로 안내를 보냈습니다.");
+        setMessage("계정 복구는 아직 제공하지 않습니다. 가입한 이메일로 로그인해 주세요.");
         return;
       }
 
@@ -45,7 +36,7 @@ export default function AuthModal({ initialMode = "login", onClose, onAuthentica
         user = devUser(form);
       }
 
-      const resolvedUser = user || devUser(form);
+      const resolvedUser = user;
       authStore.setUser(resolvedUser);
       onAuthenticated?.(resolvedUser);
       onClose?.();

@@ -34,10 +34,15 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // The app has no login-gated pages today (every route is browsable without an account),
-                // so every request stays permitAll; the JwtFilter still resolves the real member from
-                // the token when one is present so data reads/writes are scoped to the right member.
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+                .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/api/auth/login", "/api/auth/join").permitAll()
+                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                    .anyRequest().authenticated())
+                .exceptionHandling(errors -> errors.authenticationEntryPoint((request, response, exception) -> {
+                    response.setStatus(401);
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.getWriter().write("{\"message\":\"로그인이 필요합니다.\"}");
+                }))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
