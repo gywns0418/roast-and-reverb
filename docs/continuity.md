@@ -98,3 +98,8 @@ feature/usability-audit는 origin/main에서 분기하고 PR #6 구현을 통합
 
 feature/editorial-pairing-engine. 5개 새 브랜드 이미지, 전체 월픽의 분류별 색상 구획과 원문 HEX 팔레트/9색 필터, R&R 무료 로컬 페어링 분석·피드백 선호 학습을 추가했다. 엔진 구현/제약은 pairing-engine.md, 원문 색상은 monthly-source.md, 이미지 프롬프트/경로는 design-guide.md, 검증은 change-log.md 마지막 섹션. 실제 서버 미배포, 개인 원본 보호, 무료 크레딧만 허용 조건 유지. main 승격은 수행하지 않는다. 현재 공개 코드/PR/CI는 원격을 확인한다.
 - dev PR #9 생성. 공개 월픽/페어링 엔진 적용 확인, 최신 실행 코드 8430929 Pages 성공. 카드 사진과 분류색·팔레트·필터의 공개 증거는 docs/qa/editorial-monthly-*.jpg, pairing-engine-public.jpg. 최신 CI/병합 상태는 원격 확인을 우선한다.
+
+
+## 2026-10-13 — 운영 main / 개발 dev 분리
+
+사용자가 완료된 개발 기능의 main 반영을 승인했다. PR #9까지의 dev 코드와 main/dev 분리 Pages workflow를 함께 반영한다. 운영은 /roast-and-reverb/, 개발은 /roast-and-reverb/dev/이며 두 브랜치를 각각 빌드한다. feature 직접 배포는 environment branch policy로 차단한다. main 반영만 사용자 확인을 받으며 이번 반영은 이미 승인됨. bean-discovery 미커밋 파일과 개인 원본은 보존했다. 프론트 19개 테스트와 개발 경로 빌드 통과. GitHub CI/배포 최종 결과는 후속 상태로 기록한다. 실제 백엔드 운영과 독립 데이터베이스 환경을 제공하는 변경은 아니다.
