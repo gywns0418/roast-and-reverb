@@ -1,3 +1,4 @@
+import { decodePairingEvidence, saveFeedback, readPreferences } from "../../utils/pairingEngine.js";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Coffee, Headphones, ArrowUpRight, Bookmark } from "lucide-react";
@@ -17,6 +18,9 @@ export default function PairingDetailPage() {
     fallback,
     [id],
   );
+  const evidence = decodePairingEvidence(item.reason);
+  const [feedback, setFeedback] = useState("");
+  function rate(label) { try { const model=saveFeedback(item.id,evidence.features,label); setFeedback(`피드백을 반영했어요. 이 기기 학습 ${model.samples}건`); } catch(error) { setFeedback(error.message); } }
   const [archiving, setArchiving] = useState(false);
   const [archived, setArchived] = useState(false);
   const [error, setError] = useState("");
@@ -73,14 +77,14 @@ export default function PairingDetailPage() {
             <p>{item.text}</p>
           </div>
           <div className="session-score">
-            <span>페어링 점수</span>
+            <span>{evidence?.scoreKind || "페어링 점수"}</span>
             <strong>
               {item.score}
               <small>/ 100</small>
             </strong>
           </div>
         </div>
-        {item.reason && <p className="session-reason">{item.reason}</p>}
+        {evidence ? <section className="pairing-evidence"><p className="eyebrow">R&R LOCAL / EXPLAINABLE PAIRING</p><h3>이 조합을 연결한 단서</h3><div className="evidence-columns"><div><strong>커피에서</strong><p>{evidence.coffee.join(" · ")}</p></div><div><strong>음악에서</strong><p>{evidence.music.join(" · ")}</p></div></div><div className="evidence-axes">{evidence.axes.map(axis => <div key={axis.label}><span>{axis.label}</span><progress max="1" value={axis.value} /><b>{Math.round(axis.value*100)}%</b></div>)}</div><p>비교 가능한 특성 {evidence.coverage}/4 · {evidence.scoreKind} · 분석 당시 피드백 {evidence.samples}건. 특성 유사도는 만족 확률이나 객관적 음악/커피 평점이 아닙니다.</p><h3>직접 느낀 조합은 어땠나요?</h3><div className="action-row"><button className="primary-button" onClick={() => rate(1)}>잘 어울려요</button><button className="ghost-button" onClick={() => rate(0)}>조금 아쉬워요</button></div><p role="status">{feedback || `이 기기 학습 ${readPreferences().samples}건 · 5건부터 개인 선호 추정 적용`}</p></section> : item.reason && <p className="session-reason">{item.reason}</p>}
         <footer>
           <Link className="ghost-button" to="/pairing/write">
             새 조합 만들기 <ArrowUpRight size={17} />

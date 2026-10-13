@@ -139,6 +139,7 @@ export default function CoffeeWritePage() {
       <div className="today-log-layout">
         <section className="natural-log-panel">
           <span>자연어 입력</span>
+          {local && <p className="color-help">체험 구조화는 고정 예시입니다. 직접 입력한 맛과 음악은 R&R 페어링 엔진으로 비교할 수 있어요.</p>}
           <textarea
             aria-label="오늘의 커피와 음악"
             placeholder="오늘 마신 커피와 들은 음악을 적어보세요."
@@ -147,7 +148,7 @@ export default function CoffeeWritePage() {
             onChange={(event) => setNaturalLog(event.target.value)}
           />
           <Button onClick={handleParse} disabled={parsing} loading={parsing}>
-            {parsing ? "분석 중" : "AI로 분석하기"}
+            {parsing ? "분석 중" : local ? "구조화 예시 보기" : "AI로 분석하기"}
           </Button>
         </section>
 

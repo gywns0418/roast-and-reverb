@@ -46,3 +46,22 @@ imagegen 스킬의 built-in image_gen 도구 사용. 결과는 `frontend/public/
 
 Discovery Studio를 유지하며 마지막에 usability.css를 적용한다. 본문 14~15px, 월픽 사실 정보 최소 12px, 녹색 보조 텍스트 대비, 44px 주요 조작 영역을 사용한다. 520px 이하의 원두 카드는 한 열로 읽으며 모바일 안내 레일은 숨겨 본문에 집중한다. 검색 포커스, 본문 건너뛰기, 상세/작성의 목록 복귀, 키보드 가능한 페어링 선택을 제공한다. 음악 기록은 예시 초기값 대신 빈 입력과 들은 날짜를 제공한다. 체험 계정 화면은 서버 미배포 안내와 기록장 복귀를 제공하고 가입/로그인 제출을 비활성화한다.
 - 작성 폼은 구획 사이 24px 간격을 유지하고, 상세의 장식 아트워크 높이는 190px로 제한한다. 페어링 선택 결과는 데스크톱 2열, 모바일 1열이다.
+
+
+## 2026-10-13 Editorial Sessions / 월픽 색감
+
+사용자의 첨부 레퍼런스(햇살 아래 커피·레코드·헤드폰)와 어울리도록 built-in image_gen으로 5개 원본 브랜드 연출 이미지를 생성했다. 최종 서비스 자산은 frontend/public/images/{coffee,music,pairing,house,special}-editorial.webp. WebP 총 약 0.8MB로 제공하고 lazy loading한다. 실제 원두 사진이나 공식 앨범 커버로 표시하지 않는다. 원본 PNG는 C:/Users/gywns/.codex/generated_images/01a13571-f3da-71e3-b66a-ca69d0ffd6de에 보존한다. 기존 ritual-editorial.png를 덮어쓰지 않았다.
+
+공통 RecordArtwork는 커피/음악/페어링 사진을 사용해 아카이브·상세·추천·소장품·리포트·안내 레일을 연결한다. 월픽 전체에서도 분류별 제목 구획, 카드 색띠/분류 배지/장면을 유지한다. 언스페셜티 블렌드 #b35537, 하우스 블렌드 #80603f, 싱글 #526849, 스페셜 싱글 #725685는 R&R 자체 분류색이다. 판매처의 **원두별 향미 HEX**는 이 분류색과 별도로 원문 그대로 사용한다. 컬러 스트립과 원형 팔레트, 보라/분홍/빨강/주황/노랑/초록/파랑/갈색/크림 필터를 제공한다. 색만으로 분류하지 않고 이름을 함께 표시한다. 드립백은 별도 보존한다.
+
+### 생성 프롬프트 세트 (built-in, photorealistic-natural)
+
+공통 제약: landscape 3:2, warm natural afternoon sunlight, crisp diagonal shadows, cream tabletop, tactile ceramics/paper/metal, contemporary premium editorial photography; no people, writing, branding, watermark or UI. Original brand scenes, not actual vendor products or official album covers.
+
+- coffee: sculptural cream ceramic cup of black filter coffee, clear pour-over brewer with paper filter and glass server, roasted beans, olive linen; close inviting composition. 원본 exec-e5011a63-fca8-4f56-ade4-c2d8fa8fd176.png.
+- music: black vinyl on minimalist charcoal turntable, burnt orange blank sleeve, brushed silver headphones, olive accent; quiet listening ritual. 원본 exec-5d086232-598b-47a6-abfe-1a02a99e777e.png.
+- pairing: ivory coffee cup beside vinyl emerging from orange sleeve, glass carafe, silver headphones; equal emphasis on coffee/music; top-down angled composition. 원본 exec-094b25a3-9659-4175-af6c-f50eb19585b2.png.
+- house: ivory espresso cup with dark black coffee, silver moka pot, folded unbranded kraft bag, roasted beans; warm caramel/chocolate palette, olive linen. 원본 exec-b59b41d5-0155-4bf6-840f-5edcd6846da9.png.
+- special: two clear tasting glasses of amber filter coffee, silver cupping spoon, glass server, muted lavender cloth, blank notebook edge; refined intimate tasting scene. 원본 exec-bac6a4e4-602f-43ea-8101-13c88662ea7e.png.
+
+판매처 색상은 https://unspecialty.com/product/detail.html?product_no=901 과 공개 UFO2/UFO2.json에서 확인했다. 아프리카노의 6247aa/cdb4db/ffb4a2 등은 그대로 보존한다. 색감별 필터 분류는 HSL 기반의 R&R 근사 분류이며 판매처가 지정한 의미 이름이라고 주장하지 않는다. 색상과 개별 컵노트의 대응을 임의로 일대일 연결하지 않는다.

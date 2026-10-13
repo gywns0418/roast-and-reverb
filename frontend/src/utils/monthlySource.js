@@ -1,3 +1,4 @@
+import { safeColor } from "./monthlyColors.js";
 export function sourceUrl(value) {
   const url = new URL(value);
   if (
@@ -164,6 +165,7 @@ export function normalizeMonthlySource(metadata, data, now = new Date()) {
           .split(/[,，]/)
           .map((note) => note.trim())
           .filter(Boolean),
+        flavorColors: (item.flavors || []).map(flavor => safeColor(flavor.color)).filter(Boolean),
         specs,
         gauges: (item.details?.gauges || [])
           .filter((gauge) => gauge.value != null)

@@ -70,3 +70,13 @@
 - 최종 구현 9fa5342의 GitHub Verify 전체 성공(프론트·서버·운영 재시작·Docker 기동/health), Pages 배포 성공. PR #7 dev 병합 완료: https://github.com/gywns0418/roast-and-reverb/pull/7 , merge fff4d04. main 변경 없음.
 - 공개 재검증: 음악 작성 폼 간격 24px, 음악 날짜 입력, 가로 넘침 없음. 390px 월픽 52카드/339px 단일 열/페이지 가로 넘침 없음. docs/qa/music-write-desktop.jpg, monthly-mobile.jpg 저장. 개인 원본이 아닌 공개 화면만 저장했다.
 - QA 문서 전용 PR #8 dev 병합 완료(04a0ef5). 마지막 Git 확인에서 feature/usability-audit와 clean 작업트리 확인. Pages의 실행 코드는 검증된 9fa5342이며 이후 커밋은 문서/공개 화면 증거뿐이다.
+
+
+## 2026-10-13 — 새 카드 이미지 / 월픽 색감 / 자체 페어링 엔진
+
+- 작업 시작 feature/usability-audit clean. origin/main에서 feature/editorial-pairing-engine 생성 후 이전 기능/연속 기록 448480f 통합. 원본 roast-and-reverb/coffe_brew_log 미접근·미수정·미공개.
+- built-in image_gen으로 커피·음악·페어링·하우스·스페셜 5장 생성 및 WebP 적용. 원본/프롬프트 세트는 design-guide.md에 보존. RecordArtwork 전체의 CSS 장식을 새 브랜드 사진으로 교체, 월픽은 분류별 장면을 사용.
+- 언스페셜티 공개 월픽 원문/JSON 확인. 원두별 HEX를 flavorColors로 보존하고 카드/상세에 스트립/팔레트 표시. 전체에도 분류 제목·색띠·배지를 유지, 9개 색군 필터를 검색/카테고리와 결합. 52종 유지.
+- R&R 로컬 엔진: 의미 규칙과 온라인 로지스틱 개인 선호 모델. 입력 기반 점수/근거/정보량 표시, 부족한 기록 분석 거절, 0 평점과 미기록 축 보존, 5건부터 학습 선호 추정. 로컬 학습 유지/중복 차단. 대형 언어 모델 또는 음원 청취 AI라고 표시하지 않는다. Claude 선택은 실제 서버에만 있고 오류를 다른 엔진 성공으로 바꾸지 않는다. 상세는 pairing-engine.md.
+- 프론트 18개 테스트 통과, 빌드 성공. 브라우저 월픽 전체 그룹·보라 필터 11개 확인. 실제 페어링 분석/저장/근거/피드백 학습 1건/새로고침 후 중복 차단 확인. 390px 주요 9경로 가로 넘침 없음. 개발 서버가 main 통합 중 잠깐 이전 JSX 설정으로 재시작해 React undefined가 발생했으나 현재 Vite 설정으로 재시작 후 해결했다(소스 변경 필요 없음).
+- 무료 배포 비용 조건 유지, 실제 서버 미배포 유지. 이번 엔진은 외부 키/유료 호출 없이 브라우저에서 동작하며 개인 원본 데이터를 쓰지 않는다.
