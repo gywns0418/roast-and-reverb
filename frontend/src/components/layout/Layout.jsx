@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { watchBeanFile } from "../../store/beanFileStore.js";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { authStore } from "../../store/authStore.js";
 import ResourceBoundary from "../common/ResourceBoundary.jsx";
@@ -6,6 +8,7 @@ import Sidebar from "./Sidebar.jsx";
 
 export default function Layout() {
   const location = useLocation();
+  useEffect(()=>watchBeanFile(),[]);
   const local = import.meta.env.VITE_USE_REAL_API !== "true";
   if (!local && !authStore.token) return <Navigate to="/auth/login" replace />;
   if (
@@ -21,7 +24,7 @@ export default function Layout() {
         <Header />
         {local && (
           <div className="demo-notice" role="status">
-            체험 모드 · 기록은 이 브라우저에 저장됩니다. R&R 페어링은 기기에서 분석하며 일부 추천은 예시입니다.
+            체험 모드 · 기록은 이 브라우저에 저장됩니다. 원두·음악 추천은 기기에서 분석합니다. 외부 음악 검색은 서버 연결이 필요합니다.
           </div>
         )}
         <ResourceBoundary key={location.pathname}>

@@ -7,6 +7,8 @@ import "./styles/interior.css";
 import "./styles/discovery.css";
 import "./styles/usability.css";
 import "./styles/editorial.css";
+import "./styles/discovery-flow.css";
+import "./styles/listening-room.css";
 
 function ScrollReset() {
   const { pathname } = useLocation();

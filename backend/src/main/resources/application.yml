@@ -26,3 +26,5 @@ app:
     api-key: ${LASTFM_API_KEY:}
   discogs:
     token: ${DISCOGS_TOKEN:}
+  youtube:
+    api-key: ${YOUTUBE_API_KEY:}

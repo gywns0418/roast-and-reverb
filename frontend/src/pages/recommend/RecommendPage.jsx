@@ -1,51 +1,70 @@
+import { useEffect,useState } from "react";
+import { Link,useSearchParams,useLocation } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
-import EmptyState from "../../components/common/EmptyState.jsx";
-import Motif from "../../components/common/Motif.jsx";
-import RecordArtwork from "../../components/common/RecordArtwork.jsx";
-import { recommendations } from "../../data/sampleData.js";
-import { adaptRecommendation } from "../../api/adapters.js";
-import { request } from "../../api/http.js";
-import { useApiResource } from "../../hooks/useApiResource.js";
+import BeanArtwork from "../../components/beans/BeanArtwork.jsx";
+import { monthlyCatalog } from "../../api/monthlyCatalog.js";
+import { musicApi } from "../../api/musicApi.js";
+import { discoveryApi } from "../../api/discoveryApi.js";
+import { adaptMusicLog } from "../../api/adapters.js";
+import { listDiaryRecords } from "../../utils/diaryRecords.js";
+import { readDevice,saveDevice,downloadBackup } from "../../store/discoveryStore.js";
+import { parseMusicLink,parseMusicLines,safeMusicUrl,musicSearchLink,mergeMusic,dedupeMusic } from "../../utils/musicCandidates.js";
+import { rankDiscovery,beanText,musicText } from "../../utils/discoveryRanking.js";
+import { semanticEmbeddings } from "../../utils/semanticClient.js";
+import { readPreferences,saveFeedback } from "../../utils/pairingEngine.js";
 
+
+function seedDevice(kind) {try{return {items:readDevice(kind),error:""};}catch(error){return {items:[],error:error.message};}}
 export default function RecommendPage() {
-  const fallback = recommendations.map(adaptRecommendation);
-  const { data: items } = useApiResource(
-    () => request("/recommend").then((result) => result.map(adaptRecommendation)),
-    fallback,
-    []
-  );
-  const featured = items.length === 0 ? null : [...items].sort((a, b) => b.score - a.score)[0];
-  const rest = items.length > 1 && featured ? items.filter((item) => item.id !== featured.id) : items;
-
-  return (
-    <PageShell title="취향의 다음 페이지" eyebrow="DISCOVER YOUR NEXT RITUAL" subtitle="익숙한 취향에서 출발해, 새로운 커피와 음악의 조합을 만나보세요.">
-      {featured && (
-        <div className="recommend-feature">
-          <RecordArtwork kind="blend" seed={featured.title}/><div className="recommend-copy"><p className="eyebrow">IN THE SPOTLIGHT</p>
-          <Motif variant="flow" />
-          <div className="names">{featured.title}<span>→</span>{featured.target}</div>
-          <p className="catalog smcp">Best Match · No. <span className="oldnum">{featured.score}</span></p>
-          <p>{featured.reason}</p></div>
-        </div>
-      )}
-      <div className="ledger">
-        <div className="ledger-head">
-          <span className="book smcp">Recommend</span>
-          <span className="vol oldnum">{items.length} pairs</span>
-        </div>
-        <div className="xref-list">
-          {items.length === 0
-            ? <EmptyState icon="flow">아직 추천할 만한 조합이 없어요. 기록이 며칠만 더 쌓이면 보여드릴게요.</EmptyState>
-            : rest.map((item) => (
-              <div className="xref-row" key={item.id}>
-                <RecordArtwork kind="blend" seed={item.title} small />
-                <span className="eyebrow">{item.title}</span>
-                <div className="flow"><span className="arrow">→</span> {item.target}</div>
-                <p>{item.reason}</p>
-              </div>
-            ))}
-        </div>
-      </div>
-    </PageShell>
-  );
+  const {state:routeState}=useLocation();const draft=routeState?.coffeeCandidate;
+  const [removed,setRemoved]=useState(null);
+  const [params]=useSearchParams();const [initialBeans]=useState(()=>seedDevice("beans")),[initialMusic]=useState(()=>seedDevice("music"));
+  const [owned,setOwned]=useState(initialBeans.items),[savedMusic,setSavedMusic]=useState(initialMusic.items),[monthly,setMonthly]=useState([]),[records,setRecords]=useState([]);
+  const [source,setSource]=useState(draft ? "draft" : params.get("source") || (initialBeans.items.length?"owned":"monthly")),[beanId,setBeanId]=useState(params.get("bean")||""),[songId,setSongId]=useState("");
+  const [situation,setSituation]=useState(""),[busy,setBusy]=useState(false),[progress,setProgress]=useState(""),[results,setResults]=useState([]),[method,setMethod]=useState("");
+  const [error,setError]=useState(initialBeans.error || initialMusic.error),[notice,setNotice]=useState(""),[fetchBusy,setFetchBusy]=useState(false);
+  const [status,setStatus]=useState({server:false,youtube:false,musicbrainz:false}),[provider,setProvider]=useState("musicbrainz"),[query,setQuery]=useState("");
+  const [link,setLink]=useState(""),[manual,setManual]=useState({artist:"",track:"",genre:"",memo:""}),[paste,setPaste]=useState(""),[fetched,setFetched]=useState([]),[partial,setPartial]=useState(false),[feedback,setFeedback]=useState({});
+  useEffect(()=>{let active=true;
+    monthlyCatalog().then(products=>{if(active)setMonthly((products[0]?.items || []).map(item=>({...item,id:`catalog-${item.id}`,source:"monthly",sourceUrl:products[0].sourceUrl})));}).catch(err=>active&&setError(err.message));
+    listDiaryRecords(musicApi.list).then(items=>{if(active)setRecords(items.map(adaptMusicLog).map(item=>({...item,id:`record-${item.id}`,source:"record",metadataSource:"내 음악 기록"})));}).catch(err=>active&&setError(err.message));
+    discoveryApi.status().then(value=>active&&setStatus(value)).catch(()=>active&&setNotice("외부 음악 서버 연결을 확인하지 못했습니다. 기기 후보는 계속 사용할 수 있어요."));
+    function refresh(){try{setOwned(readDevice("beans"));setSavedMusic(readDevice("music"));}catch(err){setError(err.message);}}
+    window.addEventListener("rr-discovery-changed",refresh);window.addEventListener("storage",refresh);
+    return()=>{active=false;window.removeEventListener("rr-discovery-changed",refresh);window.removeEventListener("storage",refresh);};
+  },[]);
+  useEffect(()=>{setResults([]);setFeedback({});},[source,beanId,songId,situation,owned,savedMusic]);
+  const beanPool=source==="draft"&&draft?[draft]:source==="owned"?owned.filter(item=>item.status==="held"):source==="monthly"?monthly.filter(item=>item.availability!=="sold-out"):[...owned.filter(item=>item.status==="held"),...monthly.filter(item=>item.availability!=="sold-out")];
+  const songPool=dedupeMusic(records.slice(0,80),savedMusic);
+  function storeSongs(items) {try{const next=mergeMusic(savedMusic,items);saveDevice("music",next);setSavedMusic(next);setNotice(`${items.length}곡을 기기 후보에 반영했습니다. 청취 기록은 생성하지 않았습니다.`);return true;}catch(err){setError(err.message || "음악 후보를 저장하지 못했습니다.");return false;}}
+  async function searchMusic(event) {event.preventDefault();setFetchBusy(true);setError("");setFetched([]);try{const data=await discoveryApi.search(query,provider);setFetched(data.items);setPartial(data.partial);setNotice(data.items.length?`${data.items.length}곡을 찾았습니다. 확인한 뒤 후보에 추가해 주세요.`:"검색 결과가 없습니다. 다른 곡이나 아티스트로 찾아보세요.");}catch(err){setError(err.message);}finally{setFetchBusy(false);}}
+  async function importLink() {setFetchBusy(true);setError("");setFetched([]);try{const parsed=parseMusicLink(link);if(parsed.kind==="playlist"){const data=await discoveryApi.playlist(parsed.id);setFetched(data.items);setPartial(data.partial);setNotice(`${data.items.length}개 음악 항목을 가져왔습니다.${data.partial?" 먼저 50개 항목 범위를 조회했습니다.":""}`);}else if(status.youtube){const data=await discoveryApi.video(parsed.id);setFetched(data.items);setPartial(false);if(!data.items.length)setNotice("음악 카테고리의 공개 곡 정보를 찾지 못했습니다.");}else{if(!manual.track.trim()||!manual.artist.trim())throw new Error("현재는 링크의 자동 정보를 조회할 수 없습니다. 아티스트와 곡명을 함께 입력해 주세요.");storeSongs([{id:`youtube:${parsed.id}`,url:parsed.url,track:manual.track.trim(),artist:manual.artist.trim(),genre:manual.genre,tags:[],memo:manual.memo,source:"playlist",metadataSource:"직접 확인한 곡 링크"}]);}}
+    catch(err){setError(err.message);}finally{setFetchBusy(false);}}
+  function addManual(event){event.preventDefault();setError("");try{const music={id:`manual:${manual.artist.trim().toLowerCase()}|${manual.track.trim().toLowerCase()}`,track:manual.track.trim(),artist:manual.artist.trim(),genre:manual.genre,memo:manual.memo,tags:[],source:"playlist",metadataSource:"직접 입력한 음악 후보",url:link?safeMusicUrl(link):""};if(!music.track||!music.artist)throw new Error("곡명과 아티스트를 입력해 주세요.");if(link&&!music.url)throw new Error("단일 곡 링크를 입력하거나 링크 칸을 비워 주세요.");if(storeSongs([music]))setManual({artist:"",track:"",genre:"",memo:""});}catch(err){setError(err.message);}}
+  async function importMusicFile(event){setError("");try{const file=event.target.files?.[0];if(!file)return;if(file.size>1000000)throw new Error("1MB 이하의 음악 목록을 선택해 주세요.");const content=await file.text();if(file.name.endsWith(".json")){const data=JSON.parse(content);if(data.schemaVersion!==1||!Array.isArray(data.music))throw new Error("지원하지 않는 음악 후보 백업입니다.");const items=data.music.map(item=>{if(typeof item.artist!=="string"||typeof item.track!=="string")throw new Error("곡 정보가 없는 항목이 있습니다.");return {channel:typeof item.channel==="string"?item.channel.slice(0,200):"",id:String(item.id||`manual:${item.artist}|${item.track}`).slice(0,400),track:item.track.slice(0,200),artist:item.artist.slice(0,200),genre:typeof item.genre==="string"?item.genre.slice(0,200):"",memo:typeof item.memo==="string"?item.memo.slice(0,500):"",tags:Array.isArray(item.tags)?item.tags.filter(x=>typeof x==="string").slice(0,12):[],url:safeMusicUrl(item.url)||"",referenceUrl:"",source:"playlist",metadataSource:"기기 백업에서 가져온 후보"};});storeSongs(items);}else storeSongs(parseMusicLines(content));}catch(err){setError(err.message);}finally{event.target.value="";}}
+  async function discover(useSemantic=true) {setError("");setNotice("");setResults([]);setBusy(true);setProgress("");try{
+    const beans=beanId?beanPool.filter(item=>item.id===beanId):beanPool;
+    const music=songId?songPool.filter(item=>item.id===songId):songPool;
+    if(!beans.length)throw new Error("추천할 보유 원두가 없습니다. 원두를 가져오거나 월픽 범위를 선택해 주세요.");
+    if(!music.length)throw new Error("음악 후보를 먼저 추가해 주세요. 곡명과 링크만으로도 시작할 수 있어요.");
+    let vectors=null;if(useSemantic){const context=situation.trim() || "이 원두의 컵노트와 어울리는 음악, 내가 좋아할 새로운 조합";setProgress("의미 모델을 준비합니다. 첫 사용에는 모델 파일을 받습니다.");vectors=await semanticEmbeddings([`query: ${context.slice(0,500)}`,...beans.map(item=>`passage: 커피 ${beanText(item)}`),...music.map(item=>`passage: 음악 ${musicText(item)}`)],p=>setProgress(p.status==="encoding"?`후보의 의미를 비교하는 중 ${p.progress}%`:p.progress!=null?`모델 파일 준비 ${Math.round(p.progress)}%`:"의미 모델을 준비하는 중"));}
+    const next=rankDiscovery({beans,music,situation,vectors,model:readPreferences()});if(!next.length)throw new Error("지금 조건에 맞는 후보가 없습니다. 제외 조건이나 원두 범위를 조정해 주세요.");setResults(next);setMethod(useSemantic?"다국어 의미 모델 · 이 기기에서 분석":"기본 특성 추천 · 규칙 기반");
+  }catch(err){setError(err.message);}finally{setBusy(false);setProgress("");}}
+  function rate(result,label){try{if(!result.analyzed)throw new Error("학습에 필요한 향미/음악 특성이 부족한 조합입니다. 감상을 음악 후보에 더해 주세요.");const model=saveFeedback(`discovery:${result.id}`,result.analyzed.evidence.features,label);setFeedback({...feedback,[result.id]:`기기 선호 학습 ${model.samples}건에 반영했습니다.`});}catch(err){setFeedback({...feedback,[result.id]:err.message});}}
+  return <PageShell title="오늘의 한 잔, 다음 한 곡" eyebrow="DISCOVER A NEW PAIRING" subtitle="내 원두와 이달의 원두, 좋아하는 음악에서 새로운 조합을 찾아보세요.">
+    <div className="discovery-layout"><section className="discovery-compose panel"><p className="eyebrow">WHAT DOES THIS MOMENT FEEL LIKE?</p><h2>지금, 어떤 시간을 보내고 있나요?</h2><label className="input-field"><span>상황과 바라는 분위기</span><textarea disabled={busy} value={situation} onChange={e=>setSituation(e.target.value)} placeholder="늦은 밤 책을 읽고 있어요. 보컬 없이 차분한 음악과 가볍게 마실 커피를 찾고 싶어요." rows="4"/></label>
+      <div className="form-grid"><label className="input-field"><span>원두 후보</span><select disabled={busy} value={source} onChange={e=>{setSource(e.target.value);setBeanId("");}}>{draft&&<option value="draft">지금 작성 중인 커피</option>}<option value="owned">내 보유 원두</option><option value="monthly">이달의 픽 · 발견 후보</option><option value="all">내 원두 + 이달의 픽</option></select></label><label className="input-field"><span>마시고 싶은 원두 (선택)</span><select disabled={busy} aria-label="추천 기준 원두" value={beanId} onChange={e=>setBeanId(e.target.value)}><option value="">후보 모두 살펴보기 · {beanPool.length}종</option>{beanPool.map(item=><option key={item.id} value={item.id}>{item.name}{item.source==="monthly"?" · 월픽":" · 보유"}</option>)}</select></label><label className="input-field"><span>기준 음악 (선택 · 최근 기록 80곡 + 추가 후보)</span><select disabled={busy} aria-label="추천 기준 음악" value={songId} onChange={e=>setSongId(e.target.value)}><option value="">음악 모두 살펴보기 · {songPool.length}곡</option>{songPool.map(item=><option key={item.id} value={item.id}>{item.artist || item.channel || "아티스트 미확인"} · {item.track}</option>)}</select></label></div>
+      <div className="action-row"><button className="primary-button" disabled={busy || fetchBusy} onClick={()=>discover(true)}>{busy?"조합을 찾는 중…":"조합 발견하기"}</button><button className="ghost-button" disabled={busy || fetchBusy} onClick={()=>discover(false)}>기본 추천으로 찾기</button><Link className="ghost-button" to="/beans">내 원두 관리 ↗</Link>{draft&&<Link className="ghost-button" to="/coffee/write" state={{coffeeDraft:routeState.coffeeDraft}}>커피 작성으로 돌아가기</Link>}</div><p className="model-note">AI 의미 추천은 공개 모델을 처음 다운로드한 뒤 이 기기에서 실행합니다. 원두 메모와 상황 문장은 외부 AI로 전송하지 않습니다. 실제 음원을 듣거나 맛을 측정하는 기능은 아닙니다.</p>{progress&&<p role="status" className="device-message">{progress}</p>}
+    </section><aside className="discovery-summary"><p className="eyebrow">YOUR STARTING POINT</p><h3>가진 것에서 시작해요.</h3><dl><div><dt>보유 원두</dt><dd>{owned.filter(item=>item.status==="held").length}종</dd></div><div><dt>월픽 카탈로그</dt><dd>{monthly.length}종</dd></div><div><dt>음악 후보</dt><dd>{songPool.length}곡</dd></div></dl><p>보유 미확인·배송 중·소진 원두는 추천에서 제외합니다. 월픽은 아직 구매하지 않은 발견 후보로 표시해요.</p><Link to="/beans">beans.md 가져오기 ↗</Link><Link to="/monthly-pick">월픽 색감으로 둘러보기 ↗</Link></aside></div>
+    {error&&<p role="alert" className="resource-error">{error}</p>}{notice&&<p role="status" className="device-message">{notice}</p>}
+    {!!results.length&&<section className="discovery-results"><div className="section-heading"><div><p className="eyebrow">THREE WAYS TO ENJOY</p><h2>지금의 시간을 위한 조합</h2></div><span>{method}</span></div><div className="discovery-result-grid">{results.map(result=><article className="discovery-result" key={result.id}><div className="result-heading"><span>{result.label}</span><small>{result.bean.source==="owned"?"내 보유 원두":result.bean.source==="draft"?"작성 중인 커피":"월픽 · 미보유"}</small></div><BeanArtwork compact item={result.bean}/><div className="result-copy"><h3>{result.bean.name}</h3><p>{result.bean.flavors?.length?result.bean.flavors.slice(0,4).join(" · "):"원두 향미 미기록"}</p>{result.bean.source==="monthly"&&<p>{result.bean.availability==="upcoming"?"오픈 예정 원두":result.bean.availability==="unknown"?"재고 미확인":"판매처 구매 가능 표기"}</p>}<div className="result-track"><span>WITH THIS TRACK</span><h3>{result.music.track}</h3><p>{result.music.artist || `채널: ${result.music.channel || "아티스트 미확인"}`}</p><small>{result.music.metadataSource || "내 음악 후보"}</small></div><p className="recommend-reason">{result.semantic!=null?"적어주신 상황과 원두·음악 설명의 의미를 함께 비교한 후보입니다.":result.analyzed?result.analyzed.pairingText:"음악과 원두의 특성 정보가 적어 먼저 들어보고 확인할 후보입니다."}</p>{result.metadataThin&&<p className="candidate-caution">장르·감상 정보가 적어 추천 근거가 제한적입니다.</p>}<div className="action-row"><a className="primary-button" href={safeMusicUrl(result.music.url)||musicSearchLink(result.music)} target="_blank" rel="noreferrer">{safeMusicUrl(result.music.url)?"이 곡 듣기 ↗":"YouTube Music에서 찾기 ↗"}</a><Link className="ghost-button" to="/coffee/write" state={{coffeeCandidate:result.bean,coffeeDraft:result.bean.source==="draft"?routeState?.coffeeDraft:undefined}}>커피 기록</Link><Link className="ghost-button" to="/music/write" state={{musicCandidate:result.music}}>들은 음악 기록</Link></div>{result.analyzed&&<div className="result-feedback"><span>직접 느낀 조합은?</span><button onClick={()=>rate(result,1)}>좋아요</button><button onClick={()=>rate(result,0)}>아쉬워요</button></div>}{feedback[result.id]&&<p role="status">{feedback[result.id]}</p>}</div></article>)}</div><p className="model-note">문장 의미의 연관성으로 정렬한 후보이며 만족도나 원두·음악의 객관적 품질 점수가 아닙니다. 추천만으로 추출·청취 기록을 만들지 않습니다.</p></section>}
+    <section className="panel music-candidate-panel"><div className="section-heading"><div><p className="eyebrow">EXPAND YOUR LISTENING ROOM</p><h2>음악 후보를 넓혀보세요.</h2></div><span>{savedMusic.length}곡 · 이 기기</span></div><p>좋아하는 곡 링크와 음악 목록을 더하면 기록하지 않은 음악도 추천할 수 있어요.</p>
+      <div className="music-source-status"><span>MusicBrainz {status.musicbrainz?"연결 가능":"서버 연결 필요"}</span><span>YouTube {status.youtube?"연결 가능":"서버·API 키 필요"}</span></div>
+      <details><summary>곡·아티스트로 외부 음악 찾기</summary><form className="candidate-search" onSubmit={searchMusic}><input required aria-label="외부 음악 검색어" value={query} maxLength={160} onChange={e=>setQuery(e.target.value)} placeholder="좋아하는 아티스트 또는 곡명"/><select aria-label="음악 검색 서비스" value={provider} onChange={e=>setProvider(e.target.value)}><option value="musicbrainz">MusicBrainz</option><option value="youtube">YouTube</option></select><button className="primary-button" disabled={fetchBusy || busy || !(provider==="youtube"?status.youtube:status.musicbrainz)}>음악 검색</button></form>{!status.server&&<p className="model-note">현재 공개 체험에는 외부 음악 서버가 없습니다. 아래 곡 링크·음악 목록 추가는 바로 사용할 수 있습니다.</p>}</details>
+      <details open><summary>곡 링크 또는 공개 플레이리스트 가져오기</summary><label className="input-field"><span>YouTube / YouTube Music 링크</span><input aria-label="음악 후보 링크" type="url" placeholder="https://music.youtube.com/watch?v=…" value={link} onChange={e=>setLink(e.target.value)}/></label><button type="button" className="ghost-button" disabled={fetchBusy || busy || !link.trim()} onClick={importLink}>링크 정보 가져오기</button><p className="model-note">개인 청취 이력은 읽지 않습니다. 자동 재생목록 조회는 서버 연결 시 공개 음악 항목 최대 50개 범위를 사용합니다.</p><form onSubmit={addManual}><div className="form-grid">{[["artist","아티스트"],["track","곡명"],["genre","장르 (선택)"],["memo","음악의 느낌 (선택)"]].map(([key,label])=><label className="input-field" key={key}><span>{label}</span><input required={key==="artist"||key==="track"} value={manual[key]} onChange={e=>setManual({...manual,[key]:e.target.value})}/></label>)}</div><button className="primary-button" disabled={busy || fetchBusy}>음악 후보 추가</button></form></details>
+      {!!fetched.length&&<div className="candidate-preview"><h3>가져온 음악 확인 {partial&&<small> · 일부 조회</small>}</h3><p>장르가 없는 항목은 미기록으로 유지합니다. YouTube 채널명은 아티스트로 바꾸지 않습니다.</p><div>{fetched.map(item=><article key={item.id}><strong>{item.track}</strong><span>{item.artist || `채널: ${item.channel}`}</span><small>{item.metadataSource}</small><button className="ghost-button" disabled={busy} onClick={()=>storeSongs([item])}>후보에 추가</button></article>)}</div><button className="primary-button" disabled={busy} onClick={()=>{if(storeSongs(fetched))setFetched([]);}}>확인한 {fetched.length}곡 모두 추가</button></div>}
+      <details><summary>음악 목록 붙여넣기 / 파일 가져오기</summary><p>한 줄에 아티스트 · 곡명 · 장르 · YouTube 링크를 탭으로 구분해 넣어 주세요. 장르와 링크는 비워도 됩니다.</p><textarea aria-label="음악 목록 붙여넣기" rows="4" value={paste} onChange={e=>setPaste(e.target.value)} placeholder={"Artist\tTrack\tGenre\tYouTube URL"}/><div className="action-row"><button className="ghost-button" disabled={busy || fetchBusy || !paste.trim()} onClick={()=>{try{if(storeSongs(parseMusicLines(paste)))setPaste("");}catch(err){setError(err.message);}}}>목록 확인 후 추가</button><label className="ghost-button file-button">음악 목록 파일 가져오기<input type="file" aria-label="음악 목록 파일 가져오기" accept=".tsv,.txt,.json" onChange={importMusicFile}/></label></div></details>
+      {!!savedMusic.length&&<details><summary>기기에 저장한 후보 {savedMusic.length}곡</summary><div className="action-row"><button className="ghost-button" onClick={()=>downloadBackup(owned,savedMusic)}>원두·음악 후보 백업</button>{removed&&<button className="ghost-button" onClick={()=>{if(storeSongs([removed]))setRemoved(null);}}>방금 삭제한 곡 복원</button>}</div><div className="saved-candidates">{savedMusic.map(item=><p key={item.id}><strong>{item.track}</strong><span>{item.artist || item.channel || "아티스트 미확인"}</span><small>{item.genre || "장르 미기록"}</small><button className="ghost-button" disabled={busy} onClick={()=>{try{saveDevice("music",savedMusic.filter(song=>song.id!==item.id));setRemoved(item);}catch(err){setError(err.message);}}}>삭제</button></p>)}</div></details>}
+    </section>
+  </PageShell>;
 }

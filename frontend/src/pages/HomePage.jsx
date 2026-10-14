@@ -12,7 +12,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [authMode, setAuthMode] = useState(null);
   const local = import.meta.env.VITE_USE_REAL_API !== "true";
-  const start = () => (local ? navigate("/dashboard") : setAuthMode("join"));
+  const start = () => (local ? navigate("/ritual") : setAuthMode("join"));
   return (
     <div className="studio-home">
       <header className="studio-nav">
@@ -55,7 +55,7 @@ export default function HomePage() {
               흩어진 취향을 모아 나만의 리듬을 발견하세요.
             </p>
             <button className="studio-cta" onClick={start}>
-              {local ? "기록장 체험하기" : "나의 첫 기록 남기기"}
+              {local ? "나의 청음실 시작하기" : "나의 첫 기록 남기기"}
               <ArrowUpRight size={22} />
             </button>
             <p className="studio-caption">
@@ -155,7 +155,7 @@ export default function HomePage() {
         <section className="studio-closing">
           <p>오늘의 커피에는 어떤 음악이 어울릴까요?</p>
           <button onClick={start}>
-            내 기록장 열기 <ArrowRight size={22} />
+            나의 청음실 열기 <ArrowRight size={22} />
           </button>
         </section>
       </main>
@@ -168,7 +168,7 @@ export default function HomePage() {
         <AuthModal
           initialMode={authMode}
           onClose={() => setAuthMode(null)}
-          onAuthenticated={() => navigate("/dashboard")}
+          onAuthenticated={() => navigate("/ritual")}
         />
       )}
     </div>
