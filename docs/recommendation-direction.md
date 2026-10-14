@@ -59,3 +59,14 @@ feature/bean-discovery에 원두 파일 미리보기/기기 저장/수정/백업
 Stability 공식 API pricing https://platform.stability.ai/pricing 은 계정 시작 무료 크레딧과 모델별 생성 비용을 명시한다. 무료 웹 사용과 무료 API 호출을 같은 것으로 가정하지 않는다. Suno 무료 output 조건은 https://help.suno.com/en/categories/550145 및 https://www.suno.com/terms 에서 확인했다. 무제한 무료 앱 음악 생성으로 표시하지 않는다. 실제 통합 시 서버 전용 키, 확인된 Trial/Free 잔액 이하 요청 한도, 잔액 소진 시 명시적 중단, 자동 결제/유료 전환 없음이 필요하다. 이번 작업에 계정 생성/키 설정/실제 음악 생성/개인 입력 외부 전송은 없었다.
 
 지속 파일 연결은 https://developer.chrome.com/docs/capabilities/web-apis/file-system-access , https://developer.chrome.com/blog/persistent-permissions-for-the-file-system-access-api , https://developer.mozilla.org/en-US/docs/Web/API/Window/showOpenFilePicker 에 따라 read 전용 handle과 IndexedDB를 사용한다. Chrome/Edge의 HTTPS 환경에서 최초 사용자가 파일을 선택하며 앱이 열려 있을 때만 확인한다. 브라우저 종료/저장소 삭제/권한 취소 시 자동 읽기는 멈추고 다시 연결 또는 권한 허용이 필요하다.
+
+
+## 2026-10-14 API 비용 없는 실제 음악 생성 조사
+
+사용자는 무료 제공 모델/직접 만든 AI를 요청했다. 확인한 PC는 RTX 3060 Ti 8GB, 시스템 RAM 약 32GB이며 실제 음악 모델을 아직 설치하거나 실행하지 않았다. 사전 학습 공개 모델을 기기에서 실행하는 R&R 음악 생성기를 만드는 방향이 가능하다. 모델을 처음부터 학습했다거나 실행 성공했다고 주장하지 않는다.
+
+우선 후보 Stable Audio 3 Small-Music: 공식 저장소는 433M, 최대 120초 음악, CPU 경로와 Windows TFLite runtime을 문서화한다. 라이선스료 없는 자체 연산 경로와 API 무료 체험은 구분한다. GPU/RAM 실측 성능·Windows 의존성·음질은 실제 실행으로 검증해야 하며 품질/속도를 미리 보장하지 않는다. API 호출 비용은 없어도 PC 전력·디스크/메모리와 켜져 있어야 하는 조건이 있다. Pages 자체는 음악 모델을 실행하는 GPU 서버가 아니며 PC-local 생성 서비스가 별도로 필요하다.
+
+공식 모델 페이지 https://huggingface.co/stabilityai/stable-audio-3-small-music 는 가중치 다운로드에 로그인/연락처 공유/Community License 및 Gemma Terms 동의를 요구한다. 사용자 대신 약관을 수락하거나 우회하지 않았다. 다운로드/학습/음원 생성/서버 공개는 미실행이다. 공식 구현 https://github.com/Stability-AI/stable-audio-3 및 자체 실행 조건 https://stability.ai/explainers/self-hosted-vs-api-generative-audio-choosing-a-deployment-model 확인.
+
+제안 흐름: 원두/산지/컵노트 → 향미의 창작 은유와 상황 → 로컬 공개 음악 모델 → 실제 WAV 생성/재생 → 사용자가 들은 후 청취 기록. 새 모델의 대규모 학습 대신 기존 모델 추론과 R&R 조건/취향 조절을 개발한다. 공개 서비스 모두에게 상시 생성해 주는 무료 GPU 운영까지 가능하다고 해석하지 않는다.
