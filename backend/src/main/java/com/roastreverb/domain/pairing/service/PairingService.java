@@ -28,7 +28,9 @@ public class PairingService {
     }
 
     public Map<String, Object> findById(Long memberId, Long pairingId) {
-        return pairingMapper.findById(pairingId, memberId);
+        var record = pairingMapper.findById(pairingId, memberId);
+        if (record == null) throw new CustomException(HttpStatus.NOT_FOUND, "기록을 찾을 수 없습니다.");
+        return record;
     }
 
     public Map<String, Object> findLatest(Long memberId) {

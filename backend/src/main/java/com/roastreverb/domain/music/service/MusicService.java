@@ -2,6 +2,8 @@ package com.roastreverb.domain.music.service;
 
 import com.roastreverb.domain.music.mapper.MusicMapper;
 import org.springframework.stereotype.Service;
+import com.roastreverb.global.exception.CustomException;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,7 +22,9 @@ public class MusicService {
     }
 
     public Map<String, Object> findById(Long memberId, Long musicLogId) {
-        return musicMapper.findById(musicLogId, memberId);
+        var record = musicMapper.findById(musicLogId, memberId);
+        if (record == null) throw new CustomException(HttpStatus.NOT_FOUND, "기록을 찾을 수 없습니다.");
+        return record;
     }
 
     public Map<String, Object> create(Map<String, Object> musicLog) {

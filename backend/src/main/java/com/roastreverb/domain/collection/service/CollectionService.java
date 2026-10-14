@@ -2,6 +2,8 @@ package com.roastreverb.domain.collection.service;
 
 import com.roastreverb.domain.collection.mapper.CollectionMapper;
 import org.springframework.stereotype.Service;
+import com.roastreverb.global.exception.CustomException;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +21,9 @@ public class CollectionService {
     }
 
     public Map<String, Object> findById(Long memberId, Long collectionId) {
-        return collectionMapper.findById(collectionId, memberId);
+        var record = collectionMapper.findById(collectionId, memberId);
+        if (record == null) throw new CustomException(HttpStatus.NOT_FOUND, "기록을 찾을 수 없습니다.");
+        return record;
     }
 
     public Map<String, Object> create(Map<String, Object> collection) {
