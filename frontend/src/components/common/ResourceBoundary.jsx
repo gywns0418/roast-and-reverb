@@ -1,4 +1,5 @@
 import { Component } from "react";
+import {Link} from 'react-router-dom';
 export default class ResourceBoundary extends Component {
   state = { error: null };
   static getDerivedStateFromError(error) {
@@ -17,6 +18,7 @@ export default class ResourceBoundary extends Component {
             >
               다시 시도
             </button>
+            <Link className="ghost-button" to="/backup">기기 자료 백업·복구</Link>
           </div>
         </section>
       );

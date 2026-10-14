@@ -14,6 +14,10 @@ class ServiceSecurityTest {
  @Autowired MockMvc mvc;
  @Autowired ObjectMapper json;
  @Test void anonymousCannotReadRecords() throws Exception {mvc.perform(get("/api/coffee")).andExpect(status().isUnauthorized());}
+ @Test void publicImagesAreNotBlockedByLoginAndMalformedJsonIsClientError() throws Exception {
+  mvc.perform(get("/images/missing-test-image.png")).andExpect(status().isNotFound());
+  mvc.perform(post("/api/auth/join").contentType("application/json").content("{broken")).andExpect(status().isBadRequest());
+ }
  @Test void signupCannotGrantAdminAndUsersAreIsolated() throws Exception {
   var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"email\":\"security@example.com\",\"password\":\"secure-password-123\",\"nickname\":\"Tester\",\"role\":\"ADMIN\"}"))
     .andExpect(status().isOk()).andReturn();
@@ -22,6 +26,8 @@ class ServiceSecurityTest {
   String auth="Bearer "+data.path("token").asText();
   mvc.perform(get("/api/admin/dashboard").header("Authorization",auth)).andExpect(status().isForbidden());
   mvc.perform(get("/api/coffee?memberId=1").header("Authorization",auth)).andExpect(status().isOk()).andExpect(jsonPath("$.data.length()").value(0));
+  for(String resource : new String[]{"coffee", "music", "pairing", "collection"})
+   mvc.perform(get("/api/"+resource+"/999999").header("Authorization",auth)).andExpect(status().isNotFound());
   mvc.perform(post("/api/pairing").header("Authorization",auth).contentType("application/json").content("{\"coffeeLogId\":1,\"musicLogId\":1}")).andExpect(status().isBadRequest());
   mvc.perform(get("/api/members/me").header("Authorization",auth)).andExpect(status().isOk()).andExpect(jsonPath("$.data.password").doesNotExist());
  }

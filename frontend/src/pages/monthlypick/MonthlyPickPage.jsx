@@ -147,9 +147,8 @@ export default function MonthlyPickPage() {
     [error, setError] = useState("");
   const [favorites, setFavorites] = useState(() => {
     try {
-      return JSON.parse(
-        localStorage.getItem("rr-monthly-favorites-v1") || "[]",
-      );
+      const saved=JSON.parse(localStorage.getItem("rr-monthly-favorites-v1") || "[]");
+      return Array.isArray(saved)?saved.filter(value=>typeof value==='string'||typeof value==='number'):[];
     } catch {
       return [];
     }
@@ -215,8 +214,7 @@ export default function MonthlyPickPage() {
     const next = favorites.includes(id)
       ? favorites.filter((value) => value !== id)
       : [...favorites, id];
-    setFavorites(next);
-    localStorage.setItem("rr-monthly-favorites-v1", JSON.stringify(next));
+    try {localStorage.setItem("rr-monthly-favorites-v1", JSON.stringify(next));setFavorites(next);}catch {setError("관심 원두 저장에 실패했습니다. 브라우저 저장 공간을 확인해 주세요.");}
   }
   function toggleCompare(id) {
     if (selected.includes(id))

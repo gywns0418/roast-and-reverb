@@ -19,8 +19,8 @@ export default function CollectionWritePage() {
     try {
       await collectionApi.create(form);
       navigate("/collection");
-    } catch {
-      setMessage("저장에 실패했습니다. 백엔드 서버가 켜져 있는지 확인해주세요.");
+    } catch (error) {
+      setMessage(error.message || "저장에 실패했습니다. 입력 내용은 유지됩니다.");
     } finally {
       setSaving(false);
     }
@@ -39,7 +39,7 @@ export default function CollectionWritePage() {
         </div>
         <label className="input-field"><span>소장 메모</span><textarea className="textarea" placeholder="메모 — 어떤 페어링에 자주 등장하는지, 왜 들였는지" value={form.note} onChange={update("note")} /></label>
         <Button onClick={handleSave} disabled={saving || !form.title.trim()} loading={saving}>{saving ? "저장 중" : "컬렉션에 등록"}</Button>
-        {message && <p className="muted">{message}</p>}
+        {message && <p className="resource-error" role="alert">{message}</p>}
       </section>
     </PageShell>
   );
