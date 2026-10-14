@@ -43,6 +43,7 @@ export default function MyPage() {
           </div>
           <div className="action-row">
             <Link className="ghost-button" to="/backup">나의 자료 백업·복구</Link>
+            <Link className="ghost-button" to="/connections">자동 연결 상태 확인</Link>
             {user.role === "ADMIN" && <Link to="/admin" className="ghost-button">관리자 화면</Link>}
             {local ? <Link className="ghost-button" to="/">서비스 소개</Link> : <Button onClick={handleLogout}>로그아웃</Button>}
           </div>

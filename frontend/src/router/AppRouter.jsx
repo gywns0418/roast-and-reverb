@@ -1,6 +1,7 @@
 import RitualPage from "../pages/ritual/RitualPage.jsx";
 import SoundStudioPage from "../pages/ritual/SoundStudioPage.jsx";
 import BackupPage from '../pages/mypage/BackupPage.jsx';
+import ConnectionsPage from '../pages/mypage/ConnectionsPage.jsx';
 import MemoriesPage from "../pages/ritual/MemoriesPage.jsx";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout/Layout.jsx";
@@ -50,6 +51,7 @@ export default function AppRouter() {
         <Route path="/ritual" element={<RitualPage />} />
         <Route path="/studio" element={<SoundStudioPage />} />
         <Route path="/backup" element={<BackupPage />} />
+        <Route path="/connections" element={<ConnectionsPage />} />
         <Route path="/memories" element={<MemoriesPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
 

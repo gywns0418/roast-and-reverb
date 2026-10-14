@@ -15,7 +15,8 @@ const links = [
   ["/recommend", Disc3, "추천", "blend"],
   ["/monthly-pick", ShoppingBasket, "이달의 픽", "blend"],
   ["/collection", Library, "컬렉션", "blend"],
-  ["/mypage", UserRound, "마이페이지", "neutral"]
+  ["/mypage", UserRound, "마이페이지", "neutral"],
+  ["/connections", Sparkles, "자료 연결 상태", "neutral"]
 ];
 
 export default function Sidebar() {
