@@ -98,3 +98,6 @@
 .music-brief { margin-top:24px;padding-top:20px;border-top:1px solid #dce2d3; }
 .music-brief textarea { font-size:13px;line-height:1.8; }
 @media(max-width:1000px){.coffee-sound-layout {grid-template-columns:minmax(0,1fr);}}
+
+.coffee-sound-layout .input-field select,.coffee-sound-layout .input-field textarea { display:block;width:100%;min-height:46px;border:1px solid #dce2d3;border-radius:8px;padding:12px 14px;background:#fbfcf7;color:#34432d;font:inherit;box-sizing:border-box; }
+.coffee-sound-layout .music-brief textarea { font-size:13px;line-height:1.8;resize:vertical; }
