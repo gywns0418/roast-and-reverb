@@ -31,7 +31,8 @@ export function parseBeansMarkdown(content) {
   flush();
   const unique=new Map();for(const item of records) unique.set(item.id,item);
   if(!unique.size) throw new Error("### 원두명과 - 상태: 등의 항목을 찾지 못했습니다. 원본 형식을 확인해 주세요.");
-  return [...unique.values()].slice(0,500);
+  if(unique.size>500)throw new Error("원두 파일은 최대 500종입니다. 기존 원두는 유지합니다.");
+  return [...unique.values()];
 }
 export function validateBeansFile(data) {
   if(data?.schemaVersion!==1 || !Array.isArray(data.beans) || data.beans.length>500) throw new Error("지원하지 않는 원두 백업 파일입니다.");

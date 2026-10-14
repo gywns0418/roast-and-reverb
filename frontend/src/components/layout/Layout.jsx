@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { watchBeanFile } from "../../store/beanFileStore.js";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { authStore } from "../../store/authStore.js";
 import ResourceBoundary from "../common/ResourceBoundary.jsx";
@@ -6,6 +8,7 @@ import Sidebar from "./Sidebar.jsx";
 
 export default function Layout() {
   const location = useLocation();
+  useEffect(()=>watchBeanFile(),[]);
   const local = import.meta.env.VITE_USE_REAL_API !== "true";
   if (!local && !authStore.token) return <Navigate to="/auth/login" replace />;
   if (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation,Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
 import Input from "../../components/common/Input.jsx";
@@ -7,11 +7,12 @@ import { musicApi } from "../../api/musicApi.js";
 
 export default function MusicWritePage() {
   const navigate = useNavigate();
+  const {state}=useLocation();const candidate=state?.musicCandidate;
   const [form, setForm] = useState({
-    trackName: "",
-    artistName: "",
+    trackName: candidate?.track || "",
+    artistName: candidate?.artist || "",
     albumName: "",
-    genre: "",
+    genre: candidate?.genre || "",
     listenedDate: new Date().toLocaleDateString("sv-SE"),
     memo: ""
   });
@@ -42,6 +43,8 @@ export default function MusicWritePage() {
 
   return (
     <PageShell title="음악 기록 작성" eyebrow="Music log" subtitle="오늘 들은 음악과 그때의 감상을 남깁니다.">
+      <div className="action-row"><Link className="ghost-button" to="/coffee/write">커피는 따로 기록하기 ↗</Link></div>
+      {candidate&&<p className="device-message">추천곡 정보를 가져왔습니다. 실제로 들은 날짜와 감상을 확인한 뒤 저장해 주세요.</p>}
       <form className="panel" onSubmit={event => { event.preventDefault(); handleSave(); }}>
         <div className="form-grid">
           <Input required label="곡명" placeholder="곡명" value={form.trackName} onChange={update("trackName")} />

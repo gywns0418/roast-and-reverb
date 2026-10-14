@@ -50,3 +50,12 @@ feature/bean-discovery에 원두 파일 미리보기/기기 저장/수정/백업
 실서버용 MusicBrainz 공개 메타데이터 검색과 YouTube 검색/영상/공개 재생목록 API를 구현했다. Pages에서는 서버가 없어 자동 조회할 수 없고 곡명·링크/목록 추가는 가능하다. 계정 청취 이력은 읽지 않는다. YouTube 키는 서버 환경변수 YOUTUBE_API_KEY만 사용한다. 하루 60 upstream 요청 제한, 12시간 캐시, MusicBrainz 요청 간격 1.1초. 실제 서버 배포와 API 키 설정은 아직 미완료다.
 
 참고: https://huggingface.co/Xenova/multilingual-e5-small / https://huggingface.co/intfloat/multilingual-e5-small (MIT 모델 카드), https://huggingface.co/docs/transformers.js/en/pipelines , https://musicbrainz.org/doc/MusicBrainz_API , https://developers.google.com/youtube/v3/docs/search/list . MusicBrainz 무료 비상업 API 조건과 호출 제한을 따른다. 추천은 알려진 설명의 의미 연관성이고 실제 청취/맛 검증 결과가 아니다.
+
+
+## 2026-10-14 커피에서 음악을 창작하는 방향
+
+사용자 제안: 커피 작성과 음악 작성을 분리하고 산지/컵노트로 음악 생성. 향미를 음색·악기·리듬의 창작 은유로 옮기는 60~90초 연주곡이 서비스 흐름에 잘 맞는다. 이미 알려진 아티스트의 곡 추천과 새로운 음원 생성을 구분하고, 생성곡은 별도 제작물로 표시한 뒤 실제로 들었을 때만 청취 기록을 만든다. 현재 기존 곡 의미 추천 연결과 규칙 제작 설명만 구현했으며 실제 음원 생성 모델/API는 미연결이다.
+
+Stability 공식 API pricing https://platform.stability.ai/pricing 은 계정 시작 무료 크레딧과 모델별 생성 비용을 명시한다. 무료 웹 사용과 무료 API 호출을 같은 것으로 가정하지 않는다. Suno 무료 output 조건은 https://help.suno.com/en/categories/550145 및 https://www.suno.com/terms 에서 확인했다. 무제한 무료 앱 음악 생성으로 표시하지 않는다. 실제 통합 시 서버 전용 키, 확인된 Trial/Free 잔액 이하 요청 한도, 잔액 소진 시 명시적 중단, 자동 결제/유료 전환 없음이 필요하다. 이번 작업에 계정 생성/키 설정/실제 음악 생성/개인 입력 외부 전송은 없었다.
+
+지속 파일 연결은 https://developer.chrome.com/docs/capabilities/web-apis/file-system-access , https://developer.chrome.com/blog/persistent-permissions-for-the-file-system-access-api , https://developer.mozilla.org/en-US/docs/Web/API/Window/showOpenFilePicker 에 따라 read 전용 handle과 IndexedDB를 사용한다. Chrome/Edge의 HTTPS 환경에서 최초 사용자가 파일을 선택하며 앱이 열려 있을 때만 확인한다. 브라우저 종료/저장소 삭제/권한 취소 시 자동 읽기는 멈추고 다시 연결 또는 권한 허용이 필요하다.

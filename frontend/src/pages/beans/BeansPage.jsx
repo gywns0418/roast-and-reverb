@@ -1,4 +1,5 @@
-import { useState } from "react";
+import BeanFileConnection from "../../components/beans/BeanFileConnection.jsx";
+import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import BeanArtwork from "../../components/beans/BeanArtwork.jsx";
@@ -9,6 +10,7 @@ export default function BeansPage() {
   const [initial]=useState(()=>{try{return {items:readDevice("beans"),error:""};}catch(error){return {items:[],error:error.message};}});
   const [error,setError]=useState(initial.error);const [beans,setBeans]=useState(initial.items);
   const [preview,setPreview]=useState([]),[selected,setSelected]=useState([]),[query,setQuery]=useState(""),[filter,setFilter]=useState("all"),[form,setForm]=useState(empty),[editId,setEditId]=useState(null),[message,setMessage]=useState("");
+  useEffect(()=>{const refresh=()=>{try{setBeans(readDevice("beans"));}catch(err){setError(err.message);}};window.addEventListener("rr-discovery-changed",refresh);return()=>window.removeEventListener("rr-discovery-changed",refresh);},[]);
   async function importFile(event) {
     setError("");setMessage("");setPreview([]);try {const file=event.target.files?.[0];if(!file)return;if(file.size>1000000)throw new Error("1MB 이하의 파일을 선택해 주세요.");const content=await file.text();const items=file.name.toLowerCase().endsWith(".json")?validateBeansFile(JSON.parse(content)):parseBeansMarkdown(content);setPreview(items);setSelected(items.map(item=>item.id));}catch(err){setError(err.message);}finally{event.target.value="";}
   }
@@ -18,6 +20,7 @@ export default function BeansPage() {
   const shown=beans.filter(item=>(filter==="all" || item.status===filter) && [item.name,item.roastery,item.origin,...(item.flavors || [])].join(" ").toLowerCase().includes(query.toLowerCase()));
   return <PageShell title="내가 가진 원두" eyebrow="MY BEAN SHELF" subtitle="지금 내릴 수 있는 원두에서, 다음 한 잔과 한 곡을 발견하세요.">
     <div className="inventory-intro"><div><h2>내 원두를 먼저, 취향을 더 가까이.</h2><p>beans.md를 가져오거나 직접 추가하세요. 이 자료는 이 기기에 저장되며 서버에 전송하지 않습니다.</p><div className="action-row"><label className="primary-button file-button">원두 파일 가져오기<input aria-label="원두 파일 가져오기" type="file" accept=".md,.json,text/markdown,application/json" onChange={importFile}/></label><button className="ghost-button" type="button" disabled={!beans.length} onClick={()=>downloadBackup(beans,[])}>원두 백업 내려받기</button><Link className="ghost-button" to="/recommend">이 원두로 추천받기 ↗</Link></div></div><strong>{beans.filter(item=>item.status==="held").length}<small>보유 원두</small></strong></div>
+    <BeanFileConnection/>
     {error&&<p className="resource-error" role="alert">{error}</p>}{message&&<p className="device-message" role="status">{message}</p>}
     {!!preview.length&&<section className="panel import-preview"><h2>저장하기 전에 확인해 주세요</h2><p>동일 원두·로스터리·로스팅 날짜는 기존 항목을 갱신합니다. 보유 미확인과 배송 중 원두는 기본 추천에서 제외합니다.</p><div className="preview-list">{preview.map(item=><label key={item.id}><input type="checkbox" checked={selected.includes(item.id)} onChange={e=>setSelected(e.target.checked?[...selected,item.id]:selected.filter(id=>id!==item.id))}/><span><strong>{item.name}</strong><small>{item.roastery} · {inventoryLabels[item.status]} · {item.remaining || "남은 양 미기록"}</small></span></label>)}</div><div className="action-row"><button className="primary-button" disabled={!selected.length} onClick={applyImport}>{selected.length}종 저장</button><button className="ghost-button" onClick={()=>setPreview([])}>취소</button></div></section>}
     <div className="library-toolbar"><label className="library-search"><input aria-label="내 원두 검색" placeholder="원두, 로스터리, 컵노트 검색" value={query} onChange={e=>setQuery(e.target.value)}/></label><select aria-label="내 원두 상태" value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">모든 상태</option>{Object.entries(inventoryLabels).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select><span>{shown.length}종</span></div>

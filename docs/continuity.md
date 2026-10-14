@@ -124,3 +124,10 @@ feature/editorial-pairing-engine. 5개 새 브랜드 이미지, 전체 월픽의
 PR #12 dev 병합 완료(a314370), 구현 442feec CI 전체 성공. dev의 Verify 38419921891 / Pages 38419921942 성공. 이번 기능의 공개 개발 진입은 https://gywns0418.github.io/roast-and-reverb/dev/#/recommend 이며 원두 관리는 /dev/#/beans. 운영 루트는 main 빌드이고 이번 기능을 main에 병합하지 않았다. Pages는 main/dev 각각 빌드하며 feature 정책을 제거했다. 실제 서버/YouTube API 키는 계속 미연결, 유료 비용 없음.
 
 공개 개발 화면에서 실제 다국어 의미 AI 결과·모바일·원두 파일 가져오기/보유 후보 연결 확인. 개인 원본은 브라우저 안에서만 읽고 기기에 저장했다. QA 이미지는 개인 원두 가져오기 전 공개 월픽/체험 음악 조합만 포함한다. 다른 브라우저로 개인 원두 저장이 자동 전달되지 않는다. 세부 구현/제약은 recommendation-direction.md와 pairing-engine.md 최신 섹션, 검증은 change-log.md 마지막 항목. 현재 작업 브랜치는 feature/bean-discovery이며 후속 문서/QA 커밋은 이 브랜치에 보존한다.
+
+
+## 2026-10-14 자동 원두 연결과 커피/음악 작성 분리
+
+현재 feature/linked-beans-music는 origin/main에서 만들고 이전 bean-discovery 구현/인수인계 문서를 통합했다. beans.md는 한 번 파일 선택으로 FileSystemFileHandle을 IndexedDB에 저장하고 read 권한만으로 앱 진입/포커스/표시 중 15초마다 다시 읽는다. 권한 재요청은 사용자 버튼에서만 수행한다. 파일 수정/업로드 없음. 원본에서 제외된 항목은 미확인 보관, 수동 원두는 유지. Chrome/Edge 등 지원 브라우저 필요. 브라우저가 권한을 초기화하면 다시 허용해야 하며 다른 브라우저에 연결이 전달되지 않는다.
+
+커피 작성에서 음악 필드를 제거하고 각각 저장한다. 커피 원두/산지/판매처 컵노트/내 관찰 맛을 가지고 실제 기존 곡 의미 AI 추천으로 이동한다. 음악 제작 설명은 규칙 기반 초안이고 실제 음악 생성은 아직 연결하지 않았다. 음악 생성 API는 무료 크레딧·서비스 조건과 키/서버가 필요하며 자동 결제를 하지 않는다. 자세한 검증/원격 반영은 change-log.md 최신 항목. main 배포 승인 규칙 유지, 실제 서버 미배포.
