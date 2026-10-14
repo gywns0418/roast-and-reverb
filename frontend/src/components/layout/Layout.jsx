@@ -24,7 +24,7 @@ export default function Layout() {
         <Header />
         {local && (
           <div className="demo-notice" role="status">
-            체험 모드 · 기록은 이 브라우저에 저장됩니다. 원두·음악 추천은 기기에서 분석합니다. 외부 음악 검색은 서버 연결이 필요합니다.
+            체험 모드 · 기록은 이 브라우저에 저장됩니다. 원두·음악 추천은 기기에서 분석합니다. MusicBrainz 검색과 YouTube 곡 링크를 연결할 수 있습니다.
           </div>
         )}
         <ResourceBoundary key={location.pathname}>

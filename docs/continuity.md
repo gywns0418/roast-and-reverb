@@ -196,3 +196,13 @@ HTTP 비정상 JSON/실패 envelope/시간 초과를 성공으로 처리하지 �
 인증된 companion status/chat API와 스튜디오 자유 대화 UI, 구조화된 음악 설정 제안·직접 적용, 입력/출력 제한·시간 초과·크레딧 차단·권한/거절 처리 구현. AI는 대화와 설정을 제안하며 실제 연주는 기존 규칙 작곡/Web Audio 합성이다. 원두 파일/전체 일지 미전송. 대화는 화면 내 일시 보관. 공개 Pages는 기기 모드이고 실제 서버 운영 배포는 아직 없으므로 AI 대화 사용 불가 상태를 정확히 표시한다.
 
 로컬 실행기는 승인된 키를 backend에만 전달하고 loopback 서버+화면을 실행하며 별도 .local DB를 사용한다. 실제 로컬 회원가입/인증 및 status 키 설정 확인, 프론트50/서버14 테스트·빌드·production 저장/재시작/재조회·audit0 통과. 실행 중 Windows JAR 잠금 문제를 확인해 실행용 사본 사용으로 수정하고 재빌드 성공. 실제 모델 답변 성공은 크레딧 소진 때문에 미검증이다. 자세한 운영 방법은 ai-companion.md. main 승격/유료 운영 변경 없음. 원격 PR/배포 결과는 후속 기록을 따른다.
+
+
+최종 구현/QA source 81a0618의 Verify 38633649698 frontend/backend/deployment-image 성공. PR #21 dev 병합 6861681. dev Verify 38633928108 및 Pages 38633928042 성공. 공개 /dev/?v=81a0618#/studio에서 실제 신규 대화 카드와 서버 미연결 안내 확인. 로컬에서는 인증된 /companion/chat 실제 요청의 크레딧 오류와 이후 차단, 크레딧 없이 53초 기기 음악 생성, 모바일375=scroll375 확인. 키는 client build에 포함되지 않았다. 로컬 실행 중인 서버/화면은 127.0.0.1:8080/5184이며 저장된 테스트 계정은 QA용일 뿐 사용자 계정으로 간주하지 않는다. 실제 AI 답변 성공과 운영 서버 배포는 남아 있다. 공개 QA에 개인 원본 정보 없음. 최종 후속 문서/QA는 feature 브랜치에 보존한다.
+
+
+## 2026-10-15 — 추천 음악 MusicBrainz / YouTube 공개 연결
+
+현재 feature/public-music-connections는 main에서 분기하고 최신 dev/직전 인수인계를 통합했다. 사용자가 추천 후보 화면의 두 외부 연결을 요청했다. 공개 Pages에 MusicBrainz 직접 검색과 YouTube 공식 oEmbed 단일 영상 제목·채널 조회 연결. 키 없이 결과 미리보기→선택 추가→추천/청음실 후보 반영. 장르/아티스트/보컬 여부 미확인은 추정하지 않고 oEmbed HTML은 실행하지 않는다. 전체 YouTube 검색/재생목록 자동 목록은 서버·별도 YOUTUBE_API_KEY가 여전히 필요하다. 현재 키 없음, OpenAI 키 대체 불가.
+
+실제 브라우저에서 첫 MusicBrainz503 정확 표시, 다음 일반 검색12결과 및 확인한 Norah Jones곡 추가, YouTube제목/채널 조회·선택 추가·새로고침·기준 음악/기본 추천 반영 확인. 모바일375=scroll375. 프론트55 테스트/build 통과. 입력검증·직렬화/1.1초/Web Locks·5분메모리캐시·15초timeout·HTML미사용·중복/화면종료 요청 보호. 자세한 제약과 공식근거 public-music-connections.md. Railway읽기 점검에서 기존 보류11개/live없음 확인, 변경/결제/배포하지 않았다. main 승격 없음, dev PR/배포는 후속 결과 참고.
