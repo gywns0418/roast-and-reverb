@@ -14,6 +14,10 @@ class ServiceSecurityTest {
  @Autowired MockMvc mvc;
  @Autowired ObjectMapper json;
  @Test void anonymousCannotReadRecords() throws Exception {mvc.perform(get("/api/coffee")).andExpect(status().isUnauthorized());}
+ @Test void companionRequiresLogin() throws Exception {
+  mvc.perform(get("/api/companion/status")).andExpect(status().isUnauthorized());
+  mvc.perform(post("/api/companion/chat").contentType("application/json").content("{}")).andExpect(status().isUnauthorized());
+ }
  @Test void publicImagesAreNotBlockedByLoginAndMalformedJsonIsClientError() throws Exception {
   mvc.perform(get("/images/missing-test-image.png")).andExpect(status().isNotFound());
   mvc.perform(post("/api/auth/join").contentType("application/json").content("{broken")).andExpect(status().isBadRequest());

@@ -191,3 +191,12 @@ PR #15(청음실)와 #17(익숙함/발견 반영)을 dev에 병합하고 PR #16�
 - /connections 추가, 원문 확인 시각·브라우저 연결·기기 자료 상태 표시. 사용자에게 링크를 매번 전달하도록 하던 문구 교체.
 - 실제 공개 수집에서 품절 변경 1종 반영/52항목 유지. JSON 확인 시각 별도 기록. 반복 수집 changed:false.
 - 프론트 50개 테스트/빌드 통과. native source snapshot 및 REA review 반복 실행에서 no-change 확인. 모바일 390×844 clientWidth=scrollWidth=375. 개인 원본 수정/공개 없음.
+
+
+## 2026-10-15 — 사운드 AI 대화 서버 연결
+
+- 기존 /studio에 자유 대화·제안 선택 적용. 기존 로컬 소리 요청/악보/WAV 유지.
+- 인증된 Responses API 서버 경로, 키 서버 환경 전용, store:false, bounded history/output/timeouts, no automatic retry.
+- 크레딧 소진/권한/속도 제한/잘못된 응답을 구별하고 실패 시 설정 유지. 개인 원두/전체 기록 미전송.
+- .env.local 기존 키 실제 요청: 429 credit_balance_exhausted. 실제 AI 성공은 보류, 결제 없음.
+- frontend50/backend14 테스트·build·production restart 검증·audit0. 개발 운영 결과는 continuity 후속.

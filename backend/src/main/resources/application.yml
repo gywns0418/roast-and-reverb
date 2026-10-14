@@ -16,6 +16,9 @@ mybatis:
     map-underscore-to-camel-case: true
 
 app:
+  openai:
+    api-key: ${OPENAI_API_KEY:}
+    model: ${OPENAI_MODEL:gpt-4.1-mini}
   jwt:
     secret: ${JWT_SECRET:roast-and-reverb-local-dev-secret-key-change-me}
     expiration-ms: 86400000
