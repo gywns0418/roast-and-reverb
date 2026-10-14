@@ -185,3 +185,14 @@ HTTP 비정상 JSON/실패 envelope/시간 초과를 성공으로 처리하지 �
 읽기 전용 connection-snapshot은 기존 허용된 원두 원본을 자동 발견하며 개인정보는 .local에만 보관한다. REA 검사 스크립트는 변경이 없으면 재사용한다. 기존 월픽 heartbeat를 매일 09:00 KST의 자동 연결·유지관리로 확장했고 글로벌 자동 선택 스킬 roast-reverb-autopilot도 설치/검증했다. PC/Codex 실행 필요, 개인 자료 미공개, 무료 비용·dev 자동 반영·main 확인 규칙 유지. 같은 키 승인 거절을 반복하지 않는다.
 
 /connections에서 브라우저 파일 상태와 게시된 원문 확인 시각, 개인 기기 자료를 표시한다. 브라우저 최초 파일 선택/권한은 여전히 사용자 소유이며 native 파일 접근과 다르다. 이번 실제 공개 월픽 수집에서 한 원두 품절 상태를 갱신했고 52항목 유지·두 번째 실행 changed:false 확인. 테스트 50개/빌드·소스/REA no-change 재사용·모바일 넘침 없음 검증. 원격 CI/PR/Pages 최종 상태는 후속 기록을 확인한다. 실제 LLM/음원 생성 모델·Railway 운영 배포는 여전히 미완료다.
+
+최종 구현 9782de1의 Verify 38631019516에서 frontend/backend/deployment-image 전부 성공. PR #20 dev 병합 완료(0c63de6b). dev Verify 38631291702 / Pages 38631291478 성공. 공개 /dev/?v=9782de1#/connections에서 연결 화면·52개 공개 항목·실제 원문/JSON 확인 시각을 확인했다. public QA 이미지는 개인 기기 수치가 보이는 하단을 제외했다. 로컬 heartbeat ACTIVE/매일 09:00 확인, 실제 미래 예약 실행은 아직 발생하지 않았다. 최종 문서/QA는 feature 브랜치에 보존한다.
+
+
+## 2026-10-15 — API 키 확인 후 사운드 AI 연결
+
+현재 feature/studio-ai-companion은 origin/main에서 분기하고 최신 dev 및 직전 인수인계를 통합했다. 사용자 생성 키는 승인된 .env.local에 존재하며 값 노출 없이 서버 환경에서만 사용한다. 실제 최소 Responses 요청은 429 credit_balance_exhausted / insufficient_quota로 실패했다. 이전 저장 승인 창 차단은 해결된 것으로 .local 상태를 갱신했고 현재 차단은 잔액 소진이다. 자동 결제/키 재생성/같은 실패 반복을 하지 않는다.
+
+인증된 companion status/chat API와 스튜디오 자유 대화 UI, 구조화된 음악 설정 제안·직접 적용, 입력/출력 제한·시간 초과·크레딧 차단·권한/거절 처리 구현. AI는 대화와 설정을 제안하며 실제 연주는 기존 규칙 작곡/Web Audio 합성이다. 원두 파일/전체 일지 미전송. 대화는 화면 내 일시 보관. 공개 Pages는 기기 모드이고 실제 서버 운영 배포는 아직 없으므로 AI 대화 사용 불가 상태를 정확히 표시한다.
+
+로컬 실행기는 승인된 키를 backend에만 전달하고 loopback 서버+화면을 실행하며 별도 .local DB를 사용한다. 실제 로컬 회원가입/인증 및 status 키 설정 확인, 프론트50/서버14 테스트·빌드·production 저장/재시작/재조회·audit0 통과. 실행 중 Windows JAR 잠금 문제를 확인해 실행용 사본 사용으로 수정하고 재빌드 성공. 실제 모델 답변 성공은 크레딧 소진 때문에 미검증이다. 자세한 운영 방법은 ai-companion.md. main 승격/유료 운영 변경 없음. 원격 PR/배포 결과는 후속 기록을 따른다.

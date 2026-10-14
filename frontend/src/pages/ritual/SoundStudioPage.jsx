@@ -2,6 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {Link,useLocation} from 'react-router-dom';
 import {ArrowUpRight,Download,Heart,Music2,RefreshCw,SlidersHorizontal} from 'lucide-react';
 import PageShell from '../../components/common/PageShell.jsx';
+import SoundCompanion from '../../components/ritual/SoundCompanion.jsx';
 import {readDevice,saveDevice} from '../../store/discoveryStore.js';
 import {soundMoods,soundSettings,settingsForCoffee,soundCommands,applySoundCommand,validateSoundRecipe,parseSoundBackup} from '../../utils/soundStudio.js';
 import {renderSound} from '../../utils/soundRenderer.js';
@@ -53,10 +54,11 @@ export default function SoundStudioPage() {
         {current&&<button className="ghost-button" disabled={busy} onClick={()=>generate(null,settings,true)}><SlidersHorizontal size={16}/> 같은 선율에 설정 반영</button>}
         <button className="sound-text-button" onClick={()=>{try{saveDevice('sound-preference',[settings]);setNotice('다음 방문의 시작 분위기로 기억할게요.');}catch(err){setError(err.message);}}}>이 설정을 다음에도 기억하기 ↗</button>
       </section>
+      <SoundCompanion settings={settings} disabled={busy} onApply={next=>{setSettings(next);generate(null,next,true);}}/>
       <section className="panel sound-conversation"><div className="sound-conversation-heading"><h3>말 한마디로, 다른 여운</h3><span>소리 요청</span></div><p>아래 표현을 누르거나 입력해 보세요. 같은 선율의 분위기를 바꿔 다시 만듭니다.</p><div className="sound-chips">{soundCommands.map(text=><button disabled={busy} key={text} onClick={()=>requestSound(text)}>{text}</button>)}</div>
         {history.length>0&&<div className="sound-history" aria-label="반영한 소리 요청">{history.map((row,i)=><div key={i}><b>{row.text}</b><span>{row.result}</span></div>)}</div>}
         <form onSubmit={event=>{event.preventDefault();requestSound(command);}}><label className="sr-only" htmlFor="sound-request">소리 요청 입력</label><input id="sound-request" value={command} disabled={busy} maxLength={120} onChange={e=>setCommand(e.target.value)} placeholder="예: 조금 느리게"/><button disabled={busy||!command.trim()} type="submit" aria-label="소리 요청 반영"><ArrowUpRight size={20}/></button></form>
-        <small>소리 요청은 정해진 표현을 처리합니다. 자유로운 AI 대화는 아직 연결되지 않았습니다.</small>
+        <small>이 빠른 요청은 정해진 표현으로 처리하며 외부에 전송하지 않습니다.</small>
       </section></div>
     </div>
     {current&&<section className="panel sound-save"><label className="input-field"><span>이 음악에 이름을 붙여주세요</span><input maxLength={100} value={title} onChange={e=>setTitle(e.target.value)} placeholder="비 오는 목요일의 한 잔"/></label><button className="primary-button" disabled={busy} onClick={save}>나의 사운드 선반에 보관</button><p>악보와 설정을 기기에 저장해 같은 음악을 다시 만들 수 있어요. 음원 파일은 WAV로 따로 내려받으세요.</p></section>}
