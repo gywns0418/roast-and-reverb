@@ -25,6 +25,8 @@ test('piano-only removes all other layers; missing settings are bounded',()=>{
 });
 test('coffee timbre uses provided notes, never infers culture from origin',()=>{
   assert.equal(settingsForCoffee({flavors:['자스민']}).mood,'airy');
+  assert.equal(settingsForCoffee({flavors:['아카시아','복숭아','감귤']}).mood,'airy');
+  assert.equal(settingsForCoffee({flavors:['복숭아','감귤']}).mood,'bright');
   assert.equal(settingsForCoffee({cupNotes:'citrus'}).mood,'bright');
   assert.deepEqual(settingsForCoffee({origin:'Brazil'}),settingsForCoffee({origin:'Kenya'}));
 });

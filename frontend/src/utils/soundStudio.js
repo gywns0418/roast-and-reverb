@@ -12,7 +12,7 @@ export function soundSettings(value={}) {
 }
 export function settingsForCoffee(coffee={}) {
   const notes=[coffee.cupNotes,coffee.tasteNote,...(Array.isArray(coffee.flavors)?coffee.flavors:[])].filter(Boolean).join(' ');
-  const mood=/꽃|플로럴|자스민|floral|jasmine/i.test(notes)?'airy':/시트러스|레몬|베리|과일|citrus|berry|fruit/i.test(notes)?'bright':/다크|카카오|dark|cocoa/i.test(notes)?'dusk':'warm';
+  const mood=/꽃|플로럴|자스민|아카시아|장미|라벤더|floral|jasmine|acacia|rose/i.test(notes)?'airy':/시트러스|레몬|베리|과일|복숭아|감귤|오렌지|자몽|포도|사과|citrus|berry|fruit|peach|orange|apple/i.test(notes)?'bright':/다크|카카오|dark|cocoa/i.test(notes)?'dusk':'warm';
   return soundSettings({mood,bpm:mood==='bright'?92:mood==='dusk'?64:76});
 }
 export const soundCommands=['조금 느리게','조금 빠르게','더 따뜻하게','조금 밝게','리듬 없이','리듬 넣기','여운 길게','피아노만'];
