@@ -2,8 +2,9 @@ export function parseMusicLink(value) {
   let url;try{url=new URL(value);}catch{throw new Error("YouTube 또는 YouTube Music 링크를 입력해 주세요.");}
   if(url.protocol!=="https:" || url.username || url.password || url.port || !["youtube.com","www.youtube.com","music.youtube.com","youtu.be"].includes(url.hostname))throw new Error("지원하는 HTTPS YouTube 링크가 아닙니다.");
   const playlist=url.searchParams.get("list");let video=url.hostname==="youtu.be"?url.pathname.slice(1):url.searchParams.get("v");
-  if(playlist){if(!/^[A-Za-z0-9_-]{10,120}$/.test(playlist)||["HL","WL"].includes(playlist))throw new Error("공개 재생목록 링크를 입력해 주세요.");return {kind:"playlist",id:playlist,url:`https://www.youtube.com/playlist?list=${playlist}`};}
   if(!video&&url.pathname.startsWith("/shorts/"))video=url.pathname.split("/")[2];
+  if(/^[A-Za-z0-9_-]{11}$/.test(video||"")&&url.pathname!=="/playlist")return {kind:"video",id:video,url:`https://music.youtube.com/watch?v=${video}`};
+  if(playlist){if(!/^[A-Za-z0-9_-]{10,120}$/.test(playlist)||["HL","WL"].includes(playlist))throw new Error("공개 재생목록 링크를 입력해 주세요.");return {kind:"playlist",id:playlist,url:`https://www.youtube.com/playlist?list=${playlist}`};}
   if(!/^[A-Za-z0-9_-]{11}$/.test(video||""))throw new Error("곡 또는 재생목록 링크를 확인해 주세요.");
   return {kind:"video",id:video,url:`https://music.youtube.com/watch?v=${video}`};
 }
