@@ -8,7 +8,8 @@ export async function monthlyCatalog() {
   );
   if (!response.ok) throw new Error("월픽 자료를 불러오지 못했습니다.");
   const catalog = await response.json();
-  return catalog.products || [];
+  if(catalog?.schemaVersion!==1||!Array.isArray(catalog.products)||catalog.products.some(product=>!product||!Array.isArray(product.items)))throw new Error('월픽 자료 형식이 바뀌었습니다. 마지막으로 확인한 자료를 유지해 주세요.');
+  return catalog.products;
 }
 
 export async function importMonthlyUrl(value, catalog) {
@@ -23,7 +24,7 @@ export async function importMonthlyUrl(value, catalog) {
   const known = catalog.find((item) => item.sourceUrl === url);
   if (!known)
     throw new Error(
-      "이 링크는 아직 체험 자료에 없습니다. 실제 서버 모드에서는 링크를 바로 수집할 수 있습니다. 이 대화에 링크를 주시면 공개 자료에도 추가할 수 있어요.",
+      "이 상품은 아직 연결된 월픽 목록에 없습니다. 지원 판매처의 당월 자료는 정기 갱신에서 자동으로 확인합니다. 현재 목록을 이용하거나 갱신 상태를 확인해 주세요.",
     );
   const response = await fetch(known.detailSourceUrl, {
     signal: AbortSignal.timeout(20000),

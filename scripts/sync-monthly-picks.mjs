@@ -68,7 +68,7 @@ const updates = [];
 for (const url of urls.slice(0, 8)) {
   const metadata = parseSourceHtml(await readPublic(sourceUrl(url)), url);
   const data = JSON.parse(await readPublic(metadata.detailSourceUrl));
-  updates.push(normalizeMonthlySource(metadata, data));
+  updates.push({...normalizeMonthlySource(metadata, data),detailsCheckedAt:new Date().toISOString()});
 }
 // Write only after every requested product passed validation; preserve prior months.
 const facts = (product) =>
@@ -82,7 +82,7 @@ const changed = updates.filter(
     facts(
       catalog.products.find((item) => item.sourceUrl === product.sourceUrl) ||
         {},
-    ) !== facts(product),
+    ) !== facts(product) || !catalog.products.find(item=>item.sourceUrl===product.sourceUrl)?.detailsCheckedAt,
 );
 if (!changed.length) {
   console.log(JSON.stringify({ changed: false, products: updates.length }));

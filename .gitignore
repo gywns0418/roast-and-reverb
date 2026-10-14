@@ -10,3 +10,4 @@ target/
 
 # Local Codex/agent working instructions
 AGENTS.md
+.local/

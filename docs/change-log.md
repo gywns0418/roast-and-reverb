@@ -183,3 +183,11 @@ PR #15(청음실)와 #17(익숙함/발견 반영)을 dev에 병합하고 PR #16�
 - 서버 이미지 경로 허용, 입력 형식 오류 400, 존재하지 않는 리소스 404. 회원 데이터/관리자 접근 검사 유지.
 - 프론트 46개/서버 9개 테스트 통과, Vite build·npm production audit 0건·운영 재시작 검증 통과. Java 21은 실행 명령에 JAVA_HOME으로 명시.
 - 가상 QA 일지/취향 백업 파일로 확인→교체→새로고침→목록 재조회 검증. 개인 원본 미사용. 모바일 390×844 clientWidth=scrollWidth=375. QA: project-backup-desktop.png / project-backup-mobile.png.
+# 2026-10-15 REA와 자동 연결
+
+- REA 6.5.0 static application analysis/feature trace로 연결·저장·의미 모델 소스를 추적. 대상 5개/parse failure 0이며 나머지 소스 및 runtime은 별도 미검증 범위.
+- 원본 hash가 같아도 복원된 선반이 다르면 자동으로 재정렬/복구. manual 원두 유지. old worker의 늦은 오류가 new worker를 종료하지 않도록 요청별 소유권 적용, 전송 실패·timeout 즉시 종료/재시도 보완.
+- read-only native source discovery, fingerprint-based REA review, 자동 선택 스킬 설치/검증. 기존 월픽 heartbeat를 매일 09:00 KST 유지관리로 확장. 변경 없음은 조용히 종료하며 PC/Codex 실행 필요.
+- /connections 추가, 원문 확인 시각·브라우저 연결·기기 자료 상태 표시. 사용자에게 링크를 매번 전달하도록 하던 문구 교체.
+- 실제 공개 수집에서 품절 변경 1종 반영/52항목 유지. JSON 확인 시각 별도 기록. 반복 수집 changed:false.
+- 프론트 50개 테스트/빌드 통과. native source snapshot 및 REA review 반복 실행에서 no-change 확인. 모바일 390×844 clientWidth=scrollWidth=375. 개인 원본 수정/공개 없음.
