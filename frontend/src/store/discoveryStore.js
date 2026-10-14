@@ -1,6 +1,6 @@
 import { authStore } from "../store/authStore.js";
 export function deviceScope() {
-  if(import.meta.env.VITE_USE_REAL_API !== "true") return "trial";
+  if(import.meta.env?.VITE_USE_REAL_API !== "true") return "trial";
   const user=authStore.user;
   if(!user)throw new Error("개인 자료를 사용하려면 로그인해 주세요.");
   return String(user.memberId || user.member_id || user.id || user.email);

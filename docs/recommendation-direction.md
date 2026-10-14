@@ -70,3 +70,15 @@ Stability 공식 API pricing https://platform.stability.ai/pricing 은 계정 �
 공식 모델 페이지 https://huggingface.co/stabilityai/stable-audio-3-small-music 는 가중치 다운로드에 로그인/연락처 공유/Community License 및 Gemma Terms 동의를 요구한다. 사용자 대신 약관을 수락하거나 우회하지 않았다. 다운로드/학습/음원 생성/서버 공개는 미실행이다. 공식 구현 https://github.com/Stability-AI/stable-audio-3 및 자체 실행 조건 https://stability.ai/explainers/self-hosted-vs-api-generative-audio-choosing-a-deployment-model 확인.
 
 제안 흐름: 원두/산지/컵노트 → 향미의 창작 은유와 상황 → 로컬 공개 음악 모델 → 실제 WAV 생성/재생 → 사용자가 들은 후 청취 기록. 새 모델의 대규모 학습 대신 기존 모델 추론과 R&R 조건/취향 조절을 개발한다. 공개 서비스 모두에게 상시 생성해 주는 무료 GPU 운영까지 가능하다고 해석하지 않는다.
+
+
+## 2026-10-14 개인 청음실 실제 구현
+
+이번 방향은 매일 돌아올 이유를 사용자의 실제 감상/취향 변화에 둔다. /ritual 첫 초대→지금의 문장→의미 AI 선택→조용한 시간→직접 감상→다음 초대의 기억을 연결했다. 기본 선곡 3곡은 공식 작품명/아티스트 정보를 확인했으며 태그는 R&R 편집 판단으로 구분한다. 음원/앨범 커버를 복제하거나 자동 재생하지 않는다. 출처: https://aphextwin.warp.net/release/86961-aphex-twin-drukqs , https://www.nilsfrahm.com/works/spaces/ , https://www.khruangbin.com/description?albumId=5 . 저장 음악과 같은 아티스트·곡명은 중복 제거한다.
+
+개인화는 실제 E5 의미 임베딩 + 사용자가 적은 취향/최대 3개 확인된 좋아요 기억의 임베딩으로 구성한다. 현재 상황 0.8, 취향/좋은 기억 평균 0.2를 합쳐 정규화한 query vector를 후보 설명과 비교한다. 초기 취향 없이도 동작한다. 추가로 직접 마시고 들었다고 확인한 ±1 평가의 4개 설명 특성 유사도를 소형 로지스틱 선호 모델에 반영한다. 5건 전에는 개인 선호 확률 모델로 표시하지 않는다. 상황/취향 문장을 창작 LLM이 해석한 응답이라고 주장하지 않는다. 음악을 실제 분석/측정하지 않고 설명의 의미를 비교한다.
+
+기억/profile/진행 시간은 기존 deviceScope의 기기 저장소로 분리한다. anonymous 체험은 같은 브라우저 저장소를 공유하고 실제 서버 모드는 회원 scope를 사용한다. 서버 운영/다중 사용자 서비스가 이미 배포됐다고 주장하지 않는다. 개인 원본과 외부 AI 전송 없음. 실제 AI 음원 생성 모델의 약관 동의/설치/생성은 아직 완료되지 않았다.
+
+
+청음실 대화는 별도 Qwen2.5-1.5B-Instruct 공개 언어 모델(ONNX revision d54957e3af1be04546436e874a60fe386041b244, q4)을 사용자 요청 시에만 내려받고 worker에서 실행한다. 원본은 https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct (Apache-2.0), 변환은 https://huggingface.co/onnx-community/Qwen2.5-1.5B-Instruct . 최초 0.5B 시험은 한국어 답변 품질이 부족해 더 큰 모델로 변경했다. WebGPU adapter를 사용할 수 있으면 GPU, 아니면 WASM을 선택한다. 제공된 원두/곡/직접 취향/최대 3개의 실제 경험 확인 기억만 context로 제공하고 원두 남은 양/파일 경로/미확인 경험은 포함하지 않는다. 질문/응답은 저장하지 않고 외부 추론 API에 보내지 않는다. 오류/시간 초과/중단 시 예시 답변으로 대체하지 않는다. 새로운 음원 생성 모델과 별도이며 음원 생성이나 실제 측정 능력이 없다.
