@@ -1,216 +1,26 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import PageShell from "../../components/common/PageShell.jsx";
-import Button from "../../components/common/Button.jsx";
-import Input from "../../components/common/Input.jsx";
-import CoffeeForm from "../../components/coffee/CoffeeForm.jsx";
-import { coffeePayload } from "../../utils/brewDetails.js";
-import Tag from "../../components/common/Tag.jsx";
-import { coffeeApi } from "../../api/coffeeApi.js";
-import { musicApi } from "../../api/musicApi.js";
-import { pairingApi } from "../../api/pairingApi.js";
-
-export default function CoffeeWritePage() {
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const candidate=state?.coffeeCandidate;
-  const song=state?.musicCandidate;
-  const local = import.meta.env.VITE_USE_REAL_API !== "true";
-  const [naturalLog, setNaturalLog] = useState(
-    local && !candidate
-      ? "오늘 예가체프를 핸드드립으로 진하게 내려 마시면서 시규어 로스를 들었다."
-      : "",
-  );
-  const [coffee, setCoffee] = useState({
-    beanName: candidate?.name || (local ? "에티오피아 예가체프" : ""),
-    roastery: candidate?.roastery || "",
-    originCountry: candidate?.origin || "",
-    process: candidate?.process || "",
-    brewMethod: candidate ? "" : "핸드드립",
-    roastLevel: candidate ? candidate.roast || "" : "Light",
-    tasteNote: candidate ? "" : local ? "플로럴, 밝은 산미" : "",
-    memo: "",
-    drinkDate: new Date().toLocaleDateString("sv-SE"),
-    brewDetails: {},
-  });
-  const [music, setMusic] = useState({
-    trackName: song?.track || (candidate ? "" : local ? "Svefn-g-englar" : ""),
-    artistName: song?.artist || (candidate ? "" : local ? "Sigur Ros" : ""),
-    genre: song?.genre || (candidate ? "" : local ? "Post-rock" : ""),
-    tags: candidate ? "" : local ? "몽환적, 차분함" : "",
-    memo: "",
-  });
-  const [saving, setSaving] = useState(false);
-  const [parsing, setParsing] = useState(false);
-  const [message, setMessage] = useState("");
-
-  const updateCoffee = (key) => (event) =>
-    setCoffee((prev) => ({ ...prev, [key]: event.target.value }));
-  const updateMusic = (key) => (event) =>
-    setMusic((prev) => ({ ...prev, [key]: event.target.value }));
-
-  async function handleParse() {
-    setParsing(true);
-    setMessage("");
-    try {
-      const parsed = await pairingApi.parseNaturalLog({ text: naturalLog });
-      setCoffee((prev) => ({ ...prev, ...parsed.coffee }));
-      setMusic((prev) => ({ ...prev, ...parsed.music }));
-      setMessage("구조화된 정보를 확인해보세요.");
-    } catch {
-      setMessage("분석 서버에 연결되지 않아 현재 입력값을 유지합니다.");
-    } finally {
-      setParsing(false);
-    }
-  }
-
-  async function handleSaveCoffee() {
-    if (!coffee.beanName.trim()) {
-      setMessage("원두명을 입력해 주세요.");
-      return;
-    }
-    setSaving(true);
-    setMessage("");
-    try {
-      const item = await coffeeApi.create(coffeePayload(coffee));
-      navigate(`/coffee/${item.coffeeLogId || item.coffee_log_id || item.id}`);
-    } catch (error) {
-      setMessage(error.message || "기록을 저장하지 못했습니다.");
-    } finally {
-      setSaving(false);
-    }
-  }
-
-  async function handleCreatePairing() {
-    if (
-      !coffee.beanName.trim() ||
-      !music.trackName.trim() ||
-      !music.artistName.trim()
-    ) {
-      setMessage("원두명, 곡명, 아티스트를 입력해 주세요.");
-      return;
-    }
-    setSaving(true);
-    setMessage("");
-    try {
-      const analyzed = await pairingApi.analyze({
-        coffee,
-        music,
-        text: naturalLog,
-      });
-      const today = new Date().toISOString().slice(0, 10);
-      const createdCoffee = await coffeeApi.create({
-        ...coffeePayload(coffee),
-        drinkDate: coffee.drinkDate || today,
-      });
-      const createdMusic = await musicApi.create({
-        ...music,
-        albumName: music.albumName || "",
-        listenedDate: today,
-      });
-      const pairing = await pairingApi.create({
-        memberId: 1,
-        coffeeLogId:
-          createdCoffee.coffeeLogId ||
-          createdCoffee.coffee_log_id ||
-          createdCoffee.id,
-        musicLogId:
-          createdMusic.musicLogId ||
-          createdMusic.music_log_id ||
-          createdMusic.id,
-        moodSummary: analyzed.moodSummary,
-        moodTags: analyzed.moodTags,
-        pairingScore: analyzed.pairingScore,
-        pairingText: analyzed.pairingText,
-        aiReason: analyzed.aiReason,
-      });
-      navigate(
-        `/pairing/${pairing.pairingId || pairing.pairing_id || pairing.id}`,
-      );
-    } catch (error) {
-      setMessage(
-        error.message || "저장에 실패했습니다. 잠시 후 다시 시도해 주세요.",
-      );
-    } finally {
-      setSaving(false);
-    }
-  }
-
-  return (
-    <PageShell
-      title="오늘의 로그"
-      eyebrow="Natural log"
-      subtitle="하루의 감각을 한 문장으로 남기면 AI가 커피와 음악 정보를 조용히 정리합니다."
-    >
-      {candidate && <p className="device-message">추천한 원두 정보만 가져왔습니다. 판매처 컵노트: {(candidate.flavors || []).join(" · ") || "미기재"}. 내가 느낀 맛과 실제로 들은 음악을 확인한 뒤 저장해 주세요.</p>}
-      <div className="today-log-layout">
-        <section className="natural-log-panel">
-          <span>자연어 입력</span>
-          {local && <p className="color-help">체험 구조화는 고정 예시입니다. 직접 입력한 맛과 음악은 R&R 페어링 엔진으로 비교할 수 있어요.</p>}
-          <textarea
-            aria-label="오늘의 커피와 음악"
-            placeholder="오늘 마신 커피와 들은 음악을 적어보세요."
-            className="textarea"
-            value={naturalLog}
-            onChange={(event) => setNaturalLog(event.target.value)}
-          />
-          <Button onClick={handleParse} disabled={parsing} loading={parsing}>
-            {parsing ? "분석 중" : local ? "구조화 예시 보기" : "AI로 분석하기"}
-          </Button>
-        </section>
-
-        <section className="analysis-grid">
-          <div className="ai-field ai-field-coffee">
-            <h3>추출된 커피 정보</h3>
-            <CoffeeForm value={coffee} onChange={setCoffee} />
-          </div>
-          <div className="ai-field ai-field-music">
-            <h3>추출된 음악 정보</h3>
-            <div className="form-grid">
-              <Input
-                placeholder="곡명"
-                value={music.trackName}
-                onChange={updateMusic("trackName")}
-              />
-              <Input
-                placeholder="아티스트"
-                value={music.artistName}
-                onChange={updateMusic("artistName")}
-              />
-              <Input
-                placeholder="장르"
-                value={music.genre}
-                onChange={updateMusic("genre")}
-              />
-              <Input
-                placeholder="분위기"
-                value={music.tags}
-                onChange={updateMusic("tags")}
-              />
-            </div>
-          </div>
-          <div className="mood-strip">
-            {!candidate && <Tag variant="warm">플로럴</Tag>}
-            {!candidate && <Tag variant="cool">몽환적</Tag>}
-            {!candidate && <Tag variant="neutral">집중</Tag>}
-            <Button
-              onClick={handleSaveCoffee}
-              disabled={saving}
-              loading={saving}
-            >
-              {saving ? "저장 중" : "커피 기록 저장"}
-            </Button>
-            <Button
-              onClick={handleCreatePairing}
-              disabled={saving}
-              loading={saving}
-            >
-              {saving ? "저장 중" : "페어링 생성"}
-            </Button>
-            {message && <span className="muted">{message}</span>}
-          </div>
-        </section>
-      </div>
-    </PageShell>
-  );
+import { useEffect,useState } from 'react';
+import { Link,useLocation,useNavigate } from 'react-router-dom';
+import PageShell from '../../components/common/PageShell.jsx';
+import CoffeeForm from '../../components/coffee/CoffeeForm.jsx';
+import Input from '../../components/common/Input.jsx';
+import { coffeeApi } from '../../api/coffeeApi.js';
+import { coffeePayload } from '../../utils/brewDetails.js';
+import { readDevice } from '../../store/discoveryStore.js';
+import { coffeeMusicBrief } from '../../utils/coffeeMusicBrief.js';
+export default function CoffeeWritePage(){
+ const navigate=useNavigate();const {state}=useLocation();const candidate=state?.coffeeCandidate;
+ const [coffee,setCoffee]=useState(state?.coffeeDraft || {beanName:candidate?.name||'',roastery:candidate?.roastery||'',originCountry:candidate?.origin||'',process:candidate?.process||'',roastLevel:candidate?.roast||'',cupNotes:(candidate?.flavors||[]).join(', '),brewMethod:'',tasteNote:'',memo:'',drinkDate:new Date().toLocaleDateString('sv-SE'),brewDetails:{}});
+ const [beans,setBeans]=useState([]),[error,setError]=useState(''),[saving,setSaving]=useState(false),[brief,setBrief]=useState(null),[message,setMessage]=useState('');
+ useEffect(()=>{const refresh=()=>{try{setBeans(readDevice('beans').filter(bean=>bean.status==='held'));}catch(err){setError(err.message);}};refresh();window.addEventListener('rr-discovery-changed',refresh);return()=>window.removeEventListener('rr-discovery-changed',refresh);},[]);
+ function update(value){setCoffee(value);setBrief(null);setMessage('');}
+ async function save(){setError('');if(!coffee.beanName.trim()){setError('원두명을 입력해 주세요.');return;}setSaving(true);try{const saved=await coffeeApi.create(coffeePayload({...coffee,memo:[coffee.memo,coffee.cupNotes&&`판매처 컵노트: ${coffee.cupNotes}`].filter(Boolean).join('\n')}));navigate(`/coffee/${saved.coffeeLogId||saved.coffee_log_id||saved.id}`);}catch(err){setError(err.message);}finally{setSaving(false);}}
+ const recommendBean={...candidate,id:candidate?.id||'coffee-draft',name:coffee.beanName,roastery:coffee.roastery,origin:coffee.originCountry,process:coffee.process,roast:coffee.roastLevel,flavors:coffee.cupNotes.split(/[,，]/).map(s=>s.trim()).filter(Boolean),tasteNote:coffee.tasteNote,source:'draft'};
+ return <PageShell title="오늘의 커피" eyebrow="BREW JOURNAL" subtitle="한 잔의 맛을 먼저 남기세요. 음악은 그 향미에서 이어집니다.">
+ <div className="action-row"><Link className="ghost-button" to="/coffee">커피 기록 목록</Link><Link className="ghost-button" to="/music/write">음악은 따로 기록하기 ↗</Link></div>
+ <div className="coffee-sound-layout"><section className="panel"><label className="input-field"><span>내 보유 원두에서 가져오기</span><select aria-label="작성할 보유 원두" defaultValue="" onChange={e=>{const bean=beans.find(row=>row.id===e.target.value);if(bean)update({...coffee,beanName:bean.name,roastery:bean.roastery||'',originCountry:bean.origin||'',process:bean.process||'',roastLevel:bean.roast||'',cupNotes:(bean.flavors||[]).join(', ')});}}><option value="">직접 적기 · 보유 {beans.length}종</option>{beans.map(bean=><option key={bean.id} value={bean.id}>{bean.name}</option>)}</select></label>
+ <h2>내린 한 잔의 기록</h2><CoffeeForm value={coffee} onChange={update}/><div className="form-grid"><Input placeholder="산지" value={coffee.originCountry} onChange={e=>update({...coffee,originCountry:e.target.value})}/><Input placeholder="가공 방식" value={coffee.process} onChange={e=>update({...coffee,process:e.target.value})}/><Input placeholder="판매처 컵노트" value={coffee.cupNotes} onChange={e=>update({...coffee,cupNotes:e.target.value})}/></div><p className="model-note">판매처 컵노트와 내가 느낀 맛은 구분해서 남깁니다. 음악 입력 없이 커피만 저장할 수 있어요.</p><button className="primary-button" disabled={saving} onClick={save}>{saving?'저장 중…':'커피 기록 저장'}</button></section>
+ <aside className="panel coffee-sound-panel"><p className="eyebrow">THE SOUND OF YOUR CUP</p><h2>이 한 잔은 어떤 소리일까요?</h2><p>컵노트와 산지를 음악의 질감·악기·흐름으로 풀어보세요.</p><div className="action-row"><Link className="primary-button" to="/recommend" state={{coffeeCandidate:recommendBean,coffeeDraft:coffee}}>이 커피로 AI 음악 추천 ↗</Link><button className="ghost-button" onClick={()=>{try{setError('');setBrief(coffeeMusicBrief(coffee));}catch(err){setError(err.message);}}}>음악 제작 설명 만들기</button></div><p className="model-note">AI 음악 추천은 기존 음악 후보에서 찾습니다. 제작 설명은 향미를 음악에 비유한 규칙 기반 초안이며 실제 음원을 생성하지 않습니다.</p>
+ {brief&&<div className="music-brief"><h3>{brief.mood}</h3><p>{brief.basis.join(' · ')}</p><label className="input-field"><span>음원 생성 도구에 사용할 제작 설명</span><textarea aria-label="음악 제작 설명" readOnly rows={9} value={brief.prompt}/></label><button className="ghost-button" onClick={async()=>{try{await navigator.clipboard.writeText(brief.prompt);setMessage('제작 설명을 복사했습니다.');}catch{setMessage('복사할 수 없습니다. 설명을 직접 선택해 주세요.');}}}>설명 복사</button><p>실제 음악 생성은 음원 서비스 연결과 무료 크레딧 확인 후 사용할 수 있습니다.</p></div>}
+ {message&&<p role="status">{message}</p>}</aside></div>{error&&<p role="alert" className="resource-error">{error}</p>}
+ </PageShell>;
 }

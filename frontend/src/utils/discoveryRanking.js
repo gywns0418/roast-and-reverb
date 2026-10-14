@@ -1,6 +1,6 @@
 import { analyzePairing } from "./pairingEngine.js";
 export function cosine(a,b) {if(!Array.isArray(a)||!Array.isArray(b)||!a.length||a.length!==b.length)return 0;let dot=0,na=0,nb=0;for(let i=0;i<a.length;i++){dot+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}return na&&nb?dot/Math.sqrt(na*nb):0;}
-export function beanText(bean) {return [bean.name,...(bean.flavors || []),bean.tasteNote,bean.roast,bean.process].filter(Boolean).join(" · ").slice(0,480);}
+export function beanText(bean) {return [bean.name,bean.origin,bean.variety,...(bean.flavors || []),bean.tasteNote,bean.roast,bean.process].filter(Boolean).join(" · ").slice(0,480);}
 export function musicText(music) {return [music.track,music.artist,music.genre,...(music.tags || []),music.memo].filter(Boolean).join(" · ").slice(0,480);}
 export function situationHints(situation) {
   const value=String(situation||"").toLowerCase();const avoid=[];

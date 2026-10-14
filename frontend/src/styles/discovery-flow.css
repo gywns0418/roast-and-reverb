@@ -89,3 +89,12 @@
 .saved-candidates p { display:flex; flex-wrap:wrap; gap:14px; padding:14px 0; border-bottom:1px solid #e1e7d7; font-size:13px; }
 @media(max-width:1200px) { .bean-shelf-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .discovery-layout { grid-template-columns:1fr; } .discovery-summary { display:none; } .discovery-result-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:760px) { .inventory-intro { display:block; padding:24px; } .inventory-intro > strong { display:none; } .bean-shelf-grid,.discovery-result-grid { grid-template-columns:minmax(0,1fr); } .candidate-search { grid-template-columns:1fr; } .discovery-compose h2 { font-size:24px; } .result-heading { font-size:12px; } }
+.bean-file-connection { margin:24px 0; }
+.bean-file-connection p,.bean-file-connection small { line-height:1.8; color:#606b55; }
+.bean-file-connection h2 { margin:8px 0 16px; }
+.coffee-sound-layout { display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;margin-top:24px;align-items:start; }
+.coffee-sound-layout h2 { margin:20px 0; }
+.coffee-sound-panel > p { line-height:1.8; }
+.music-brief { margin-top:24px;padding-top:20px;border-top:1px solid #dce2d3; }
+.music-brief textarea { font-size:13px;line-height:1.8; }
+@media(max-width:1000px){.coffee-sound-layout {grid-template-columns:minmax(0,1fr);}}

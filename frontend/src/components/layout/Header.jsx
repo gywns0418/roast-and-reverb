@@ -42,7 +42,7 @@ export default function Header() {
         <div className="topbar-actions">
           <Link className="primary-button" to="/coffee/write">
             <Sparkles size={17} />
-            <span>오늘의 로그</span>
+            <span>커피 기록</span>
           </Link>
           {local ? (
             <Link className="ghost-button" to="/">
