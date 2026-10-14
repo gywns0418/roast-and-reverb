@@ -59,3 +59,26 @@ feature/bean-discovery에 원두 파일 미리보기/기기 저장/수정/백업
 Stability 공식 API pricing https://platform.stability.ai/pricing 은 계정 시작 무료 크레딧과 모델별 생성 비용을 명시한다. 무료 웹 사용과 무료 API 호출을 같은 것으로 가정하지 않는다. Suno 무료 output 조건은 https://help.suno.com/en/categories/550145 및 https://www.suno.com/terms 에서 확인했다. 무제한 무료 앱 음악 생성으로 표시하지 않는다. 실제 통합 시 서버 전용 키, 확인된 Trial/Free 잔액 이하 요청 한도, 잔액 소진 시 명시적 중단, 자동 결제/유료 전환 없음이 필요하다. 이번 작업에 계정 생성/키 설정/실제 음악 생성/개인 입력 외부 전송은 없었다.
 
 지속 파일 연결은 https://developer.chrome.com/docs/capabilities/web-apis/file-system-access , https://developer.chrome.com/blog/persistent-permissions-for-the-file-system-access-api , https://developer.mozilla.org/en-US/docs/Web/API/Window/showOpenFilePicker 에 따라 read 전용 handle과 IndexedDB를 사용한다. Chrome/Edge의 HTTPS 환경에서 최초 사용자가 파일을 선택하며 앱이 열려 있을 때만 확인한다. 브라우저 종료/저장소 삭제/권한 취소 시 자동 읽기는 멈추고 다시 연결 또는 권한 허용이 필요하다.
+
+
+## 2026-10-14 API 비용 없는 실제 음악 생성 조사
+
+사용자는 무료 제공 모델/직접 만든 AI를 요청했다. 확인한 PC는 RTX 3060 Ti 8GB, 시스템 RAM 약 32GB이며 실제 음악 모델을 아직 설치하거나 실행하지 않았다. 사전 학습 공개 모델을 기기에서 실행하는 R&R 음악 생성기를 만드는 방향이 가능하다. 모델을 처음부터 학습했다거나 실행 성공했다고 주장하지 않는다.
+
+우선 후보 Stable Audio 3 Small-Music: 공식 저장소는 433M, 최대 120초 음악, CPU 경로와 Windows TFLite runtime을 문서화한다. 라이선스료 없는 자체 연산 경로와 API 무료 체험은 구분한다. GPU/RAM 실측 성능·Windows 의존성·음질은 실제 실행으로 검증해야 하며 품질/속도를 미리 보장하지 않는다. API 호출 비용은 없어도 PC 전력·디스크/메모리와 켜져 있어야 하는 조건이 있다. Pages 자체는 음악 모델을 실행하는 GPU 서버가 아니며 PC-local 생성 서비스가 별도로 필요하다.
+
+공식 모델 페이지 https://huggingface.co/stabilityai/stable-audio-3-small-music 는 가중치 다운로드에 로그인/연락처 공유/Community License 및 Gemma Terms 동의를 요구한다. 사용자 대신 약관을 수락하거나 우회하지 않았다. 다운로드/학습/음원 생성/서버 공개는 미실행이다. 공식 구현 https://github.com/Stability-AI/stable-audio-3 및 자체 실행 조건 https://stability.ai/explainers/self-hosted-vs-api-generative-audio-choosing-a-deployment-model 확인.
+
+제안 흐름: 원두/산지/컵노트 → 향미의 창작 은유와 상황 → 로컬 공개 음악 모델 → 실제 WAV 생성/재생 → 사용자가 들은 후 청취 기록. 새 모델의 대규모 학습 대신 기존 모델 추론과 R&R 조건/취향 조절을 개발한다. 공개 서비스 모두에게 상시 생성해 주는 무료 GPU 운영까지 가능하다고 해석하지 않는다.
+
+
+## 2026-10-14 개인 청음실 실제 구현
+
+이번 방향은 매일 돌아올 이유를 사용자의 실제 감상/취향 변화에 둔다. /ritual 첫 초대→지금의 문장→의미 AI 선택→조용한 시간→직접 감상→다음 초대의 기억을 연결했다. 기본 선곡 3곡은 공식 작품명/아티스트 정보를 확인했으며 태그는 R&R 편집 판단으로 구분한다. 음원/앨범 커버를 복제하거나 자동 재생하지 않는다. 출처: https://aphextwin.warp.net/release/86961-aphex-twin-drukqs , https://www.nilsfrahm.com/works/spaces/ , https://www.khruangbin.com/description?albumId=5 . 저장 음악과 같은 아티스트·곡명은 중복 제거한다.
+
+개인화는 실제 E5 의미 임베딩 + 사용자가 적은 취향/최대 3개 확인된 좋아요 기억의 임베딩으로 구성한다. 현재 상황 0.8, 취향/좋은 기억 평균 0.2를 합쳐 정규화한 query vector를 후보 설명과 비교한다. 초기 취향 없이도 동작한다. 추가로 직접 마시고 들었다고 확인한 ±1 평가의 4개 설명 특성 유사도를 소형 로지스틱 선호 모델에 반영한다. 5건 전에는 개인 선호 확률 모델로 표시하지 않는다. 상황/취향 문장을 창작 LLM이 해석한 응답이라고 주장하지 않는다. 음악을 실제 분석/측정하지 않고 설명의 의미를 비교한다.
+
+기억/profile/진행 시간은 기존 deviceScope의 기기 저장소로 분리한다. anonymous 체험은 같은 브라우저 저장소를 공유하고 실제 서버 모드는 회원 scope를 사용한다. 서버 운영/다중 사용자 서비스가 이미 배포됐다고 주장하지 않는다. 개인 원본과 외부 AI 전송 없음. 실제 AI 음원 생성 모델의 약관 동의/설치/생성은 아직 완료되지 않았다.
+
+
+대화 모델은 실제 품질 검증 후 공개 구현에서 제외했다. Qwen2.5-0.5B-Instruct는 한국어 응답이 요청/원두 정보와 어긋났고, 1.5B는 검증 브라우저에서 session creation std::bad_alloc 오류가 발생했다. 예시 텍스트를 언어 모델 응답이라고 대체하지 않았고, 해당 worker/UI/대화 runtime은 최종 배포에서 제거했다. 개인화 E5 의미 추론과 선호 모델은 실제 검증된 기능으로 유지한다. 실제 음악 생성 모델의 접근 절차/설치도 여전히 미완료다.

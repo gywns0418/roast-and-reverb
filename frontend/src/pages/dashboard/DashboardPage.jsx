@@ -161,6 +161,7 @@ export default function DashboardPage() {
                 to={item.path}
                 className="journal-entry"
               >
+        <Link className="dashboard-room-entry" to="/ritual"><span>TODAY IN YOUR LISTENING ROOM</span><strong>내 취향을 기억하는 한 잔의 시간</strong><small>나의 청음실 열기 ↗</small></Link>
                 <div className={`entry-icon ${item.kind}`}>
                   {item.kind === "coffee" ? (
                     <Coffee size={22} />

@@ -1,3 +1,5 @@
+import RitualPage from "../pages/ritual/RitualPage.jsx";
+import MemoriesPage from "../pages/ritual/MemoriesPage.jsx";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout/Layout.jsx";
 import BeansPage from "../pages/beans/BeansPage.jsx";
@@ -43,6 +45,8 @@ export default function AppRouter() {
       <Route path="/auth/find-id" element={<FindIdPage />} />
       <Route path="/auth/find-password" element={<FindPasswordPage />} />
       <Route element={<Layout />}>
+        <Route path="/ritual" element={<RitualPage />} />
+        <Route path="/memories" element={<MemoriesPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
 
         <Route path="/today" element={<Navigate to="/coffee/write" replace />} />
