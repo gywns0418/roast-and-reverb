@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {eligibleRoomMusic,roomMemory,roomBackup,tasteModel,elapsedRoom,blendRoomIntent,roomMusicPool,roomTracks} from '../src/utils/ritualLogic.js';
+import {dailyRoomIndex,eligibleRoomMusic,roomMemory,roomBackup,tasteModel,elapsedRoom,blendRoomIntent,roomMusicPool,roomTracks} from '../src/utils/ritualLogic.js';
 import {readRoom,rememberRoom,moveRoomMemory,restoreRoomBackup,saveRoomProfile} from '../src/store/ritualStore.js';
 const pair={bean:{id:'b',name:'Test bean',flavors:['citrus'],source:'owned'},music:{id:'m',artist:'Artist',track:'Test track',tags:['piano'],url:'https://evil.test/'}};
 const memory=(id,extra={})=>roomMemory({...pair,id,date:'2026-10-14T01:00:00Z',rating:1,features:[1,.5,.8,.7],brewed:true,listened:true,...extra});
@@ -37,3 +37,4 @@ test('device memory saves, moves to recoverable storage, restores and merges val
 
 test('explicit no-vocal requests require known instrumental metadata instead of guessing from an artist',()=>{const unknown={id:'unknown',artist:'Artist',track:'Unknown',tags:[]};assert.equal(eligibleRoomMusic([unknown,...roomTracks],'보컬 없는 음악').length,3);assert.equal(eligibleRoomMusic([unknown,...roomTracks],'평소 음악').length,4);});
 
+test('familiar-mode uses the nearest invitation while discovery-mode has reproducible daily variation',()=>{assert.equal(dailyRoomIndex('2026-10-14',3,false),0);assert.equal(dailyRoomIndex('2026-10-14',3,true),dailyRoomIndex('2026-10-14',3,true));assert.ok(['2026-10-14','2026-10-15','2026-10-16'].some(day=>dailyRoomIndex(day,3,true)!==0));});
