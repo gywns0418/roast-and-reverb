@@ -81,4 +81,4 @@ Stability 공식 API pricing https://platform.stability.ai/pricing 은 계정 �
 기억/profile/진행 시간은 기존 deviceScope의 기기 저장소로 분리한다. anonymous 체험은 같은 브라우저 저장소를 공유하고 실제 서버 모드는 회원 scope를 사용한다. 서버 운영/다중 사용자 서비스가 이미 배포됐다고 주장하지 않는다. 개인 원본과 외부 AI 전송 없음. 실제 AI 음원 생성 모델의 약관 동의/설치/생성은 아직 완료되지 않았다.
 
 
-청음실 대화는 별도 Qwen2.5-1.5B-Instruct 공개 언어 모델(ONNX revision d54957e3af1be04546436e874a60fe386041b244, q4)을 사용자 요청 시에만 내려받고 worker에서 실행한다. 원본은 https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct (Apache-2.0), 변환은 https://huggingface.co/onnx-community/Qwen2.5-1.5B-Instruct . 최초 0.5B 시험은 한국어 답변 품질이 부족해 더 큰 모델로 변경했다. WebGPU adapter를 사용할 수 있으면 GPU, 아니면 WASM을 선택한다. 제공된 원두/곡/직접 취향/최대 3개의 실제 경험 확인 기억만 context로 제공하고 원두 남은 양/파일 경로/미확인 경험은 포함하지 않는다. 질문/응답은 저장하지 않고 외부 추론 API에 보내지 않는다. 오류/시간 초과/중단 시 예시 답변으로 대체하지 않는다. 새로운 음원 생성 모델과 별도이며 음원 생성이나 실제 측정 능력이 없다.
+대화 모델은 실제 품질 검증 후 공개 구현에서 제외했다. Qwen2.5-0.5B-Instruct는 한국어 응답이 요청/원두 정보와 어긋났고, 1.5B는 검증 브라우저에서 session creation std::bad_alloc 오류가 발생했다. 예시 텍스트를 언어 모델 응답이라고 대체하지 않았고, 해당 worker/UI/대화 runtime은 최종 배포에서 제거했다. 개인화 E5 의미 추론과 선호 모델은 실제 검증된 기능으로 유지한다. 실제 음악 생성 모델의 접근 절차/설치도 여전히 미완료다.

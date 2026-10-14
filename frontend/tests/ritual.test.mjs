@@ -1,4 +1,3 @@
-import {roomChatMessages} from '../src/utils/roomChatContext.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {eligibleRoomMusic,roomMemory,roomBackup,tasteModel,elapsedRoom,blendRoomIntent,roomMusicPool,roomTracks} from '../src/utils/ritualLogic.js';
@@ -38,4 +37,3 @@ test('device memory saves, moves to recoverable storage, restores and merges val
 
 test('explicit no-vocal requests require known instrumental metadata instead of guessing from an artist',()=>{const unknown={id:'unknown',artist:'Artist',track:'Unknown',tags:[]};assert.equal(eligibleRoomMusic([unknown,...roomTracks],'보컬 없는 음악').length,3);assert.equal(eligibleRoomMusic([unknown,...roomTracks],'평소 음악').length,4);});
 
-test('local conversation uses only bounded known facts and confirmed memories, never inventory quantities or unconfirmed experiences',()=>{const messages=roomChatMessages({question:'질문',profile:{about:'피아노'},pair:{...pair,bean:{...pair.bean,remaining:'secret quantity'}},memories:[memory('hidden',{brewed:false,note:'unconfirmed'}),memory('seen',{note:'confirmed'})]});assert.ok(messages[1].content.includes('confirmed'));assert.ok(!messages[1].content.includes('unconfirmed'));assert.ok(!messages[1].content.includes('secret quantity'));assert.equal(messages.length,2);});
