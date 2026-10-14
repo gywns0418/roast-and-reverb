@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
@@ -17,6 +17,8 @@ export default function MusicSearchPage() {
   const [keyword, setKeyword] = useState(params.get("q") || "");
   const {data:results,loading}=useApiResource(()=>listDiaryRecords(musicApi.list).then(items=>items.map(adaptMusicLog)),[],[]);
   const [limit,setLimit]=useState(SHOWN_LIMIT);
+  const routeQuery=params.get('q')||'';
+  useEffect(()=>{setKeyword(routeQuery);setLimit(SHOWN_LIMIT);},[routeQuery]);
 
   const visible = useMemo(() => {
     const normalized = keyword.trim().toLowerCase();
