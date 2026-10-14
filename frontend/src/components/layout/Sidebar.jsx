@@ -4,6 +4,7 @@ import { authStore } from "../../store/authStore.js";
 
 const links = [
   ["/ritual", Disc3, "나의 청음실", "blend"],
+  ["/studio", Headphones, "한 잔의 사운드", "music"],
   ["/memories", Library, "감각의 기억", "neutral"],
   ["/dashboard", Home, "대시보드", "neutral"],
   ["/beans", ShoppingBasket, "내 원두", "coffee"],
