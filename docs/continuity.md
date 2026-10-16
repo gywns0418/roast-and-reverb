@@ -255,3 +255,5 @@ feature/dashboard-first main 분기후 최신dev/직전최종QA통합. 사용자
 추가로 직접읽은자료: NNg https://www.nngroup.com/articles/hamburger-menus/ (핵심탐색 가시성), https://www.nngroup.com/articles/consistency-and-standards/ (예측가능한표현), W3C https://www.w3.org/WAI/WCAG22/Understanding/consistent-navigation.html (반복탐색 상대순서일관성). 정보단서 글은 검색요약확인만, 본문2회timeout으로 본문을읽었다고주장하지않음. 기능별선택옵션의점진적공개와 핵심메뉴가시성을 구분해 적용했다. 전체WCAG준수나 전환향상을 검증했다는뜻아님.
 
 63테스트/build통과. 로컬 빈기록 시작/기록1개 보유상태 안내변화, 커피현황 클릭/로고복귀/모바일대시보드 첫위치 및 넘침0/중첩0 확인. 격리localhost5191의 기록은 실제시음아닌 명시QA자료. 공개개인자료/원본/키/결제/main 변경없음. dev PR/배포는후속기록.
+
+최종: source6cc4faa Verify38918719455 전체성공. PR#28 dev병합10ae3787. devVerify38919011988/Pages38919011734 성공. 공개 /dev/?v=6cc4faa#/dashboard에서 첫메뉴대시보드·로고dashboard·기록현황링크4/중첩0 확인. dashboard-first-published.png는 빈기록 초기화면만 보관. 개인보유원두영역/원본자료 미포함·공개사용자저장소 미변경. main미승격.
