@@ -430,7 +430,7 @@ export default function MonthlyPickPage() {
           디카페인 숨기기
         </label>
       </div>
-      <div className="monthly-group-legend">{Object.entries(monthlyGroups).map(([key,group]) => <button type="button" key={key} onClick={() => setCategory(category === key ? "all" : key)} aria-pressed={category === key}><i style={{backgroundColor:group.color}} />{group.label}<strong>{beans.filter(item => item.category === key).length}</strong></button>)}</div>
+      <div className="monthly-group-legend">{Object.entries(monthlyGroups).map(([key,group]) => <button type="button" key={key} onClick={() => setCategory(category === key ? "all" : key)} aria-pressed={category === key}><i style={{backgroundColor:group.color}} /><span>{group.label}</span><strong>{beans.filter(item => item.category === key).length}</strong></button>)}</div>
       <div className="monthly-bean-grid">
         {visible.map((item,index) => (
           <Fragment key={item.id}>
