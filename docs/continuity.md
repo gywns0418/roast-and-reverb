@@ -210,3 +210,5 @@ HTTP 비정상 JSON/실패 envelope/시간 초과를 성공으로 처리하지 �
 ## 2026-10-16 자동 유지관리
 
 feature/monthly-refresh-20261016은 main에서 분기 후 최신 dev 통합. 개인 원본 변경 없음, 공개 10월 UFO 원두 57종(신규 5종) 및 기존 5종 판매 상태 갱신. 반복 수집 무변경 및 프론트55 테스트 통과. 실제 원본/개인 기록 미수정·미공개, main/서비스/결제/AI 키 변경 없음. 원격 PR 검사 및 dev Pages 결과를 최종 기준으로 확인한다. 유지관리 checkout: C:/Users/gywns/Documents/project/roast-reverb-maintenance-20261016.
+
+최종 검증: source 7765d7e Verify 38896255042 성공. PR #23 dev 병합 완료(8239cf2). dev Verify 38896493192와 Pages 38896493088 성공. 공개 /dev/data/monthly-picks.json의 57종 자료가 로컬 검증 결과와 전체 일치함을 확인했다. 프론트55 테스트/production build/diff 검사 통과. main 미변경. 이 결과 문서는 유지관리 feature 후속 커밋에 보존한다.
