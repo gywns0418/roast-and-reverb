@@ -23,7 +23,7 @@ export default function DashboardPage() {
       .then((items) => setMonthly(items[0] || null))
       .catch(() => {});
   }, []);
-  const { data: coffees } = useApiResource(
+  const { data: coffees, loading: coffeeLoading } = useApiResource(
     () =>
       listDiaryRecords(coffeeApi.list).then((items) =>
         items.map(adaptCoffeeLog),
@@ -31,13 +31,13 @@ export default function DashboardPage() {
     [],
     [],
   );
-  const { data: music } = useApiResource(
+  const { data: music, loading: musicLoading } = useApiResource(
     () =>
       listDiaryRecords(musicApi.list).then((items) => items.map(adaptMusicLog)),
     [],
     [],
   );
-  const { data: pairs } = useApiResource(
+  const { data: pairs, loading: pairingLoading } = useApiResource(
     () =>
       listDiaryRecords(pairingApi.list).then((items) =>
         items.map(adaptPairing),
@@ -73,30 +73,44 @@ export default function DashboardPage() {
   const days = new Set(
     [...coffees, ...music].map((item) => item.date).filter(Boolean),
   ).size;
+  const loading=coffeeLoading||musicLoading||pairingLoading;
+  const isNew=!coffees.length&&!music.length;
   return (
     <PageShell
-      title="오늘도, 나의 리듬으로."
+      title="대시보드"
       eyebrow="YOUR DAILY RITUAL"
-      subtitle="커피의 향과 음악의 여운, 그 사이에 쌓이는 나의 취향."
+      subtitle="쌓인 기록을 한눈에 보고, 오늘의 커피와 음악을 이어가세요."
     >
+      <div className="metric-strip" role="group" aria-label="기록 현황">
+        {[
+          ["커피 기록", coffees.length, "cups", Coffee, "/coffee"],
+          ["음악 기록", music.length, "tracks", Headphones, "/music"],
+          ["연결한 페어링", pairs.length, "pairs", Sparkles, "/pairing"],
+          ["기록한 날", days, "days", ArrowUpRight, "/report/monthly"],
+        ].map(([label, value, unit, Icon, destination]) => (
+          <Link className="metric" key={label} to={destination} aria-label={`${label} ${loading?"조회 중":value} · 자세히 보기`}>
+            <span>
+              <Icon size={16} />
+              {label}
+            </span>
+            <strong>
+              {loading?"—":value}
+              <small>{unit}</small>
+            </strong>
+          </Link>
+        ))}
+      </div>
       <div className="dashboard-hero">
         <div className="session-copy">
           <p className="eyebrow">BREW & LISTEN / DAILY SESSION</p>
-          <h2>
-            한 잔을 내리고,
-            <br />한 곡에 머무르는 시간.
-          </h2>
-          <p>
-            오늘의 작은 감각을 기록해두세요.
-            <br />
-            좋아하는 순간들이 나만의 리듬이 됩니다.
-          </p>
+          <h2>{loading?'오늘의 시간을 준비해요.':isNew?'처음이라면, 짧은 가이드부터.':'지난 기록에서, 오늘의 한 잔으로.'}</h2>
+          <p>{loading?'저장한 커피와 음악 기록을 확인하고 있어요.':isNew?'약 8분 동안 한 잔과 한 곡을 살펴보고, 좋았던 이유 한 줄을 남겨보세요.':'새 기록을 남기거나 아래 최근의 순간들을 다시 열어보세요. 직접 남긴 감상이 다음 선택의 단서가 됩니다.'}</p>
           <div className="action-row">
-            <Link to="/coffee/write" className="primary-button">
-              오늘의 한 잔 기록 <ArrowUpRight size={17} />
+            <Link to={isNew?"/journey":"/coffee/write"} className="primary-button">
+              {isNew?"첫 감상 가이드 시작":"오늘의 한 잔 기록"} <ArrowUpRight size={17} />
             </Link>
-            <Link to="/music/write" className="session-secondary">
-              음악 더하기 ↗
+            <Link to={isNew?"/ritual":"/music/write"} className="session-secondary">
+              {isNew?"청음실 둘러보기 ↗":"음악 기록하기 ↗"}
             </Link>
           </div>
         </div>
@@ -126,25 +140,6 @@ export default function DashboardPage() {
           </span>
         </Link>
       )}
-      <div className="metric-strip">
-        {[
-          ["커피 기록", coffees.length, "cups", Coffee],
-          ["음악 기록", music.length, "tracks", Headphones],
-          ["연결한 페어링", pairs.length, "pairs", Sparkles],
-          ["기록한 날", days, "days", ArrowUpRight],
-        ].map(([label, value, unit, Icon]) => (
-          <div className="metric" key={label}>
-            <span>
-              <Icon size={16} />
-              {label}
-            </span>
-            <strong>
-              {value}
-              <small>{unit}</small>
-            </strong>
-          </div>
-        ))}
-      </div>
       <div className="dashboard-body">
         <section className="journal-panel">
           <div className="section-heading">
@@ -155,7 +150,7 @@ export default function DashboardPage() {
             <Link to="/coffee">모든 커피 기록 ↗</Link>
           </div>
           <Link className="dashboard-room-entry" to="/ritual"><span>TODAY IN YOUR LISTENING ROOM</span><strong>내 취향을 기억하는 한 잔의 시간</strong><small>나의 청음실 열기 ↗</small></Link>
-          {recent.length ? (
+          {loading?<p role="status">기록을 불러오고 있어요…</p>:recent.length ? (
             recent.map((item) => (
               <Link
                 key={`${item.kind}-${item.id}`}

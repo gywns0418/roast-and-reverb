@@ -31,6 +31,20 @@
 .result-track h3 {margin:8px 0;font-size:20px;line-height:1.5;}
 .result-track p {margin:8px 0;line-height:1.5;}
 .discovery-results {scroll-margin-top:24px;}
+.dashboard-hero {min-height:260px;}
+.dashboard-hero .session-copy {padding:32px;}
+.dashboard-hero .session-copy h2 {font-size:clamp(24px,2.6vw,34px);line-height:1.4;max-width:22ch;}
+.dashboard-hero .session-copy > p:not(.eyebrow) {font-size:15px;line-height:1.75;max-width:54ch;}
+.dashboard-hero .dashboard-photo {min-height:260px;}
+a.metric {color:inherit;text-decoration:none;min-width:0;transition:background .15s;}
+a.metric:hover {background:#f1f4e8;}
+a.metric:focus-visible {outline:3px solid #6e8551;outline-offset:-3px;}
+.monthly-discover {padding:20px 24px;margin:24px 0;}
+@media(max-width:520px) {
+  .dashboard-hero .session-copy {padding:24px;}
+  .dashboard-hero .dashboard-photo {min-height:160px;max-height:180px;}
+  .monthly-discover {padding:20px;}
+}
 .journal-panel,.dashboard-aside,.journal-entry > div {min-width:0;}
 .journal-entry {grid-template-columns:48px minmax(0,1fr) 18px;}
 .journal-entry h3,.journal-entry p {word-break:keep-all;overflow-wrap:anywhere;text-wrap:pretty;}
