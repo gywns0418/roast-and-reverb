@@ -340,6 +340,9 @@ try {
  if (raw !== null) {
    const saved = validateDiary(JSON.parse(raw));
    for (const [key, items] of Object.entries(tables)) items.splice(0,items.length,...saved[key]);
+ } else {
+   // A new notebook starts empty; never claim that the visitor tasted or listened to seed examples.
+   for(const rows of [coffeeLogs,musicLogs,pairings,collections])rows.splice(0,rows.length);
  }
 } catch { storageError=new Error('이 브라우저의 기록 자료를 읽지 못했습니다. 마이페이지에서 원본 자료를 백업하거나 이전 백업으로 복구해 주세요. 예시 기록으로 덮어쓰지 않습니다.'); }
 coffeeSeq = Math.max(0,...coffeeLogs.map(x=>x.coffeeLogId))+1;

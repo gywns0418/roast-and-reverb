@@ -2,8 +2,11 @@ import {DIARY_KEY,validateDiary} from './diaryStorage.js';
 import {validateBeansFile} from './beanInventory.js';
 import {roomMemory,roomProfile,roomPair} from './ritualLogic.js';
 import {validateSoundRecipe,soundSettings} from './soundStudio.js';
+import {journeyEntry,journeyProfile} from './journey.js';
+import {validateDraft} from './draft.js';
 
 export const backupLabels={diary:'커피·음악 일지와 컬렉션',beans:'내 원두',music:'음악 후보', 'room-profile':'청음실 취향','room-memories':'감각의 기억','room-trash':'기억 보관함','room-active':'진행 중인 청음 시간','sound-tracks':'사운드 선반','sound-preference':'사운드 기본 설정',favorites:'월픽 관심 원두',preferences:'페어링 선호'};
+Object.assign(backupLabels,{'journey-entries':'취향 여정 발견 노트','journey-profile':'취향 여정 시작점','draft-coffee':'작성 중인 커피 초안','draft-music':'작성 중인 음악 초안','draft-journey':'작성 중인 발견 노트'});
 export function backupKeys(scope='trial') {
   return Object.fromEntries(Object.keys(backupLabels).map(name=>[name,name==='diary'?DIARY_KEY:name==='favorites'?'rr-monthly-favorites-v1':name==='preferences'?'rr-pairing-preferences-v1':`rr-discovery-${name}-v1-${encodeURIComponent(scope)}`]));
 }
@@ -16,6 +19,9 @@ function checkedSection(name,value) {
   if(name==='diary')return validateDiary(value);
   if(name==='preferences'){if(!value||!Array.isArray(value.weights)||value.weights.length!==5||!value.weights.every(Number.isFinite)||!Number.isInteger(value.samples)||value.samples<0)throw new Error('페어링 선호 자료가 올바르지 않습니다.');return value;}
   if(!Array.isArray(value)||value.length>500)throw new Error(`${backupLabels[name]} 자료 형식이 올바르지 않습니다.`);
+  if(name==='journey-entries'){if(value.length>140)throw new Error('발견 노트 저장 한도를 넘습니다.');return value.map(journeyEntry);}
+  if(name==='journey-profile'){if(value.length>1)throw new Error('여정 설정은 하나만 보관할 수 있습니다.');return value.map(journeyProfile);}
+  if(name.startsWith('draft-')){if(value.length>1)throw new Error('초안은 한 개만 보관할 수 있습니다.');return value.map(row=>validateDraft(row,name));}
   if(name==='beans'){validateBeansFile({schemaVersion:1,beans:value});return value;}
   if(name==='music'&&(value.length>250||value.some(row=>!row||typeof row.id!=='string'||typeof row.track!=='string'||!row.track.trim())))throw new Error('음악 후보 자료가 올바르지 않습니다.');
   if(name==='room-memories'||name==='room-trash'){if(value.length>(name==='room-memories'?80:160))throw new Error('기억 저장 한도를 넘습니다.');return value.map(roomMemory);}

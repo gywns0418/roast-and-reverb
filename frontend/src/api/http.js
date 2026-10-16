@@ -26,6 +26,7 @@ export async function request(path, options = {}) {
       ...options.headers
     }
   });
+  if(response.status===401&&token&&!path.startsWith('/auth/'))authStore.expire();
   return await readApiResponse(response);
   } catch(error) {
     if(error.name==='AbortError')throw new Error('요청이 중단되었거나 응답 시간이 초과됐습니다. 저장 요청이었다면 목록에서 완료 여부를 확인해 주세요.');
