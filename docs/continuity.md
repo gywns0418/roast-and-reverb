@@ -245,3 +245,5 @@ feature/dashboard-record-layout main 분기 후 최신dev/직전QA 통합. 최�
 ## 2026-10-16 — 조사 근거 기반 행동 흐름 정리
 
 feature/focused-service-flow main 분기 후 최신dev/최종QA통합. Baymard버튼/NNg점진적공개/홈가치 문서 직접 확인, focused-experience.md에 출처와 적용 판단 기록. 추천/청음실/가이드/음악제작의 기본작업과 선택옵션 분리, 추천 즉시기본실행·결과포커스·듣기CTA1, 홈구체효용 추가. 14경로 데스크톱/모바일 초기구조 넘침/중첩0, 77JSX검사, 실제추천3결과·선택옵션/입력유지 확인. AST회귀검사2추가, 총63테스트/build/audit0. 신규API키/대화요청/원본자료/운영개인기록/가격/결제/main 변경 없음. 전환효과는 아직측정하지 않음. dev검사/배포결과는후속기록.
+
+최종: source9888809 Verify38916955868 성공. PR#27 dev병합56581660. devVerify38917145584/Pages38917145583 모두성공. 공개 /dev/?v=9888809#/recommend에서 월픽 범위만 선택하여 실제추천3결과/결과포커스/중첩0 확인. 공개 원두/음악/일지 저장소 변경 없음. focused-published.png는 공개월픽과시작선곡만 포함, 개인보유원두/원본정보없음. main 승격없음.
