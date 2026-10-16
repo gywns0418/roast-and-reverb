@@ -239,3 +239,5 @@ feature/visual-rhythm은 main에서 분기 후 최신dev와 직전 최종QA 문�
 feature/dashboard-record-layout main 분기 후 최신dev/직전QA 통합. 최근기록 map 안에 청음실 Link가 중첩되어 3열 grid에 4개 자식이 놓이는 원인을 확인. 배너는 목록 위 독립링크로 한 번만 렌더, 각 기록은 아이콘/본문/화살표만 유지. 기록 본문 min-width0 및 배너 반응형 보완. 기존 기록 변경/삭제 없음.
 
 61테스트/build통과. 격리된 localhost5189에 실제 시음/청취가 아닌 명시적 개발QA 기록2개를 UI로 저장하여 혼합목록 확인. 중첩a0/배너1/행자식3, 데스크톱 본문436px, 모바일본문213px 및375=scroll375, 음악기록 클릭의 상세경로 확인. QA screenshot는 개발용 자료만 포함. 공개 사용자 저장소는 미변경. dev검사/배포는 후속기록.
+
+최종: sourcea9c732b Verify38915055770 성공. PR#26 dev병합75b912a8. devVerify38915335796 세job 모두성공, Pages38915335908 성공. 공개 /dev/?v=a9c732b#/dashboard에서 독립배너1/중첩a0/빈목록 정상 확인. 기록보유 상태는 로컬 QA2개로 검증했고 공개사용자 기록을 생성하지 않았다. main 미반영.
