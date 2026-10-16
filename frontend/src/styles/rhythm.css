@@ -7,6 +7,30 @@
 .main :is(button,input,select,textarea,.primary-button,.ghost-button) {font-family:var(--rr-ui-font);font-variant-numeric:lining-nums tabular-nums;}
 .main .eyebrow {line-height:1.5;margin:0 0 16px;}
 .main .action-row {align-items:center;gap:12px;}
+.flow-options {border-top:1px solid #dfe4d6;margin:20px 0 0;padding:8px 0;min-width:0;}
+.flow-options > summary {cursor:pointer;font:600 14px/1.6 var(--rr-ui-font);min-height:44px;align-content:center;color:#42553b;}
+.flow-options[open] > summary {margin-bottom:16px;}
+.flow-links {display:flex;flex-wrap:wrap;gap:8px 24px;}
+.flow-links > a {display:inline-flex;align-items:center;min-height:44px;font-size:14px;line-height:1.5;}
+.flow-hint {font-size:13px;line-height:1.75;color:#5a6650;margin:16px 0;}
+.room-intent {margin:0 0 24px;}
+.room-intent .room-composer {margin:0;}
+.sound-option-panel {background:#fff;border:1px solid #dfe4d6;border-radius:12px;padding:12px 20px;margin:0;}
+.sound-option-panel .panel {border:0;padding:8px 0;margin:0;box-shadow:none;}
+.journey-tools > summary {font-size:16px;}
+.journey-personal-options {margin:0;align-self:start;}
+.flow-benefits {list-style:none;padding:20px 0 0;margin:24px 0 0;border-top:1px solid #dfe4d6;display:grid;gap:16px;}
+.flow-benefits li {display:grid;gap:4px;}
+.flow-benefits b {font:600 14px/1.5 var(--rr-ui-font);}
+.flow-benefits span {font:400 13px/1.6 var(--rr-ui-font);color:#5a6650;}
+.discovery-result .bean-still {height:120px;min-height:120px;}
+.result-copy {padding:24px;}
+.result-copy > h3 {font-size:18px;line-height:1.5;margin:0 0 12px;}
+.result-copy > p {margin:8px 0;line-height:1.6;}
+.result-track {margin:16px 0;padding-top:16px;}
+.result-track h3 {margin:8px 0;font-size:20px;line-height:1.5;}
+.result-track p {margin:8px 0;line-height:1.5;}
+.discovery-results {scroll-margin-top:24px;}
 .journal-panel,.dashboard-aside,.journal-entry > div {min-width:0;}
 .journal-entry {grid-template-columns:48px minmax(0,1fr) 18px;}
 .journal-entry h3,.journal-entry p {word-break:keep-all;overflow-wrap:anywhere;text-wrap:pretty;}
