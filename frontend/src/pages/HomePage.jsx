@@ -1,3 +1,4 @@
+import {authStore} from '../store/authStore.js';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -12,7 +13,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [authMode, setAuthMode] = useState(null);
   const local = import.meta.env.VITE_USE_REAL_API !== "true";
-  const start = () => (local ? navigate("/ritual") : setAuthMode("join"));
+  const start = () => (local||authStore.token ? navigate("/journey") : setAuthMode("join"));
   return (
     <div className="studio-home">
       <header className="studio-nav">
@@ -55,12 +56,12 @@ export default function HomePage() {
               흩어진 취향을 모아 나만의 리듬을 발견하세요.
             </p>
             <button className="studio-cta" onClick={start}>
-              {local ? "나의 청음실 시작하기" : "나의 첫 기록 남기기"}
+              {local ? "나의 첫 발견 시작하기" : "나의 첫 발견 시작하기"}
               <ArrowUpRight size={22} />
             </button>
             <p className="studio-caption">
               {local
-                ? "체험 데이터로 둘러보세요 · 이 브라우저에 저장됩니다"
+                ? "가입 없이 시작해요 · 발견과 기록은 이 브라우저에 저장됩니다"
                 : "커피 × 음악, 나를 알아가는 작은 습관"}
             </p>
           </div>
@@ -121,6 +122,7 @@ export default function HomePage() {
             일상의 기록에서 당신만의 조합을 찾아갑니다.
           </p>
         </section>
+<section className="studio-intro"><p className="studio-eyebrow">SEVEN SMALL DISCOVERIES</p><h2>추천을 받는 것에서,<br/>좋아하는 이유를 아는 것으로.</h2><p>향과 여운, 질감과 리듬.<br/>일곱 가지 감상 가이드와 나만의 발견 노트를 통해<br/>다음 한 잔과 한 곡을 고르는 기준을 만들어보세요.</p><Link className="ghost-button" to="/journey">감상 가이드 살펴보기 ↗</Link></section>
         <section id="notes" className="studio-steps">
           {[
             [
@@ -155,14 +157,14 @@ export default function HomePage() {
         <section className="studio-closing">
           <p>오늘의 커피에는 어떤 음악이 어울릴까요?</p>
           <button onClick={start}>
-            나의 청음실 열기 <ArrowRight size={22} />
+            나의 취향 여정 시작하기 <ArrowRight size={22} />
           </button>
         </section>
       </main>
       <footer className="studio-footer">
         <strong>Roast & Reverb</strong>
         <span>매일 조금씩, 취향이 되는 순간들.</span>
-        <span>© {new Date().getFullYear()} R&R</span>
+        <Link to="/help">이용 도움말</Link><span>© {new Date().getFullYear()} R&R</span>
       </footer>
       {authMode && (
         <AuthModal

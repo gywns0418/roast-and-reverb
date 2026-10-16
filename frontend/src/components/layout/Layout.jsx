@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { watchBeanFile } from "../../store/beanFileStore.js";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { authStore } from "../../store/authStore.js";
@@ -8,9 +8,11 @@ import Sidebar from "./Sidebar.jsx";
 
 export default function Layout() {
   const location = useLocation();
+  const [,refreshAuth]=useState(0);
+  useEffect(()=>{const refresh=()=>refreshAuth(n=>n+1);window.addEventListener('rr-auth-changed',refresh);return()=>window.removeEventListener('rr-auth-changed',refresh);},[]);
   useEffect(()=>watchBeanFile(),[]);
   const local = import.meta.env.VITE_USE_REAL_API !== "true";
-  if (!local && !authStore.token) return <Navigate to="/auth/login" replace />;
+  if (!local && !authStore.token) return <Navigate to="/auth/login" replace state={{from:location.pathname+location.search}} />;
   if (
     location.pathname.startsWith("/admin") &&
     authStore.user?.role !== "ADMIN"

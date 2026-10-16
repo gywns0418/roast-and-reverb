@@ -15,7 +15,7 @@ function loadStudio(coffee) {
 const time=value=>`${Math.floor(value/60)}:${Math.floor(value%60).toString().padStart(2,'0')}`;
 export default function SoundStudioPage() {
   const location=useLocation(), coffee=location.state?.coffeeCandidate;
-  const [initial]=useState(()=>loadStudio(coffee));
+  const [initial]=useState(()=>{const value=loadStudio(coffee);return location.state?.guideSound?{...value,settings:soundSettings(location.state.guideSound)}:value;});
   const [settings,setSettings]=useState(initial.settings),[tracks,setTracks]=useState(initial.tracks),[error,setError]=useState(initial.error);
   const [current,setCurrent]=useState(null),[url,setUrl]=useState(''),[busy,setBusy]=useState(false),[notice,setNotice]=useState(''),[command,setCommand]=useState(''),[playing,setPlaying]=useState(false),[title,setTitle]=useState('');
   const [history,setHistory]=useState([]);

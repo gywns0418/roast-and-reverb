@@ -9,8 +9,14 @@ export const authStore = {
   },
   setUser(user) {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    window.dispatchEvent?.(new Event('rr-auth-changed'));
+  },
+  expire() {
+    const user=this.user;
+    if(user)this.setUser({...user,token:null});
   },
   clear() {
     window.localStorage.removeItem(STORAGE_KEY);
+    window.dispatchEvent?.(new Event('rr-auth-changed'));
   }
 };
