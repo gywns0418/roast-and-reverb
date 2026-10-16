@@ -7,6 +7,14 @@
 .main :is(button,input,select,textarea,.primary-button,.ghost-button) {font-family:var(--rr-ui-font);font-variant-numeric:lining-nums tabular-nums;}
 .main .eyebrow {line-height:1.5;margin:0 0 16px;}
 .main .action-row {align-items:center;gap:12px;}
+.journal-panel,.dashboard-aside,.journal-entry > div {min-width:0;}
+.journal-entry {grid-template-columns:48px minmax(0,1fr) 18px;}
+.journal-entry h3,.journal-entry p {word-break:keep-all;overflow-wrap:anywhere;text-wrap:pretty;}
+.journal-entry > svg {justify-self:end;}
+.journal-panel > .dashboard-room-entry {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 24px;margin:0 0 24px;padding:24px;}
+.journal-panel > .dashboard-room-entry > span {grid-column:1/-1;line-height:1.5;}
+.journal-panel > .dashboard-room-entry > strong {font-size:20px;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere;}
+.journal-panel > .dashboard-room-entry > small {line-height:1.5;}
 .main :is(.primary-button,.ghost-button) {display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 18px;line-height:1.4;text-align:center;gap:8px;}
 .monthly-group-legend button {display:inline-grid;grid-template-columns:18px auto minmax(16px,auto);align-items:center;gap:8px;min-height:44px;line-height:1.5;font:500 13px/1.5 var(--rr-ui-font);}
 .monthly-group-legend button :is(span,strong) {font:inherit;line-height:1.5;margin:0;align-self:center;}
@@ -58,6 +66,8 @@
   .journey-welcome h2,.journey-article h2 {font-size:26px;}
 }
 @media(max-width:520px) {
+  .journal-entry {grid-template-columns:40px minmax(0,1fr) 16px;gap:12px;}
+  .journal-panel > .dashboard-room-entry {grid-template-columns:minmax(0,1fr);padding:20px;gap:12px;}
   .main .action-row > :is(a,button) {width:100%;}
   .journey-start,.journey-note-cta {width:100%;}
   .journey-count {gap:8px 16px;}
