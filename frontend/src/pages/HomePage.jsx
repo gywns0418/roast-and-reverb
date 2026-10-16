@@ -64,6 +64,11 @@ export default function HomePage() {
                 ? "가입 없이 시작해요 · 발견과 기록은 이 브라우저에 저장됩니다"
                 : "커피 × 음악, 나를 알아가는 작은 습관"}
             </p>
+            <ul className="flow-benefits" aria-label="시작하면 할 수 있는 일">
+              <li><b>감각을 발견해요</b><span>약 8분 가이드부터 가볍게</span></li>
+              <li><b>내 말로 남겨요</b><span>좋았던 이유를 한 줄로</span></li>
+              <li><b>다음에 꺼내 써요</b><span>지난 발견 비교와 청음실 취향 반영</span></li>
+            </ul>
           </div>
           <div
             className="studio-art"
