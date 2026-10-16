@@ -8,7 +8,7 @@
       "roastery": "유에프오커피",
       "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=901",
       "detailSourceUrl": "https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/UFO2/UFO2.json",
-      "sourceCheckedAt": "2026-10-14T20:14:09.849Z",
+      "sourceCheckedAt": "2026-10-16T11:47:42.508Z",
       "items": [
         {
           "id": "901-b81b8e01d",
@@ -317,7 +317,7 @@
             }
           ],
           "openDate": "2026-10-05",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T16:11:44+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -952,7 +952,7 @@
             }
           ],
           "openDate": "2026-10-01",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T17:20:47+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1133,7 +1133,7 @@
             }
           ],
           "openDate": "2026-10-01",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-01T17:11:49+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1728,7 +1728,7 @@
             }
           ],
           "openDate": "2026-10-05",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-01T16:41:16+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1814,7 +1814,7 @@
             }
           ],
           "openDate": "2026-10-12",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-09-30T19:02:39+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2077,6 +2077,420 @@
           "decaf": false,
           "darkRoast": false,
           "summary": "Ethiopia · Heirloom · Modified Honey"
+        },
+        {
+          "id": "901-19",
+          "name": "#19 케냐 마운트 케냐 SL28 SL34 루이루11 AA TOP 워시드",
+          "originalName": "[10.16 오픈] #19 케냐 마운트 케냐 SL28 SL34 루이루11 AA TOP 워시드",
+          "nameEnglish": "Kenya Mount Kenya SL28, SL34, Ruiru11 AA TOP Washed",
+          "category": "single origin",
+          "origin": "Kenya",
+          "region": "Mount Kenya",
+          "variety": "SL28, SL34, Ruiru11",
+          "process": "Washed",
+          "roast": "Light #86.5",
+          "flavors": [
+            "자두",
+            "블랙체리",
+            "블랙사파이어 포도"
+          ],
+          "flavorColors": [
+            "#640d14",
+            "#560bad",
+            "#b5179e"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자두, 블랙체리, 블랙사파이어 포도"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #86.5"
+            },
+            {
+              "label": "국가",
+              "value": "Kenya"
+            },
+            {
+              "label": "지역",
+              "value": "Mount Kenya"
+            },
+            {
+              "label": "고도",
+              "value": "1,700m"
+            },
+            {
+              "label": "품종",
+              "value": "SL28, SL34, Ruiru11"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 5
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 16000
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T19:18:37+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Kenya · SL28, SL34, Ruiru11 · Washed"
+        },
+        {
+          "id": "901-20",
+          "name": "#20 케냐 예리하 셀렉션 SL28 SL34 AA TOP 워시드",
+          "originalName": "[10.16 오픈] #20 케냐 예리하 셀렉션 SL28 SL34 AA TOP 워시드",
+          "nameEnglish": "Kenya Yerihar Selection SL28, SL34 AA TOP Washed",
+          "category": "single origin",
+          "origin": "Kenya",
+          "region": "Nyeri",
+          "variety": "SL28, SL34",
+          "process": "Washed",
+          "roast": "Light #91",
+          "flavors": [
+            "크랜베리",
+            "레드커런트",
+            "히비스커스"
+          ],
+          "flavorColors": [
+            "#880d1e",
+            "#d00000",
+            "#dd2d4a"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "크랜베리, 레드커런트, 히비스커스"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #91"
+            },
+            {
+              "label": "국가",
+              "value": "Kenya"
+            },
+            {
+              "label": "지역",
+              "value": "Nyeri"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "Yerihar Selection"
+            },
+            {
+              "label": "고도",
+              "value": "1,650~1,750m"
+            },
+            {
+              "label": "품종",
+              "value": "SL28, SL34"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 4
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 16000
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T19:11:57+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Kenya · SL28, SL34 · Washed"
+        },
+        {
+          "id": "901-21",
+          "name": "#21 에티오피아 타리쿠 카레 무라고 74158 내추럴",
+          "originalName": "[10.16 오픈] #21 에티오피아 타리쿠 카레 무라고 74158 내추럴",
+          "nameEnglish": "Ethiopia Tariku Kare  Murago 74158 Natural",
+          "category": "single origin",
+          "origin": "Ethiopia",
+          "region": "Murago, Bensa, Sidama",
+          "variety": "74158",
+          "process": "Natural",
+          "roast": "Light #91.2",
+          "flavors": [
+            "라즈베리",
+            "열대과일",
+            "밀크 초콜릿"
+          ],
+          "flavorColors": [
+            "#e30b5d",
+            "#f72585",
+            "#ffba08"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "라즈베리, 열대과일, 밀크 초콜릿"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #91.2"
+            },
+            {
+              "label": "국가",
+              "value": "Ethiopia"
+            },
+            {
+              "label": "지역",
+              "value": "Murago, Bensa, Sidama"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Murago Station"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Tariku Kare"
+            },
+            {
+              "label": "고도",
+              "value": "2,250~2,350m"
+            },
+            {
+              "label": "품종",
+              "value": "74158"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 17500
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T19:18:58+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ethiopia · 74158 · Natural"
+        },
+        {
+          "id": "901-22",
+          "name": "#22 에티오피아 시다마 아르베고나 부르사 74158 워시드",
+          "originalName": "[10.16 오픈] #22 에티오피아 시다마 아르베고나 부르사 74158 워시드",
+          "nameEnglish": "Ethiopia Sidama Arbegona Bursa 74158 Washed",
+          "category": "single origin",
+          "origin": "Ethiopia",
+          "region": "Bursa, Arbegona, Sidama",
+          "variety": "74158",
+          "process": "Washed",
+          "roast": "Light #99",
+          "flavors": [
+            "화이트 플로럴",
+            "백도",
+            "오렌지"
+          ],
+          "flavorColors": [
+            "#ff9e00",
+            "#fcd5ce",
+            "#fdfcdc"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "화이트 플로럴, 백도, 오렌지"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #99"
+            },
+            {
+              "label": "국가",
+              "value": "Ethiopia"
+            },
+            {
+              "label": "지역",
+              "value": "Bursa, Arbegona, Sidama"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Bursa Main Station"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Mulugeta Muntasha, Degefu Mulugeta"
+            },
+            {
+              "label": "고도",
+              "value": "2,350m"
+            },
+            {
+              "label": "품종",
+              "value": "74158"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 18500
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T19:07:59+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ethiopia · 74158 · Washed"
+        },
+        {
+          "id": "901-23",
+          "name": "#23 에티오피아 예가체프 첼바 에얼룸 내추럴",
+          "originalName": "[10.16 오픈] #23 에티오피아 예가체프 첼바 에얼룸 내추럴",
+          "nameEnglish": "Ethiopia Yirgacheffe Chelba Heirloom Natural",
+          "category": "single origin",
+          "origin": "Ethiopia",
+          "region": "Yirgacheffe, Gedeo",
+          "variety": "Heirloom",
+          "process": "Natural",
+          "roast": "Light #96",
+          "flavors": [
+            "홍옥",
+            "베리",
+            "핵과"
+          ],
+          "flavorColors": [
+            "#b11a47",
+            "#e7143f",
+            "#df869a"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "홍옥, 베리, 핵과"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #96"
+            },
+            {
+              "label": "국가",
+              "value": "Ethiopia"
+            },
+            {
+              "label": "지역",
+              "value": "Yirgacheffe, Gedeo"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Chelba Washing Station"
+            },
+            {
+              "label": "고도",
+              "value": "1,800~2,200m"
+            },
+            {
+              "label": "품종",
+              "value": "Heirloom"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 16500
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T20:16:52+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ethiopia · Heirloom · Natural"
         },
         {
           "id": "901-31",
@@ -4188,7 +4602,7 @@
             }
           ],
           "openDate": "2026-10-01",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T23:35:09+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4317,7 +4731,7 @@
           "summary": ""
         }
       ],
-      "detailsCheckedAt": "2026-10-14T20:14:09.851Z"
+      "detailsCheckedAt": "2026-10-16T11:47:42.510Z"
     }
   ]
 }
