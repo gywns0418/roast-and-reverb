@@ -247,3 +247,11 @@ feature/dashboard-record-layout main 분기 후 최신dev/직전QA 통합. 최�
 feature/focused-service-flow main 분기 후 최신dev/최종QA통합. Baymard버튼/NNg점진적공개/홈가치 문서 직접 확인, focused-experience.md에 출처와 적용 판단 기록. 추천/청음실/가이드/음악제작의 기본작업과 선택옵션 분리, 추천 즉시기본실행·결과포커스·듣기CTA1, 홈구체효용 추가. 14경로 데스크톱/모바일 초기구조 넘침/중첩0, 77JSX검사, 실제추천3결과·선택옵션/입력유지 확인. AST회귀검사2추가, 총63테스트/build/audit0. 신규API키/대화요청/원본자료/운영개인기록/가격/결제/main 변경 없음. 전환효과는 아직측정하지 않음. dev검사/배포결과는후속기록.
 
 최종: source9888809 Verify38916955868 성공. PR#27 dev병합56581660. devVerify38917145584/Pages38917145583 모두성공. 공개 /dev/?v=9888809#/recommend에서 월픽 범위만 선택하여 실제추천3결과/결과포커스/중첩0 확인. 공개 원두/음악/일지 저장소 변경 없음. focused-published.png는 공개월픽과시작선곡만 포함, 개인보유원두/원본정보없음. main 승격없음.
+
+## 2026-10-16 — 대시보드 우선 탐색
+
+feature/dashboard-first main 분기후 최신dev/직전최종QA통합. 사용자 요청으로 대시보드를 접힌기타메뉴에서 기본메뉴 맨앞으로 이동. 공통로고도 대시보드 연결, 주요메뉴 aria-label, 전페이지 동일순서 유지. 대시보드 제목을 실제메뉴명과 일치시키고 기록현황을 맨위에 배치·목록/리포트 링크로 연결. 첫기록없음은 감상가이드, 기록보유자는 커피작성·최근기록 중심 안내. 로딩중 수치를0이아닌 대시로 표시. 월픽홍보는 기록현황뒤, 시각영역 축소.
+
+추가로 직접읽은자료: NNg https://www.nngroup.com/articles/hamburger-menus/ (핵심탐색 가시성), https://www.nngroup.com/articles/consistency-and-standards/ (예측가능한표현), W3C https://www.w3.org/WAI/WCAG22/Understanding/consistent-navigation.html (반복탐색 상대순서일관성). 정보단서 글은 검색요약확인만, 본문2회timeout으로 본문을읽었다고주장하지않음. 기능별선택옵션의점진적공개와 핵심메뉴가시성을 구분해 적용했다. 전체WCAG준수나 전환향상을 검증했다는뜻아님.
+
+63테스트/build통과. 로컬 빈기록 시작/기록1개 보유상태 안내변화, 커피현황 클릭/로고복귀/모바일대시보드 첫위치 및 넘침0/중첩0 확인. 격리localhost5191의 기록은 실제시음아닌 명시QA자료. 공개개인자료/원본/키/결제/main 변경없음. dev PR/배포는후속기록.
