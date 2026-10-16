@@ -51,12 +51,12 @@ export default function HomePage() {
               <br />한 곡의 <em>여운.</em>
             </h1>
             <p className="studio-lead">
-              마신 커피와 들은 음악, 그 순간의 기분까지.
+              좋았던 커피와 음악, 다음에도 고르고 싶다면.
               <br />
-              흩어진 취향을 모아 나만의 리듬을 발견하세요.
+              짧은 감상 가이드와 기록으로 나만의 선택 기준을 만드세요.
             </p>
             <button className="studio-cta" onClick={start}>
-              {local ? "나의 첫 발견 시작하기" : "나의 첫 발견 시작하기"}
+              오늘의 8분 가이드 시작하기
               <ArrowUpRight size={22} />
             </button>
             <p className="studio-caption">

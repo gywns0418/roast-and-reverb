@@ -11,6 +11,7 @@ import "./styles/editorial.css";
 import "./styles/discovery-flow.css";
 import "./styles/listening-room.css";
 import "./styles/journey.css";
+import "./styles/rhythm.css";
 
 function ScrollReset() {
   const { pathname } = useLocation();
