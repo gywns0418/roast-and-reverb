@@ -23,6 +23,18 @@ class ServiceSecurityTest {
   mvc.perform(get("/api/companion/status")).andExpect(status().isUnauthorized());
   mvc.perform(post("/api/companion/chat").contentType("application/json").content("{}")).andExpect(status().isUnauthorized());
  }
+ @Test void importedGrinderExplanationIsPreservedWithoutTruncation() throws Exception {
+  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"email\":\"grind-import@example.com\",\"password\":\"test-grind-password\",\"nickname\":\"Test\"}"))
+    .andExpect(status().isOk()).andReturn();
+  String auth="Bearer "+json.readTree(signup.getResponse().getContentAsString()).path("data").path("token").asText();
+  String explanation="Grinder calibration explanation, preserving all original detail. ".repeat(5);
+  String body=json.writeValueAsString(java.util.Map.of("beanName","Import regression fixture","drinkDate","2026-07-01","grindSize",explanation));
+  var created=mvc.perform(post("/api/coffee").header("Authorization",auth).contentType("application/json").content(body))
+    .andExpect(status().isOk()).andReturn();
+  long id=json.readTree(created.getResponse().getContentAsString()).path("data").path("coffeeLogId").asLong();
+  mvc.perform(get("/api/coffee/"+id).header("Authorization",auth)).andExpect(status().isOk())
+    .andExpect(jsonPath("$.data.grind_size").value(explanation));
+ }
  @Test void publicImagesAreNotBlockedByLoginAndMalformedJsonIsClientError() throws Exception {
   mvc.perform(get("/images/missing-test-image.png")).andExpect(status().isNotFound());
   mvc.perform(post("/api/auth/join").contentType("application/json").content("{broken")).andExpect(status().isBadRequest());
