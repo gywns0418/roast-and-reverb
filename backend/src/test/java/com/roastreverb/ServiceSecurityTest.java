@@ -14,6 +14,23 @@ class ServiceSecurityTest {
  @Autowired MockMvc mvc;
  @Autowired ObjectMapper json;
  @Test void anonymousCannotReadRecords() throws Exception {mvc.perform(get("/api/coffee")).andExpect(status().isUnauthorized());}
+ @Test void cupAndSoundtrackAreSavedTogetherAndSurvivePartialEdit() throws Exception {
+  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"email\":\"cup-soundtrack@example.com\",\"password\":\"test-cup-password\",\"nickname\":\"Test\"}"))
+   .andExpect(status().isOk()).andReturn();
+  String auth="Bearer "+json.readTree(signup.getResponse().getContentAsString()).path("data").path("token").asText();
+  var details=java.util.Map.of("doseGrams",16,"momentNote","User's own cup and music impression","soundtrack",java.util.Map.of("version",1,"kind","matched","track","Fixture track","listened",false));
+  var created=mvc.perform(post("/api/coffee").header("Authorization",auth).contentType("application/json").content(json.writeValueAsString(java.util.Map.of("beanName","Soundtrack fixture","drinkDate","2026-10-17","brewDetails",details))))
+   .andExpect(status().isOk()).andReturn();
+  long id=json.readTree(created.getResponse().getContentAsString()).path("data").path("coffeeLogId").asLong();
+  mvc.perform(put("/api/coffee/"+id).header("Authorization",auth).contentType("application/json").content("{\"tasteNote\":\"Changed coffee observation\"}" )).andExpect(status().isOk());
+  var fetched=mvc.perform(get("/api/coffee/"+id).header("Authorization",auth)).andExpect(status().isOk()).andReturn();
+  var saved=json.readTree(json.readTree(fetched.getResponse().getContentAsString()).path("data").path("brew_details").asText());
+  assertEquals(16,saved.path("doseGrams").asInt());
+  assertEquals("User's own cup and music impression",saved.path("momentNote").asText());
+  assertEquals("Fixture track",saved.path("soundtrack").path("track").asText());
+  assertFalse(saved.path("soundtrack").path("listened").asBoolean());
+  mvc.perform(get("/api/music").header("Authorization",auth)).andExpect(status().isOk()).andExpect(jsonPath("$.data.length()").value(0));
+ }
  @Test void publicCatalogIsReadableWithoutOpeningOtherDataPaths() throws Exception {
   mvc.perform(get("/data/monthly-picks.json")).andExpect(status().isOk()).andExpect(jsonPath("$.schemaVersion").value(1));
   mvc.perform(get("/data/private-test.json")).andExpect(status().isUnauthorized());

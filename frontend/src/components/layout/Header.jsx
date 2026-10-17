@@ -28,13 +28,13 @@ export default function Header() {
           className="topbar-search"
           onSubmit={(event) => {
             event.preventDefault();
-            navigate(`/music/search?q=${encodeURIComponent(query)}`);
+            navigate(`/music?q=${encodeURIComponent(query)}`);
           }}
         >
           <Search size={16} />
           <input
-            aria-label="내 음악 기록 검색"
-            placeholder="내 기록에서 곡, 아티스트 검색"
+            aria-label="음악 보관함 검색"
+            placeholder="보관한 곡, 아티스트 검색"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
+import CoffeeSoundtrack from "../../components/coffee/CoffeeSoundtrack.jsx";
 import CoffeeForm from "../../components/coffee/CoffeeForm.jsx";
 import { coffeeApi } from "../../api/coffeeApi.js";
 import { adaptCoffeeLog } from "../../api/adapters.js";
@@ -25,6 +26,7 @@ export default function CoffeeEditPage() {
     brewDetails: {},
   });
   const [saving, setSaving] = useState(false);
+  const [musicBusy,setMusicBusy]=useState(false);
   const [message, setMessage] = useState("");
   useEffect(() => {
     setForm({
@@ -42,6 +44,7 @@ export default function CoffeeEditPage() {
     });
   }, [coffee]);
   async function save() {
+    if(saving||musicBusy)return;
     setSaving(true);
     setMessage("");
     try {
@@ -62,8 +65,9 @@ export default function CoffeeEditPage() {
       <section className="panel">
         <fieldset className="coffee-fields" disabled={loading}>
           <CoffeeForm value={form} onChange={setForm} />
+          {!loading&&<CoffeeSoundtrack coffee={form} onChange={setForm} onBusyChange={setMusicBusy}/> }
         </fieldset>
-        <Button onClick={save} disabled={saving || loading} loading={saving}>
+        <Button onClick={save} disabled={saving || loading || musicBusy} loading={saving}>
           {saving ? "저장 중" : "수정 저장"}
         </Button>
         {message && (

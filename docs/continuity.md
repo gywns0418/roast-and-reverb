@@ -294,3 +294,12 @@ feature/music-import-spacing main 분기 후 최신dev/직전인계 통합. 링�
 Chrome 연결 후 전용프로젝트 roast-and-reverb 확인. 기존 micro-atrium-371108의 MusicEmotion 앱은 미변경. 사용자 명시적 정책동의/클라이언트 생성/연결 승인에 따라 웹클라이언트 생성, JavaScript origin은 기존 Railway 운영origin만. GOOGLE_CLIENT_ID만 서버 설정(비밀키미사용), 세범위email/profile/openid만 선언. 공개홈/개인정보처리방침/도메인 등록 후 Google 콘솔 ‘프로덕션 단계’ 확인. 브랜드 이름/로고 검증 별도이며 심사승인됐다고 주장하지 않음.
 
 feature/google-login-public-policy main 분기·최신dev 통합. privacy.html과 공개경로 허용/홈·공통footer·로그인 링크 추가. 기존 회원의 Google연결 조회API 및 새로고침시 연결표시 유지. PR#33 source9b4a555 Verify39012993355 성공, dev병합03a1ba3. devVerify39013113865/Pages39013113886 성공. 첫CI Docker의 NuGet 다운로드ETIMEDOUT은 재시도로 성공했고 관련없는 dependency수정은 하지 않음. Railway deployment6e616a69-a12e-4296-9b54-f2b0fbd7daa8 SUCCESS. privacy.html200/config200/익명개인상태401/익명일지401. 실제 기존계정 Google연결·새로고침·로그아웃 후 Google 재로그인 및 기록유지 확인. 계정선택팝업은 CDP입력timeout으로 사용자가 직접선택했고 이후 동일회원UI 확인. 캡처와 개인계정상세는 .local에만 저장. 공개시드/개인원본/main 변경 없음.
+
+
+## 2026-10-17 — 커피에서 시작하는 음악과 감상
+
+사용자가 독립 음악일지보다 커피에 맞는 음악 매칭/제작과 통합 감상을 요청했고 새 운영주소 https://roast-and-reverb.up.railway.app/#/journey 에 적용하도록 승인했다. feature/coffee-led-music은 origin/main에서 분기한 후 최신dev d68c714 통합. 별도 worktree roast-reverb-coffee-led 사용.
+
+여정 진입→커피 선택→기존음악 매칭 또는 기기내 연주제작→함께 감상→커피 단일요청 저장. brewDetails.soundtrack에 곡/출처/매칭방식 또는 재현가능한 작곡recipe, momentNote에 직접 적은 감상 저장. 별도 음악일지/페어링 레코드 자동생성 없음. 기존 음악기록 유지·보관함에서 합산조회·커피상세로 연결. 새 음악은 직접 청취확인 전 리포트의 들은음악에 포함하지 않는다. 생성형 AI음원은 연결하지 않았고 규칙기반 작곡임을 명시한다. AI 의미매칭은 기존기기모델을 선택사용, 신규키/결제/외부개인자료전송 없음.
+
+로컬 프론트66테스트/build/audit0, 서버21테스트 및 production 저장·재시작·재조회 통과. 브라우저에서 매칭3곡/선택/통합감상저장/새로고침/부분수정/청취확인/음악보관함 연결 확인. QA는 격리localhost의 명시테스트자료이며 운영개인기록은 수정하지 않는다. CI/PR/Railway 최종 배포와 공개검증은 후속기록을 따른다. main미반영·기존서비스/영구볼륨/Google설정 유지.
