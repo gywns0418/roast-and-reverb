@@ -303,3 +303,6 @@ feature/google-login-public-policy main 분기·최신dev 통합. privacy.html�
 여정 진입→커피 선택→기존음악 매칭 또는 기기내 연주제작→함께 감상→커피 단일요청 저장. brewDetails.soundtrack에 곡/출처/매칭방식 또는 재현가능한 작곡recipe, momentNote에 직접 적은 감상 저장. 별도 음악일지/페어링 레코드 자동생성 없음. 기존 음악기록 유지·보관함에서 합산조회·커피상세로 연결. 새 음악은 직접 청취확인 전 리포트의 들은음악에 포함하지 않는다. 생성형 AI음원은 연결하지 않았고 규칙기반 작곡임을 명시한다. AI 의미매칭은 기존기기모델을 선택사용, 신규키/결제/외부개인자료전송 없음.
 
 로컬 프론트66테스트/build/audit0, 서버21테스트 및 production 저장·재시작·재조회 통과. 브라우저에서 매칭3곡/선택/통합감상저장/새로고침/부분수정/청취확인/음악보관함 연결 확인. QA는 격리localhost의 명시테스트자료이며 운영개인기록은 수정하지 않는다. CI/PR/Railway 최종 배포와 공개검증은 후속기록을 따른다. main미반영·기존서비스/영구볼륨/Google설정 유지.
+
+
+최종: source3b8f622 Verify39014960873 모든job성공. PR#35 dev병합951acb19200ff1593aa3193ec901ef7e451bfb38. 기존Railway production에 source를 이SHA로 pin하는 단일변경 staged(환경368c4b5f-8d55-4353-b11c-89c5745616aa/patchba0957ce-76a6-47bc-aad7-adf6035a35f8). accept-deploy가 최종승인단계에서 취소되어 운영반영하지 못했다. 도구응답: Cancelled — the user did not approve this action. No changes were made. 우회배포하지않음. 사용자의 배포승인 후 pending변경을 재확인하고 기존서비스에 accept-deploy, 성공/health/익명401/운영journey와작성화면을 확인해야 한다. 현재live는 기존efcdd3c5 배포. 로컬실제연주 생성/저장/재생성53.526초 및 모바일375가로넘침0/중첩0, 추천결과→원두/곡동시전달도 확인. 프리뷰 .local/coffee-led-preview.png는 로컬화면이며 운영반영증거가 아니다. main미반영/개인기록미변경.
