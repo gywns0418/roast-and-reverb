@@ -41,11 +41,9 @@ export default function CoffeeDetailPage() {
       subtitle="커피 정보와 연결된 음악, AI 페어링 문장을 함께 확인합니다."
     >
       <div className="action-row">
+        {!loading && <Link className="primary-button" to="/coffee/write" state={{repeatCoffee:coffee}}>이 조건으로 다시 내리기</Link>}
         <Link className="ghost-button" to={`/coffee/${id}/edit`}>
-          기록 수정
-        </Link>
-        <Link className="ghost-button" to={`/coffee/${id}/edit`}>
-          이 커피에 음악 받기
+          기록·음악·감상 수정
         </Link>
       </div>
       <div className="panel-grid">

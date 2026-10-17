@@ -32,6 +32,8 @@ export default function CoffeeEditPage() {
     setForm({
       beanName: coffee.bean,
       roastery: coffee.roastery,
+      originCountry: coffee.raw?.originCountry || coffee.raw?.origin_country || coffee.origin || "",
+      process: coffee.process,
       brewMethod: coffee.brew,
       roastLevel: coffee.roast,
       memo: coffee.memo,

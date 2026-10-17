@@ -156,3 +156,9 @@ a.metric:focus-visible {outline:3px solid #6e8551;outline-offset:-3px;}
 .cup-save-bar button:disabled {opacity:.5;cursor:wait;}
 .coffee-fields > .cup-soundtrack {margin-top:32px;}
 @media(max-width:760px){.cup-journey-entry ol{display:grid;gap:12px;}.cup-save-bar{padding:20px;}.cup-save-bar button{width:100%;}.cup-soundtrack .action-row{align-items:stretch;}.cup-soundtrack .action-row>*{flex:1 1 180px;}}
+.repeat-brew-panel { margin-bottom:24px; }
+.repeat-brew-panel p { margin:12px 0; }
+.repeat-brew-table { margin-top:20px; overflow-x:auto; }
+.repeat-brew-table table { width:100%; border-collapse:collapse; table-layout:fixed; }
+.repeat-brew-table caption { text-align:left; font-weight:600; padding-bottom:12px; }
+.repeat-brew-table th,.repeat-brew-table td { text-align:left; padding:12px; border-bottom:1px solid #dce1d4; overflow-wrap:anywhere; vertical-align:top; }
