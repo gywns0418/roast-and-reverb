@@ -1,3 +1,4 @@
+import GoogleSignIn from "../../components/auth/GoogleSignIn.jsx";
 import {safeReturnPath} from '../../utils/returnPath.js';
 import TrialNotice from "../../components/auth/TrialNotice.jsx";
 import { useState } from "react";
@@ -51,6 +52,7 @@ export default function LoginPage() {
           <Button type="submit" disabled={loading || import.meta.env.VITE_USE_REAL_API !== "true"} loading={loading}>{loading ? "로그인 중" : "로그인"}</Button>
           {error && <p role="alert" className="muted">{error}</p>}
         </form>
+        <GoogleSignIn onSuccess={user => { authStore.setUser(user); navigate(safeReturnPath(location.state?.from), { replace: true }); }} />
         <div className="cover-links">
           <Link to="/auth/find-id">아이디를 잊었나요?</Link>
           <Link to="/auth/find-password">비밀번호를 잊었나요?</Link>

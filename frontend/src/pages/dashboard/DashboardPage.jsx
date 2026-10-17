@@ -1,3 +1,4 @@
+import Loading from "../../components/common/Loading.jsx";
 import { listDiaryRecords } from "../../utils/diaryRecords.js";
 import { useEffect, useState } from "react";
 import { monthlyCatalog } from "../../api/monthlyCatalog.js";
@@ -45,6 +46,7 @@ export default function DashboardPage() {
     [],
     [],
   );
+  if (coffeeLoading || musicLoading || pairingLoading) return <PageShell title="대시보드" eyebrow="YOUR DAILY RITUAL" subtitle="쌓인 기록을 한눈에 보고, 오늘의 커피와 음악을 이어가세요."><Loading title="나의 기록을 펼치고 있어요." detail="저장한 커피와 음악을 모아 오늘의 시간을 준비합니다." /></PageShell>;
   const recent = [
     ...coffees.map((item) => ({
       ...item,

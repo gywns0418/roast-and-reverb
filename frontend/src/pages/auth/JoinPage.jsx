@@ -1,3 +1,4 @@
+import GoogleSignIn from "../../components/auth/GoogleSignIn.jsx";
 import TrialNotice from "../../components/auth/TrialNotice.jsx";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -50,6 +51,7 @@ export default function JoinPage() {
           <Button type="submit" disabled={loading || import.meta.env.VITE_USE_REAL_API !== "true"} loading={loading}>{loading ? "생성 중" : "계정 만들기"}</Button>
           {error && <p role="alert" className="muted">{error}</p>}
         </form>
+        <GoogleSignIn onSuccess={user => { authStore.setUser(user); navigate("/dashboard", { replace: true }); }} />
         <Link to="/auth/login" className="cover-switch">이미 계정이 있다면 — 로그인</Link>
       </div>
     </section>
