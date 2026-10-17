@@ -112,22 +112,29 @@ export default function HomePage() {
           <span>REMEMBER.</span>
           <Coffee size={22} />
         </div>
-        <section id="ritual" className="studio-intro">
+        <section id="ritual" className="home-discovery">
+          <div className="home-discovery-copy">
           <p className="studio-eyebrow">YOUR TASTE, CONNECTED</p>
           <h2>
-            좋아하는 것들은
+            좋았던 한 잔,
             <br />
-            서로 닮아 있으니까.
+            다음에도 고를 수 있도록.
           </h2>
           <p>
-            산뜻한 산미에 어울리는 가벼운 재즈.
-            <br />
-            묵직한 바디와 오래 머무는 베이스.
-            <br />
-            일상의 기록에서 당신만의 조합을 찾아갑니다.
+            무슨 원두였는지, 어떻게 내렸는지 잊곤 하나요?
+            커피와 어울린 음악, 그날의 감상을 한곳에 남겨보세요.
+            다음 한 잔은 지난 기록에서 시작할 수 있어요.
           </p>
+          <button className="studio-cta" onClick={start}>내 취향 알아보기 <ArrowUpRight size={20}/></button>
+          </div>
+          <div className="home-session-preview" aria-label="커피와 감상을 기록하는 방법">
+            <p className="studio-eyebrow">ONE CUP, YOUR OWN WORDS</p>
+            <h3>한 잔에 담는 세 가지</h3>
+            <dl><div><dt><Coffee size={20}/> 커피</dt><dd>원두와 추출 조건을 남겨요.</dd></div><div><dt><Headphones size={20}/> 음악</dt><dd>어울리는 곡을 고르거나 연주를 만들어요.</dd></div><div><dt><Sparkles size={20}/> 나의 감상</dt><dd>직접 느낀 맛과 여운을 한 줄로 적어요.</dd></div></dl>
+            <p className="home-preview-note">커피만 기록해도 괜찮아요. 음악과 감상은 원할 때 더하세요.</p>
+          </div>
         </section>
-<section className="studio-intro"><p className="studio-eyebrow">SEVEN SMALL DISCOVERIES</p><h2>추천을 받는 것에서,<br/>좋아하는 이유를 아는 것으로.</h2><p>향과 여운, 질감과 리듬.<br/>일곱 가지 감상 가이드와 나만의 발견 노트를 통해<br/>다음 한 잔과 한 곡을 고르는 기준을 만들어보세요.</p><Link className="ghost-button" to="/journey">감상 가이드 살펴보기 ↗</Link></section>
+        <section className="home-guide"><div><p className="studio-eyebrow">SEVEN SMALL DISCOVERIES</p><h2>무엇을 적을지 막막하다면,<br/>8분 가이드부터.</h2><p>향 하나, 음악의 느낌 하나. 질문을 따라 적다 보면 나만의 선택 기준이 남습니다.</p></div><Link className="ghost-button" to="/journey">감상 가이드 살펴보기 <ArrowUpRight size={18}/></Link></section>
         <section id="notes" className="studio-steps">
           {[
             [
@@ -140,13 +147,13 @@ export default function HomePage() {
               Headphones,
               "02",
               "한 곡을 더하고",
-              "그때 듣던 음악과 기분을 함께 적어두세요.",
+              "어울리는 곡을 고르고, 실제로 들어본 느낌을 남겨요. 음악은 나중에 더해도 좋아요.",
             ],
             [
               Sparkles,
               "03",
-              "취향을 연결해요",
-              "페어링과 월간 리포트로 반복되는 취향을 발견하세요.",
+              "다음 한 잔으로 이어가요",
+              "지난 추출 조건을 불러와 바꾼 점을 비교하고, 나에게 맞는 한 잔을 찾아가요.",
             ],
           ].map(([Icon, n, title, copy]) => (
             <article key={n}>

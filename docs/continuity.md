@@ -313,3 +313,9 @@ feature/google-login-public-policy main 분기·최신dev 통합. privacy.html�
 ## 2026-10-17 — 중앙 원두 회전 로딩 오버레이
 
 기존 인라인 파형/진행선을 공통 fixed 오버레이로 교체. body portal로 기본 화면 위를 덮고 중앙에 원두SVG의 입체회전/그림자 표시. 반투명 배경blur, 로딩 동안 root inert 및 body scroll lock, 중복로딩 수명관리와 종료시 원래상태복구. reduced-motion시 정적원두. 실제 요청 종료시 해제하며 인위적 지연없음. 로컬68테스트/build 성공, 임시QA화면에서 전체뷰포트bounds/모바일390 중앙좌표195,422/가로넘침없음/해제후inert 및 overflow복구 확인. QA HTML 삭제, 개인자료변경없음. PR/CI/배포결과후속기록.
+
+## 2026-10-17 — 홈 하단 구체화 및 모바일 전용 사용 흐름
+
+feature/mobile-discovery-layout을 main에서 분기하고 최신dev96c68c7통합. 홈의 반복 2열문장/과도한여백을 커피·음악·감상의 실제기록 예시 및8분가이드와 다음추출연결로 재구성. 모바일전용 mobile.css를 마지막에 적용. 하단5개빠른메뉴/네이티브dialog 전체메뉴(ESC닫기·초점복귀·이동시닫기)/접이식상단검색 추가. 1열폼/16px입력/44px조작/기기하단안전영역/본문여백과기록저장동선 조정. 데스크톱전체메뉴 유지.
+
+프론트68테스트/build 성공. 로컬320/390px에서 홈·대시보드·커피작성·전체메뉴·검색 실제UI 확인, 가로넘침없음/입력16px/메뉴이동시닫기/ESC후전체메뉴로초점복귀 검증. 1440px홈2열·넘침없음 확인. 운영개인자료변경없음. 스크린샷은 .local/mobile-*.png와home-discovery-desktop.png. PR/배포결과후속기록.
