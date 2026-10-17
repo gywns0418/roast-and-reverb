@@ -14,7 +14,7 @@
 .home-guide{display:flex;align-items:center;justify-content:space-between;gap:32px;padding-top:32px;padding-bottom:32px;border-top:1px solid #dce1d4}
 .home-guide h2{font-size:28px;margin-bottom:12px}.home-guide p:not(.studio-eyebrow){margin-bottom:0}.home-guide>a{flex:none;display:inline-flex;gap:12px;align-items:center;min-height:48px;padding:12px 20px}
 .studio-home .studio-steps{padding-top:40px;padding-bottom:56px;gap:24px}.studio-home .studio-steps article{background:#eeefe5;border:0;border-radius:12px;padding:24px}.studio-home .studio-steps h3{margin:20px 0 12px}.studio-home .studio-steps p{max-width:none;margin:0;word-break:keep-all;overflow-wrap:anywhere}
-.mobile-tabbar,.mobile-search-toggle{display:none}.mobile-menu-sheet:not([open]){display:none}
+.mobile-tabbar,.topbar .mobile-search-toggle{display:none}.mobile-menu-sheet:not([open]){display:none}
 @media(max-width:760px){
  body:has(.mobile-menu-sheet[open]){overflow:hidden}
  .app-shell{display:block}.app-shell>.sidebar{position:relative;width:100%;height:auto;padding:16px 20px;box-sizing:border-box;border-radius:0}
@@ -36,3 +36,4 @@
  .home-discovery,.home-guide{padding:32px 20px;display:grid;grid-template-columns:minmax(0,1fr);gap:24px}.home-discovery h2{font-size:30px}.home-discovery-copy>p:not(.studio-eyebrow),.home-guide p:not(.studio-eyebrow){font-size:15px;line-height:1.8}.home-session-preview{padding:24px 20px}.home-session-preview dl>div{grid-template-columns:minmax(0,1fr);gap:8px}.home-session-preview dl{gap:20px}.home-session-preview h3{font-size:21px;margin-top:12px}.home-guide h2{font-size:26px}.home-guide>a{justify-content:space-between;width:100%;box-sizing:border-box}.studio-home .studio-steps{grid-template-columns:minmax(0,1fr);padding:0 20px 32px;gap:12px}.studio-home .studio-steps article{padding:20px}.studio-home .studio-steps h3{margin:12px 0 8px;font-size:18px}.studio-home .studio-closing{padding:32px 20px}.studio-closing p{font-size:20px;line-height:1.6}.studio-closing button{font-size:16px;min-height:48px}.studio-home .studio-footer{padding:28px 20px;display:flex;gap:16px;flex-wrap:wrap}
 }
 @media(max-width:760px){.app-shell .page input,.app-shell .page textarea,.app-shell .page select{font-size:16px}.mobile-tabbar a:focus-visible,.mobile-tabbar button:focus-visible,.mobile-menu-sheet a:focus-visible{outline:3px solid #879c62;outline-offset:2px}}
+
