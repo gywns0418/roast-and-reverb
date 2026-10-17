@@ -1,3 +1,5 @@
+import GoogleSignIn from "../../components/auth/GoogleSignIn.jsx";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
@@ -11,6 +13,7 @@ import { adaptCoffeeLog, adaptMusicLog, adaptPairing } from "../../api/adapters.
 import { useApiResource } from "../../hooks/useApiResource.js";
 
 export default function MyPage() {
+  const [googleLinked, setGoogleLinked] = useState(false);
   const navigate = useNavigate();
   const local = import.meta.env.VITE_USE_REAL_API !== "true";
   const user = authStore.user || {};
@@ -49,6 +52,7 @@ export default function MyPage() {
           </div>
         </div>
       </section>
+      {!local && <>{googleLinked ? <p role="status">Google 계정을 연결했어요. 다음부터 Google로 같은 기록장을 열 수 있습니다.</p> : <GoogleSignIn link onSuccess={user => { authStore.setUser(user); setGoogleLinked(true); }} />}</>}
       <div className="stat-grid">
         {report.stats.map((stat) => (
           <div className="stat-tile" key={stat.label}>

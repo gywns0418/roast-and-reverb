@@ -158,3 +158,9 @@ CREATE INDEX IF NOT EXISTS idx_taste_rule_member ON taste_rule(member_id);
 ALTER TABLE coffee_log ADD COLUMN IF NOT EXISTS brew_details TEXT;
 -- Imported grinder settings may include the user's calibration explanation.
 ALTER TABLE coffee_log ALTER COLUMN grind_size TEXT;
+
+CREATE TABLE IF NOT EXISTS social_identity (
+ provider VARCHAR(20) NOT NULL, subject VARCHAR(255) NOT NULL, member_id BIGINT NOT NULL,
+ PRIMARY KEY (provider, subject), UNIQUE (provider, member_id),
+ FOREIGN KEY (member_id) REFERENCES member(member_id)
+);

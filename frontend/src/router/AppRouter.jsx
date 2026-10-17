@@ -1,3 +1,4 @@
+import Loading from "../components/common/Loading.jsx";
 import {lazy,Suspense} from 'react';
 const JourneyPage=lazy(()=>import('../pages/ritual/JourneyPage.jsx'));
 const HelpPage=lazy(()=>import('../pages/mypage/HelpPage.jsx'));
@@ -40,7 +41,7 @@ const AdminStatisticsPage=lazy(()=>import('../pages/admin/AdminStatisticsPage.js
 
 export default function AppRouter() {
   return (
-    <Suspense fallback={<main className="page" role="status" style={{padding:40}}>페이지를 준비하고 있어요…</main>}><Routes>
+    <Suspense fallback={<main className="page"><Loading /></main>}><Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<Navigate to="/auth/login" replace />} />
       <Route path="/join" element={<Navigate to="/auth/join" replace />} />

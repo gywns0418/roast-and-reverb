@@ -1,4 +1,5 @@
-import { useEffect,useState } from "react";
+import Loading from "../common/Loading.jsx";
+import { Suspense,useEffect,useState } from "react";
 import { watchBeanFile } from "../../store/beanFileStore.js";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { authStore } from "../../store/authStore.js";
@@ -30,7 +31,7 @@ export default function Layout() {
           </div>
         )}
         <ResourceBoundary key={location.pathname}>
-          <Outlet />
+          <Suspense fallback={<div className="page"><Loading /></div>}><Outlet /></Suspense>
         </ResourceBoundary>
       </main>
     </div>

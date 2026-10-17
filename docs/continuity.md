@@ -257,3 +257,20 @@ feature/dashboard-first main 분기후 최신dev/직전최종QA통합. 사용자
 63테스트/build통과. 로컬 빈기록 시작/기록1개 보유상태 안내변화, 커피현황 클릭/로고복귀/모바일대시보드 첫위치 및 넘침0/중첩0 확인. 격리localhost5191의 기록은 실제시음아닌 명시QA자료. 공개개인자료/원본/키/결제/main 변경없음. dev PR/배포는후속기록.
 
 최종: source6cc4faa Verify38918719455 전체성공. PR#28 dev병합10ae3787. devVerify38919011988/Pages38919011734 성공. 공개 /dev/?v=6cc4faa#/dashboard에서 첫메뉴대시보드·로고dashboard·기록현황링크4/중첩0 확인. dashboard-first-published.png는 빈기록 초기화면만 보관. 개인보유원두영역/원본자료 미포함·공개사용자저장소 미변경. main미승격.
+
+## 2026-10-17 — 실제 서버 배포와 가져오기 호환성
+
+기존 Railway 프로젝트의 서버 및 /data 영구볼륨 배포 성공. https://roast-and-reverb-production.up.railway.app 에서 실제 계정 UI 제공, 익명 개인기록 API401 확인. 서버소스는 검증된 dev90885b2a에 고정해 임의후속push 자동배포를 막는다. main미승격/유료업그레이드없음.
+
+실서버에서 공개정적월픽401 및 긴분쇄도설명 VARCHAR60 저장오류를 재현하고 수정. 정확한 /data/monthly-picks.json만 공개, 나머지data와기록API인증유지. grind_size TEXT 비절단기존DB마이그레이션 및 합성장문인증API왕복테스트추가. .dockerignore .local제외. 개인원본/가져오기자료/계정정보/화면증거는 무시된로컬위치에만 보관하고 저장소에추가하지않음.
+
+PR#29 sourcec822f79 Verify38989619289 성공/dev병합b299853b. PR#30 source21cf85d Verify38989866412 전체성공/dev병합90885b2a. devVerify38989997816 및 Pages38989997756 성공. Railway배포69599fa4-d2ca-42a8-98a6-5699e99fbf14 성공·영구볼륨유지. 운영 healthz200/정적월픽200/익명coffee401 재확인. 실계정로그인 후 가져오기·새로고침서버조회·동일원본재선택중복차단 검증 완료. 구체개인자료/수량/인증정보는 공개문서에기록하지않음. 운영환경은 사용자확인된Trial로 유료지속운영/자동업그레이드승인을뜻하지않는다.
+
+
+## 2026-10-17 — 대시보드 전환 로딩·Google 인증 준비
+
+feature/dashboard-social-login을 main에서 분기하고 최신dev 통합. 조회 완료 전 첫 방문 안내/빈 기록을 표시하던 문제를 대시보드 전체 loading gate로 수정. 공통 커피·음악 파형과 진행선, reduced-motion 지원. Layout 내부 Suspense로 메뉴 유지. 실제 로딩 여부에 따라 종료하며 임의 진행률/최소 대기는 넣지 않았다.
+
+Google GIS 공식 버튼·공개키 검증·issuer/audience/만료/인증 이메일/5분 단회 nonce·Origin 검증·기존 JWT 발급 구현. 이메일 자동 병합 금지, 로그인한 회원만 기존 기록장에 Google identity 연결. social_identity 추가 migration으로 기존 DB 보존. GOOGLE_CLIENT_ID 없으면 버튼/Google SDK 로딩 없음. client secret 불필요. 공식 운영 조건·카카오 테스트/운영 앱 구분·개인 개발자 비즈 앱 조건은 docs/social-login.md 참조. Google Cloud 로그인은 사용자 직접 완료했지만 OAuth 등록/승인/실제 Google 로그인은 아직 미완료. 지원 연락처와 정책 페이지 등 브랜드 검증 요건 남음. 기존 Railway 서버/volume 사용, 유료 업그레이드 없음.
+
+로컬 프론트64 테스트/build 통과. 로딩 desktop/mobile 시각 확인, private .local/dashboard-loading.png. 백엔드 인증 통합4개 추가(거부·재사용·클레임·기존 기록 보존). 초기CI에서 새 테스트 컨텍스트와 기존 H2 시드 충돌을 발견해 테스트DB를 분리했다. PR#31 CI/배포 최종 결과는 후속 기록. main 미반영.
