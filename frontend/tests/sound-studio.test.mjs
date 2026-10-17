@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {freshSoundSeed} from '../src/utils/soundStudio.js';
 import {createScore,soundSettings,settingsForCoffee,applySoundCommand,parseSoundBackup,encodeWave,validateSoundRecipe} from '../src/utils/soundStudio.js';
 
 test('same recipe recreates the score, new seed changes the melody',()=>{
@@ -36,7 +38,7 @@ test('backup validation rejects bad versions, duplicate ids, excessive tracks an
   assert.equal(parseSoundBackup(backup)[0].seed,42);
   assert.throws(()=>parseSoundBackup({...backup,tracks:[track,track]}));
   assert.throws(()=>parseSoundBackup({...backup,tracks:Array(25).fill(track)}));
-  assert.throws(()=>validateSoundRecipe({...track,version:2}));
+  assert.throws(()=>validateSoundRecipe({...track,version:3}));
   assert.throws(()=>validateSoundRecipe({...track,seed:-1}));
   assert.throws(()=>validateSoundRecipe({...track,createdAt:'broken'}));
   assert.equal(validateSoundRecipe({...track,settings:{bpm:1e9}}).settings.bpm,110);
@@ -50,4 +52,15 @@ test('WAV has correct stereo layout, length and bounded signed PCM samples',()=>
   assert.equal(v.getInt16(48,true),-32768);assert.equal(v.getInt16(50,true),0);
   assert.equal(v.getInt16(54,true),-32768);
   assert.throws(()=>encodeWave([new Float32Array(1),new Float32Array(2)],32000));
+});
+
+test('saved legacy music retains its original score while new arrangements vary harmony and rhythm',()=>{
+  assert.equal(createHash('sha256').update(JSON.stringify(createScore({},123,1))).digest('hex'),'5b0339527426219dbcb161b50cac1f659eb67c097e667a4ca79a4ffddeb8853d');
+  assert.deepEqual(createScore({},123,2),createScore({},123,2));
+  assert.deepEqual(createScore({},123,2).notes.filter(n=>n.kind==='piano'),createScore({rhythm:false,bass:false,pad:false},123,2).notes.filter(n=>n.kind==='piano'));
+  const arrangements=Array.from({length:12},(_,i)=>createScore({},i,2));
+  assert.ok(new Set(arrangements.map(s=>JSON.stringify(s.notes.filter(n=>n.kind==='bass').map(n=>[n.midi,n.time])))).size>8);
+  assert.ok(new Set(arrangements.map(s=>JSON.stringify(s.notes.filter(n=>n.kind==='piano').map(n=>[n.midi,n.time])))).size>8);
+  assert.ok(arrangements.every(s=>s.notes.every(n=>n.time>=0&&n.time+n.duration<s.duration&&n.midi>=0&&n.midi<128)));
+  assert.equal(freshSoundSeed(42,42),43);assert.equal(freshSoundSeed(0xffffffff,0xffffffff),0);
 });

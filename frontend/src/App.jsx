@@ -2,6 +2,7 @@ import { HashRouter, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import AppErrorBoundary from "./components/common/AppErrorBoundary.jsx";
 import AppRouter from "./router/AppRouter.jsx";
+import {LoadingHost} from './components/common/Loading.jsx';
 import "./styles/main.css";
 import "./styles/studio.css";
 import "./styles/interior.css";
@@ -26,6 +27,7 @@ export default function App() {
     <AppErrorBoundary><HashRouter>
       <ScrollReset />
       <AppRouter />
+      <LoadingHost />
     </HashRouter></AppErrorBoundary>
   );
 }

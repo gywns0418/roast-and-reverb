@@ -1,9 +1,9 @@
 import {createScore,encodeWave,seededRandom} from './soundStudio.js';
 
-export async function renderSound(settings,seed) {
+export async function renderSound(settings,seed,version=1) {
   const Offline=globalThis.OfflineAudioContext||globalThis.webkitOfflineAudioContext;
   if(!Offline)throw new Error('이 브라우저에서는 음악을 만들 수 없습니다. 최신 Chrome, Edge 또는 Safari를 이용해 주세요.');
-  const score=createScore(settings,seed), rate=32000;
+  const score=createScore(settings,seed,version), rate=32000;
   const context=new Offline(2,Math.ceil(score.duration*rate),rate);
   const master=context.createGain();master.gain.setValueAtTime(0,0);master.gain.linearRampToValueAtTime(.8,1);master.gain.setValueAtTime(.8,score.duration-4);master.gain.linearRampToValueAtTime(0,score.duration-.05);
   const compressor=context.createDynamicsCompressor();compressor.threshold.value=-14;compressor.ratio.value=4;master.connect(compressor);compressor.connect(context.destination);

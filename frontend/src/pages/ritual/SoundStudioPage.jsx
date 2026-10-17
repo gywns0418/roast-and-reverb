@@ -1,10 +1,11 @@
 import {useEffect,useRef,useState} from 'react';
 import {Link,useLocation} from 'react-router-dom';
 import {ArrowUpRight,Download,Heart,Music2,RefreshCw,SlidersHorizontal} from 'lucide-react';
+import Loading from '../../components/common/Loading.jsx';
 import PageShell from '../../components/common/PageShell.jsx';
 import SoundCompanion from '../../components/ritual/SoundCompanion.jsx';
 import {readDevice,saveDevice} from '../../store/discoveryStore.js';
-import {soundMoods,soundSettings,settingsForCoffee,soundCommands,applySoundCommand,validateSoundRecipe,parseSoundBackup} from '../../utils/soundStudio.js';
+import {freshSoundTitle,freshSoundSeed,SOUND_VERSION,soundMoods,soundSettings,settingsForCoffee,soundCommands,applySoundCommand,validateSoundRecipe,parseSoundBackup} from '../../utils/soundStudio.js';
 import {renderSound} from '../../utils/soundRenderer.js';
 import '../../styles/sound-studio.css';
 
@@ -26,17 +27,18 @@ export default function SoundStudioPage() {
   async function generate(recipe=null, nextSettings=settings, keepSeed=false) {
     if(rendering.current)return;
     rendering.current=true;const token=++revision.current;setBusy(true);setError('');setNotice('선율을 쓰고 소리를 만드는 중…');audio.current?.pause();
-    const next=recipe||{version:1,id:crypto.randomUUID(),createdAt:new Date().toISOString(),coffee:String(keepSeed&&current?current.coffee:coffee?.name||'').slice(0,120),title:keepSeed&&current?(title.trim()||current.title):`${soundMoods[nextSettings.mood].label} · 한 잔의 소리`,seed:keepSeed&&current?current.seed:crypto.getRandomValues(new Uint32Array(1))[0],settings:soundSettings(nextSettings),favorite:false};
-    try{const output=await renderSound(next.settings,next.seed);if(!mounted.current||token!==revision.current)return;const nextUrl=URL.createObjectURL(output.blob);URL.revokeObjectURL(urlRef.current);urlRef.current=nextUrl;setUrl(nextUrl);setCurrent({...next,duration:output.duration});setTitle(next.title);setSettings(next.settings);setPlaying(false);setNotice('음악이 준비됐어요. 재생 버튼을 눌러 들어보세요.');}
+    const seed=keepSeed&&current?current.seed:freshSoundSeed(current?.seed);
+    const next=recipe||{version:keepSeed&&current?current.version:SOUND_VERSION,id:crypto.randomUUID(),createdAt:new Date().toISOString(),coffee:String(keepSeed&&current?current.coffee:coffee?.name||'').slice(0,120),title:keepSeed&&current?(title.trim()||current.title):freshSoundTitle(nextSettings,seed,current?.title),seed,settings:soundSettings(nextSettings),favorite:false};
+    try{const output=await renderSound(next.settings,next.seed,next.version);if(!mounted.current||token!==revision.current)return;const nextUrl=URL.createObjectURL(output.blob);URL.revokeObjectURL(urlRef.current);urlRef.current=nextUrl;setUrl(nextUrl);setCurrent({...next,duration:output.duration});setTitle(next.title);setSettings(next.settings);setPlaying(false);setNotice(recipe?'저장한 악보를 그대로 준비했어요.':keepSeed?'같은 선율에 설정을 반영했어요.':'새로운 선율과 화음의 음악이 준비됐어요. 재생 버튼으로 들어보세요.');}
     catch(err){if(mounted.current)setError(err.message);}
     finally{rendering.current=false;if(mounted.current)setBusy(false);}
   }
-  function requestSound(text){try{const next=applySoundCommand(text,settings);setSettings(next);setHistory(rows=>[...rows.slice(-5),{text,result:`${soundMoods[next.mood].label} · ${next.bpm} BPM · ${next.rhythm?'작은 리듬':'리듬 없이'}`}]);setCommand('');generate(null,next,true);}catch(err){setError(err.message);}}
+  function requestSound(text){try{const next=applySoundCommand(text,settings);setSettings(next);setHistory(rows=>[...rows.slice(-5),{text,result:`${soundMoods[next.mood].label} · ${next.bpm} BPM · ${next.rhythm?'작은 리듬':'리듬 없이'}`}]);setCommand('');generate(null,next,false);}catch(err){setError(err.message);}}
   function save(){try{if(!current)return;if(tracks.length>=24&&!tracks.some(row=>row.id===current.id))throw new Error('24곡까지 보관할 수 있어요. 먼저 백업하고 필요 없는 곡을 지워 주세요.');const next=validateSoundRecipe({...current,title:title.trim()||current.title});persist([next,...tracks.filter(row=>row.id!==next.id)]);setCurrent({...next,duration:current.duration});setNotice('이 브라우저의 사운드 선반에 보관했어요.');}catch(err){setError(err.message);}}
   function backup(){const backupUrl=URL.createObjectURL(new Blob([JSON.stringify({format:'roast-reverb-sounds',version:1,tracks},null,2)],{type:'application/json'}));const anchor=document.createElement('a');anchor.href=backupUrl;anchor.download='roast-reverb-sounds.json';anchor.click();setTimeout(()=>URL.revokeObjectURL(backupUrl),1000);}
   async function restore(event){const selected=event.target.files[0];event.target.value='';if(!selected)return;try{if(selected.size>150000)throw new Error('150KB 이하의 사운드 백업을 선택해 주세요.');const incoming=parseSoundBackup(JSON.parse(await selected.text()));const merged=new Map(tracks.map(row=>[row.id,row]));incoming.forEach(row=>{if(!merged.has(row.id))merged.set(row.id,row);});if(merged.size>24)throw new Error('합치면 24곡을 넘습니다. 현재 보관함을 먼저 정리해 주세요.');persist([...merged.values()]);setNotice('기존 곡을 유지하고 백업의 새 곡을 복원했어요.');}catch(err){setError(err.message);}}
   return <PageShell title="한 잔의 사운드" eyebrow="COMPOSE A LITTLE MOMENT" subtitle="오늘의 커피에, 세상에 없던 작은 선율 하나.">
-    {error&&<p className="resource-error" role="alert">{error}</p>}
+    {busy&&<Loading title="한 잔의 연주를 준비하고 있어요." detail="선율과 화음을 쓰고 소리를 준비합니다."/>}{error&&<p className="resource-error" role="alert">{error}</p>}
     <div className="sound-layout">
       <section className="sound-stage" style={{'--sound-color':soundMoods[settings.mood].color}} aria-label="나의 사운드 플레이어">
         <div className="sound-topline"><span>R&R ORIGINAL STUDIES</span><span>VOL. {String(tracks.length+1).padStart(2,'0')}</span></div>
@@ -54,8 +56,8 @@ export default function SoundStudioPage() {
         {current&&<button className="ghost-button" disabled={busy} onClick={()=>generate(null,settings,true)}><SlidersHorizontal size={16}/> 같은 선율에 설정 반영</button>}
         <button className="sound-text-button" onClick={()=>{try{saveDevice('sound-preference',[settings]);setNotice('다음 방문의 시작 분위기로 기억할게요.');}catch(err){setError(err.message);}}}>이 설정을 다음에도 기억하기 ↗</button>
       </section>
-      <details className="flow-options sound-option-panel"><summary>AI와 대화하며 분위기 정하기</summary><SoundCompanion settings={settings} disabled={busy} onApply={next=>{setSettings(next);generate(null,next,true);}}/></details>
-      <details className="flow-options sound-option-panel"><summary>짧은 표현으로 소리 바꾸기</summary><section className="panel sound-conversation"><div className="sound-conversation-heading"><h3>말 한마디로, 다른 여운</h3><span>소리 요청</span></div><p>아래 표현을 누르거나 입력해 보세요. 같은 선율의 분위기를 바꿔 다시 만듭니다.</p><div className="sound-chips">{soundCommands.map(text=><button disabled={busy} key={text} onClick={()=>requestSound(text)}>{text}</button>)}</div>
+      <details className="flow-options sound-option-panel"><summary>AI와 대화하며 분위기 정하기</summary><SoundCompanion settings={settings} disabled={busy} onApply={next=>{setSettings(next);generate(null,next,false);}}/></details>
+      <details className="flow-options sound-option-panel"><summary>짧은 표현으로 새 음악 만들기</summary><section className="panel sound-conversation"><div className="sound-conversation-heading"><h3>말 한마디로, 다른 여운</h3><span>소리 요청</span></div><p>아래 표현을 누르거나 입력해 보세요. 같은 선율의 분위기를 바꿔 다시 만듭니다.</p><div className="sound-chips">{soundCommands.map(text=><button disabled={busy} key={text} onClick={()=>requestSound(text)}>{text}</button>)}</div>
         {history.length>0&&<div className="sound-history" aria-label="반영한 소리 요청">{history.map((row,i)=><div key={i}><b>{row.text}</b><span>{row.result}</span></div>)}</div>}
         <form onSubmit={event=>{event.preventDefault();requestSound(command);}}><label className="sr-only" htmlFor="sound-request">소리 요청 입력</label><input id="sound-request" value={command} disabled={busy} maxLength={120} onChange={e=>setCommand(e.target.value)} placeholder="예: 조금 느리게"/><button disabled={busy||!command.trim()} type="submit" aria-label="소리 요청 반영"><ArrowUpRight size={20}/></button></form>
         <small>이 빠른 요청은 정해진 표현으로 처리하며 외부에 전송하지 않습니다.</small>
