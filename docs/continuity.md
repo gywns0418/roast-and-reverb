@@ -274,3 +274,8 @@ feature/dashboard-social-login을 main에서 분기하고 최신dev 통합. 조�
 Google GIS 공식 버튼·공개키 검증·issuer/audience/만료/인증 이메일/5분 단회 nonce·Origin 검증·기존 JWT 발급 구현. 이메일 자동 병합 금지, 로그인한 회원만 기존 기록장에 Google identity 연결. social_identity 추가 migration으로 기존 DB 보존. GOOGLE_CLIENT_ID 없으면 버튼/Google SDK 로딩 없음. client secret 불필요. 공식 운영 조건·카카오 테스트/운영 앱 구분·개인 개발자 비즈 앱 조건은 docs/social-login.md 참조. Google Cloud 로그인은 사용자 직접 완료했지만 OAuth 등록/승인/실제 Google 로그인은 아직 미완료. 지원 연락처와 정책 페이지 등 브랜드 검증 요건 남음. 기존 Railway 서버/volume 사용, 유료 업그레이드 없음.
 
 로컬 프론트64 테스트/build 통과. 로딩 desktop/mobile 시각 확인, private .local/dashboard-loading.png. 백엔드 인증 통합4개 추가(거부·재사용·클레임·기존 기록 보존). 초기CI에서 새 테스트 컨텍스트와 기존 H2 시드 충돌을 발견해 테스트DB를 분리했다. PR#31 CI/배포 최종 결과는 후속 기록. main 미반영.
+
+
+최종: PR#31 source839def3 Verify38991083041 세job 성공, dev병합d21b29a. dev Verify38991237347/Pages38991237400 성공. 기존 Railway service에 정확한 dev SHA를 pin하여 deployment0e46e65c-b03f-45f4-ba91-a9624653a1b7 SUCCESS. /healthz200, /api/auth/google/config200(enabledfalse, clientId빈값), 익명 /api/coffee401 확인. 운영 UI에서 메뉴를 유지하는 새 로딩과 조회 후 기존 계정 대시보드 확인. 배포 직후 일시적인 fetch실패는 재시도 후 정상 조회. 개인 원본/기록 변경 없음, main 미반영.
+
+Google Cloud 사용자 로그인 확인. 개요와 클라이언트 페이지 모두 ‘로드할 수 없습니다’ 재현, 재시도도 실패. 신규 전용 프로젝트 생성 시도는 완료 확인이 없어 생성했다고 주장하지 않았고 목록에는 기존 기본 프로젝트 둘만 확인. 다른 브라우저에서 이어서 작업할 수 있도록 사용자에게 알림. 실제 OAuth client 생성·GOOGLE_CLIENT_ID 등록·브랜드 승인·실계정 Google 로그인 검증은 아직 남아 있음. 후속 작업은 프로젝트 목록을 다시 확인한 뒤 진행하며 중복 생성하지 않는다.
