@@ -300,3 +300,4 @@ feature/google-login-public-policy main 분기·최신dev 통합. privacy.html�
 PR#34의 파일 선택 컨트롤 높이60px/내부버튼40px와 빈 선택 안내를 운영반영. Verify39013598315, devVerify39013727319, Pages39013727318 성공. dev d68c714를 Railway에 pin하여 d19a4bc6 SUCCESS. 운영 DOM 실측 높이60px 확인.
 
 사용자 도메인구매 없이 짧은 Railway주소 변경 승인. 최신 기기백업 확인·비공개 보관 후 기존 domain을 https://roast-and-reverb.up.railway.app 로 변경. APP_PUBLIC_ORIGIN 및 기존Google웹클라이언트 JavaScript원본/브랜드홈/정책/승인도메인을 새주소로 일치시킴. 기존호스트허용 제거. 설정 재배포 efcdd3c5 SUCCESS. /healthz200, privacy200, Googleconfig200, 익명coffee401 확인. 서버/볼륨/계정데이터 변경없음. Google 계정선택 화면에서 사용자 직접선택 대기 중이며, 새주소 재로그인·기기백업복원 검증은 아직 미완료. 원래호스트는 이제 사용하지 않는다. main미반영, 유료구매없음.
+새주소에서 사용자가 Google계정을 선택한 후 기존동일회원/Google연결표시/서버기록 유지 UI확인 완료. 기기백업 복원은 확장의 file URL접근권한 부재로 setFiles가 차단되어 사용자에게 백업파일 직접선택을 요청했다. 권한확대는 자동수행하지 않음. 복원은 아직 미완료.
