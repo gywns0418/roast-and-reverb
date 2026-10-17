@@ -6,8 +6,7 @@ import PageShell from "../../components/common/PageShell.jsx";
 import RecordArtwork from "../../components/common/RecordArtwork.jsx";
 import { coffeeApi } from "../../api/coffeeApi.js";
 import { musicApi } from "../../api/musicApi.js";
-import { pairingApi } from "../../api/pairingApi.js";
-import { adaptCoffeeLog, adaptMusicLog, adaptPairing } from "../../api/adapters.js";
+import { adaptCoffeeLog, adaptMusicLog } from "../../api/adapters.js";
 import { useApiResource } from "../../hooks/useApiResource.js";
 
 function Ranking({ title, eyebrow, items, field, kind }) {
@@ -15,7 +14,7 @@ function Ranking({ title, eyebrow, items, field, kind }) {
   items.forEach(item => { if(item[field]) counts.set(item[field], (counts.get(item[field]) || 0) + 1); });
   const ranked = [...counts].sort((a,b) => b[1]-a[1]).slice(0,5);
   const max = Math.max(1,...ranked.map(item => item[1]));
-  return <section className="panel ranking-panel"><p className="eyebrow">{eyebrow}</p><h3>{title}</h3>{ranked.length ? ranked.map(([name,count],index) => <div className={`rank-row ${kind}`} key={name}><span className="rank-index">{String(index+1).padStart(2,"0")}</span><div><div className="rank-label"><strong>{name}</strong><span>{count}회</span></div><div className="rank-track"><i style={{width:`${count/max*100}%`}}/></div></div></div>) : <div className="report-no-data"><p>이번 달의 기록이 아직 없어요.</p><Link to={`/${kind}/write`}>첫 기록 남기기 ↗</Link></div>}</section>;
+  return <section className="panel ranking-panel"><p className="eyebrow">{eyebrow}</p><h3>{title}</h3>{ranked.length ? ranked.map(([name,count],index) => <div className={`rank-row ${kind}`} key={name}><span className="rank-index">{String(index+1).padStart(2,"0")}</span><div><div className="rank-label"><strong>{name}</strong><span>{count}회</span></div><div className="rank-track"><i style={{width:`${count/max*100}%`}}/></div></div></div>) : <div className="report-no-data"><p>이번 달의 기록이 아직 없어요.</p><Link to="/coffee/write">첫 기록 남기기 ↗</Link></div>}</section>;
 }
 export default function MonthlyReportPage() {
   const now = new Date();
@@ -23,9 +22,8 @@ export default function MonthlyReportPage() {
   const moveMonth = offset => { const [y,m] = month.split("-").map(Number); const date = new Date(y,m-1+offset,1); setMonth(`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}`); };
   const {data:coffees} = useApiResource(() => listDiaryRecords(coffeeApi.list).then(items => items.map(adaptCoffeeLog)), [], []);
   const {data:music} = useApiResource(() => listDiaryRecords(musicApi.list).then(items => items.map(adaptMusicLog)), [], []);
-  const {data:pairs} = useApiResource(() => listDiaryRecords(pairingApi.list).then(items => items.map(adaptPairing)), [], []);
   const inMonth = items => items.filter(item => item.date.replaceAll(".","-").startsWith(month));
-  const cups = inMonth(coffees), tracks = inMonth([...music,...soundtrackRecords(coffees).filter(row=>row.listened)]), connections = inMonth(pairs);
+  const cups = inMonth(coffees), tracks = inMonth([...music,...soundtrackRecords(coffees).filter(row=>row.listened)]);
   const dates = new Set([...cups,...tracks].map(item => item.date));
   const [year,mo] = month.split("-").map(Number);
   const dayCount = new Date(year,mo,0).getDate();

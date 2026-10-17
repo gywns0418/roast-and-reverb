@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowUpRight, Search } from "lucide-react";
 import RecordArtwork from "./RecordArtwork.jsx";
@@ -8,6 +8,7 @@ export default function RecordLibrary({ items, kind }) {
   const [params]=useSearchParams();
   const [query, setQuery] = useState(params.get("q")||"");
 
+  useEffect(()=>{setQuery(params.get("q")||"");},[params]);
   const [order, setOrder] = useState("newest");
   const coffee = kind === "coffee";
   const visible = useMemo(() => items.filter(item => [item.bean, item.roastery, item.origin, item.brew, item.track, item.artist, item.album, item.genre, item.memo].filter(Boolean).join(" ").toLowerCase().includes(query.toLowerCase())).sort((a,b) => order === "oldest" ? (a.date || "").localeCompare(b.date || "") : (b.date || "").localeCompare(a.date || "")), [items, query, order]);

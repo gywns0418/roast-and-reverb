@@ -18,7 +18,7 @@ export default function CoffeeSoundtrack({coffee,onChange,readOnly=false,onBusyC
   useEffect(()=>{setResults([]);},[context]);
   function patch(changes){const value=latest.current;onChange?.({...value,brewDetails:{...value.brewDetails,...changes}});}
   function attach(value){URL.revokeObjectURL(audioUrl.current);audioUrl.current='';setUrl('');patch({soundtrack:value});setStatus('음악을 이 한 잔에 연결했어요. 아래에서 감상을 함께 남겨보세요.');}
-  async function run(action){if(flight.current)return;flight.current=true;setBusy(true);onBusyChange?.(true);setError('');try{await action();}catch(err){if(alive.current)setError(err.message);}finally{flight.current=false;if(alive.current){setBusy(false);onBusyChange?.(false);}}}
+  async function run(action){if(flight.current)return;flight.current=true;setBusy(true);onBusyChange?.(true);setError('');try{await action();}catch(err){if(alive.current){setError(err.message);setStatus('');}}finally{flight.current=false;if(alive.current){setBusy(false);onBusyChange?.(false);}}}
   function match(ai=false){const started=context;run(async()=>{
     const bean=coffeeCandidate(coffee);if(!bean.name.trim())throw new Error('먼저 오늘 마시는 원두명을 입력해 주세요.');
     const pool=roomMusicPool([...roomTracks,...readDevice('music')]);
