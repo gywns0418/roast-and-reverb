@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/", "/index.html", "/assets/**", "/images/**", "/data/monthly-picks.json", "/favicon.ico", "/healthz").permitAll()
+                    .requestMatchers("/", "/index.html", "/privacy.html", "/assets/**", "/images/**", "/data/monthly-picks.json", "/favicon.ico", "/healthz").permitAll()
                     .requestMatchers("/api/auth/login", "/api/auth/join", "/api/auth/google/config", "/api/auth/google/challenge", "/api/auth/google/complete").permitAll()
                     .requestMatchers("/api/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated())

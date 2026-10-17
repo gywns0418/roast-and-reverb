@@ -36,6 +36,7 @@ class ServiceSecurityTest {
     .andExpect(jsonPath("$.data.grind_size").value(explanation));
  }
  @Test void publicImagesAreNotBlockedByLoginAndMalformedJsonIsClientError() throws Exception {
+  mvc.perform(get("/privacy.html")).andExpect(status().isNotFound());
   mvc.perform(get("/images/missing-test-image.png")).andExpect(status().isNotFound());
   mvc.perform(post("/api/auth/join").contentType("application/json").content("{broken")).andExpect(status().isBadRequest());
  }

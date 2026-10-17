@@ -284,3 +284,6 @@ Google Cloud 사용자 로그인 확인. 개요와 클라이언트 페이지 모
 ## 2026-10-17 — 음악 가져오기 조작 간격
 
 feature/music-import-spacing main 분기 후 최신dev/직전인계 통합. 링크 입력과 가져오기 버튼을 별도 grid로 묶어12px 간격, 직접추가 form은16px gap, 목록붙여넣기 textarea와 action-row12px 간격. 음악후보 영역 및 음악 제작설명의 복사 버튼(12px)에만 적용. 여정·청음실·사운드 보관·월 선택의 인접 조합은 기존 gap 확인. 로컬 build 및 desktop/mobile DOM 실측(12px/직접추가16px, 가로넘침0). 기존 자료·외부연결 설정 변경 없음. PR/CI/배포 결과 후속 기록.
+
+
+최종: PR#32 source81e372a Verify38991534671 성공, dev병합1fe5db2. devVerify38991653959/Pages38991654023 성공. 기존Railway source를 해당SHA로 pin, deployment3313896b-8dbb-45a7-914e-11d841928dea SUCCESS. 실제 운영 /#/recommend 링크 가져오기12px/직접추가16px DOM실측 확인. .local/music-import-spacing-live.png는 빈 입력 UI 캡처, 개인자료 미변경. main미반영.
