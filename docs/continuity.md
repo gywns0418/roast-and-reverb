@@ -279,3 +279,8 @@ Google GIS 공식 버튼·공개키 검증·issuer/audience/만료/인증 이메
 최종: PR#31 source839def3 Verify38991083041 세job 성공, dev병합d21b29a. dev Verify38991237347/Pages38991237400 성공. 기존 Railway service에 정확한 dev SHA를 pin하여 deployment0e46e65c-b03f-45f4-ba91-a9624653a1b7 SUCCESS. /healthz200, /api/auth/google/config200(enabledfalse, clientId빈값), 익명 /api/coffee401 확인. 운영 UI에서 메뉴를 유지하는 새 로딩과 조회 후 기존 계정 대시보드 확인. 배포 직후 일시적인 fetch실패는 재시도 후 정상 조회. 개인 원본/기록 변경 없음, main 미반영.
 
 Google Cloud 사용자 로그인 확인. 개요와 클라이언트 페이지 모두 ‘로드할 수 없습니다’ 재현, 재시도도 실패. 신규 전용 프로젝트 생성 시도는 완료 확인이 없어 생성했다고 주장하지 않았고 목록에는 기존 기본 프로젝트 둘만 확인. 다른 브라우저에서 이어서 작업할 수 있도록 사용자에게 알림. 실제 OAuth client 생성·GOOGLE_CLIENT_ID 등록·브랜드 승인·실계정 Google 로그인 검증은 아직 남아 있음. 후속 작업은 프로젝트 목록을 다시 확인한 뒤 진행하며 중복 생성하지 않는다.
+
+
+## 2026-10-17 — 음악 가져오기 조작 간격
+
+feature/music-import-spacing main 분기 후 최신dev/직전인계 통합. 링크 입력과 가져오기 버튼을 별도 grid로 묶어12px 간격, 직접추가 form은16px gap, 목록붙여넣기 textarea와 action-row12px 간격. 음악후보 영역에만 적용. 로컬 build 및 desktop/mobile DOM 실측(12px/직접추가16px, 가로넘침0). 기존 자료·외부연결 설정 변경 없음. PR/CI/배포 결과 후속 기록.
