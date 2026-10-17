@@ -309,3 +309,5 @@ feature/google-login-public-policy main 분기·최신dev 통합. privacy.html�
 최신dev951acb1의 커피중심 음악흐름 및 Railway ad9497f3 SUCCESS 확인 후 main에서 feature/repeat-coffee-brew 분기·dev통합. 커피상세의 중복 수정버튼을 통합하고 ‘이 조건으로 다시 내리기’ 추가. 작성화면은 자동초안덮어쓰기 없이 명시적으로 레시피를 불러오고 이전초안으로 되돌리기/추출조건 차이표 제공. 날짜는 오늘로 새로 준비하고 이전맛평가·음악청취·감상·실제추출량·기록시간은 복사하지 않는다. 원본수정 없이 새기록저장 흐름 유지.
 
 프론트68테스트/build 성공. 격리localhost5197에서 검증용기록 생성→조건불러오기→초안복구→온도92→90변경 비교→새기록저장 확인. 모바일390px 가로넘침없음. 운영개인자료변경없음. CI/PR/배포결과는 후속기록.
+
+최종: PR#36 head7cda177 Verify39017908435 세job성공, dev병합edeb298. devVerify39018030606 및 Pages39018030652 성공. Railway9becd1b1 SUCCESS. 운영 healthz200/익명coffee401, 기존상세→다시내리기→작성중초안미변경 안내 및 명시불러오기 버튼 확인. 실제 개인기록 저장·수정은 하지않음. 음악·감상수정시 산지/가공방식 필드 누락도 함께보완. 증빙 .local/repeat-brew-live.png. 테스트서버5197 종료, main미반영.
