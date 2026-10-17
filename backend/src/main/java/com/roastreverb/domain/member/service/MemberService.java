@@ -32,8 +32,8 @@ public class MemberService {
         if (email.length()>120 || !email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$") || !validPassword(password)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "이메일과 8자 이상의 비밀번호를 입력해 주세요.");
         }
-        String nickname=String.valueOf(member.getOrDefault("nickname",""));
-        if(nickname.isBlank()||nickname.length()>60)throw new CustomException(HttpStatus.BAD_REQUEST,"이름은 1~60자로 입력해 주세요.");
+        Object name=member.get("nickname");
+        if(!(name instanceof String nickname)||nickname.isBlank()||nickname.length()>60)throw new CustomException(HttpStatus.BAD_REQUEST,"이름은 1~60자로 입력해 주세요.");
         if (memberMapper.existsByEmail(email) > 0) {
             throw new CustomException(HttpStatus.CONFLICT, "이미 가입된 이메일입니다.");
         }

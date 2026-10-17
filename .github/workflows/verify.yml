@@ -56,6 +56,7 @@ jobs:
       - run: docker build -t roast-reverb-service:check .
 
       - name: Verify hosted app starts with persistent storage
+        id: hosted
         run: |
           mkdir -p "$RUNNER_TEMP/rr-volume"
           docker run -d --name rr-check --memory=500m --cpus=1 \
@@ -78,10 +79,20 @@ jobs:
           chmod 777 "$RUNNER_TEMP/security-reports"
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$RUNNER_TEMP/security-reports:/reports" aquasec/trivy:0.76.0 image --scanners vuln --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 --format json --output /reports/trivy.json roast-reverb-service:check
       - name: ZAP passive baseline against isolated service
+        if: ${{ !cancelled() && steps.hosted.outcome == 'success' }}
         run: |
           mkdir -p "$RUNNER_TEMP/security-reports"
           chmod 777 "$RUNNER_TEMP/security-reports"
           docker run --rm --network host -v "$RUNNER_TEMP/security-reports:/zap/wrk/:rw" ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://127.0.0.1:8187 -m 1 -T 3 -I -r zap.html -J zap.json
+      - name: Summarize scanner findings
+        if: always()
+        run: |
+          node --input-type=module - "$RUNNER_TEMP/security-reports" <<'NODE'
+          import fs from 'node:fs';
+          const dir=process.argv[2];
+          if(fs.existsSync(dir+'/trivy.json')){const r=JSON.parse(fs.readFileSync(dir+'/trivy.json'));console.log('TRIVY_FINDINGS',JSON.stringify((r.Results||[]).flatMap(x=>(x.Vulnerabilities||[]).map(v=>({id:v.VulnerabilityID,package:v.PkgName,version:v.InstalledVersion,fixed:v.FixedVersion,severity:v.Severity})))));}
+          if(fs.existsSync(dir+'/zap.json')){const r=JSON.parse(fs.readFileSync(dir+'/zap.json'));console.log('ZAP_ALERTS',JSON.stringify((r.site||[]).flatMap(s=>(s.alerts||[]).map(a=>({name:a.name,risk:a.riskdesc,count:a.count})))));}
+          NODE
       - name: Upload isolated security reports
         if: always()
         uses: actions/upload-artifact@v4

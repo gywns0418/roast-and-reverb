@@ -12,11 +12,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class AuthRateLimitFilter extends OncePerRequestFilter {
  private final boolean enabled;
  private final Map<String,Window> windows=new HashMap<>();
+ private long nextCleanup;
  private record Window(long expires,int count){}
  public AuthRateLimitFilter(@Value("${app.security.rate-limit.enabled:true}") boolean enabled){this.enabled=enabled;}
  synchronized boolean allow(String key,int limit,long now){
-  windows.entrySet().removeIf(entry->entry.getValue().expires<=now);
+  if(now>=nextCleanup){windows.entrySet().removeIf(entry->entry.getValue().expires<=now);nextCleanup=now+60000;}
   Window previous=windows.get(key);
+  if(previous!=null&&previous.expires<=now){windows.remove(key);previous=null;}
   if(previous==null&&windows.size()>=10000)return false;
   if(previous!=null&&previous.count>=limit)return false;
   windows.put(key,new Window(previous==null?now+60000:previous.expires,previous==null?1:previous.count+1));return true;
