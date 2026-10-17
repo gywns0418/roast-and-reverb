@@ -19,6 +19,6 @@ export default function PageShell({ eyebrow, title, subtitle, children }) {
     <header className="page-heading"><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="subtitle">{subtitle}</p></div><div className="heading-signature" aria-hidden="true"><span>{kind === "coffee" ? "SIDE A" : kind === "music" ? "SIDE B" : "A + B"}</span><b>r&amp;r</b><small>YOUR DAILY RITUAL</small></div></header>
     <div className={withRail ? "page-workspace" : "page-content"}><div className="workspace-content">{children}</div>
       {withRail && <aside className="workspace-rail"><RecordArtwork kind={kind} seed={section} /><div className="ritual-guide"><p className="eyebrow">A LITTLE RITUAL</p><h3>{guide[0]}</h3><p>{guide[1]}</p><Link to={guide[2]}>{guide[3]} ↗</Link></div><div className="rail-index"><span>01 / BREW</span><span>02 / LISTEN</span><span>03 / REMEMBER</span></div></aside>}
-    </div><footer className="page-footer"><span>ROAST & REVERB</span><span>한 잔의 취향. 한 곡의 여운.</span><Link to="/">서비스 소개 ↗</Link></footer>
+    </div><footer className="page-footer"><span>ROAST & REVERB</span><span>한 잔의 취향. 한 곡의 여운.</span><Link to="/">서비스 소개 ↗</Link><a href={`${import.meta.env.BASE_URL}privacy.html`}>개인정보처리방침</a></footer>
   </section>;
 }

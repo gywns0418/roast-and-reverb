@@ -170,7 +170,7 @@ export default function HomePage() {
         <strong>Roast & Reverb</strong>
         <span>매일 조금씩, 취향이 되는 순간들.</span>
         <Link to="/help">이용 도움말</Link><span>© {new Date().getFullYear()} R&R</span>
-      </footer>
+      <a href={`${import.meta.env.BASE_URL}privacy.html`}>개인정보처리방침</a></footer>
       {authMode && (
         <AuthModal
           initialMode={authMode}

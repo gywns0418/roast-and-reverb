@@ -48,6 +48,7 @@ export default function GoogleSignIn({ link = false, onSuccess }) {
   if (!enabled && !error) return null;
   return <section className="google-auth" aria-label={link ? "Google 계정 연결" : "Google 로그인"} aria-busy={busy}>
     <p>{link ? "기존 기록을 그대로 두고 Google로도 로그인할 수 있어요. 연결할 Google 계정을 선택해 주세요." : "Google 계정으로 간편하게 시작하세요."}</p>
+    <p><a href={`${import.meta.env.BASE_URL}privacy.html`} target="_blank" rel="noreferrer">개인정보처리방침</a></p>
     <div className="google-auth-button" ref={host} style={busy ? { pointerEvents: "none", opacity: .6 } : undefined} />
     {busy && <p role="status">계정을 확인하고 있어요…</p>}
     {error && <><p role="alert">{error}</p><button className="ghost-button" type="button" onClick={() => retry(n => n + 1)}>다시 시도</button></>}
