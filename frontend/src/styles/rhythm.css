@@ -120,3 +120,5 @@ a.metric:focus-visible {outline:3px solid #6e8551;outline-offset:-3px;}
 .music-candidate-panel .music-manual-form > .form-grid {margin:0;}
 .music-candidate-panel .music-manual-form > button {justify-self:start;}
 .music-candidate-panel details > textarea + .action-row {margin-top:12px;}
+
+.music-brief > .input-field + button {margin-top:12px;}
