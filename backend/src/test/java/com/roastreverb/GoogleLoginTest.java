@@ -74,4 +74,3 @@ class GoogleLoginTest {
   mvc.perform(get("/api/coffee").header("Authorization","Bearer "+token)).andExpect(status().isOk()).andExpect(jsonPath("$.data.length()").value(1));
  }
 }
-

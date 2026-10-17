@@ -46,7 +46,7 @@ class SecurityAuditTest {
   mvc.perform(get("/api/members/me").header("Authorization",auth)).andExpect(status().isUnauthorized());
  }
  @Test void securityHeadersAndCorsAreEnforced()throws Exception{
-  mvc.perform(get("/healthz").secure(true)).andExpect(status().isOk()).andExpect(header().exists("Content-Security-Policy")).andExpect(header().string("X-Content-Type-Options","nosniff")).andExpect(header().string("X-Frame-Options","DENY")).andExpect(header().exists("Strict-Transport-Security")).andExpect(header().exists("Permissions-Policy")).andExpect(header().exists("Referrer-Policy"));
+  mvc.perform(get("/healthz").secure(true)).andExpect(status().isOk()).andExpect(header().exists("Content-Security-Policy")).andExpect(header().string("X-Content-Type-Options","nosniff")).andExpect(header().string("X-Frame-Options","DENY")).andExpect(header().exists("Strict-Transport-Security")).andExpect(header().exists("Permissions-Policy")).andExpect(header().exists("Referrer-Policy")).andExpect(header().string("Cross-Origin-Resource-Policy","same-origin"));
   mvc.perform(options("/api/coffee").header("Origin","https://security-audit.invalid").header("Access-Control-Request-Method","GET")).andExpect(status().isForbidden()).andExpect(header().doesNotExist("Access-Control-Allow-Origin"));
  }
  @Test void invalidPasswordsAndSensitivePathsAreRejected()throws Exception{

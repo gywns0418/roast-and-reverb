@@ -35,4 +35,3 @@ class CoffeeBrewDetailsTest {
    .andExpect(status().isBadRequest());
  }
 }
-

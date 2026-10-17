@@ -27,4 +27,3 @@ class MonthlyPickSecurityTest {
   mvc.perform(post("/api/monthly-picks/"+id+"/score").header("Authorization",first)).andExpect(status().isOk());
  }
 }
-

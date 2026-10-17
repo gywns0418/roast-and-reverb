@@ -71,4 +71,3 @@ class ServiceSecurityTest {
   mvc.perform(get("/api/members/me").header("Authorization",auth)).andExpect(status().isOk()).andExpect(jsonPath("$.data.password").doesNotExist());
  }
 }
-

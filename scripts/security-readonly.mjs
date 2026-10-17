@@ -9,7 +9,7 @@ async function probe(name,path,accept,options={}){
 }
 await probe('Public health','/healthz',r=>r.status===200);
 const page=await probe('Public home','/',r=>r.status===200);
-for(const name of ['content-security-policy','x-content-type-options','x-frame-options','referrer-policy','permissions-policy','cross-origin-opener-policy',...(origin.protocol==='https:'?['strict-transport-security']:[])])checks.push({name:`Header ${name}`,passed:!!page.headers.get(name)});
+for(const name of ['content-security-policy','x-content-type-options','x-frame-options','referrer-policy','permissions-policy','cross-origin-opener-policy','cross-origin-resource-policy',...(origin.protocol==='https:'?['strict-transport-security']:[])])checks.push({name:`Header ${name}`,passed:!!page.headers.get(name)});
 for(const path of ['/api/coffee','/api/music','/api/pairing','/api/collection','/api/members/me','/api/admin/dashboard','/.env','/.git/config','/h2-console','/actuator/env'])await probe(`Anonymous denied: ${path}`,path,r=>[401,403,404].includes(r.status));
 await probe('Invalid bearer denied','/api/coffee',r=>r.status===401,{headers:{Authorization:'Bearer security-audit-invalid'}});
 await probe('Untrusted CORS denied','/api/coffee',r=>r.status===403&&!r.headers.get('access-control-allow-origin'),{method:'OPTIONS',headers:{Origin:'https://security-audit.invalid','Access-Control-Request-Method':'GET'}});

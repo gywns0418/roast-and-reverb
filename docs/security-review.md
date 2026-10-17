@@ -48,8 +48,12 @@ No stress/DoS tests or unrestricted active scans run against production. MFA, pa
 | CSP inline styles | Existing React dynamic artwork/progress styles and Google UI need inline styling. Script `unsafe-inline` is not allowed. Move styles to classes/nonces before removing this exception. |
 | Missing SRI | The finding points to the dynamic Google Fonts CSS in index.html. A stable integrity hash cannot be assumed for that response; self-host licensed font files to remove this dependency. |
 | COOP | `same-origin-allow-popups` deliberately preserves Google popup login, as described in [Google GIS setup](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid#cross_origin_opener_policy). Strict cross-origin isolation is not claimed. |
-| COEP / CORP | Full cross-origin isolation is not enabled. External embeds, cover images and Google UI require compatibility testing before enforcing it. This remains a hardening item. |
+| COEP / CORP | CORP is now `same-origin` for service resources. Full COEP isolation is not enabled: external embeds, cover images and Google UI require compatibility testing before enforcing it. |
 | Modern Web Application | Informational: hash-routed SPA requires additional authenticated/manual coverage, supplied partly by API and browser checks. |
 | Non-Storable Content | Informational: `no-store` protects authenticated responses. Do not make personal responses publicly cacheable to silence this notice. |
 
 The release has concrete fixes and repeatable regression gates, but the open medium-level CSP/SRI warnings, local-storage session design, account recovery and independent authenticated review remain important before a broad paid launch.
+
+Compatibility follow-up: the semantic worker previously depended on CDN/blob runtime factories, which the new script CSP would block. Its lockfile-pinned ONNX factory/WASM are now served as same-origin Vite assets, with the factory blob cache disabled. No script CDN or blob exception was added; model weights still download from the existing approved Hugging Face hosts. The unused jsDelivr connection allowance was removed.
+
+Isolated Chrome execution under the enforced CSP completed real inference on a public Korean example: 384-dimensional vector, no console errors/warnings. The test created no service account or record.
