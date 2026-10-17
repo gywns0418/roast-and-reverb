@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-@SpringBootTest(properties={"GOOGLE_CLIENT_ID=test-client","APP_PUBLIC_ORIGIN=http://localhost"})
+@SpringBootTest(properties={"spring.datasource.url=jdbc:h2:mem:google_login_tests;MODE=MySQL;DATABASE_TO_LOWER=TRUE;NON_KEYWORDS=MEMBER,BODY;DB_CLOSE_DELAY=-1","GOOGLE_CLIENT_ID=test-client","APP_PUBLIC_ORIGIN=http://localhost"})
 @AutoConfigureMockMvc
 class GoogleLoginTest {
  @Autowired MockMvc mvc; @Autowired ObjectMapper json;
