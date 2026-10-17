@@ -287,3 +287,10 @@ feature/music-import-spacing main 분기 후 최신dev/직전인계 통합. 링�
 
 
 최종: PR#32 source81e372a Verify38991534671 성공, dev병합1fe5db2. devVerify38991653959/Pages38991654023 성공. 기존Railway source를 해당SHA로 pin, deployment3313896b-8dbb-45a7-914e-11d841928dea SUCCESS. 실제 운영 /#/recommend 링크 가져오기12px/직접추가16px DOM실측 확인. .local/music-import-spacing-live.png는 빈 입력 UI 캡처, 개인자료 미변경. main미반영.
+
+
+## 2026-10-17 — Google 운영 로그인 활성화
+
+Chrome 연결 후 전용프로젝트 roast-and-reverb 확인. 기존 micro-atrium-371108의 MusicEmotion 앱은 미변경. 사용자 명시적 정책동의/클라이언트 생성/연결 승인에 따라 웹클라이언트 생성, JavaScript origin은 기존 Railway 운영origin만. GOOGLE_CLIENT_ID만 서버 설정(비밀키미사용), 세범위email/profile/openid만 선언. 공개홈/개인정보처리방침/도메인 등록 후 Google 콘솔 ‘프로덕션 단계’ 확인. 브랜드 이름/로고 검증 별도이며 심사승인됐다고 주장하지 않음.
+
+feature/google-login-public-policy main 분기·최신dev 통합. privacy.html과 공개경로 허용/홈·공통footer·로그인 링크 추가. 기존 회원의 Google연결 조회API 및 새로고침시 연결표시 유지. PR#33 source9b4a555 Verify39012993355 성공, dev병합03a1ba3. devVerify39013113865/Pages39013113886 성공. 첫CI Docker의 NuGet 다운로드ETIMEDOUT은 재시도로 성공했고 관련없는 dependency수정은 하지 않음. Railway deployment6e616a69-a12e-4296-9b54-f2b0fbd7daa8 SUCCESS. privacy.html200/config200/익명개인상태401/익명일지401. 실제 기존계정 Google연결·새로고침·로그아웃 후 Google 재로그인 및 기록유지 확인. 계정선택팝업은 CDP입력timeout으로 사용자가 직접선택했고 이후 동일회원UI 확인. 캡처와 개인계정상세는 .local에만 저장. 공개시드/개인원본/main 변경 없음.
