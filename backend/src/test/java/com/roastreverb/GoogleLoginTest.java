@@ -62,10 +62,12 @@ class GoogleLoginTest {
   Flow anonymous=begin(null);when(verifier.verify("collision")).thenReturn(identity(anonymous,"existing-sub","google-existing@example.com","test-client",anonymous.nonce(),true,Instant.now().plusSeconds(300)));
   mvc.perform(finish(anonymous,"collision")).andExpect(status().isConflict());
   Flow link=begin(auth);when(verifier.verify("link")).thenReturn(identity(link,"existing-sub","google-existing@example.com","test-client",link.nonce(),true,Instant.now().plusSeconds(300)));
+  mvc.perform(get("/api/members/me/google/status").header("Authorization",auth)).andExpect(status().isOk()).andExpect(jsonPath("$.data.linked").value(false));
   // A link challenge cannot be completed without the original authenticated account.
   mvc.perform(finish(link,"link")).andExpect(status().isUnauthorized());
   link=begin(auth);when(verifier.verify("link")).thenReturn(identity(link,"existing-sub","google-existing@example.com","test-client",link.nonce(),true,Instant.now().plusSeconds(300)));
   mvc.perform(finish(link,"link").header("Authorization",auth)).andExpect(status().isOk()).andExpect(jsonPath("$.data.memberId").value(id));
+  mvc.perform(get("/api/members/me/google/status").header("Authorization",auth)).andExpect(status().isOk()).andExpect(jsonPath("$.data.linked").value(true));
   Flow login=begin(null);when(verifier.verify("linked-login")).thenReturn(identity(login,"existing-sub","google-existing@example.com","test-client",login.nonce(),true,Instant.now().plusSeconds(300)));
   var signed=mvc.perform(finish(login,"linked-login")).andExpect(status().isOk()).andReturn();
   String token=json.readTree(signed.getResponse().getContentAsString()).path("data").path("token").asText();

@@ -13,13 +13,20 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.*;
 @RestController
 public class GoogleLoginController {
+ private final com.roastreverb.domain.member.mapper.SocialIdentityMapper identities;
  private final GoogleIdentityVerifier verifier; private final GoogleAccountService accounts; private final String clientId; private final String publicOrigin;
- public GoogleLoginController(GoogleIdentityVerifier verifier,GoogleAccountService accounts,@Value("${GOOGLE_CLIENT_ID:}") String clientId,@Value("${APP_PUBLIC_ORIGIN:https://roast-and-reverb-production.up.railway.app}") String publicOrigin) {
-  this.verifier=verifier;this.accounts=accounts;this.clientId=clientId.trim();this.publicOrigin=publicOrigin;
+ public GoogleLoginController(GoogleIdentityVerifier verifier,GoogleAccountService accounts,com.roastreverb.domain.member.mapper.SocialIdentityMapper identities,@Value("${GOOGLE_CLIENT_ID:}") String clientId,@Value("${APP_PUBLIC_ORIGIN:https://roast-and-reverb-production.up.railway.app}") String publicOrigin) {
+  this.identities=identities;this.verifier=verifier;this.accounts=accounts;this.clientId=clientId.trim();this.publicOrigin=publicOrigin;
  }
  @GetMapping("/api/auth/google/config")
  public ApiResponse<?> config(HttpServletResponse response) {
   response.setHeader("Cache-Control","no-store");return ApiResponse.ok(Map.of("enabled",!clientId.isBlank(),"clientId",clientId));
+ }
+ @GetMapping("/api/members/me/google/status")
+ public ApiResponse<?> linked(HttpServletResponse response) {
+  response.setHeader("Cache-Control","no-store");
+  Long member=SecurityUtil.currentMemberId(null);if(member==null)throw unauthorized();
+  return ApiResponse.ok(Map.of("linked",identities.subjectFor(member)!=null));
  }
  @PostMapping({"/api/auth/google/challenge","/api/members/me/google/challenge"})
  public ApiResponse<?> challenge(HttpServletRequest request,HttpServletResponse response,@RequestHeader(value="X-RR-Social",defaultValue="") String header) {
