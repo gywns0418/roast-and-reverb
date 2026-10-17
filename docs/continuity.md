@@ -306,3 +306,8 @@ feature/google-login-public-policy main 분기·최신dev 통합. privacy.html�
 
 
 최종: source3b8f622 Verify39014960873 모든job성공. PR#35 dev병합951acb19200ff1593aa3193ec901ef7e451bfb38. 기존Railway production에 source를 이SHA로 pin하는 단일변경 staged(환경368c4b5f-8d55-4353-b11c-89c5745616aa/patchba0957ce-76a6-47bc-aad7-adf6035a35f8). accept-deploy가 최종승인단계에서 취소되어 운영반영하지 못했다. 도구응답: Cancelled — the user did not approve this action. No changes were made. 우회배포하지않음. 사용자의 배포승인 후 pending변경을 재확인하고 기존서비스에 accept-deploy, 성공/health/익명401/운영journey와작성화면을 확인해야 한다. 현재live는 기존efcdd3c5 배포. 로컬실제연주 생성/저장/재생성53.526초 및 모바일375가로넘침0/중첩0, 추천결과→원두/곡동시전달도 확인. 프리뷰 .local/coffee-led-preview.png는 로컬화면이며 운영반영증거가 아니다. main미반영/개인기록미변경.
+
+
+## 2026-10-17 운영 배포 최종 확인
+
+사용자가 Railway에서 직접 배포를 눌러 기존 staged변경을 적용했다. deployment ad9497f3-35ea-4085-be56-c2b122c540c3 SUCCESS(17:32 KST), 운영 source951acb19200ff1593aa3193ec901ef7e451bfb38/dev 고정, pending없음·실행replica1·실패0 확인. 기존/data볼륨200MB와 새주소 유지. /healthz200/privacy.html200/Googleconfig200/익명coffee401. 실제 로그인된운영Chrome에서 새journey 진입영역과 작성화면의 음악매칭/연주제작/통합감상 필드 표시 확인. 운영개인기록·초안입력 변경없음. 운영스크린샷 .local/coffee-led-live.png. 앞선 배포승인대기 기록은 해소됨. 생성형AI음원 미연결/기기작곡표시 유지. main미반영·플랜변경없음.
