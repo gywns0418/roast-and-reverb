@@ -1,11 +1,20 @@
 // Original, deterministic procedural composition. This is not a generative AI model.
-export const SOUND_VERSION = 1;
+export const SOUND_VERSION = 2;
+export function freshSoundSeed(previous,value=crypto.getRandomValues(new Uint32Array(1))[0]){
+  const seed=value>>>0;return seed===previous?(seed+1)>>>0:seed;
+}
 export const soundMoods = {
   warm: {label:'고소한 온기', description:'둥근 베이스와 부드러운 건반', color:'#d6a46b', root:48, scale:[0,2,4,7,9]},
   airy: {label:'꽃 향의 여백', description:'맑은 건반과 천천히 번지는 잔향', color:'#b8b8d7', root:50, scale:[0,2,5,7,9]},
   bright: {label:'산뜻한 빛', description:'가벼운 멜로디와 작은 움직임', color:'#d0d89b', root:55, scale:[0,2,4,7,9]},
   dusk: {label:'깊은 밤', description:'낮은 음과 차분한 마이너 선율', color:'#9eafb1', root:45, scale:[0,3,5,7,10]},
 };
+export function freshSoundTitle(settings,seed,previous=''){
+  const places=['창가','정원','산책','여백','오후','노을','새벽','골목'];
+  const textures=['느린','작은','고요한','부드러운','가벼운','따뜻한','맑은','아늑한'];
+  const name=index=>`${soundMoods[soundSettings(settings).mood].label} · ${textures[(seed>>>3)%8]} ${places[index%8]}`;
+  const title=name(seed%8);return title===previous?name(seed%8+1):title;
+}
 export function soundSettings(value={}) {
   const finite=(n,fallback)=>typeof n==='number'&&Number.isFinite(n)?n:fallback;
   return {mood:Object.hasOwn(soundMoods,value.mood)?value.mood:'warm', bpm:Math.round(Math.max(56,Math.min(110,finite(value.bpm,76)))), space:Math.max(0,Math.min(1,finite(value.space,.45))), rhythm:value.rhythm!==false, bass:value.bass!==false, pad:value.pad!==false};
@@ -32,7 +41,8 @@ export function seededRandom(seed) {
   let state=seed>>>0;
   return ()=>{state=(state+0x6D2B79F5)>>>0;let n=Math.imul(state^(state>>>15),1|state);n^=n+Math.imul(n^(n>>>7),61|n);return ((n^(n>>>14))>>>0)/4294967296;};
 }
-export function createScore(value, seed) {
+export function createScore(value, seed, version=1) {
+  if(version===2)return createFreshScore(value,seed);
   const settings=soundSettings(value), mood=soundMoods[settings.mood], random=seededRandom(seed);
   const beat=60/settings.bpm, notes=[], progression=[0,3,1,4];
   let melody=2;
@@ -49,11 +59,30 @@ export function createScore(value, seed) {
     }
     if(settings.rhythm)for(let step=0;step<4;step++)notes.push({kind:'brush',time:time+step*beat,midi:0,duration:.075,gain:step%2?.025:.012});
   }
-  return {version:SOUND_VERSION,settings,seed:seed>>>0,duration:64*beat+3,notes};
+  return {version:1,settings,seed:seed>>>0,duration:64*beat+3,notes};
+}
+// Keep old recipes reproducible while new pieces vary their entire arrangement.
+function createFreshScore(value,seed){
+  const settings=soundSettings(value),mood=soundMoods[settings.mood],random=seededRandom(seed),rhythmRandom=seededRandom(seed+91);
+  const pick=items=>items[Math.floor(random()*items.length)];
+  const progression=pick([[0,3,1,4],[0,2,4,1],[0,4,3,2],[1,3,0,4],[0,1,3,4],[3,0,4,1]]);
+  const offset=pick([0,2,4]),span=pick([1,2]),register=pick([0,5]);
+  const motif=Array.from({length:4},()=>Math.floor(random()*5));
+  const rhythm=pick([[0,1,2,3],[0,.5,1.5,2,3],[0,.75,1.5,2.5,3.5],[0,1.5,2.5],[.5,1,2,3.5]]),beat=60/settings.bpm,notes=[];
+  const pitch=index=>mood.root+mood.scale[((index%5)+5)%5]+12*Math.floor(index/5);
+  for(let bar=0;bar<16;bar++){
+    const bridge=bar>=8&&bar<12,degree=progression[(Math.floor(bar/span)+(bridge?1:0))%4],time=bar*4*beat;
+    if(settings.bass){notes.push({kind:'bass',time,midi:pitch(degree-5),duration:(span===1?2.4:3.7)*beat,gain:.12});if((bar+offset)%3===0)notes.push({kind:'bass',time:time+2.5*beat,midi:pitch(degree-1),duration:1.1*beat,gain:.08});}
+    if(settings.pad)for(const index of [degree,degree+2,degree+4])notes.push({kind:'pad',time,midi:pitch(index+(bridge?5:0)),duration:4.2*beat,gain:.03});
+    const phrase=bridge?rhythm.slice().reverse().map(t=>3.5-t).sort((a,b)=>a-b):rhythm;
+    phrase.forEach((step,i)=>{if(bar%4===3&&i>1&&random()<.35)return;const note=motif[(i+bar%2)%4]+register+offset+(bridge?2:0)+(bar%4===2?pick([-1,0,1]):0);notes.push({kind:'piano',time:time+step*beat,midi:pitch(i===0?degree+register:note),duration:pick([.65,1,1.5])*beat,gain:.08+random()*.05});});
+    if(settings.rhythm)for(const step of rhythm.filter((_,i)=>i%2===0))notes.push({kind:'brush',time:time+step*beat,midi:0,duration:.075,gain:.012+rhythmRandom()*.012});
+  }
+  return {version:2,settings,seed:seed>>>0,duration:64*beat+3,notes};
 }
 export function validateSoundRecipe(value) {
-  if(!value||value.version!==SOUND_VERSION||!Number.isInteger(value.seed)||value.seed<0||value.seed>0xffffffff||typeof value.id!=='string'||!value.id||value.id.length>100||typeof value.title!=='string'||value.title.length>100||!Number.isFinite(Date.parse(value.createdAt)))throw new Error('지원하지 않는 사운드 보관 파일입니다.');
-  return {version:SOUND_VERSION,id:value.id,title:value.title,coffee:String(value.coffee||'').slice(0,120),createdAt:value.createdAt,seed:value.seed,settings:soundSettings(value.settings),favorite:value.favorite===true};
+  if(!value||![1,SOUND_VERSION].includes(value.version)||!Number.isInteger(value.seed)||value.seed<0||value.seed>0xffffffff||typeof value.id!=='string'||!value.id||value.id.length>100||typeof value.title!=='string'||value.title.length>100||!Number.isFinite(Date.parse(value.createdAt)))throw new Error('지원하지 않는 사운드 보관 파일입니다.');
+  return {version:value.version,id:value.id,title:value.title,coffee:String(value.coffee||'').slice(0,120),createdAt:value.createdAt,seed:value.seed,settings:soundSettings(value.settings),favorite:value.favorite===true};
 }
 export function parseSoundBackup(value) {
   if(value?.format!=='roast-reverb-sounds'||value.version!==1||!Array.isArray(value.tracks)||value.tracks.length>24)throw new Error('R&R 사운드 백업 파일을 선택해 주세요.');
