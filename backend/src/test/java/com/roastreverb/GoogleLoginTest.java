@@ -15,12 +15,12 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-@SpringBootTest(properties={"GOOGLE_CLIENT_ID=test-client","APP_PUBLIC_ORIGIN=https://roast.example"})
+@SpringBootTest(properties={"GOOGLE_CLIENT_ID=test-client","APP_PUBLIC_ORIGIN=http://localhost"})
 @AutoConfigureMockMvc
 class GoogleLoginTest {
  @Autowired MockMvc mvc; @Autowired ObjectMapper json;
  @MockitoBean GoogleIdentityVerifier verifier;
- String origin="https://roast.example";
+ String origin="http://localhost";
  record Flow(MockHttpSession session,String nonce){}
  Flow begin(String auth) throws Exception {
   var request=post(auth==null?"/api/auth/google/challenge":"/api/members/me/google/challenge").header("Origin",origin).header("X-RR-Social","1");
@@ -35,7 +35,7 @@ class GoogleLoginTest {
   return post("/api/auth/google/complete").session(flow.session()).header("Origin",origin).header("X-RR-Social","1").contentType("application/json").content("{\"credential\":\""+value+"\"}");
  }
  @Test void browserProofAndLinkRequireProtection() throws Exception {
-  mvc.perform(post("/api/auth/google/challenge").header("Origin","https://evil.example").header("X-RR-Social","1")).andExpect(status().isUnauthorized());
+  mvc.perform(post("/api/auth/google/challenge").header("Origin","http://localhost:5199").header("X-RR-Social","1")).andExpect(status().isUnauthorized());
   mvc.perform(post("/api/auth/google/challenge").header("Origin",origin)).andExpect(status().isUnauthorized());
   mvc.perform(post("/api/members/me/google/challenge").header("Origin",origin).header("X-RR-Social","1")).andExpect(status().isUnauthorized());
   mvc.perform(post("/api/auth/google/complete").header("Origin",origin).header("X-RR-Social","1").contentType("application/json").content("{\"credential\":\"bad\"}")).andExpect(status().isUnauthorized());
