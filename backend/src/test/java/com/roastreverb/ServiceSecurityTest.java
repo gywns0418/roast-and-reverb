@@ -14,6 +14,11 @@ class ServiceSecurityTest {
  @Autowired MockMvc mvc;
  @Autowired ObjectMapper json;
  @Test void anonymousCannotReadRecords() throws Exception {mvc.perform(get("/api/coffee")).andExpect(status().isUnauthorized());}
+ @Test void publicCatalogIsReadableWithoutOpeningOtherDataPaths() throws Exception {
+  mvc.perform(get("/data/monthly-picks.json")).andExpect(status().isOk()).andExpect(jsonPath("$.schemaVersion").value(1));
+  mvc.perform(get("/data/private-test.json")).andExpect(status().isUnauthorized());
+  mvc.perform(get("/api/coffee")).andExpect(status().isUnauthorized());
+ }
  @Test void companionRequiresLogin() throws Exception {
   mvc.perform(get("/api/companion/status")).andExpect(status().isUnauthorized());
   mvc.perform(post("/api/companion/chat").contentType("application/json").content("{}")).andExpect(status().isUnauthorized());
