@@ -20,4 +20,4 @@
 - [카카오 앱 종류](https://developers.kakao.com/docs/ko/app-setting/app): 테스트 앱은 멤버 전용이고 운영에는 원본 앱 키를 사용. 사업자번호가 없는 개인 개발자도 본인인증·약관 동의 후 개인 개발자 비즈 앱 전환 가능.
 - [카카오 동의항목](https://developers.kakao.com/docs/ko/kakaologin/utilize): 닉네임 기본 제공, 이메일은 비즈/테스트 앱 권한. 카카오싱크·친구·메시지 검수와 기본 로그인을 혼동하지 않는다. 이번 구현은 Google을 우선하며 카카오 버튼은 만들지 않았다.
 
-현재 확인: Railway 변수명에 GOOGLE_CLIENT_ID 없음. Google Cloud 콘솔은 로그아웃 상태. 계정 로그인/콘솔 등록/브랜드 검증은 아직 미확인이며 실제 Google 인증 성공을 주장하지 않는다.
+현재 확인: Railway 변수명에 GOOGLE_CLIENT_ID 없음. Google Cloud 사용자 로그인은 확인했으나 OAuth 개요·클라이언트 화면에 로드 오류가 반복됨. 콘솔 등록/브랜드 검증은 아직 미확인이며 실제 Google 인증 성공을 주장하지 않는다.
