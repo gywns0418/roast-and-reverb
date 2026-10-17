@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
+import CoffeeSoundtrack from "../../components/coffee/CoffeeSoundtrack.jsx";
 import CoffeeLogCard from "../../components/coffee/CoffeeLogCard.jsx";
 import PairingCard from "../../components/pairing/PairingCard.jsx";
 import { coffeeLogs } from "../../data/sampleData.js";
@@ -43,8 +44,8 @@ export default function CoffeeDetailPage() {
         <Link className="ghost-button" to={`/coffee/${id}/edit`}>
           기록 수정
         </Link>
-        <Link className="ghost-button" to="/pairing/write">
-          내 음악과 연결하기
+        <Link className="ghost-button" to={`/coffee/${id}/edit`}>
+          이 커피에 음악 받기
         </Link>
       </div>
       <div className="panel-grid">
@@ -53,11 +54,11 @@ export default function CoffeeDetailPage() {
           <PairingCard item={pairing} />
         ) : (
           <p className="brew-hint">
-            아직 음악과 연결하지 않은 커피입니다. 실제로 들은 곡을 골라 페어링해
-            보세요.
+            이 한 잔의 음악과 감상은 아래에서 함께 볼 수 있어요.
           </p>
         )}
       </div>
+      {!loading&&<section className="panel" style={{marginTop:24}}><CoffeeSoundtrack key={id} coffee={{beanName:coffee.bean,brewDetails:coffee.brewDetails}} readOnly/></section>}
       {morePairings.length > 0 && (
         <section style={{ marginTop: 24 }}>
           <div className="ledger-head">

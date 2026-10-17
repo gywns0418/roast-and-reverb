@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import RecordLibrary from "../../components/common/RecordLibrary.jsx";
 import { musicApi } from "../../api/musicApi.js";
-import { adaptMusicLog } from "../../api/adapters.js";
+import {coffeeApi} from "../../api/coffeeApi.js";
+import {soundtrackRecords} from "../../utils/coffeeSoundtrack.js";
+import { adaptCoffeeLog, adaptMusicLog } from "../../api/adapters.js";
 import { useApiResource } from "../../hooks/useApiResource.js";
 
 export default function MusicLogPage() {
@@ -13,13 +15,15 @@ export default function MusicLogPage() {
     []
   );
 
+  const {data:coffees}=useApiResource(()=>listDiaryRecords(coffeeApi.list).then(rows=>rows.map(adaptCoffeeLog)),[],[]);
+  const attached=soundtrackRecords(coffees);
   return (
-    <PageShell title="음악 로그" eyebrow="Side B" subtitle="곡, 아티스트, 앨범, 장르와 감상 태그를 기록합니다.">
+    <PageShell title="음악 보관함" eyebrow="Side B" subtitle="커피에 매칭한 음악과 만든 연주를 다시 만나보세요. 감상은 커피와 함께 남깁니다.">
       <div className="action-row">
-        <Link to="/music/search" className="primary-button">음악 검색</Link>
-        <Link to="/music/write" className="ghost-button">음악 로그 작성</Link>
+        <Link to="/coffee/write" className="primary-button">커피에 음악 받기</Link>
+        <Link to="/recommend" className="ghost-button">다른 음악 찾아보기</Link>
       </div>
-      <RecordLibrary items={logs} kind="music" />
+      <RecordLibrary items={[...attached,...logs]} kind="music" />
     </PageShell>
   );
 }

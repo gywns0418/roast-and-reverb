@@ -130,3 +130,29 @@ a.metric:focus-visible {outline:3px solid #6e8551;outline-offset:-3px;}
 .coffee-import-panel input[type="file"]:focus-visible {outline:3px solid #8ca578;outline-offset:3px;}
 .coffee-import-panel .primary-button:disabled {opacity:.45;cursor:not-allowed;}
 .coffee-import-panel > .brew-field {margin-bottom:16px;}
+
+/* A cup, its soundtrack and the user's words form one saved moment. */
+.cup-journey-entry {display:grid;gap:16px;margin-bottom:24px;background:#f0f3e7;}
+.cup-journey-entry h2,.cup-journey-entry p {margin:0;}
+.cup-journey-entry ol {display:flex;flex-wrap:wrap;gap:12px 32px;padding-left:22px;}
+.cup-journey-entry > .primary-button {justify-self:start;}
+.cup-soundtrack {display:grid;gap:16px;min-width:0;}
+.cup-soundtrack > p,.cup-soundtrack h2,.cup-soundtrack h3 {margin:0;}
+.cup-soundtrack .action-row {margin:0;gap:12px;}
+.cup-soundtrack .action-row > * {white-space:normal;text-align:center;}
+.cup-soundtrack .flow-options {margin:0;}
+.cup-soundtrack .flow-options > button {margin-top:12px;}
+.cup-song-options {display:grid;gap:12px;}
+.cup-song-options article,.cup-selected-song {display:grid;gap:12px;padding:18px;border:1px solid #d5ddcd;border-radius:12px;background:#f8faf4;min-width:0;overflow-wrap:anywhere;}
+.cup-song-options article p,.cup-selected-song p {margin:0;}
+.cup-song-options article button {justify-self:start;}
+.cup-selected-song audio {width:100%;min-width:0;margin-top:8px;}
+.cup-listened {display:flex;align-items:center;gap:10px;min-height:44px;cursor:pointer;}
+.cup-listened input {width:20px;height:20px;flex-shrink:0;}
+.cup-moment-note {margin:8px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;}
+.cup-moment-note textarea {width:100%;box-sizing:border-box;}
+.cup-save-bar {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:24px;padding:24px;background:#eff3e7;border-radius:12px;}
+.cup-save-bar p {margin:0;}
+.cup-save-bar button:disabled {opacity:.5;cursor:wait;}
+.coffee-fields > .cup-soundtrack {margin-top:32px;}
+@media(max-width:760px){.cup-journey-entry ol{display:grid;gap:12px;}.cup-save-bar{padding:20px;}.cup-save-bar button{width:100%;}.cup-soundtrack .action-row{align-items:stretch;}.cup-soundtrack .action-row>*{flex:1 1 180px;}}

@@ -1,3 +1,4 @@
+import {readSoundtrack,soundtrackRecords} from '../../utils/coffeeSoundtrack.js';
 import Loading from "../../components/common/Loading.jsx";
 import { listDiaryRecords } from "../../utils/diaryRecords.js";
 import { useEffect, useState } from "react";
@@ -47,6 +48,8 @@ export default function DashboardPage() {
     [],
   );
   if (coffeeLoading || musicLoading || pairingLoading) return <PageShell title="대시보드" eyebrow="YOUR DAILY RITUAL" subtitle="쌓인 기록을 한눈에 보고, 오늘의 커피와 음악을 이어가세요."><Loading title="나의 기록을 펼치고 있어요." detail="저장한 커피와 음악을 모아 오늘의 시간을 준비합니다." /></PageShell>;
+  const attached=soundtrackRecords(coffees);
+  const savedMusic=[...attached,...music];
   const recent = [
     ...coffees.map((item) => ({
       ...item,
@@ -65,11 +68,12 @@ export default function DashboardPage() {
   ]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 6);
-  const last = [...pairs].sort((a, b) => b.date.localeCompare(a.date))[0];
+  const cupPairs=coffees.flatMap(cup=>{const song=readSoundtrack(cup.brewDetails?.soundtrack);return song?[{id:`cup-${cup.id}`,path:`/coffee/${cup.id}`,coffee:cup.bean,music:song.track,artist:song.artist||song.channel,date:cup.date,text:cup.brewDetails?.momentNote||'선택한 음악과 함께 보관한 한 잔'}]:[];});
+  const last = [...cupPairs,...pairs].sort((a, b) => b.date.localeCompare(a.date))[0];
   const latestCoffee = [...coffees].sort((a, b) =>
     b.date.localeCompare(a.date),
   )[0];
-  const latestMusic = [...music].sort((a, b) =>
+  const latestMusic = [...savedMusic].sort((a, b) =>
     b.date.localeCompare(a.date),
   )[0];
   const days = new Set(
@@ -86,8 +90,8 @@ export default function DashboardPage() {
       <div className="metric-strip" role="group" aria-label="기록 현황">
         {[
           ["커피 기록", coffees.length, "cups", Coffee, "/coffee"],
-          ["음악 기록", music.length, "tracks", Headphones, "/music"],
-          ["연결한 페어링", pairs.length, "pairs", Sparkles, "/pairing"],
+          ["보관한 음악", savedMusic.length, "tracks", Headphones, "/music"],
+          ["음악과 함께한 커피", attached.filter(row=>row.listened).length, "cups", Sparkles, "/coffee"],
           ["기록한 날", days, "days", ArrowUpRight, "/report/monthly"],
         ].map(([label, value, unit, Icon, destination]) => (
           <Link className="metric" key={label} to={destination} aria-label={`${label} ${loading?"조회 중":value} · 자세히 보기`}>
@@ -111,8 +115,8 @@ export default function DashboardPage() {
             <Link to={isNew?"/journey":"/coffee/write"} className="primary-button">
               {isNew?"첫 감상 가이드 시작":"오늘의 한 잔 기록"} <ArrowUpRight size={17} />
             </Link>
-            <Link to={isNew?"/ritual":"/music/write"} className="session-secondary">
-              {isNew?"청음실 둘러보기 ↗":"음악 기록하기 ↗"}
+            <Link to="/recommend" className="session-secondary">
+              어울리는 음악 찾아보기 ↗
             </Link>
           </div>
         </div>
@@ -197,13 +201,13 @@ export default function DashboardPage() {
                   {last.artist} — {last.music}
                 </p>
                 <blockquote>{last.text || last.mood}</blockquote>
-                <Link to={`/pairing/${last.id}`}>페어링 자세히 보기 ↗</Link>
+                <Link to={last.path||`/pairing/${last.id}`}>한 잔의 감상 보기 ↗</Link>
               </>
             ) : (
               <>
                 <RecordArtwork kind="blend" />
                 <p>한 잔과 한 곡을 골라 첫 조합을 연결해보세요.</p>
-                <Link to="/pairing/write">첫 페어링 만들기 ↗</Link>
+                <Link to="/coffee/write">커피에 음악 더하기 ↗</Link>
               </>
             )}
           </section>
@@ -226,9 +230,9 @@ export default function DashboardPage() {
               ? [latestMusic.artist, latestMusic.memo]
                   .filter(Boolean)
                   .join(" · ")
-              : "오늘의 기분에 머무른 곡을 기록해보세요.",
+              : "커피를 고르면 어울리는 음악이 이어집니다.",
             "music",
-            latestMusic ? `/music/${latestMusic.id}` : "/music/write",
+            latestMusic ? latestMusic.path || `/music/${latestMusic.id}` : "/coffee/write",
           ],
         ].map(([label, title, note, kind, path]) => (
           <Link className={`side-feature ${kind}`} to={path} key={kind}>
