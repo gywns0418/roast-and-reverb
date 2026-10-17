@@ -313,3 +313,5 @@ feature/google-login-public-policy main 분기·최신dev 통합. privacy.html�
 ## 2026-10-17 — 중앙 원두 회전 로딩 오버레이
 
 기존 인라인 파형/진행선을 공통 fixed 오버레이로 교체. body portal로 기본 화면 위를 덮고 중앙에 원두SVG의 입체회전/그림자 표시. 반투명 배경blur, 로딩 동안 root inert 및 body scroll lock, 중복로딩 수명관리와 종료시 원래상태복구. reduced-motion시 정적원두. 실제 요청 종료시 해제하며 인위적 지연없음. 로컬68테스트/build 성공, 임시QA화면에서 전체뷰포트bounds/모바일390 중앙좌표195,422/가로넘침없음/해제후inert 및 overflow복구 확인. QA HTML 삭제, 개인자료변경없음. PR/CI/배포결과후속기록.
+
+최종: PR#37 headb2d8e23 Verify39038386288 성공, dev병합96c68c7. devVerify39038473199 및 Pages39038473162 성공. Railway4b304c40 SUCCESS. 운영healthz200, 실제배포CSS 원두회전/오버레이속성 확인. 운영대시보드 로딩종료후 정상표시/inert해제/overflow복구 확인. 실제요청이 빨라 운영로딩중 캡처는 확보하지못했고 시각증빙은 동일컴포넌트 로컬QA .local/bean-loading-{desktop,mobile}.png. 임시HTML/QA서버정리, main미반영.
