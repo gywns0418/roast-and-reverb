@@ -319,3 +319,5 @@ feature/google-login-public-policy main 분기·최신dev 통합. privacy.html�
 feature/mobile-discovery-layout을 main에서 분기하고 최신dev96c68c7통합. 홈의 반복 2열문장/과도한여백을 커피·음악·감상의 실제기록 예시 및8분가이드와 다음추출연결로 재구성. 모바일전용 mobile.css를 마지막에 적용. 하단5개빠른메뉴/네이티브dialog 전체메뉴(ESC닫기·초점복귀·이동시닫기)/접이식상단검색 추가. 1열폼/16px입력/44px조작/기기하단안전영역/본문여백과기록저장동선 조정. 데스크톱전체메뉴 유지.
 
 프론트68테스트/build 성공. 로컬320/390px에서 홈·대시보드·커피작성·전체메뉴·검색 실제UI 확인, 가로넘침없음/입력16px/메뉴이동시닫기/ESC후전체메뉴로초점복귀 검증. 1440px홈2열·넘침없음 확인. 운영개인자료변경없음. 스크린샷은 .local/mobile-*.png와home-discovery-desktop.png. PR/배포결과후속기록.
+
+최종: PR#38 head8464189 Verify39038975389성공, dev f1ed7d0 Verify39039077596/Pages39039077597성공, Railway0145f999SUCCESS. 이후 공통버튼 display규칙과 모바일검색숨김의 우선순위를 보정한 PR#39 head1fa2e53 Verify39039138079성공, dev9d69287 Verify39039223424/Pages39039223426성공, Railway05535034SUCCESS. 운영390px 대시보드/하단메뉴/전체메뉴열기닫기/넘침없음 및1440px 모바일요소숨김 확인. healthz200. 월픽·추천·월리포트390px로컬넘침없음 추가확인. .local/mobile-dashboard-live.png 운영증빙. 개인기록미변경, QA서버5199종료, main미반영.
