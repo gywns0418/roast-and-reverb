@@ -20,7 +20,7 @@ class SecurityAuditTest {
   long coffee=create("coffee",a,Map.of("beanName","Private fixture","drinkDate","2026-10-17"),"coffeeLogId");
   long music=create("music",a,Map.of("trackName","Private song","artistName","Fixture","listenedDate","2026-10-17"),"musicLogId");
   long pairing=create("pairing",a,Map.of("coffeeLogId",coffee,"musicLogId",music,"pairingScore",88),"pairingId");
-  long collection=create("collection",a,Map.of("title","Private shelf","format","LP","linkedPairingId",pairing),"collectionId");
+  long collection=create("collection",a,Map.of("title","Private shelf","artistName","Fixture","format","LP","linkedPairingId",pairing),"collectionId");
   for(var item:Map.of("coffee",coffee,"music",music,"pairing",pairing,"collection",collection).entrySet()){
    String path="/api/"+item.getKey()+"/"+item.getValue();
    mvc.perform(get(path).header("Authorization",b).param("memberId","1")).andExpect(status().isNotFound());
@@ -28,7 +28,7 @@ class SecurityAuditTest {
    mvc.perform(get(path).header("Authorization",a)).andExpect(status().isOk());
   }
   mvc.perform(put("/api/coffee/"+coffee).header("Authorization",b).contentType("application/json").content("{\"beanName\":\"Attack\",\"drinkDate\":\"2026-10-17\"}")).andExpect(status().isNotFound());
-  mvc.perform(post("/api/collection").header("Authorization",b).contentType("application/json").content(json.writeValueAsString(Map.of("title","Foreign link","format","LP","linkedPairingId",pairing)))).andExpect(status().isBadRequest());
+  mvc.perform(post("/api/collection").header("Authorization",b).contentType("application/json").content(json.writeValueAsString(Map.of("title","Foreign link","artistName","Fixture","format","LP","linkedPairingId",pairing)))).andExpect(status().isBadRequest());
   mvc.perform(get("/api/coffee").header("Authorization",b).param("keyword","' OR 1=1 --")).andExpect(status().isOk()).andExpect(jsonPath("$.data.length()").value(0));
  }
  @Test void passwordChangeRequiresCurrentPasswordAndInvalidatesPreviousTokens()throws Exception{
