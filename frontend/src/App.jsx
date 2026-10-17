@@ -13,6 +13,7 @@ import "./styles/listening-room.css";
 import "./styles/journey.css";
 import "./styles/rhythm.css";
 import "./styles/loading.css";
+import "./styles/mobile.css";
 
 function ScrollReset() {
   const { pathname } = useLocation();

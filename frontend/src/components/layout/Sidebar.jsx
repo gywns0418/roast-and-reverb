@@ -1,6 +1,6 @@
 import {useEffect,useRef} from 'react';
 import { Link, NavLink,useLocation } from "react-router-dom";
-import { BarChart3, Coffee, Disc3, Headphones, Home, Library, ShoppingBasket, Sparkles, UserRound } from "lucide-react";
+import { BarChart3, Coffee, Disc3, Headphones, Home, Library, ShoppingBasket, Sparkles, UserRound, Menu, X, Plus } from "lucide-react";
 import { authStore } from "../../store/authStore.js";
 
 const links = [
@@ -22,7 +22,9 @@ const links = [
 ];
 
 export default function Sidebar() {
-  const location=useLocation(),navigation=useRef(null);
+  const location=useLocation(),navigation=useRef(null),mobileMenu=useRef(null);
+  useEffect(()=>{mobileMenu.current?.close();},[location.pathname]);
+  useEffect(()=>{const resize=()=>{if(window.innerWidth>760)mobileMenu.current?.close();};window.addEventListener('resize',resize);return()=>window.removeEventListener('resize',resize);},[]);
   useEffect(()=>{if(!window.matchMedia("(max-width:760px)").matches)return;const nav=navigation.current,active=nav?.querySelector(".nav-link.active");if(active)nav.scrollTo({left:Math.max(0,active.offsetLeft-nav.offsetLeft-(nav.clientWidth-active.clientWidth)/2),behavior:"auto"});},[location.pathname]);
   const primary=links.filter(([to])=>["/dashboard","/journey","/ritual","/recommend","/coffee","/music"].includes(to));
   const more=links.filter(row=>!primary.includes(row)&&!["/mypage","/connections"].includes(row[0]));
@@ -31,7 +33,7 @@ export default function Sidebar() {
   const isDemo = authStore.user?.demo;
 
   return (
-    <aside className="sidebar">
+    <><aside className="sidebar">
       <NavLink className="brand" to="/dashboard" aria-label="Roast & Reverb 대시보드">
         <span>Roast &amp; Reverb</span>
         <small>coffee × music log</small>
@@ -46,5 +48,16 @@ export default function Sidebar() {
       <div className="sidebar-session"><div className="mini-vinyl" aria-hidden="true"><i>r&amp;r</i></div><p>좋은 커피와<br/>오래 듣는 음악.</p><Link to="/ritual">나의 시간 시작하기 ↗</Link></div>
       <div className="sidebar-foot">BREW. LISTEN. REMEMBER.</div>
     </aside>
+    <nav className="mobile-tabbar" aria-label="모바일 빠른 메뉴">
+      <NavLink to="/dashboard"><Home size={21}/><span>홈</span></NavLink>
+      <NavLink to="/coffee" end><Library size={21}/><span>커피 기록</span></NavLink>
+      <NavLink to="/coffee/write" className="mobile-record"><Plus size={23}/><span>한 잔 기록</span></NavLink>
+      <NavLink to="/ritual"><Disc3 size={21}/><span>청음실</span></NavLink>
+      <button type="button" aria-haspopup="dialog" onClick={()=>mobileMenu.current?.showModal()}><Menu size={21}/><span>전체 메뉴</span></button>
+    </nav>
+    <dialog ref={mobileMenu} className="mobile-menu-sheet" aria-labelledby="mobile-menu-title" onClick={event=>{if(event.target===event.currentTarget)mobileMenu.current.close();}}>
+      <div className="mobile-menu-heading"><h2 id="mobile-menu-title">어디로 갈까요?</h2><button type="button" aria-label="전체 메뉴 닫기" onClick={()=>mobileMenu.current.close()}><X size={24}/></button></div>
+      <nav aria-label="모바일 전체 메뉴" onClick={event=>{if(event.target.closest("a"))mobileMenu.current.close();}}>{links.map(([to,Icon,label])=><NavLink key={to} to={to}><Icon size={20}/>{label}</NavLink>)}<Link to="/help"><Library size={20}/>도움말</Link></nav>
+    </dialog></>
   );
 }
