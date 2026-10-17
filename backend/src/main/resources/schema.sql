@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS coffee_log (
   roast_level VARCHAR(40),
   brew_method VARCHAR(60),
   water_temp INT,
-  grind_size VARCHAR(60),
+  grind_size TEXT,
   brew_time INT,
   taste_note VARCHAR(500),
   acidity INT,
@@ -156,3 +156,5 @@ CREATE INDEX IF NOT EXISTS idx_taste_rule_member ON taste_rule(member_id);
 
 -- Additive migration: preserve existing coffee and music records.
 ALTER TABLE coffee_log ADD COLUMN IF NOT EXISTS brew_details TEXT;
+-- Imported grinder settings may include the user's calibration explanation.
+ALTER TABLE coffee_log ALTER COLUMN grind_size TEXT;
