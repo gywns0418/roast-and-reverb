@@ -111,3 +111,14 @@ a.metric:focus-visible {outline:3px solid #6e8551;outline-offset:-3px;}
   .journey-count {gap:8px 16px;}
   .room-bottom h3 {font-size:22px;}
 }
+
+/* Keep music import controls separated without changing other forms. */
+.music-candidate-panel .music-link-import {display:grid;gap:12px;}
+.music-candidate-panel .music-link-import > .input-field {margin:0;min-width:0;}
+.music-candidate-panel .music-link-import > button {justify-self:start;}
+.music-candidate-panel .music-manual-form {display:grid;gap:16px;margin-top:24px;}
+.music-candidate-panel .music-manual-form > .form-grid {margin:0;}
+.music-candidate-panel .music-manual-form > button {justify-self:start;}
+.music-candidate-panel details > textarea + .action-row {margin-top:12px;}
+
+.music-brief > .input-field + button {margin-top:12px;}
