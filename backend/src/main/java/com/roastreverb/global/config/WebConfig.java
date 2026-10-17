@@ -10,10 +10,13 @@ import java.util.List;
 
 @Configuration
 public class WebConfig {
+    private final org.springframework.core.env.Environment environment;
+    public WebConfig(org.springframework.core.env.Environment environment){this.environment=environment;}
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:*", "http://127.0.0.1:*"));
+        if(environment.matchesProfiles("production"))configuration.setAllowedOrigins(List.of(environment.getProperty("APP_PUBLIC_ORIGIN","https://roast-and-reverb.up.railway.app")));
+        else configuration.setAllowedOriginPatterns(List.of("http://localhost:*", "http://127.0.0.1:*"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { LogIn, Search, Sparkles } from "lucide-react";
 import AuthModal from "../auth/AuthModal.jsx";
 import { authStore } from "../../store/authStore.js";
+import {authApi} from '../../api/authApi.js';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -12,7 +13,8 @@ export default function Header() {
   const [authOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState(() => authStore.user);
 
-  function handleLogout() {
+  async function handleLogout() {
+    try{await authApi.logout();}catch{ /* Clear this device even when offline. */ }
     authStore.clear();
     setUser(null);
     navigate("/");

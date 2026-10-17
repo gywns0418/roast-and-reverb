@@ -164,3 +164,6 @@ CREATE TABLE IF NOT EXISTS social_identity (
  PRIMARY KEY (provider, subject), UNIQUE (provider, member_id),
  FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
+
+ALTER TABLE member ADD COLUMN IF NOT EXISTS auth_version INT NOT NULL DEFAULT 0;
+CREATE TABLE IF NOT EXISTS revoked_token (token_hash VARCHAR(64) PRIMARY KEY, expires_at BIGINT NOT NULL);

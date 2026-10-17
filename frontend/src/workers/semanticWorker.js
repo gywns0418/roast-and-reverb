@@ -1,5 +1,10 @@
 import { pipeline, env } from "@huggingface/transformers";
+import wasmFactory from "onnxruntime-web/ort-wasm-simd-threaded.mjs?url";
+import wasmBinary from "onnxruntime-web/ort-wasm-simd-threaded.wasm?url";
 env.allowLocalModels=false;
+// Serve the lockfile-pinned runtime ourselves; do not execute CDN/blob factories.
+env.useWasmCache=false;
+env.backends.onnx.wasm.wasmPaths={mjs:wasmFactory,wasm:wasmBinary};
 env.backends.onnx.wasm.numThreads=1;
 let encoder=null;const cache=new Map();let chain=Promise.resolve();
 self.onmessage=event=>{const {id,texts}=event.data;chain=chain.catch(()=>{}).then(async()=>{try{

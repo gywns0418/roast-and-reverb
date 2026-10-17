@@ -15,6 +15,7 @@ public class MemberPrincipal implements UserDetails {
     private final String nickname;
     private final String role;
     private final boolean active;
+    private int authVersion;
 
     private MemberPrincipal(Long memberId, String email, String password, String nickname, String role, boolean active) {
         this.memberId = memberId;
@@ -28,7 +29,7 @@ public class MemberPrincipal implements UserDetails {
     // map-underscore-to-camel-case only applies to POJO mapping; resultType="map" queries
     // hand back raw snake_case column names, so member_id (not memberId) is correct here.
     public static MemberPrincipal from(Map<String, Object> member) {
-        return new MemberPrincipal(
+        var principal=new MemberPrincipal(
                 ((Number) member.get("member_id")).longValue(),
                 String.valueOf(member.get("email")),
                 String.valueOf(member.get("password")),
@@ -36,7 +37,9 @@ public class MemberPrincipal implements UserDetails {
                 String.valueOf(member.getOrDefault("role", "USER")),
                 !"BLOCKED".equals(member.get("status"))
         );
+        principal.authVersion=((Number)member.getOrDefault("auth_version",0)).intValue();return principal;
     }
+    public int getAuthVersion(){return authVersion;}
 
     public Long getMemberId() {
         return memberId;

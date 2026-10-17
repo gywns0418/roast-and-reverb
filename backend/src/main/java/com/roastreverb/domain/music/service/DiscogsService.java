@@ -33,7 +33,7 @@ public class DiscogsService {
         if (!isEnabled() || keyword == null || keyword.isBlank()) {
             return List.of();
         }
-        String url = UriComponentsBuilder.fromHttpUrl(API_URL)
+        String url = UriComponentsBuilder.fromUriString(API_URL)
                 .queryParam("q", keyword)
                 .queryParam("type", "release")
                 .queryParam("token", token)
