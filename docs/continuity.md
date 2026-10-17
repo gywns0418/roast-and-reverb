@@ -294,3 +294,9 @@ feature/music-import-spacing main 분기 후 최신dev/직전인계 통합. 링�
 Chrome 연결 후 전용프로젝트 roast-and-reverb 확인. 기존 micro-atrium-371108의 MusicEmotion 앱은 미변경. 사용자 명시적 정책동의/클라이언트 생성/연결 승인에 따라 웹클라이언트 생성, JavaScript origin은 기존 Railway 운영origin만. GOOGLE_CLIENT_ID만 서버 설정(비밀키미사용), 세범위email/profile/openid만 선언. 공개홈/개인정보처리방침/도메인 등록 후 Google 콘솔 ‘프로덕션 단계’ 확인. 브랜드 이름/로고 검증 별도이며 심사승인됐다고 주장하지 않음.
 
 feature/google-login-public-policy main 분기·최신dev 통합. privacy.html과 공개경로 허용/홈·공통footer·로그인 링크 추가. 기존 회원의 Google연결 조회API 및 새로고침시 연결표시 유지. PR#33 source9b4a555 Verify39012993355 성공, dev병합03a1ba3. devVerify39013113865/Pages39013113886 성공. 첫CI Docker의 NuGet 다운로드ETIMEDOUT은 재시도로 성공했고 관련없는 dependency수정은 하지 않음. Railway deployment6e616a69-a12e-4296-9b54-f2b0fbd7daa8 SUCCESS. privacy.html200/config200/익명개인상태401/익명일지401. 실제 기존계정 Google연결·새로고침·로그아웃 후 Google 재로그인 및 기록유지 확인. 계정선택팝업은 CDP입력timeout으로 사용자가 직접선택했고 이후 동일회원UI 확인. 캡처와 개인계정상세는 .local에만 저장. 공개시드/개인원본/main 변경 없음.
+
+## 2026-10-17 — 가져오기 파일 선택 정렬 및 운영 주소 단축
+
+PR#34의 파일 선택 컨트롤 높이60px/내부버튼40px와 빈 선택 안내를 운영반영. Verify39013598315, devVerify39013727319, Pages39013727318 성공. dev d68c714를 Railway에 pin하여 d19a4bc6 SUCCESS. 운영 DOM 실측 높이60px 확인.
+
+사용자 도메인구매 없이 짧은 Railway주소 변경 승인. 최신 기기백업 확인·비공개 보관 후 기존 domain을 https://roast-and-reverb.up.railway.app 로 변경. APP_PUBLIC_ORIGIN 및 기존Google웹클라이언트 JavaScript원본/브랜드홈/정책/승인도메인을 새주소로 일치시킴. 기존호스트허용 제거. 설정 재배포 efcdd3c5 SUCCESS. /healthz200, privacy200, Googleconfig200, 익명coffee401 확인. 서버/볼륨/계정데이터 변경없음. Google 계정선택 화면에서 사용자 직접선택 대기 중이며, 새주소 재로그인·기기백업복원 검증은 아직 미완료. 원래호스트는 이제 사용하지 않는다. main미반영, 유료구매없음.
