@@ -20,4 +20,6 @@
 - [카카오 앱 종류](https://developers.kakao.com/docs/ko/app-setting/app): 테스트 앱은 멤버 전용이고 운영에는 원본 앱 키를 사용. 사업자번호가 없는 개인 개발자도 본인인증·약관 동의 후 개인 개발자 비즈 앱 전환 가능.
 - [카카오 동의항목](https://developers.kakao.com/docs/ko/kakaologin/utilize): 닉네임 기본 제공, 이메일은 비즈/테스트 앱 권한. 카카오싱크·친구·메시지 검수와 기본 로그인을 혼동하지 않는다. 이번 구현은 Google을 우선하며 카카오 버튼은 만들지 않았다.
 
-현재 확인: Railway 변수명에 GOOGLE_CLIENT_ID 없음. Google Cloud 사용자 로그인은 확인했으나 OAuth 개요·클라이언트 화면에 로드 오류가 반복됨. 콘솔 등록/브랜드 검증은 아직 미확인이며 실제 Google 인증 성공을 주장하지 않는다.
+현재 확인 (2026-10-17): Chrome에서 전용 Google Cloud 프로젝트 `roast-and-reverb`를 확인하고 웹 클라이언트를 생성했다. 운영 JavaScript origin은 `https://roast-and-reverb-production.up.railway.app` 한 곳이다. 사용자 명시적 승인 후 Google 사용자 데이터 정책 동의·등록·서버 연결을 수행했다. GOOGLE_CLIENT_ID를 기존 Railway 서비스에 설정했으며 비밀키는 사용·다운로드하지 않았다. 실제 기존 계정에 Google을 연결하고 새로고침 후 연결 상태를 조회하며, 로그아웃 후 Google 재로그인·기존 기록 보존을 확인했다. 민감하지 않은 email/profile/openid만 선언했고 민감/제한 scope는 없다.
+
+홈페이지·공개 `privacy.html`·현재 서비스 도메인을 브랜딩에 등록했고 Google 콘솔의 게시 상태가 ‘프로덕션 단계’임을 확인했다. 이는 별도의 브랜드 이름/로고 검증 승인과 동일하다고 주장하지 않는다. 프로필 화면은 인증된 `/api/members/me/google/status`로 연결 상태를 확인한다. 공개 정책은 로그인 없이200, 개인 상태와 일지는 익명401 확인. 운영자를 대신하여 Google 계정 비밀번호를 입력하거나 OAuth 클라이언트 비밀키를 추출하지 않았다.
