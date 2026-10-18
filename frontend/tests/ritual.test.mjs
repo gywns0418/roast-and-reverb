@@ -20,7 +20,7 @@ test('clock survives pauses and refresh without claiming listened time or accept
 test('personal embeddings shift intent while keeping candidates intact; repeated starter titles are deduplicated',()=>{
  const vectors=[[1,0],[.2,.8],[0,1]];const mixed=blendRoomIntent(vectors,2);
  assert.ok(mixed[0][1]>0);assert.deepEqual(mixed[1],vectors[1]);assert.deepEqual(vectors[0],[1,0]);
- assert.equal(roomMusicPool([...roomTracks,{...roomTracks[0],id:'saved',source:'record'}]).length,3);
+ assert.equal(roomMusicPool([...roomTracks,{...roomTracks[0],id:'saved',source:'record'}]).length,roomTracks.length);
 });
 test('memory backup strips unsafe playback URLs and rejects malformed data before replacing memories',()=>{
  assert.equal(memory('one').music.url,'');assert.throws(()=>roomBackup({schemaVersion:1,memories:[{id:'bad'}],trash:[]}));
@@ -35,6 +35,6 @@ test('device memory saves, moves to recoverable storage, restores and merges val
  restoreRoomBackup({schemaVersion:1,profile:{name:'Restored'},memories:[memory('two')],trash:[]});assert.equal(readRoom().memories.length,2);assert.equal(readRoom().profile.name,'Restored');
 });
 
-test('explicit no-vocal requests require known instrumental metadata instead of guessing from an artist',()=>{const unknown={id:'unknown',artist:'Artist',track:'Unknown',tags:[]};assert.equal(eligibleRoomMusic([unknown,...roomTracks],'보컬 없는 음악').length,3);assert.equal(eligibleRoomMusic([unknown,...roomTracks],'평소 음악').length,4);});
+test('explicit no-vocal requests require known instrumental metadata instead of guessing from an artist',()=>{const unknown={id:'unknown',artist:'Artist',track:'Unknown',tags:[]},instrumental={id:'instrumental',artist:'Artist',track:'Piano',tags:['연주']};assert.deepEqual(eligibleRoomMusic([unknown,instrumental,...roomTracks],'보컬 없는 음악').map(x=>x.id),['instrumental']);assert.equal(eligibleRoomMusic([unknown,...roomTracks],'평소 음악').length,roomTracks.length+1);});
 
 test('familiar-mode uses the nearest invitation while discovery-mode has reproducible daily variation',()=>{assert.equal(dailyRoomIndex('2026-10-14',3,false),0);assert.equal(dailyRoomIndex('2026-10-14',3,true),dailyRoomIndex('2026-10-14',3,true));assert.ok(['2026-10-14','2026-10-15','2026-10-16'].some(day=>dailyRoomIndex(day,3,true)!==0));});
