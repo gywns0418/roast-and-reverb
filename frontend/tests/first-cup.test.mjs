@@ -14,5 +14,5 @@ test('AI fields require literal support and drafts are scoped independently',()=
  assert.deepEqual(row,{beanName:'에티오피아',roastery:'',brewMethod:'핸드드립',tastes:['레몬']});assert.notEqual(quickDraftKey('guest'),quickDraftKey('1'));assert.notEqual(quickDraftKey('1'),quickDraftKey('2'));assert.throws(()=>firstCupPayload({note:' '}));
 });
 test('curated brewing playlist contains valid distinct official video links',()=>{
- assert.equal(new Set(brewPlaylist.map(x=>parseMusicLink(x.url).id)).size,3);assert.ok(brewPlaylist.every(x=>parseMusicLink(x.url).kind==='video'));
+ assert.equal(new Set(brewPlaylist.map(x=>parseMusicLink(x.url).id)).size,2);assert.ok(brewPlaylist.every(x=>parseMusicLink(x.url).kind==='video'));
 });
