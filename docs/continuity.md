@@ -349,3 +349,9 @@ feature/first-cup-experience를 main에서 분기하고 최신dev0b4f362통합. 
 main에서 feature/monthly-pick-editions 분기 후 최신 dev7f147f5 통합. 공식 상품930/945 확인, 기존 정규57종에 글로벌 Loquat9종·스몰 언더빈34종 추가. 일반커피월픽 제목만 찾던 발견기를 세 시리즈·당월 판매기간으로 확장(머신/이전달 제외), 반복수집 changed:false. 스몰의 공식 데이터 CDN d22c6ea6lqg2pi.cloudfront.net만 정확한 호스트로 허용하며 다른 CloudFront 도메인은 거부. 서버 링크갱신도 글로벌/스몰 제목·판매일 파싱을 지원. 탭 전환시 상품·출처·기간·필터·비교선택 일치, 모바일 같은크기64px 버튼. 글로벌 공개JSON에 없는 컵노트/가격/산지는 추측하지 않고 미기재·원문확인 표시. 프런트77테스트/build 검증, 서버검사는 CI에서 이어 확인.
 
 별도 체험화면+봉인키 운영배포는 사용자가 다시 명시적으로 승인했으나 accept-deploy 도구가 또 승인없음으로 취소. 우회 배포하지 않고 열린 Railway의 Deploy 직접누르기를 async요청. 키 봉인·pending 및 기존운영 보존. 월픽 PR/게시 결과와 운영 결과는 후속확인.
+
+## 2026-10-18 — 월픽 시리즈 운영 검증 완료
+
+PR45(dev6af1bcb)로 정규57/글로벌Loquat9/스몰언더빈34종 탭·자동발견 게시. 운영의 링크갱신에서 Jackson2 Tree가 Jackson3 HTTP 직렬화와 호환되지 않아 items배열을 읽지 못하는 오류를 확인했고, PR46(dev7403b79cf5971b38ea1ac1acb2e1f62f3fd7db8f)에서 공개사실을 일반Map/List로 반환하도록 수정. 원문갱신시 공개flavors도 유지. 교차Jackson 배열유지/마케팅제거 회귀검사 포함. 최종08e99a6 및 dev7403b79 Verify39101241764 프런트77/서버31/격리이미지·Trivy·ZAP 모두성공, Pages39101241771 성공. Railway58bb1c95-084e-451e-b348-43fcf54a3ba6 SUCCESS. 실제운영글로벌9종·스몰34종 ‘링크 가져오기’ 모두성공, 스몰색상102개유지, 390px문서375/client375 및320px문서305/client305 무넘침 확인. .local/monthly-editions-production-mobile.png, monthly-editions-production-security.json(23/23통과). main미변경, 실제기록미변경.
+
+이전 체험화면+키의 pending은 사용자가 Railway Deploy를 직접눌러1f4e3826 SUCCESS로 적용됐고, 이후 위최종배포에도 봉인키 유지. 첫운영AI정리공개검증문장1회 실패후 /studio UI에서 quota_exhausted/AI크레딧소진 확인. 검증문장미보관·초안입력비움, 실제회원58카드유지확인. 자동충전·키재생성·유료전환·재시도하지않음. 원문카드보관은 계속가능. Railway pending없음. 이 문서의 이전 승인대기 문단은 당시기록이며 현재운영대기가 아니다.
