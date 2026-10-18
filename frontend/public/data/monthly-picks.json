@@ -8,7 +8,7 @@
       "roastery": "유에프오커피",
       "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=901",
       "detailSourceUrl": "https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/UFO2/UFO2.json",
-      "sourceCheckedAt": "2026-10-16T11:47:42.508Z",
+      "sourceCheckedAt": "2026-10-18T00:01:53.269Z",
       "items": [
         {
           "id": "901-b81b8e01d",
@@ -317,7 +317,7 @@
             }
           ],
           "openDate": "2026-10-05",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-09-30T16:11:44+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4080,7 +4080,7 @@
             }
           ],
           "openDate": "2026-10-12",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-09-30T17:28:14+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4724,14 +4724,14 @@
             }
           ],
           "openDate": "2026-10-01",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T23:35:23+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": ""
         }
       ],
-      "detailsCheckedAt": "2026-10-16T11:47:42.510Z"
+      "detailsCheckedAt": "2026-10-18T00:01:53.272Z"
     }
   ]
 }

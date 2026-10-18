@@ -16,7 +16,7 @@ RUN mvn -B package -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-RUN apk upgrade --no-cache && apk add --no-cache su-exec && addgroup -S app && adduser -S app -G app && mkdir /data && chown app:app /data
+RUN apk upgrade --no-cache && apk add --no-cache su-exec 'libexpat>=2.9.0-r0' && addgroup -S app && adduser -S app -G app && mkdir /data && chown app:app /data
 COPY --from=backend /backend/target/*.jar app.jar
 COPY deploy/start-service.sh /app/start-service.sh
 RUN chmod +x /app/start-service.sh
