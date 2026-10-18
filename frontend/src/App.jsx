@@ -15,6 +15,7 @@ import "./styles/journey.css";
 import "./styles/rhythm.css";
 import "./styles/loading.css";
 import "./styles/mobile.css";
+import "./styles/first-cup.css";
 
 function ScrollReset() {
   const { pathname } = useLocation();

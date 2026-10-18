@@ -1,3 +1,4 @@
+import GoogleSignIn from './GoogleSignIn.jsx';
 import { useState,useEffect,useRef } from "react";
 import Button from "../common/Button.jsx";
 import Input from "../common/Input.jsx";
@@ -74,6 +75,7 @@ export default function AuthModal({ initialMode = "login", onClose, onAuthentica
           {message && <p role="alert" className="muted">{message}</p>}
         </form>
 
+        {!isFindId&&!isFindPassword&&<GoogleSignIn onSuccess={user=>{authStore.setUser(user);onAuthenticated?.(user);}}/>}
         {!isJoin && !isFindId && !isFindPassword && (
           <div className="cover-links">
             <button type="button" onClick={() => setMode("find-id")}>아이디를 잊었나요?</button>

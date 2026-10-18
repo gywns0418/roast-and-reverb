@@ -1,3 +1,5 @@
+import FirstCup from '../../components/coffee/FirstCup.jsx';
+import TastingShelf from '../../components/coffee/TastingShelf.jsx';
 import {readSoundtrack,soundtrackRecords} from '../../utils/coffeeSoundtrack.js';
 import Loading from "../../components/common/Loading.jsx";
 import { listDiaryRecords } from "../../utils/diaryRecords.js";
@@ -19,13 +21,14 @@ import {
 import { useApiResource } from "../../hooks/useApiResource.js";
 
 export default function DashboardPage() {
+  const [addedCoffees,setAddedCoffees]=useState([]);
   const [monthly, setMonthly] = useState(null);
   useEffect(() => {
     monthlyCatalog()
       .then((items) => setMonthly(items[0] || null))
       .catch(() => {});
   }, []);
-  const { data: coffees, loading: coffeeLoading } = useApiResource(
+  const { data: storedCoffees, loading: coffeeLoading } = useApiResource(
     () =>
       listDiaryRecords(coffeeApi.list).then((items) =>
         items.map(adaptCoffeeLog),
@@ -47,6 +50,7 @@ export default function DashboardPage() {
     [],
     [],
   );
+  const coffees=[...addedCoffees,...storedCoffees.filter(x=>!addedCoffees.some(y=>String(y.id)===String(x.id)))];
   if (coffeeLoading || musicLoading || pairingLoading) return <PageShell title="대시보드" eyebrow="YOUR DAILY RITUAL" subtitle="쌓인 기록을 한눈에 보고, 오늘의 커피와 음악을 이어가세요."><Loading title="나의 기록을 펼치고 있어요." detail="저장한 커피와 음악을 모아 오늘의 시간을 준비합니다." /></PageShell>;
   const attached=soundtrackRecords(coffees);
   const savedMusic=[...attached,...music];
@@ -87,6 +91,8 @@ export default function DashboardPage() {
       eyebrow="YOUR DAILY RITUAL"
       subtitle="쌓인 기록을 한눈에 보고, 오늘의 커피와 음악을 이어가세요."
     >
+      <FirstCup onSaved={row=>setAddedCoffees(previous=>[adaptCoffeeLog(row),...previous])}/>
+      <TastingShelf records={[...coffees].sort((a,b)=>b.date.localeCompare(a.date))}/>
       <div className="metric-strip" role="group" aria-label="기록 현황">
         {[
           ["커피 기록", coffees.length, "cups", Coffee, "/coffee"],

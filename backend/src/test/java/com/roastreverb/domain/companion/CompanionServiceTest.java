@@ -16,6 +16,27 @@ class CompanionServiceTest {
     String completed(String answer) throws Exception {
         return json.writeValueAsString(Map.of("status","completed","output",List.of(Map.of("content",List.of(Map.of("type","output_text","text",answer))))));
     }
+    @Test void cupDraftOnlyUsesEvidenceFromTheOriginalNote() throws Exception {
+        var service=new CompanionService("","test",json);
+        assertEquals(400,assertThrows(CustomException.class,()->service.organize(1L,new CompanionService.CupInput(" "))).getStatus().value());
+        assertEquals(503,assertThrows(CustomException.class,()->service.organize(1L,new CompanionService.CupInput("고소해요"))).getStatus().value());
+        var answer=json.readTree("{\"beanName\":\"\",\"roastery\":\"\",\"brewMethod\":\"핸드드립\",\"tastes\":[\"초콜릿\"]}");
+        assertEquals(List.of("초콜릿"),service.decodeCup("핸드드립, 초콜릿 맛이 나요",answer).tastes());
+        assertEquals(502,assertThrows(CustomException.class,()->service.decodeCup("그냥 따뜻했어요",answer)).getStatus().value());
+        assertThrows(CustomException.class,()->service.decodeCup("초콜릿",json.readTree("{\"tastes\":\"초콜릿\"}")));
+    }
+    @Test void cupTransportSendsOneNoteWithoutHistoryOrProviderStorage() throws Exception {
+        var received=new AtomicReference<com.fasterxml.jackson.databind.JsonNode>();
+        var server=HttpServer.create(new InetSocketAddress("127.0.0.1",0),0);
+        byte[] response=completed("{\"beanName\":\"\",\"roastery\":\"\",\"brewMethod\":\"\",\"tastes\":[\"고소해요\"]}").getBytes(StandardCharsets.UTF_8);
+        server.createContext("/responses",exchange->{received.set(json.readTree(exchange.getRequestBody()));exchange.sendResponseHeaders(200,response.length);exchange.getResponseBody().write(response);exchange.close();});server.start();
+        try {
+            var service=new CompanionService("test-only","test-model",json,URI.create("http://127.0.0.1:"+server.getAddress().getPort()+"/responses"));
+            assertEquals("고소해요",service.organize(11L,new CompanionService.CupInput("고소해요")).tastes().get(0));
+            assertFalse(received.get().path("store").asBoolean());assertEquals(1,received.get().path("input").size());assertEquals("coffee_note",received.get().path("text").path("format").path("name").asText());
+            assertEquals(429,assertThrows(CustomException.class,()->service.chat(11L,new CompanionService.Chat("다음",settings,List.of()))).getStatus().value());
+        } finally {server.stop(0);}
+    }
     @Test void validatesInputsBeforeAnyProviderCall() {
         var service=new CompanionService("","test",json);
         assertEquals(400,assertThrows(CustomException.class,()->service.chat(1L,new CompanionService.Chat("",settings,List.of()))).getStatus().value());
