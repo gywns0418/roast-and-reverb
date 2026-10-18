@@ -20,7 +20,7 @@
            c.created_at,
            c.updated_at
     FROM collection c
-    LEFT JOIN pairing p ON p.pairing_id = c.linked_pairing_id
+    LEFT JOIN pairing p ON p.pairing_id = c.linked_pairing_id AND p.member_id = c.member_id
     WHERE c.member_id = #{memberId}
     <if test="format != null and format != '' and format != 'ALL'">
       AND c.format = #{format}

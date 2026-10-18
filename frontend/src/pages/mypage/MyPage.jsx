@@ -5,6 +5,7 @@ import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
 import Tag from "../../components/common/Tag.jsx";
 import { authStore } from "../../store/authStore.js";
+import {authApi} from '../../api/authApi.js';
 import { coffeeApi } from "../../api/coffeeApi.js";
 import { musicApi } from "../../api/musicApi.js";
 import { pairingApi } from "../../api/pairingApi.js";
@@ -29,7 +30,8 @@ export default function MyPage() {
     {label: "음악 기록", value: `${music.length}곡`}, {label: "연결한 페어링", value: `${pairs.length}개`}
   ] };
 
-  function handleLogout() {
+  async function handleLogout() {
+    try{await authApi.logout();}catch{ /* Offline local logout remains available. */ }
     authStore.clear();
     navigate("/auth/login");
   }

@@ -51,7 +51,8 @@ public class MemberController {
     }
 
     @PostMapping("/api/auth/logout")
-    public ApiResponse<?> logout() {
+    public ApiResponse<?> logout(@RequestHeader("Authorization") String authorization) {
+        jwtProvider.revokeToken(authorization.substring(7));
         return ApiResponse.ok(Map.of("loggedOut", true));
     }
 
@@ -69,6 +70,6 @@ public class MemberController {
     @PutMapping("/api/members/me/password")
     public ApiResponse<?> updatePassword(@RequestParam(defaultValue = "1") Long memberId,
                                          @RequestBody Map<String, Object> request) {
-        return ApiResponse.ok(Map.of("updated", memberService.updatePassword(memberId, String.valueOf(request.get("password")))));
+        return ApiResponse.ok(Map.of("updated", memberService.updatePassword(memberId, (String)request.get("currentPassword"), (String)request.get("password"))));
     }
 }
