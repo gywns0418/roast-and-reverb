@@ -16,4 +16,16 @@ class MonthlyPickSourceTest {
   assertEquals("d22c6ea6lqg2pi.cloudfront.net",MonthlyPickSourceService.validateDataUrl("https://d22c6ea6lqg2pi.cloudfront.net/UNDERBEAN/UNDERBEAN.json").getHost());
   assertThrows(CustomException.class,()->MonthlyPickSourceService.validateDataUrl("https://evil.cloudfront.net/UNDERBEAN.json"));
  }
+ @Test void publicFactsKeepArraysAcrossHttpSerializerAndExcludeMarketing() throws Exception {
+  var jackson2=new com.fasterxml.jackson.databind.ObjectMapper();
+  var original=jackson2.readTree("{\"order\":[],\"items\":[{\"name\":\"Coffee\",\"type\":\"single origin\",\"options\":[],\"image\":\"private.jpg\",\"details\":{\"specs\":[],\"blocks\":[{\"html\":\"<script>bad</script>\"}]}}]}");
+  var facts=new MonthlyPickSourceService(jackson2).publicFacts(original);
+  var jackson3=tools.jackson.databind.json.JsonMapper.builder().build();
+  var result=jackson3.readTree(jackson3.writeValueAsString(facts));
+  assertTrue(result.path("items").isArray());
+  assertEquals("Coffee",result.path("items").get(0).path("name").asText());
+  assertTrue(result.path("items").get(0).path("details").path("specs").isArray());
+  assertFalse(result.path("items").get(0).has("image"));
+  assertFalse(result.path("items").get(0).path("details").has("blocks"));
+ }
 }

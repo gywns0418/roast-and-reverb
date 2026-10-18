@@ -90,6 +90,9 @@ public class MonthlyPickSourceService {
         metadata.put("title",title); metadata.put("month",year+"-"+String.format("%02d",Integer.parseInt(month))); metadata.put("sourceUrl",source);metadata.put("detailSourceUrl",data);
         metadata.put("roastery",title.replaceAll("^.*?월픽\\]\\s*","").replaceAll("\\s*\\(.*$","")); metadata.put("stock",stock);
         JsonNode original=json.readTree(fetch(validateDataUrl(data)));
+        return Map.of("metadata",metadata,"data",publicFacts(original));
+    }
+    public Map<String,Object> publicFacts(JsonNode original) {
         if(!original.path("items").isArray() || original.path("items").isEmpty()) throw new IllegalStateException("Missing beans");
         // Return factual fields only. Marketing prose, images and executable markup are omitted.
         var safe=json.createObjectNode(); safe.set("order",original.path("order")); var items=safe.putArray("items");
@@ -98,6 +101,6 @@ public class MonthlyPickSourceService {
             var heading=out.putObject("heading");heading.set("prices",item.path("heading").path("prices"));
             var detail=out.putObject("details");for(String key:List.of("specs","gauges","updatedAt")) if(item.path("details").has(key)) detail.set(key,item.path("details").get(key));
         }
-        return Map.of("metadata",metadata,"data",json.convertValue(safe,Map.class));
+        return json.convertValue(safe,Map.class);
     }
 }
