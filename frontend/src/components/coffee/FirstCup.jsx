@@ -1,0 +1,48 @@
+import {useEffect,useId,useRef,useState} from 'react';
+import {Link} from 'react-router-dom';
+import {ArrowRight,Check,Sparkles} from 'lucide-react';
+import {authStore} from '../../store/authStore.js';
+import {coffeeApi} from '../../api/coffeeApi.js';
+import {companionApi} from '../../api/companionApi.js';
+import {firstCupExamples,firstCupPayload,literalCupFields,quickDraftKey} from '../../utils/firstCup.js';
+import {validateDraft} from '../../utils/draft.js';
+import {matchedSoundtrack} from '../../utils/coffeeSoundtrack.js';
+import AuthModal from '../auth/AuthModal.jsx';
+import BrewPlaylist from '../music/BrewPlaylist.jsx';
+const real=import.meta.env.VITE_USE_REAL_API==='true';
+const blank=()=>({note:'',beanName:'',roastery:'',brewMethod:'',tastes:[],soundtrack:null});
+function scope(){const user=authStore.user;return real?authStore.token?String(user.memberId||user.member_id||user.id||user.email):'guest':'trial';}
+function loadDraft(key){try{const raw=localStorage.getItem(key);if(!raw)return{value:blank()};const row=validateDraft(JSON.parse(raw),'draft-first-cup');if(typeof row.value.note!=='string'||row.value.note.length>2000||['beanName','roastery','brewMethod'].some(k=>typeof row.value[k]!=='string')||!Array.isArray(row.value.tastes)||row.value.tastes.some(x=>typeof x!=='string'))throw Error();return{value:{...blank(),...row.value}};}catch{return{value:blank(),error:'저장된 한 줄을 읽지 못했어요. 원본 보호를 위해 새 초안을 덮어쓰지 않습니다.'};}}
+export default function FirstCup({onSaved,title='오늘의 커피는 어땠나요?',heading='h2'}){
+ const [,authRevision]=useState(0);const currentScope=scope(),draftKey=quickDraftKey(currentScope);const [initial]=useState(()=>loadDraft(draftKey));
+ const [value,setStoredValue]=useState(initial.value),[storageError,setStorageError]=useState(initial.error||''),[preview,setPreview]=useState(false),[busy,setBusy]=useState(''),[error,setError]=useState(''),[notice,setNotice]=useState(''),[saved,setSaved]=useState(null),[authMode,setAuthMode]=useState(null),[ai,setAi]=useState(null),[example,setExample]=useState(false);
+ const latest=useRef(value);latest.current=value;const request=useRef(null),operation=useRef(0),previousScope=useRef(currentScope),loginRequested=useRef(false),saving=useRef(false);const inputId=useId();const Heading=heading;
+ useEffect(()=>{const changed=()=>authRevision(x=>x+1);window.addEventListener('rr-auth-changed',changed);return()=>window.removeEventListener('rr-auth-changed',changed);},[]);
+ useEffect(()=>{if(previousScope.current===currentScope)return;request.current?.abort();operation.current++;setBusy('');setSaved(null);setError('');setAi(null);if(previousScope.current==='guest'&&loginRequested.current){loginRequested.current=false;const target=loadDraft(draftKey);setStorageError(target.error||target.value.note&&target.value.note!==latest.current.note?'이 계정의 기존 초안은 그대로 보존합니다. 지금 확인한 카드도 보관할 수 있어요.':'');setNotice('로그인됐어요. 확인한 카드를 보관해 주세요.');}else{const next=loadDraft(draftKey);latest.current=next.value;setStoredValue(next.value);setStorageError(next.error||'');setPreview(false);}previousScope.current=currentScope;},[currentScope,draftKey]);
+ function setValue(update){const next=typeof update==='function'?update(latest.current):update;latest.current=next;setStoredValue(next);if(storageError||previousScope.current!==currentScope)return;try{localStorage.setItem(draftKey,JSON.stringify(validateDraft({version:1,updatedAt:new Date().toISOString(),value:next},'draft-first-cup')));}catch{setStorageError('초안을 이 기기에 보관하지 못했어요. 화면의 문장은 유지됩니다.');}}
+ useEffect(()=>{let alive=true;if(real&&authStore.token)companionApi.status().then(v=>{if(alive)setAi(v);}).catch(()=>{if(alive)setAi({available:false});});return()=>{alive=false;};},[currentScope]);
+ useEffect(()=>()=>{operation.current++;request.current?.abort();},[]);
+ function change(next){if(next.note!==latest.current.note)next={...next,beanName:'',roastery:'',brewMethod:'',tastes:[]};request.current?.abort();operation.current++;setBusy('');setPreview(false);setExample(false);setError('');setSaved(null);setNotice('');setValue(next);}
+ async function prepare(){if(busy||request.current&&!request.current.signal.aborted)return;const original=value.note.trim();if(!original){setError('잘 모르겠다는 말도 좋아요. 오늘의 느낌을 한 줄만 적어 주세요.');return;}setError('');setSaved(null);setNotice('');const id=++operation.current,owner=currentScope;
+  if(ai?.available){const controller=new AbortController();request.current=controller;setBusy('organize');try{const fields=await companionApi.organize(original,controller.signal);if(id!==operation.current||scope()!==owner)return;setValue(v=>({...v,...literalCupFields(fields,original)}));setNotice('AI가 적어주신 말만 골라 정리했어요. 확인하고 보관하세요.');}catch(err){if(id!==operation.current||scope()!==owner)return;setAi({available:false});setNotice('지금은 AI 정리를 사용할 수 없어 문장 그대로 카드를 만들었어요.');}finally{if(id===operation.current){request.current=null;setBusy('');}}}
+  else setNotice(real&&authStore.token?'입력한 그대로 카드를 만들었어요. AI 정리는 현재 사용할 수 없어요.':'입력한 그대로 만든 체험 카드예요. 아직 저장하지 않았어요.');
+  if(id===operation.current&&scope()===owner)setPreview(true);
+ }
+ async function save(){if(saving.current||busy)return;if(real&&!authStore.token){loginRequested.current=true;setAuthMode('login');return;}saving.current=true;setBusy('save');setError('');const id=operation.current,owner=currentScope;try{const payload=firstCupPayload(latest.current);const result=await coffeeApi.create(payload);if(id!==operation.current||scope()!==owner)return;setSaved(result.coffeeLogId||result.coffee_log_id||result.id);setNotice('한 장이 진열장에 더해졌어요. 다음엔 한 가지만 더 남겨도 좋아요.');try{for(const key of [draftKey,quickDraftKey('guest')]){const raw=localStorage.getItem(key);if(raw&&JSON.stringify(JSON.parse(raw).value)===JSON.stringify(latest.current))localStorage.removeItem(key);}}catch{}onSaved?.({...payload,...result});}catch(err){setError(err.message);}finally{saving.current=false;setBusy('');}}
+ if(previousScope.current!==currentScope&&!(previousScope.current==='guest'&&loginRequested.current))return <p role="status">기록 공간을 바꾸고 있어요…</p>;
+ return <section className="first-cup" aria-labelledby={`${inputId}-heading`}>
+  <div className="first-cup-note"><p className="eyebrow">ONE SIP, ONE SENTENCE</p><Heading id={`${inputId}-heading`}>{title}</Heading><p className="first-cup-lead">맛을 잘 몰라도 괜찮아요. 오늘 남은 느낌 하나면 충분해요.</p>
+   <label className="first-cup-input" htmlFor={inputId}><span>오늘의 느낌 한 줄</span><textarea id={inputId} rows={3} maxLength={2000} value={value.note} disabled={busy==='save'||!!saved} onChange={e=>change({...value,note:e.target.value})} placeholder="고소하고 끝에 초콜릿 맛이 남았어. 오늘은 그냥 따뜻해서 좋았어."/></label>
+   {!value.note&&<button type="button" className="first-cup-example" onClick={()=>{change({...value,note:firstCupExamples[0]});setExample(true);setPreview(true);setNotice('예시로 만든 카드예요. 내 감상으로 바꾼 뒤 보관할 수 있어요.');}}>무슨 말을 적을지 모르겠다면, 예시로 체험 ↗</button>}
+   {!preview&&!saved&&<button type="button" className="primary-button first-cup-primary" disabled={!!busy} onClick={prepare}>{busy==='organize'?<><Sparkles size={18}/>한 줄을 정리하고 있어요…</>:<>한 줄로 카드 만들기 <ArrowRight size={18}/></>}</button>}
+   {preview&&<div className="first-cup-preview" aria-label="저장 전 테이스팅 카드"><span>YOUR TASTING NOTE · {saved?'보관한 카드':example?'체험 예시':'저장 전'}</span><h3>{value.beanName||'오늘의 한 잔'}</h3><p>{value.note}</p>{value.tastes.length>0&&<div className="first-cup-tags">{value.tastes.map(x=><span key={x}>{x}</span>)}</div>}{value.soundtrack&&<small>♫ {value.soundtrack.track}</small>}
+    {!saved&&<details><summary>원두 이름이나 내린 방법도 남길래요</summary><label>원두 이름<input disabled={busy==='save'} maxLength={120} value={value.beanName} onChange={e=>setValue(v=>({...v,beanName:e.target.value}))}/></label><label>로스터리<input disabled={busy==='save'} maxLength={100} value={value.roastery} onChange={e=>setValue(v=>({...v,roastery:e.target.value}))}/></label><label>내린 방법<input disabled={busy==='save'} maxLength={60} value={value.brewMethod} onChange={e=>setValue(v=>({...v,brewMethod:e.target.value}))}/></label></details>}
+    {example?<button type="button" className="primary-button" onClick={()=>{setPreview(false);document.getElementById(inputId)?.focus();}}>내 느낌으로 바꿔보기</button>:!saved?<button type="button" className="primary-button" disabled={!!busy} onClick={save}>{busy==='save'?'보관 중…':real&&!authStore.token?'로그인하고 내 카드 보관':'내 카드에 보관하기'}</button>:<div className="first-cup-saved"><Check size={18}/><strong>내 진열장에 보관했어요</strong><Link to={`/coffee/${saved}`}>기록 열기 ↗</Link><button type="button" className="ghost-button" onClick={()=>{change(blank());setPreview(false);}}>다른 한 잔 남기기</button></div>}
+   </div>}
+   {notice&&<p role="status" className="first-cup-notice">{notice}</p>}{error&&<p role="alert" className="resource-error">{error}</p>}{storageError&&<p role="alert">{storageError}</p>}
+   <p className="first-cup-privacy">{ai?.available?'카드 만들기를 누르면 이 문장만 OpenAI에 보내 정리합니다. ':''}{real&&!authStore.token?'가입 전에도 카드 만들기와 음악 듣기를 체험해요. 보관할 때만 로그인하세요.':real?'보관한 카드는 내 계정에서 다시 꺼내볼 수 있어요.':'체험 기록은 이 브라우저에 보관됩니다.'}</p>
+  </div>
+  <BrewPlaylist selected={value.soundtrack} onSelect={saved||busy==='save'?undefined:song=>{setValue(v=>({...v,soundtrack:matchedSoundtrack(song,'직접 고른 브루잉 플레이리스트')}));setNotice(`${song.track}을 골랐어요. 카드와 함께 보관할 수 있어요.`);}}/>
+  {authMode&&<AuthModal initialMode={authMode} onClose={()=>{setAuthMode(null);loginRequested.current=false;}} onAuthenticated={()=>setAuthMode(null)}/>}
+ </section>;
+}

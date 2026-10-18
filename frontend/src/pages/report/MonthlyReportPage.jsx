@@ -11,7 +11,7 @@ import { useApiResource } from "../../hooks/useApiResource.js";
 
 function Ranking({ title, eyebrow, items, field, kind }) {
   const counts = new Map();
-  items.forEach(item => { if(item[field]) counts.set(item[field], (counts.get(item[field]) || 0) + 1); });
+  items.forEach(item => { if(item[field]&&!(field==="bean"&&item[field]==="원두 미기록")) counts.set(item[field], (counts.get(item[field]) || 0) + 1); });
   const ranked = [...counts].sort((a,b) => b[1]-a[1]).slice(0,5);
   const max = Math.max(1,...ranked.map(item => item[1]));
   return <section className="panel ranking-panel"><p className="eyebrow">{eyebrow}</p><h3>{title}</h3>{ranked.length ? ranked.map(([name,count],index) => <div className={`rank-row ${kind}`} key={name}><span className="rank-index">{String(index+1).padStart(2,"0")}</span><div><div className="rank-label"><strong>{name}</strong><span>{count}회</span></div><div className="rank-track"><i style={{width:`${count/max*100}%`}}/></div></div></div>) : <div className="report-no-data"><p>이번 달의 기록이 아직 없어요.</p><Link to="/coffee/write">첫 기록 남기기 ↗</Link></div>}</section>;
