@@ -13,5 +13,7 @@ class MonthlyPickSourceTest {
   for(String url:new String[]{"http://127.0.0.1/product/detail.html?product_no=901","https://unspecialty.com.evil.test/product/detail.html?product_no=901","https://user@unspecialty.com/product/detail.html?product_no=901","https://unspecialty.com:443/product/detail.html?product_no=901","https://unspecialty.com/api/secret?product_no=901","https://unspecialty.com/product/detail.html?product_no=901&redirect=http://localhost"}) assertThrows(CustomException.class,()->MonthlyPickSourceService.validateProductUrl(url));
   assertEquals("unspecialty.com",MonthlyPickSourceService.validateProductUrl("https://unspecialty.com/product/detail.html?product_no=901").getHost());
   assertThrows(CustomException.class,()->MonthlyPickSourceService.validateDataUrl("https://127.0.0.1/data.json"));
+  assertEquals("d22c6ea6lqg2pi.cloudfront.net",MonthlyPickSourceService.validateDataUrl("https://d22c6ea6lqg2pi.cloudfront.net/UNDERBEAN/UNDERBEAN.json").getHost());
+  assertThrows(CustomException.class,()->MonthlyPickSourceService.validateDataUrl("https://evil.cloudfront.net/UNDERBEAN.json"));
  }
 }

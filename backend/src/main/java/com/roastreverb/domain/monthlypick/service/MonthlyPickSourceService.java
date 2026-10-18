@@ -31,7 +31,7 @@ public class MonthlyPickSourceService {
     public static URI validateDataUrl(String value) {
         try {
             URI uri=URI.create(value);
-            if (!"https".equals(uri.getScheme()) || !"unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com".equals(uri.getHost()) || uri.getUserInfo()!=null || uri.getPort()!=-1 || !uri.getPath().endsWith(".json")) throw new IllegalArgumentException();
+            if (!"https".equals(uri.getScheme()) || !Set.of("unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com","d22c6ea6lqg2pi.cloudfront.net").contains(uri.getHost()) || uri.getUserInfo()!=null || uri.getPort()!=-1 || !uri.getPath().endsWith(".json")) throw new IllegalArgumentException();
             return uri;
         } catch(Exception ex) { throw new CustomException(HttpStatus.BAD_GATEWAY,"지원하지 않는 원두 자료 주소입니다."); }
     }
@@ -70,7 +70,11 @@ public class MonthlyPickSourceService {
     }
     private Map<String,Object> parse(String html,String source) throws Exception {
         String title=match(html,"<meta\\s+property=[\"']og:title[\"']\\s+content=[\"']([^\"']+)").replaceAll("\\s*-\\s*언스페셜티.*$","");
-        String month=match(title,"(\\d{1,2})월\\s*커피\\s*월픽");
+        String edition=title.matches(".*글로벌\\s*(커피\\s*)?월픽.*")?"global":title.matches(".*커피\\s*스몰\\s*월픽.*")?"small":"regular";
+        String month=match(title,"(\\d{1,2})월\\s*커피\\s*(?:스몰\\s*)?월픽");
+        var period=Pattern.compile("\\((\\d{1,2})/(\\d{1,2})\\s*~\\s*(\\d{1,2})/(\\d{1,2})\\)").matcher(title);
+        boolean hasPeriod=period.find();
+        if(month.isBlank() && edition.equals("global") && hasPeriod) month=period.group(1);
         String data=match(html,"<usf-general-price-list\\b[^>]*\\brel=[\"']([^\"']+)").replace("&amp;","&");
         if(month.isBlank() || data.isBlank()) throw new IllegalStateException("Not a monthly pick");
         String year=match(html,"(20\\d{2})년\\s*\\d{1,2}/");
@@ -81,6 +85,8 @@ public class MonthlyPickSourceService {
             try { stock=json.readValue(decoded,Map.class); }catch(Exception ignored) { /* Availability remains unknown. */ }
         }
         var metadata=new LinkedHashMap<String,Object>();
+        metadata.put("edition",edition);
+        if(hasPeriod){metadata.put("saleStart",LocalDate.of(Integer.parseInt(year),Integer.parseInt(period.group(1)),Integer.parseInt(period.group(2))).toString());metadata.put("saleEnd",LocalDate.of(Integer.parseInt(year),Integer.parseInt(period.group(3)),Integer.parseInt(period.group(4))).toString());}
         metadata.put("title",title); metadata.put("month",year+"-"+String.format("%02d",Integer.parseInt(month))); metadata.put("sourceUrl",source);metadata.put("detailSourceUrl",data);
         metadata.put("roastery",title.replaceAll("^.*?월픽\\]\\s*","").replaceAll("\\s*\\(.*$","")); metadata.put("stock",stock);
         JsonNode original=json.readTree(fetch(validateDataUrl(data)));

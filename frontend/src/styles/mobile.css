@@ -55,3 +55,5 @@
  .monthly-color-filters i{flex-shrink:0}
 }
 @media(max-width:360px){.monthly-color-filters{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+.monthly-edition-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}.monthly-edition-tabs button{min-width:0;min-height:64px;padding:12px;border:1px solid #ccd3bf;border-radius:10px;background:#fff;color:#293e2e;font:600 14px/1.5 var(--rr-ui-font);cursor:pointer}.monthly-edition-tabs button[aria-pressed=true]{background:#293e2e;color:#fff}.monthly-edition-tabs button:disabled{opacity:.5;cursor:default}.monthly-edition-tabs small{display:block;font-size:11px;font-weight:400;margin-top:4px;overflow-wrap:anywhere}.monthly-sale-period{font-size:12px;line-height:1.8;color:#66715a;margin-bottom:24px}@media(max-width:600px){.monthly-edition-tabs{gap:6px}.monthly-edition-tabs button{font-size:12px;padding:10px 4px}.monthly-edition-tabs small{font-size:10px}}

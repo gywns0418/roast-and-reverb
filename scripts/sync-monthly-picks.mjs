@@ -2,6 +2,7 @@ import { readFile, mkdir, writeFile, rename } from "node:fs/promises";
 import { resolve } from "node:path";
 import {
   sourceUrl,
+  discoverMonthlyUrls,
   parseSourceHtml,
   normalizeMonthlySource,
 } from "../frontend/src/utils/monthlySource.js";
@@ -21,36 +22,10 @@ const args = process.argv.slice(2);
 let urls = args.filter((arg) => arg.startsWith("https://"));
 if (!urls.length) {
   const now = new Date();
-  const month = Number(
-    new Intl.DateTimeFormat("en-US", {
-      timeZone: "Asia/Seoul",
-      month: "numeric",
-    }).format(now),
-  );
   const html = await readPublic(
     "https://unspecialty.com/product/monthly_pick.html?cate_no=79",
   );
-  const anchors = [
-    ...html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi),
-  ];
-  urls = [
-    ...new Set(
-      anchors
-        .filter(
-          ([, href, content]) =>
-            href.includes("product_no=") &&
-            new RegExp(`(?:^|[^0-9])${month}월\\s*커피\\s*월픽`).test(
-              content.replace(/<[^>]+>/g, " "),
-            ),
-        )
-        .map(([, href]) =>
-          sourceUrl(
-            new URL(href.replaceAll("&amp;", "&"), "https://unspecialty.com")
-              .href,
-          ),
-        ),
-    ),
-  ];
+  urls = discoverMonthlyUrls(html, now);
   if (!urls.length)
     throw new Error("당월 월픽 링크가 아직 없습니다. 기존 자료는 유지합니다.");
 }

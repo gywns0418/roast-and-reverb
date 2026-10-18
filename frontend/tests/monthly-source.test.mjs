@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
   sourceUrl,
+  monthlyEdition,
+  discoverMonthlyUrls,
   dataUrl,
   parseSourceHtml,
   normalizeMonthlySource,
@@ -107,4 +109,19 @@ test("missing source structure fails rather than fabricating a new month or empt
     ),
   );
   assert.throws(() => normalizeMonthlySource({}, { items: [] }));
+});
+
+test('discover all coffee editions, exclude old months and machines, respect actual sale dates',()=>{
+ const now=new Date('2026-10-18T01:00:00Z');
+ const titles=['[10월 커피 월픽] UFO (10/1~10/31)','[글로벌 월픽] Loquat Coffee (10/12~10/18)','[10월 커피 스몰월픽] 언더빈 (10/18~10/31)','[10월 머신 월픽] 도구','[9월 커피 월픽] 이전 (9/1~9/30)'];
+ const html=titles.map((t,i)=>`<a href="/product/detail.html?product_no=${900+i}"><span>${t}</span></a>`).join('');
+ assert.equal(discoverMonthlyUrls(html,now).length,3);
+ const global=monthlyEdition(titles[1],now);assert.equal(global.edition,'global');assert.equal(global.month,'2026-10');assert.equal(global.saleStart,'2026-10-12');
+ assert.equal(monthlyEdition(titles[2],now).edition,'small');
+ assert.throws(()=>dataUrl('https://evil.cloudfront.net/data.json'));
+ assert.ok(dataUrl('https://d22c6ea6lqg2pi.cloudfront.net/UNDERBEAN/UNDERBEAN.json'));
+ const fixture='<meta property="og:title" content="'+titles[1]+' - 언스페셜티 몰"><usf-general-price-list rel="https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/LOQUAT/LOQUAT.json">';
+ const metadata=parseSourceHtml(fixture,'https://unspecialty.com/product/detail.html?product_no=930',now);
+ const product=normalizeMonthlySource(metadata,{items:[{name:'Coffee',type:'single origin',openAt:0,details:{specs:[]}}]},new Date('2026-10-19T01:00:00Z'));
+ assert.equal(product.items[0].openDate,'2026-10-12');assert.equal(product.items[0].availability,'ended');
 });
