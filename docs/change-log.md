@@ -225,3 +225,5 @@ PR #15(청음실)와 #17(익숙함/발견 반영)을 dev에 병합하고 PR #16�
 ## 2026-10-18 자동 월픽 갱신
 
 공식원문57종 유지, 2품절/1판매가능 상태변경. 재수집 무변경, 원문컵노트/가격/안정ID보존. 초기 의존성없는 격리checkout의 테스트실패는 npm ci 이후 재검증했다. 개인원본 미수정·미공개. 유지관리 checkout roast-reverb-maintenance-20261018.
+
+동일 PR 이미지검사의 실제 회귀: Trivy libexpat2.8.5-r0 CVE-2026-77214 HIGH/fixed2.9.0-r0로 실패. upstream https://github.com/libexpat/libexpat/blob/R_2_9_0/expat/Changes 확인. 루트/백엔드 런타임 Dockerfile 모두 apk --upgrade libexpat>=2.9.0-r0 최소버전 강제. 보안스캔을 우회하지 않고 동일CI 재실행으로 실제패키지/기동/취약점 재검증한다. 출처자료와별개신규실패를같이해결하며 REA 제한범위분석 실행.
