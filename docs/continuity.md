@@ -349,3 +349,7 @@ feature/first-cup-experience를 main에서 분기하고 최신dev0b4f362통합. 
 main에서 feature/monthly-pick-editions 분기 후 최신 dev7f147f5 통합. 공식 상품930/945 확인, 기존 정규57종에 글로벌 Loquat9종·스몰 언더빈34종 추가. 일반커피월픽 제목만 찾던 발견기를 세 시리즈·당월 판매기간으로 확장(머신/이전달 제외), 반복수집 changed:false. 스몰의 공식 데이터 CDN d22c6ea6lqg2pi.cloudfront.net만 정확한 호스트로 허용하며 다른 CloudFront 도메인은 거부. 서버 링크갱신도 글로벌/스몰 제목·판매일 파싱을 지원. 탭 전환시 상품·출처·기간·필터·비교선택 일치, 모바일 같은크기64px 버튼. 글로벌 공개JSON에 없는 컵노트/가격/산지는 추측하지 않고 미기재·원문확인 표시. 프런트77테스트/build 검증, 서버검사는 CI에서 이어 확인.
 
 별도 체험화면+봉인키 운영배포는 사용자가 다시 명시적으로 승인했으나 accept-deploy 도구가 또 승인없음으로 취소. 우회 배포하지 않고 열린 Railway의 Deploy 직접누르기를 async요청. 키 봉인·pending 및 기존운영 보존. 월픽 PR/게시 결과와 운영 결과는 후속확인.
+
+## 2026-10-18 대시보드 로딩 중앙 정렬 보강
+
+main에서 feature/dashboard-loading-center 분기·dev7403b79 통합. 일반PC 재현에서는 기존 오버레이도 중앙이었으나 확대/모바일 visual viewport 변화에 대응하도록 실제보이는화면 offset/width/height를 구독해 고정오버레이에 반영. 내부내용은 화면50%/50%+translate로 중앙 고정해 페이지 그리드와분리. body portal/배경inert/원두회전/최소2초 유지. 모바일·PC(브라우저90%확대상태)에서 visual1600x1000중심800,500 및355.555x822.222중심177.777,411.111 확인. 프런트77/build/비밀정보패턴검사 성공. 운영반영은 PR검사후진행.
