@@ -97,7 +97,7 @@ public class MonthlyPickSourceService {
         // Return factual fields only. Marketing prose, images and executable markup are omitted.
         var safe=json.createObjectNode(); safe.set("order",original.path("order")); var items=safe.putArray("items");
         for(JsonNode item:original.path("items")) {
-            var out=items.addObject(); for(String key:List.of("name","nameEnglish","type","openAt","options")) if(item.has(key)) out.set(key,item.get(key));
+            var out=items.addObject(); for(String key:List.of("name","nameEnglish","type","openAt","options","flavors")) if(item.has(key)) out.set(key,item.get(key));
             var heading=out.putObject("heading");heading.set("prices",item.path("heading").path("prices"));
             var detail=out.putObject("details");for(String key:List.of("specs","gauges","updatedAt")) if(item.path("details").has(key)) detail.set(key,item.path("details").get(key));
         }
