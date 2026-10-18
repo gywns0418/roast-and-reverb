@@ -12,6 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(properties="spring.datasource.url=jdbc:h2:mem:security_audit;MODE=MySQL;DATABASE_TO_LOWER=TRUE;NON_KEYWORDS=MEMBER,BODY;DB_CLOSE_DELAY=-1")
 @AutoConfigureMockMvc
 class SecurityAuditTest {
+ @Test void onlyThePublicPurchaseTemplateCanBeDownloadedWithoutLogin()throws Exception{
+  mvc.perform(get("/templates/bean-purchase.md")).andExpect(status().isOk()).andExpect(content().string(org.hamcrest.Matchers.containsString("구매 원두")));
+  mvc.perform(get("/templates/private.md")).andExpect(status().isUnauthorized());
+  mvc.perform(get("/api/coffee")).andExpect(status().isUnauthorized());
+ }
  @Autowired MockMvc mvc; @Autowired ObjectMapper json;
  String signup(String name)throws Exception{return "Bearer "+json.readTree(mvc.perform(post("/api/auth/join").contentType("application/json").content(json.writeValueAsString(Map.of("email",name+"@example.com","password","security-test-123","nickname",name)))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString()).path("data").path("token").asText();}
  long create(String resource,String auth,Map<String,Object> body,String key)throws Exception{return json.readTree(mvc.perform(post("/api/"+resource).header("Authorization",auth).contentType("application/json").content(json.writeValueAsString(body))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString()).path("data").path(key).asLong();}
