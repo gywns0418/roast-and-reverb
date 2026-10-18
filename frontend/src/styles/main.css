@@ -23,7 +23,7 @@
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; background: var(--ground); }
+body { margin: 0; min-width: 0; background: var(--ground); }
 a { color: inherit; text-decoration: none; }
 button, input, textarea { font: inherit; }
 

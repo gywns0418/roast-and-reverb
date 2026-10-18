@@ -18,9 +18,12 @@ import PageShell from "../../components/common/PageShell.jsx";
 import { monthlyCatalog, importMonthlyUrl } from "../../api/monthlyCatalog.js";
 import { monthlyPickApi } from "../../api/monthlyPickApi.js";
 
+const editions=[{key:"regular",label:"월픽"},{key:"global",label:"글로벌 월픽"},{key:"small",label:"스몰 월픽"}];
+const editionOf=item=>item.edition||(item.title?.includes("글로벌")?"global":item.title?.includes("스몰")?"small":"regular");
 const groups = Object.fromEntries(Object.entries(monthlyGroups).map(([key,value]) => [key,value.label]));
 const stateLabel = {
   available: "구매 가능",
+  ended: "판매 종료",
   "sold-out": "품절",
   upcoming: "오픈 예정",
   unknown: "재고 미확인",
@@ -166,8 +169,9 @@ export default function MonthlyPickPage() {
     monthlyCatalog()
       .then((items) => {
         setCatalog(items);
-        setProduct(items[0] || null);
-        if (items[0]) setUrl(items[0].sourceUrl);
+        const first=items.find(x=>editionOf(x)==="regular")||items[0];
+        setProduct(first || null);
+        if (first) setUrl(first.sourceUrl);
       })
       .catch((err) => setError(err.message));
   }, []);
@@ -262,6 +266,8 @@ export default function MonthlyPickPage() {
       eyebrow="THE MONTHLY EDIT"
       subtitle="새로운 원두를 발견하고, 향미를 비교하고, 다음 한 잔을 골라보세요."
     >
+      <div className="monthly-edition-tabs" role="group" aria-label="월픽 시리즈 선택">{editions.map(edition=>{const target=catalog.find(item=>editionOf(item)===edition.key&&item.month===(product?.month||catalog[0]?.month));return <button type="button" key={edition.key} aria-pressed={editionOf(product||{})===edition.key} disabled={!target} onClick={()=>{setProduct(target);setUrl(target.sourceUrl);setSelected([]);setActive(null);setCategory('all');setColor('all');setQuery('');setAvailableOnly(false);setHideDecaf(false);setFavoritesOnly(false);setMessage('');}}>{edition.label}<small>{target?target.roastery:'아직 공개 전'}</small></button>;})}</div>
+      {product?.saleStart&&<p className="monthly-sale-period">판매 기간 {product.saleStart} ~ {product.saleEnd} · 판매처 기준</p>}
       <div className="monthly-editorial">
         <div>
           <span className="edition-label">
@@ -292,7 +298,7 @@ export default function MonthlyPickPage() {
             </span>
             <span>
               <b>
-                {new Set(beans.map((item) => item.origin).filter(Boolean)).size}
+                {new Set(beans.map((item) => item.origin).filter(Boolean)).size || "미기재"}
               </b>{" "}
               산지
             </span>
@@ -344,6 +350,7 @@ export default function MonthlyPickPage() {
           {message}
         </p>
       )}
+      {beans.some(item=>!item.flavors.length||!item.prices.length)&&<p className="source-small">일부 원두의 컵노트·가격은 판매처 공개 자료에 없어 원문에서 확인해 주세요.</p>}
       <div className="monthly-source-line">
         <span>
           상품페이지 확인 {dateLabel(product?.sourceCheckedAt)}
@@ -354,9 +361,9 @@ export default function MonthlyPickPage() {
           출처 보기 <ArrowUpRight size={13} />
         </a>
       </div>
-      {catalog.length > 1 && (
+      {catalog.filter(item=>editionOf(item)===editionOf(product||{})).length > 1 && (
         <div className="monthly-history">
-          {catalog.map((item) => (
+          {catalog.filter(item=>editionOf(item)===editionOf(product||{})).map((item) => (
             <button
               className={
                 item.sourceUrl === product?.sourceUrl

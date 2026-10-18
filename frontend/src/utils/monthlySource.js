@@ -18,8 +18,7 @@ export function dataUrl(value) {
   const url = new URL(value);
   if (
     url.protocol !== "https:" ||
-    url.hostname !==
-      "unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com" ||
+    !["unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com", "d22c6ea6lqg2pi.cloudfront.net"].includes(url.hostname) ||
     url.username ||
     url.password ||
     url.port ||
@@ -34,17 +33,33 @@ const unescapeHtml = (value) =>
     .replaceAll("&amp;", "&")
     .replaceAll("&quot;", '"')
     .replaceAll("&#39;", "'");
+export function monthlyEdition(title, now = new Date()) {
+  const edition = /글로벌\s*(?:커피\s*)?월픽/.test(title) ? 'global' : /커피\s*스몰\s*월픽/.test(title) ? 'small' : /커피\s*월픽/.test(title) ? 'regular' : null;
+  const period = title.match(/\((\d{1,2})\/(\d{1,2})\s*~\s*(\d{1,2})\/(\d{1,2})\)/);
+  const month = Number(title.match(/(\d{1,2})월\s*커피/)?.[1] || (edition === 'global' ? period?.[1] : 0));
+  if (!edition || month < 1 || month > 12) throw new Error('지원하는 커피 월픽 제목이 아닙니다.');
+  const year = new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',year:'numeric'}).format(now);
+  const date = (m,d) => {const value=`${year}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;if(new Date(value+'T00:00:00Z').toISOString().slice(0,10)!==value)throw new Error('판매 날짜를 확인해 주세요.');return value;};
+  return {edition, month:`${year}-${String(month).padStart(2,'0')}`, ...(period?{saleStart:date(period[1],period[2]),saleEnd:date(period[3],period[4])}:{})};
+}
+export function discoverMonthlyUrls(html, now = new Date()) {
+ const expected=monthlyEdition(`[${Number(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',month:'numeric'}).format(now))}월 커피 월픽]`,now).month;
+ return [...new Set([...html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)].flatMap(([,href,content])=>{
+  const title=unescapeHtml(content.replace(/<[^>]+>/g,' ').replace(/\s+/g,' '));
+  try {if(/판매\s*종료/.test(title)||monthlyEdition(title,now).month!==expected)return [];return [sourceUrl(new URL(unescapeHtml(href),'https://unspecialty.com').href)];}catch{return [];}
+ }))];
+}
 export function parseSourceHtml(html, url, now = new Date()) {
   const title = unescapeHtml(
     html.match(
       /<meta\s+property=["']og:title["']\s+content=["']([^"']+)/i,
     )?.[1] || "",
   ).replace(/\s*-\s*언스페셜티.*$/, "");
-  const monthNumber = title.match(/(\d{1,2})월\s*커피\s*월픽/)?.[1];
+  const edition = monthlyEdition(title, now);
   const detail = html.match(
     /<usf-general-price-list\b[^>]*\brel=["']([^"']+)/i,
   )?.[1];
-  if (!monthNumber || !detail)
+  if (!detail)
     throw new Error(
       "월픽 제목 또는 공개 원두 자료를 찾지 못했습니다. 이전 자료는 유지합니다.",
     );
@@ -63,7 +78,8 @@ export function parseSourceHtml(html, url, now = new Date()) {
   }
   return {
     title,
-    month: `${year}-${monthNumber.padStart(2, "0")}`,
+    ...edition,
+    month: `${year}-${edition.month.slice(5)}`,
     roastery: title.replace(/^.*?월픽\]\s*/, "").replace(/\s*\(.*$/, ""),
     sourceUrl: sourceUrl(url),
     detailSourceUrl: dataUrl(unescapeHtml(detail)),
@@ -75,7 +91,7 @@ const cleanName = (name) => name.replace(/^\[[^\]]*오픈\]\s*/, "").trim();
 export function normalizeMonthlySource(metadata, data, now = new Date()) {
   if (!Array.isArray(data.items))
     throw new Error("공개 원두 자료 형식이 바뀌었습니다.");
-  const opening = { 0: `${metadata.month}-01` };
+  const opening = { 0: metadata.saleStart || `${metadata.month}-01` };
   const categoryOpenings = {};
   let lastOpening = opening[0];
   for (const row of data.order || []) {
@@ -140,7 +156,9 @@ export function normalizeMonthlySource(metadata, data, now = new Date()) {
           ),
       );
       const availability =
-        openDate && openDate > today
+        metadata.saleEnd && metadata.saleEnd < today
+          ? "ended"
+          : openDate && openDate > today
           ? "upcoming"
           : variants.length
             ? available
