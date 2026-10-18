@@ -57,3 +57,5 @@ The release has concrete fixes and repeatable regression gates, but the open med
 Compatibility follow-up: the semantic worker previously depended on CDN/blob runtime factories, which the new script CSP would block. Its lockfile-pinned ONNX factory/WASM are now served as same-origin Vite assets, with the factory blob cache disabled. No script CDN or blob exception was added; model weights still download from the existing approved Hugging Face hosts. The unused jsDelivr connection allowance was removed.
 
 Isolated Chrome execution under the enforced CSP completed real inference on a public Korean example: 384-dimensional vector, no console errors/warnings. The test created no service account or record.
+
+2026-10-18 follow-up: the next runtime scan detected an additional fixable HIGH OS finding, libexpat CVE-2026-77214 (2.8.5-r0; fixed in 2.9.0-r0). The release gate blocked deployment. Refresh the Alpine runtime packages during image build, then rerun the image scanner and startup/lifecycle checks; do not suppress the advisory. See the [maintainer's release notice](https://blog.hartwork.org/posts/expat-2-9-0-released/).
