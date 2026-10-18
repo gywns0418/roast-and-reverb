@@ -98,6 +98,6 @@ public class MonthlyPickSourceService {
             var heading=out.putObject("heading");heading.set("prices",item.path("heading").path("prices"));
             var detail=out.putObject("details");for(String key:List.of("specs","gauges","updatedAt")) if(item.path("details").has(key)) detail.set(key,item.path("details").get(key));
         }
-        return Map.of("metadata",metadata,"data",safe);
+        return Map.of("metadata",metadata,"data",json.convertValue(safe,Map.class));
     }
 }
