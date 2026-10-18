@@ -43,3 +43,15 @@
 .main details>summary::before,.sidebar .nav-more>summary::before{content:'';display:block;flex:0 0 7px;width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);margin-right:4px;align-self:center}
 .main details[open]>summary::before,.sidebar .nav-more[open]>summary::before{transform:rotate(45deg)}
 .main details>summary:focus-visible{outline:3px solid #879c62;outline-offset:3px;border-radius:8px}
+
+/* The full spectrum is a visual filter cue; its text remains the accessible label. */
+.monthly-color-filters .color-spectrum{flex:0 0 18px;background:radial-gradient(circle,#a7a7a777 0%,transparent 70%),conic-gradient(#f03838,#ffdc32,#39d64c,#18d9cb,#3663ff,#a632ed,#f03838)}
+@media(max-width:760px){
+ .monthly-categories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;overflow:visible;padding:0;border:0}
+ .monthly-categories button{min-width:0;min-height:48px;padding:10px 6px;white-space:normal;font-size:12px;line-height:1.5;border:1px solid #d9ddce;border-radius:8px;background:#fff}
+ .monthly-color-filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:24px}
+ .monthly-color-filters>span{grid-column:1/-1;margin:0 0 2px;font-size:14px}
+ .monthly-color-filters button{justify-content:flex-start;min-width:0;min-height:48px;padding:10px 8px;gap:7px;line-height:1.5}
+ .monthly-color-filters i{flex-shrink:0}
+}
+@media(max-width:360px){.monthly-color-filters{grid-template-columns:repeat(3,minmax(0,1fr))}}

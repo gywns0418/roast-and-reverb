@@ -1,5 +1,5 @@
-.ritual-loading{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:24px;background:rgba(246,245,239,.86);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#283c2a;text-align:center;cursor:wait;overscroll-behavior:contain}
-.ritual-loading-content{width:min(100%,400px);word-break:keep-all}
+.ritual-loading{position:fixed;inset:0;z-index:10000;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;width:100%;height:100%;height:100dvh;box-sizing:border-box;margin:0;padding:24px;background:rgba(246,245,239,.86);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#283c2a;text-align:center;cursor:wait;overscroll-behavior:contain}
+.ritual-loading-content{width:100%;max-width:400px;min-width:0;margin-inline:auto;box-sizing:border-box;word-break:keep-all;overflow-wrap:anywhere}
 .ritual-loading h2{font-size:22px;line-height:1.5;margin:12px 0 8px}
 .ritual-loading p{margin:0;line-height:1.7;font-size:14px}
 .ritual-loading .eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em}

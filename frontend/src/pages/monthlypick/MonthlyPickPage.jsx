@@ -401,7 +401,7 @@ export default function MonthlyPickPage() {
           </button>
         ))}
       </div>
-      <div className="monthly-color-filters" aria-label="판매처 색감 필터"><span>어떤 색감의 커피?</span><button type="button" aria-pressed={color === "all"} onClick={() => setColor("all")}>모든 색</button>{colorFamilies.map(([key,label,hex]) => <button type="button" key={key} aria-pressed={color === key} onClick={() => setColor(key)}><i style={{backgroundColor:hex}} />{label}</button>)}</div>
+      <div className="monthly-color-filters" aria-label="판매처 색감 필터"><span>어떤 색감의 커피?</span><button type="button" aria-pressed={color === "all"} onClick={() => setColor("all")}><i className="color-spectrum" aria-hidden="true"/>모든 색</button>{colorFamilies.map(([key,label,hex]) => <button type="button" key={key} aria-pressed={color === key} onClick={() => setColor(key)}><i aria-hidden="true" style={{backgroundColor:hex}} />{label}</button>)}</div>
       <p className="color-help">색감은 판매처가 표현한 원두별 팔레트입니다. 향미를 고르는 시각적 단서로 활용해보세요. 원두 심볼은 상품 사진이 아닌 정보 그래픽입니다.</p>
       <div className="monthly-filters">
         <label className="monthly-search">
