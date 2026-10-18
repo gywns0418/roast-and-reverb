@@ -51,7 +51,7 @@
  .monthly-categories button{min-width:0;min-height:48px;padding:10px 6px;white-space:normal;font-size:12px;line-height:1.5;border:1px solid #d9ddce;border-radius:8px;background:#fff}
  .monthly-color-filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:24px}
  .monthly-color-filters>span{grid-column:1/-1;margin:0 0 2px;font-size:14px}
- .monthly-color-filters button{justify-content:flex-start;min-width:0;min-height:48px;padding:10px 8px;gap:7px;line-height:1.5}
+ .monthly-color-filters button{justify-content:flex-start;min-width:0;min-height:48px;padding:10px 6px;gap:6px;line-height:1.5;white-space:nowrap}
  .monthly-color-filters i{flex-shrink:0}
 }
 @media(max-width:360px){.monthly-color-filters{grid-template-columns:repeat(3,minmax(0,1fr))}}
