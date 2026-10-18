@@ -11,6 +11,17 @@ import java.util.concurrent.atomic.AtomicReference;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CompanionServiceTest {
+    @Test void creditFailureHasBoundedCooldownAndDoesNotClaimVerifiedReadiness() {
+        var clock=new java.util.concurrent.atomic.AtomicLong(100000);
+        var service=new CompanionService("test","test",new ObjectMapper(),URI.create("http://127.0.0.1:1/responses"),clock::get);
+        assertEquals("configured",service.status().get("state"));
+        assertThrows(CustomException.class,()->service.decode(429,"{\"error\":{\"code\":\"insufficient_quota\"}}"));
+        assertEquals(false,service.status().get("available"));
+        assertEquals("quota_exhausted",service.status().get("state"));
+        clock.addAndGet(60001);
+        assertEquals(true,service.status().get("available"));
+        assertEquals("configured",service.status().get("state"));
+    }
     final ObjectMapper json=new ObjectMapper();
     final CompanionService.Settings settings=new CompanionService.Settings("warm",76,.45,true,true,true);
     String completed(String answer) throws Exception {

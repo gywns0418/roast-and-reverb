@@ -22,10 +22,12 @@ public class CompanionService {
     private final String key, model;
     private final ObjectMapper json;
     private final URI endpoint;
+    private final java.util.function.LongSupplier clock;
     private final HttpClient http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(8)).build();
     private final Semaphore slot = new Semaphore(1);
     private final Map<Long, Long> recent = new ConcurrentHashMap<>();
-    private volatile boolean quotaBlocked;
+    private volatile long quotaBlockedUntil;
+    private boolean quotaBlocked(){return clock.getAsLong()<quotaBlockedUntil;}
     private static final Set<String> MOODS = Set.of("warm", "airy", "bright", "dusk");
     private static final String INSTRUCTIONS = """
         You are Roast & Reverb's warm Korean coffee-and-music companion. Respond naturally in Korean,
@@ -44,11 +46,14 @@ public class CompanionService {
         this(key, model, json, URI.create("https://api.openai.com/v1/responses"));
     }
     CompanionService(String key, String model, ObjectMapper json, URI endpoint) {
-        this.key=key; this.model=model; this.json=json; this.endpoint=endpoint;
+        this(key,model,json,endpoint,System::currentTimeMillis);
+    }
+    CompanionService(String key, String model, ObjectMapper json, URI endpoint, java.util.function.LongSupplier clock) {
+        this.key=key; this.model=model; this.json=json; this.endpoint=endpoint; this.clock=clock;
     }
     public Map<String,Object> status() {
-        return Map.of("configured", !key.isBlank(), "available", !key.isBlank() && !quotaBlocked,
-                "state", key.isBlank()?"missing_key":quotaBlocked?"quota_exhausted":"ready",
+        return Map.of("configured", !key.isBlank(), "available", !key.isBlank() && !quotaBlocked(),
+                "state", key.isBlank()?"missing_key":quotaBlocked()?"quota_exhausted":"configured",
                 "model", model);
     }
     private static CustomException error(HttpStatus status, String message) {return new CustomException(status,message);}
@@ -90,9 +95,9 @@ public class CompanionService {
     }
     private void enter(Long member) {
         if(key.isBlank())throw error(HttpStatus.SERVICE_UNAVAILABLE,"AI 서버 연결을 준비하고 있어요. 원문 카드 보관은 사용할 수 있습니다.");
-        if(quotaBlocked)throw error(HttpStatus.SERVICE_UNAVAILABLE,"AI 정리를 잠시 사용할 수 없어요. 원문은 그대로 보관할 수 있습니다.");
+        if(quotaBlocked())throw error(HttpStatus.SERVICE_UNAVAILABLE,"AI 이용 한도를 확인해야 합니다. 조치 후 1분 뒤 다시 시도할 수 있어요. 원문은 그대로 보관할 수 있습니다.");
         if(!slot.tryAcquire())throw error(HttpStatus.TOO_MANY_REQUESTS,"다른 문장을 정리하고 있어요. 잠시 뒤 다시 시도해 주세요.");
-        long now=System.currentTimeMillis();recent.entrySet().removeIf(e->now-e.getValue()>60000);
+        long now=clock.getAsLong();recent.entrySet().removeIf(e->now-e.getValue()>60000);
         if(now-recent.getOrDefault(member,0L)<5000){slot.release();throw error(HttpStatus.TOO_MANY_REQUESTS,"잠시 뒤 다음 문장을 보내 주세요.");}
         recent.put(member,now);
     }
@@ -131,7 +136,7 @@ public class CompanionService {
         if(status!=200) {
             String code=data.path("error").path("code").asText(), type=data.path("error").path("type").asText();
             if(Set.of("insufficient_quota","credit_balance_exhausted").contains(code)||"insufficient_quota".equals(type)) {
-                quotaBlocked=true;
+                quotaBlockedUntil=clock.getAsLong()+60000;
                 throw error(HttpStatus.SERVICE_UNAVAILABLE,"OpenAI API 크레딧이 소진됐습니다. 관리자가 잔액을 확인해 주세요.");
             }
             if(status==401||status==403)throw error(HttpStatus.SERVICE_UNAVAILABLE,"AI 서버의 키 또는 프로젝트 권한을 확인해야 합니다.");
