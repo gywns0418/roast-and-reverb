@@ -353,3 +353,5 @@ main에서 feature/monthly-pick-editions 분기 후 최신 dev7f147f5 통합. �
 ## 2026-10-18 대시보드 로딩 중앙 정렬 보강
 
 main에서 feature/dashboard-loading-center 분기·dev7403b79 통합. 일반PC 재현에서는 기존 오버레이도 중앙이었으나 확대/모바일 visual viewport 변화에 대응하도록 실제보이는화면 offset/width/height를 구독해 고정오버레이에 반영. 내부내용은 화면50%/50%+translate로 중앙 고정해 페이지 그리드와분리. body portal/배경inert/원두회전/최소2초 유지. 모바일·PC(브라우저90%확대상태)에서 visual1600x1000중심800,500 및355.555x822.222중심177.777,411.111 확인. 프런트77/build/비밀정보패턴검사 성공. 운영반영은 PR검사후진행.
+
+후속검증: PR47 dev6ce6559a186f8df04fd35408cc5de6c1e5975848 병합·Railway23045685-49be-4d43-8fbf-6f7346f2ee4d SUCCESS. feature39125773710 및 merge39125994915 Verify 전체성공, Pages39125994903 성공. 운영 대시보드 제목 ‘나의 기록을 펼치고 있어요.’ 상태에서 visual548x1218/내용중심274,609 일치. .local/dashboard-loading-centered-production.png 저장, 운영보안23/23통과. 임시QA HTML삭제·Vite5205종료. 개인기록·키·요금제 미변경. 운영탭을 열어두었음.
