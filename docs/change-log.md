@@ -231,3 +231,5 @@ PR #15(청음실)와 #17(익숙함/발견 반영)을 dev에 병합하고 PR #16�
 ## 2026-10-22 공개 월픽 자동 갱신
 
 공식당월원문945/901재확인: 언더빈신규1종·판매상태19종·영문명2종, UFO판매상태7종·원문갱신시각3종 반영. Loquat9종보존, 전체101종. 두번째수집무변경/기존ID삭제없음. 개인원본읽기전용·snapshot무변경. 별도maintenance20261022 checkout사용, 실행코드미수정.
+
+CI신규실패: npm audit가 Vite7.3.6의수정가능advisory묶음을HIGH로검출. https://github.com/advisories/GHSA-9jrq-w75r-8gcw 공식patched7.3.7확인(해당개별항목Low이며묶음최고등급과구분). 의존성범위를유지하고 lock의vite만7.3.7업데이트. audit0,81테스트/build재통과. REA제한범위5연결모듈분석성공. 실제보안검사를유지하며CI재확인.
