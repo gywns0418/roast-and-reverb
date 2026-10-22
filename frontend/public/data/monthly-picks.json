@@ -3,6 +3,264 @@
   "products": [
     {
       "schemaVersion": 1,
+      "title": "[글로벌 월픽] Loquat Coffee (10/12~10/18)",
+      "edition": "global",
+      "month": "2026-10",
+      "saleStart": "2026-10-12",
+      "saleEnd": "2026-10-18",
+      "roastery": "Loquat Coffee",
+      "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=930",
+      "detailSourceUrl": "https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/LOQUAT/LOQUAT.json",
+      "sourceCheckedAt": "2026-10-18T01:12:25.561Z",
+      "items": [
+        {
+          "id": "930-bc8dc302",
+          "name": "자몽꿀차 (언스페셜티 블렌드)",
+          "originalName": "자몽꿀차 (언스페셜티 블렌드)",
+          "nameEnglish": "",
+          "category": "unspecialty blend",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#e85d04",
+            "#faa307",
+            "#fed9b7"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-1",
+          "name": "#1 에티오피아 아바나 에스테이트 술라자 랜드레이스 워시드",
+          "originalName": "#1 에티오피아 아바나 에스테이트 술라자 랜드레이스 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#6247aa",
+            "#99d98c",
+            "#d9ed92"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-2",
+          "name": "#2 에티오피아 아바나 에스테이트 담무 랜드레이스 허니",
+          "originalName": "#2 에티오피아 아바나 에스테이트 담무 랜드레이스 허니",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#560bad",
+            "#9163cb",
+            "#faa307"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-3",
+          "name": "#3 코스타리카 에르바수 산 로케 콜드 퍼먼테이션 워시드",
+          "originalName": "#3 코스타리카 에르바수 산 로케 콜드 퍼먼테이션 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#faa307",
+            "#ffba08",
+            "#ffd15c"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-4",
+          "name": "#4 파나마 마운트 토투마스 카투아이 워시드 26-15",
+          "originalName": "#4 파나마 마운트 토투마스 카투아이 워시드 26-15",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#f26a8d",
+            "#f49cbb",
+            "#fed9b7"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-5",
+          "name": "#5 파나마 마운트 토투마스 아라 아마루 게이샤 콜드 퍼먼테이션 내추럴 26-08",
+          "originalName": "#5 파나마 마운트 토투마스 아라 아마루 게이샤 콜드 퍼먼테이션 내추럴 26-08",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#9163cb",
+            "#f49cbb",
+            "#d9ed92"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-6",
+          "name": "#6 미국 캘리포니아 선데이스 온 토로 카투라 워시드",
+          "originalName": "#6 미국 캘리포니아 선데이스 온 토로 카투라 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#d9ed92",
+            "#dde5b6",
+            "#ffc2d1"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-7",
+          "name": "#7 미국 캘리포니아 선데이스 온 토로 게이샤 이스트 이노큘레이션 워시드",
+          "originalName": "#7 미국 캘리포니아 선데이스 온 토로 게이샤 이스트 이노큘레이션 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#ff8fab",
+            "#ffb3c6",
+            "#fed9b7"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-8",
+          "name": "#8 에티오피아 게샤 빌리지 SL28 다크룸 내추럴",
+          "originalName": "[10.14 깜짝 오픈] #8 에티오피아 게샤 빌리지 SL28 다크룸 내추럴",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#ff0000",
+            "#fdfcdc",
+            "#ffdc5e"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        }
+      ],
+      "detailsCheckedAt": "2026-10-18T01:12:25.562Z"
+    },
+    {
+      "schemaVersion": 1,
       "title": "[10월 커피 스몰월픽] 언더빈 (10/18~10/31)",
       "edition": "small",
       "month": "2026-10",
@@ -11,7 +269,7 @@
       "roastery": "언더빈",
       "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=945",
       "detailSourceUrl": "https://d22c6ea6lqg2pi.cloudfront.net/UNDERBEAN/UNDERBEAN.json",
-      "sourceCheckedAt": "2026-10-18T01:12:25.100Z",
+      "sourceCheckedAt": "2026-10-22T11:18:46.688Z",
       "items": [
         {
           "id": "945-bb3695b3d",
@@ -147,7 +405,7 @@
           "id": "945-b8844815",
           "name": "가을한줌 (하우스 블렌드)",
           "originalName": "가을한줌 (하우스 블렌드)",
-          "nameEnglish": "A Handful of Autumn Blend",
+          "nameEnglish": "Nut+Grain Blend",
           "category": "blend",
           "origin": "",
           "region": "",
@@ -205,7 +463,7 @@
           ],
           "openDate": "2026-10-18",
           "availability": "available",
-          "sourceUpdatedAt": "2026-10-17T23:42:25+09:00",
+          "sourceUpdatedAt": "2026-10-18T15:48:42+09:00",
           "decaf": false,
           "darkRoast": true,
           "summary": ""
@@ -214,7 +472,7 @@
           "id": "945-b1525926d",
           "name": "구름한점 (하우스 블렌드)",
           "originalName": "구름한점 (하우스 블렌드)",
-          "nameEnglish": "A Single Cloud Blend",
+          "nameEnglish": "Summer Blend",
           "category": "blend",
           "origin": "",
           "region": "",
@@ -273,7 +531,7 @@
           ],
           "openDate": "2026-10-18",
           "availability": "available",
-          "sourceUpdatedAt": "2026-10-17T21:06:11+09:00",
+          "sourceUpdatedAt": "2026-10-18T15:49:03+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": ""
@@ -339,7 +597,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T21:07:05+09:00",
           "decaf": true,
           "darkRoast": false,
@@ -606,7 +864,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T19:54:33+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -694,7 +952,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T22:12:00+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -778,7 +1036,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T19:54:17+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -862,7 +1120,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T23:47:10+09:00",
           "decaf": false,
           "darkRoast": true,
@@ -946,7 +1204,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T23:46:32+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1031,7 +1289,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T23:46:01+09:00",
           "decaf": false,
           "darkRoast": true,
@@ -1121,7 +1379,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T19:54:20+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1209,7 +1467,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T23:45:32+09:00",
           "decaf": false,
           "darkRoast": true,
@@ -1298,7 +1556,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T19:54:19+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1387,7 +1645,7 @@
             }
           ],
           "openDate": "2026-10-22",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-17T19:54:19+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1480,7 +1738,7 @@
             }
           ],
           "openDate": "2026-10-22",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-17T19:54:37+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1569,7 +1827,7 @@
             }
           ],
           "openDate": "2026-10-22",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-17T19:54:36+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1657,7 +1915,7 @@
             }
           ],
           "openDate": "2026-10-22",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-17T23:44:48+09:00",
           "decaf": false,
           "darkRoast": true,
@@ -1838,7 +2096,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T22:16:07+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2288,7 +2546,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T20:09:27+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2464,7 +2722,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T22:16:34+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2742,7 +3000,7 @@
             }
           ],
           "openDate": "2026-10-22",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-17T23:44:02+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2831,11 +3089,99 @@
             }
           ],
           "openDate": "2026-10-22",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-17T22:16:43+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Colombia · Geisha · Anaerobic Natural"
+        },
+        {
+          "id": "945-39",
+          "name": "#39 과테말라 엘 인헤르또 게이샤 드라이드 온 체리 내추럴(2026 Lot)",
+          "originalName": "[10.22 오픈] #39 과테말라 엘 인헤르또 게이샤 드라이드 온 체리 내추럴(2026 Lot)",
+          "nameEnglish": "Guatemala El Injerto Geisha Dried on Cherry Natural (2026 Lot)",
+          "category": "special single",
+          "origin": "Guatemala",
+          "region": "La Libertad, Huehuetenango",
+          "variety": "Geisha",
+          "process": "Natural (Dried on Cherry)",
+          "roast": "Medium Light #83",
+          "flavors": [
+            "자스민",
+            "허니서클",
+            "복숭아",
+            "머스켓",
+            "오렌지"
+          ],
+          "flavorColors": [
+            "#f2e9d8",
+            "#e8833a",
+            "#f7b48c"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 허니서클, 복숭아, 머스켓, 오렌지"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Medium Light #83"
+            },
+            {
+              "label": "국가",
+              "value": "Guatemala"
+            },
+            {
+              "label": "지역",
+              "value": "La Libertad, Huehuetenango"
+            },
+            {
+              "label": "농장",
+              "value": "El Injerto"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Arturo Manuel Aguirre Sáenz"
+            },
+            {
+              "label": "고도",
+              "value": "1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural (Dried on Cherry)"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 4
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "50g",
+              "price": 23700
+            }
+          ],
+          "openDate": "2026-10-22",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-21T20:56:38+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Guatemala · Geisha · Natural (Dried on Cherry)"
         },
         {
           "id": "945-37",
@@ -2927,265 +3273,7 @@
           "summary": "Ecuador · Pacamara · 24h Fermentation Washed"
         }
       ],
-      "detailsCheckedAt": "2026-10-18T01:12:25.102Z"
-    },
-    {
-      "schemaVersion": 1,
-      "title": "[글로벌 월픽] Loquat Coffee (10/12~10/18)",
-      "edition": "global",
-      "month": "2026-10",
-      "saleStart": "2026-10-12",
-      "saleEnd": "2026-10-18",
-      "roastery": "Loquat Coffee",
-      "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=930",
-      "detailSourceUrl": "https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/LOQUAT/LOQUAT.json",
-      "sourceCheckedAt": "2026-10-18T01:12:25.561Z",
-      "items": [
-        {
-          "id": "930-bc8dc302",
-          "name": "자몽꿀차 (언스페셜티 블렌드)",
-          "originalName": "자몽꿀차 (언스페셜티 블렌드)",
-          "nameEnglish": "",
-          "category": "unspecialty blend",
-          "origin": "",
-          "region": "",
-          "variety": "",
-          "process": "",
-          "roast": "",
-          "flavors": [],
-          "flavorColors": [
-            "#e85d04",
-            "#faa307",
-            "#fed9b7"
-          ],
-          "specs": [],
-          "gauges": [],
-          "prices": [],
-          "openDate": "2026-10-12",
-          "availability": "available",
-          "sourceUpdatedAt": null,
-          "decaf": false,
-          "darkRoast": false,
-          "summary": ""
-        },
-        {
-          "id": "930-1",
-          "name": "#1 에티오피아 아바나 에스테이트 술라자 랜드레이스 워시드",
-          "originalName": "#1 에티오피아 아바나 에스테이트 술라자 랜드레이스 워시드",
-          "nameEnglish": "",
-          "category": "single origin",
-          "origin": "",
-          "region": "",
-          "variety": "",
-          "process": "",
-          "roast": "",
-          "flavors": [],
-          "flavorColors": [
-            "#6247aa",
-            "#99d98c",
-            "#d9ed92"
-          ],
-          "specs": [],
-          "gauges": [],
-          "prices": [],
-          "openDate": "2026-10-12",
-          "availability": "available",
-          "sourceUpdatedAt": null,
-          "decaf": false,
-          "darkRoast": false,
-          "summary": ""
-        },
-        {
-          "id": "930-2",
-          "name": "#2 에티오피아 아바나 에스테이트 담무 랜드레이스 허니",
-          "originalName": "#2 에티오피아 아바나 에스테이트 담무 랜드레이스 허니",
-          "nameEnglish": "",
-          "category": "single origin",
-          "origin": "",
-          "region": "",
-          "variety": "",
-          "process": "",
-          "roast": "",
-          "flavors": [],
-          "flavorColors": [
-            "#560bad",
-            "#9163cb",
-            "#faa307"
-          ],
-          "specs": [],
-          "gauges": [],
-          "prices": [],
-          "openDate": "2026-10-12",
-          "availability": "available",
-          "sourceUpdatedAt": null,
-          "decaf": false,
-          "darkRoast": false,
-          "summary": ""
-        },
-        {
-          "id": "930-3",
-          "name": "#3 코스타리카 에르바수 산 로케 콜드 퍼먼테이션 워시드",
-          "originalName": "#3 코스타리카 에르바수 산 로케 콜드 퍼먼테이션 워시드",
-          "nameEnglish": "",
-          "category": "single origin",
-          "origin": "",
-          "region": "",
-          "variety": "",
-          "process": "",
-          "roast": "",
-          "flavors": [],
-          "flavorColors": [
-            "#faa307",
-            "#ffba08",
-            "#ffd15c"
-          ],
-          "specs": [],
-          "gauges": [],
-          "prices": [],
-          "openDate": "2026-10-12",
-          "availability": "available",
-          "sourceUpdatedAt": null,
-          "decaf": false,
-          "darkRoast": false,
-          "summary": ""
-        },
-        {
-          "id": "930-4",
-          "name": "#4 파나마 마운트 토투마스 카투아이 워시드 26-15",
-          "originalName": "#4 파나마 마운트 토투마스 카투아이 워시드 26-15",
-          "nameEnglish": "",
-          "category": "single origin",
-          "origin": "",
-          "region": "",
-          "variety": "",
-          "process": "",
-          "roast": "",
-          "flavors": [],
-          "flavorColors": [
-            "#f26a8d",
-            "#f49cbb",
-            "#fed9b7"
-          ],
-          "specs": [],
-          "gauges": [],
-          "prices": [],
-          "openDate": "2026-10-12",
-          "availability": "available",
-          "sourceUpdatedAt": null,
-          "decaf": false,
-          "darkRoast": false,
-          "summary": ""
-        },
-        {
-          "id": "930-5",
-          "name": "#5 파나마 마운트 토투마스 아라 아마루 게이샤 콜드 퍼먼테이션 내추럴 26-08",
-          "originalName": "#5 파나마 마운트 토투마스 아라 아마루 게이샤 콜드 퍼먼테이션 내추럴 26-08",
-          "nameEnglish": "",
-          "category": "single origin",
-          "origin": "",
-          "region": "",
-          "variety": "",
-          "process": "",
-          "roast": "",
-          "flavors": [],
-          "flavorColors": [
-            "#9163cb",
-            "#f49cbb",
-            "#d9ed92"
-          ],
-          "specs": [],
-          "gauges": [],
-          "prices": [],
-          "openDate": "2026-10-12",
-          "availability": "available",
-          "sourceUpdatedAt": null,
-          "decaf": false,
-          "darkRoast": false,
-          "summary": ""
-        },
-        {
-          "id": "930-6",
-          "name": "#6 미국 캘리포니아 선데이스 온 토로 카투라 워시드",
-          "originalName": "#6 미국 캘리포니아 선데이스 온 토로 카투라 워시드",
-          "nameEnglish": "",
-          "category": "single origin",
-          "origin": "",
-          "region": "",
-          "variety": "",
-          "process": "",
-          "roast": "",
-          "flavors": [],
-          "flavorColors": [
-            "#d9ed92",
-            "#dde5b6",
-            "#ffc2d1"
-          ],
-          "specs": [],
-          "gauges": [],
-          "prices": [],
-          "openDate": "2026-10-12",
-          "availability": "available",
-          "sourceUpdatedAt": null,
-          "decaf": false,
-          "darkRoast": false,
-          "summary": ""
-        },
-        {
-          "id": "930-7",
-          "name": "#7 미국 캘리포니아 선데이스 온 토로 게이샤 이스트 이노큘레이션 워시드",
-          "originalName": "#7 미국 캘리포니아 선데이스 온 토로 게이샤 이스트 이노큘레이션 워시드",
-          "nameEnglish": "",
-          "category": "single origin",
-          "origin": "",
-          "region": "",
-          "variety": "",
-          "process": "",
-          "roast": "",
-          "flavors": [],
-          "flavorColors": [
-            "#ff8fab",
-            "#ffb3c6",
-            "#fed9b7"
-          ],
-          "specs": [],
-          "gauges": [],
-          "prices": [],
-          "openDate": "2026-10-12",
-          "availability": "available",
-          "sourceUpdatedAt": null,
-          "decaf": false,
-          "darkRoast": false,
-          "summary": ""
-        },
-        {
-          "id": "930-8",
-          "name": "#8 에티오피아 게샤 빌리지 SL28 다크룸 내추럴",
-          "originalName": "[10.14 깜짝 오픈] #8 에티오피아 게샤 빌리지 SL28 다크룸 내추럴",
-          "nameEnglish": "",
-          "category": "single origin",
-          "origin": "",
-          "region": "",
-          "variety": "",
-          "process": "",
-          "roast": "",
-          "flavors": [],
-          "flavorColors": [
-            "#ff0000",
-            "#fdfcdc",
-            "#ffdc5e"
-          ],
-          "specs": [],
-          "gauges": [],
-          "prices": [],
-          "openDate": "2026-10-12",
-          "availability": "available",
-          "sourceUpdatedAt": null,
-          "decaf": false,
-          "darkRoast": false,
-          "summary": ""
-        }
-      ],
-      "detailsCheckedAt": "2026-10-18T01:12:25.562Z"
+      "detailsCheckedAt": "2026-10-22T11:18:46.690Z"
     },
     {
       "schemaVersion": 1,
@@ -3197,7 +3285,7 @@
       "roastery": "유에프오커피",
       "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=901",
       "detailSourceUrl": "https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/UFO2/UFO2.json",
-      "sourceCheckedAt": "2026-10-18T01:12:25.621Z",
+      "sourceCheckedAt": "2026-10-22T11:18:47.205Z",
       "items": [
         {
           "id": "901-b81b8e01d",
@@ -4141,7 +4229,7 @@
             }
           ],
           "openDate": "2026-10-01",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-09-30T17:20:47+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4322,7 +4410,7 @@
             }
           ],
           "openDate": "2026-10-01",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-01T17:11:49+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4832,7 +4920,7 @@
           ],
           "openDate": "2026-10-05",
           "availability": "available",
-          "sourceUpdatedAt": "2026-10-01T16:40:45+09:00",
+          "sourceUpdatedAt": "2026-10-21T11:52:27+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Ethiopia · Heirloom · Modified Honey"
@@ -4917,7 +5005,7 @@
             }
           ],
           "openDate": "2026-10-05",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-01T16:41:16+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -5089,7 +5177,7 @@
             }
           ],
           "openDate": "2026-10-12",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-01T17:13:14+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -5262,7 +5350,7 @@
           ],
           "openDate": "2026-10-12",
           "availability": "available",
-          "sourceUpdatedAt": "2026-09-30T17:24:33+09:00",
+          "sourceUpdatedAt": "2026-10-21T11:52:44+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Ethiopia · Heirloom · Modified Honey"
@@ -6910,7 +6998,7 @@
           ],
           "openDate": "2026-10-05",
           "availability": "available",
-          "sourceUpdatedAt": "2026-09-30T17:27:45+09:00",
+          "sourceUpdatedAt": "2026-10-21T11:52:00+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Guatemala · Geisha · Washed"
@@ -7269,7 +7357,7 @@
             }
           ],
           "openDate": "2026-10-12",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T17:28:14+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -7638,7 +7726,7 @@
             }
           ],
           "openDate": "2026-10-19",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T19:04:55+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -7729,7 +7817,7 @@
             }
           ],
           "openDate": "2026-10-19",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T19:04:31+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -7920,7 +8008,7 @@
           "summary": ""
         }
       ],
-      "detailsCheckedAt": "2026-10-18T01:12:25.622Z"
+      "detailsCheckedAt": "2026-10-22T11:18:47.206Z"
     }
   ]
 }
