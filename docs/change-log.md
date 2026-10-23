@@ -237,3 +237,5 @@ CI신규실패: npm audit가 Vite7.3.6의수정가능advisory묶음을HIGH로검
 ## 2026-10-23 공개카탈로그갱신
 
 공식언더빈 디카페인약배전블렌드 체리퐁듀Ver.2추가, 기존3종availability변경. 합계102종/기존항목보존, 반복수집무변경. 별도maintenance20261023사용, 개인원본수정/업로드없음. 공개자료만배포대상.
+
+게시완료: PR#53 dev34b00ac, Verify39947819110/frontend/backend/deployment-image모두성공·Pages39947819645성공. 공개102종전체JSON일치확인, 원본/운영main미변경.
