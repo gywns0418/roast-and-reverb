@@ -70,6 +70,7 @@ jobs:
           done
           curl -fsS http://127.0.0.1:8187/healthz
           curl -fsS http://127.0.0.1:8187/ | grep -F 'Roast & Reverb'
+          curl -fsS http://127.0.0.1:8187/templates/bean-purchase.md | grep -F '구매 원두'
           test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8187/api/coffee)" = 401
       - name: Read-only security acceptance checks
         run: node scripts/security-readonly.mjs http://127.0.0.1:8187
