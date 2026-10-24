@@ -269,7 +269,7 @@
       "roastery": "언더빈",
       "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=945",
       "detailSourceUrl": "https://d22c6ea6lqg2pi.cloudfront.net/UNDERBEAN/UNDERBEAN.json",
-      "sourceCheckedAt": "2026-10-23T11:36:11.848Z",
+      "sourceCheckedAt": "2026-10-24T01:11:05.863Z",
       "items": [
         {
           "id": "945-bb3695b3d",
@@ -843,7 +843,7 @@
             }
           ],
           "openDate": "2026-10-18",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-17T23:44:45+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3340,7 +3340,7 @@
           "summary": "Ecuador · Pacamara · 24h Fermentation Washed"
         }
       ],
-      "detailsCheckedAt": "2026-10-23T11:36:11.850Z"
+      "detailsCheckedAt": "2026-10-24T01:11:05.865Z"
     },
     {
       "schemaVersion": 1,
