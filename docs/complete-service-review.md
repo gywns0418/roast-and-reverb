@@ -32,3 +32,11 @@
 ## 배포를 구분
 
 GitHub Pages 운영 루트(main)와 개발(dev)은 브라우저 체험 모드다. 회원 서버 운영이 아님. 이번 Railway 상태 읽기는 UNAUTHORIZED / requires reauthentication으로 실패해 운영 서버 상태/회원 저장을 검증할 수 없었다. 같은 승인 거절을 반복하거나 대체 서비스/유료 배포로 우회하지 않는다. 이 한계는 최종 보고에도 명시한다. PR/CI/운영 배포 최종 결과는 continuity 마지막 기록과 원격을 따른다.
+
+## 운영 최종 확인
+
+- 개발 PR #56 병합: 330e984. 최종 구현 source75675e9의 Verify40194645970 통과.
+- 운영 PR #57 병합: main2130a1784eaa42a8a9a398bc7f1f05df684e1bb0. 운영 main의 Verify40195125365 frontend/backend/deployment-image 모두 성공. Pages40195125364 성공.
+- 운영 루트 https://gywns0418.github.io/roast-and-reverb/?v=2130a17#/ 에서 실제 소개→입력초점, 초기iframe0 확인. 핵심7경로 제목/넘침0/중첩0 재확인. 운영 원두3시리즈102종JSON전체일치. 글로벌9종판매종료표시 확인. 모바일도움말375=scroll375 확인. 공개사용자자료를작성/수정/복원하지 않음.
+- complete-production-desktop.png / complete-production-mobile.png는 개인자료 없는 운영공개화면. 감상수정·음악보존·백업복원 실동작은 별도localhost5212의명시QA자료로 검증했다.
+- 회원 서버는 Railway 연결 재인증 필요 상태로 운영검증 미완료. GitHub Pages의 체험모드와 구분한다. 유료서비스전환/새서비스/키생성/원본공개 없음.
