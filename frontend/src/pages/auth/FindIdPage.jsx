@@ -1,25 +1,21 @@
-import TrialNotice from "../../components/auth/TrialNotice.jsx";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../../components/common/Button.jsx";
-import Input from "../../components/common/Input.jsx";
-
+import TrialNotice from "../../components/auth/TrialNotice.jsx";
 export default function FindIdPage() {
-  const [email, setEmail] = useState("");
-
   return (
     <section className="page cover-page">
       <div className="cover-card">
+        <h1>로그인 이메일이 기억나지 않나요?</h1>
+        <p>
+          아이디는 가입할 때 사용한 이메일입니다. 현재 이메일을 찾아 보내주는
+          기능은 제공하지 않아요.
+        </p>
         <TrialNotice />
-        <div className="cover-brand smcp">Roast &amp; Reverb</div>
-        <p className="cover-vol oldnum">Coffee × Music</p>
-        <h1>아이디 찾기</h1>
-        <p className="subtitle">아이디는 가입할 때 사용한 이메일입니다.</p>
-        <div className="cover-form">
-          <Input type="email" placeholder="이메일" value={email} onChange={(event) => setEmail(event.target.value)} />
-
-        </div>
-        <Link to="/auth/login" className="cover-switch">기억이 났다면 — 로그인으로</Link>
+        <Link className="primary-button" to="/auth/login">
+          로그인으로 돌아가기
+        </Link>
+        <p>
+          <Link to="/">서비스 소개 →</Link>
+        </p>
       </div>
     </section>
   );

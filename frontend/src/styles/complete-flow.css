@@ -1,0 +1,456 @@
+/* Shared quiet reading and task flow across the service. */
+.quiet-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #52634c;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+.quiet-note,
+.quiet-section {
+  border: 1px solid #dce1d6;
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px;
+  margin: 20px 0;
+}
+.quiet-note-copy {
+  font-size: 20px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 0 0 24px;
+  word-break: keep-all;
+}
+.quiet-section h2 {
+  font-size: 21px;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+.quiet-section > p,
+.quiet-details > p {
+  line-height: 1.9;
+  font-size: 14px;
+  color: #62705c;
+}
+.quiet-details {
+  border: 1px solid #dce1d6;
+  border-radius: 12px;
+  background: #fff;
+  margin: 20px 0;
+  padding: 16px 24px;
+}
+.quiet-details > summary {
+  min-height: 44px;
+  align-content: center;
+  cursor: pointer;
+  font-weight: 600;
+}
+.quiet-details[open] > summary {
+  margin-bottom: 16px;
+}
+.quiet-facts {
+  display: grid;
+  gap: 0;
+  margin: 16px 0;
+}
+.quiet-facts > div {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #edf0e8;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.quiet-facts dt {
+  color: #6b755f;
+}
+.quiet-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.quiet-next {
+  padding: 24px 0;
+  margin-top: 24px;
+  border-top: 1px solid #dde2d6;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+.quiet-next p {
+  margin: 0;
+  color: #62705c;
+}
+.quiet-next a {
+  font-weight: 600;
+}
+.quiet-field {
+  display: block;
+  margin: 0 0 24px;
+  font-size: 14px;
+  color: #526149;
+}
+.quiet-field :is(input, textarea) {
+  display: block;
+  margin-top: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccd4c3;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fafbf8;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.quiet-link-list {
+  display: grid;
+  border: 1px solid #dce1d5;
+  border-radius: 12px;
+  background: #fff;
+  margin: 20px 0;
+}
+.quiet-link-list > a {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  min-height: 52px;
+  box-sizing: border-box;
+  color: inherit;
+  text-decoration: none;
+  font-size: 14px;
+  border-bottom: 1px solid #e8ece2;
+}
+.quiet-link-list > a:last-child {
+  border: 0;
+}
+.quiet-link-list > a:hover {
+  background: #f2f5ec;
+}
+.quiet-muted {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #67765e;
+}
+.quiet-guide {
+  list-style: none;
+  padding: 0;
+  counter-reset: guide;
+}
+.quiet-guide > li {
+  counter-increment: guide;
+  border-bottom: 1px solid #dce1d5;
+  padding: 28px 0;
+}
+.quiet-guide > li:before {
+  content: "0" counter(guide);
+  font-size: 12px;
+  color: #77876a;
+}
+.quiet-guide h2 {
+  font-size: 22px;
+  margin: 12px 0;
+}
+.quiet-guide p {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #607058;
+}
+.quiet-catalog-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: end;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #dce1d5;
+  border-radius: 12px;
+}
+.quiet-catalog-controls label {
+  font-size: 13px;
+  color: #5a6c50;
+  min-width: 0;
+}
+.quiet-catalog-controls :is(input:not([type="checkbox"]), select) {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #cdd6c5;
+  border-radius: 8px;
+  background: #fafbf8;
+  padding: 12px;
+  margin-top: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #263e2a;
+}
+.quiet-catalog-controls .quiet-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  grid-column: 1/-1;
+  min-height: 36px;
+}
+.quiet-source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 24px 0;
+  font-size: 14px;
+}
+.quiet-source p {
+  margin: 0;
+}
+.quiet-source small {
+  flex-basis: 100%;
+  color: #738068;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.quiet-bean-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.quiet-bean {
+  border: 1px solid #dce1d5;
+  border-radius: 12px;
+  background: #fff;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  color: #2a3b2a;
+  display: flex;
+  flex-direction: column;
+  font: inherit;
+  transition: box-shadow 0.2s;
+}
+.quiet-bean:hover {
+  box-shadow: 0 6px 24px #243c2910;
+}
+.quiet-bean > .bean-still {
+  width: 100%;
+}
+.quiet-bean > div:last-child {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.quiet-bean small {
+  font-size: 11px;
+  color: #657559;
+}
+.quiet-bean h2 {
+  font-size: 17px;
+  line-height: 1.7;
+  word-break: keep-all;
+  margin: 10px 0;
+}
+.quiet-bean p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #5b6a51;
+}
+.quiet-bean span {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #728266;
+  margin-top: auto;
+}
+.quiet-bean b {
+  font-size: 12px;
+  margin-top: 18px;
+  color: #365235;
+}
+.quiet-bean-dialog {
+  width: min(650px, calc(100vw - 32px));
+  max-height: 85dvh;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 16px;
+  padding: 28px;
+  color: #2c402b;
+  background: #fafbf6;
+  overflow: auto;
+}
+.quiet-bean-dialog::backdrop {
+  background: #182a2466;
+}
+.quiet-bean-dialog h2 {
+  font-size: 24px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+.quiet-close {
+  display: block;
+  margin-left: auto;
+  border: 1px solid #c9d4c1;
+  background: white;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-height: 44px;
+  color: inherit;
+}
+.page .library-banner {
+  display: none;
+}
+.page .record-art {
+  max-height: 180px;
+}
+.page .eyebrow {
+  display: none;
+}
+.page .panel-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+.page :is(.primary-button, .ghost-button, button, input, select) {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.page :is(button, .primary-button, .ghost-button) {
+  min-height: 44px;
+}
+.page .action-row {
+  gap: 12px;
+}
+.page .library-toolbar {
+  margin-top: 24px;
+}
+.cover-page {
+  min-height: 100dvh;
+  background: #f6f7f0;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+}
+.cover-page .cover-card {
+  width: min(100%, 480px);
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #dde3d4;
+  box-shadow: none;
+  border-radius: 16px;
+  padding: 32px;
+  box-sizing: border-box;
+}
+.cover-page input {
+  min-height: 48px;
+  font-size: 16px;
+}
+.cover-page h1 {
+  font-size: 28px;
+  line-height: 1.5;
+}
+.cover-page p {
+  line-height: 1.8;
+}
+@media (max-width: 760px) {
+  .quiet-note,
+  .quiet-section {
+    padding: 22px 18px;
+  }
+  .quiet-note-copy {
+    font-size: 18px;
+  }
+  .quiet-details {
+    padding: 14px 18px;
+  }
+  .quiet-facts > div {
+    grid-template-columns: 85px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .quiet-catalog-controls {
+    grid-template-columns: 1fr;
+    padding: 18px;
+    gap: 16px;
+  }
+  .quiet-bean-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .quiet-bean {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+  }
+  .quiet-bean > div:last-child {
+    padding: 16px;
+  }
+  .quiet-bean h2 {
+    font-size: 15px;
+  }
+  .quiet-bean p {
+    font-size: 12px;
+  }
+  .quiet-bean > .bean-still {
+    height: 100%;
+    min-height: 160px;
+  }
+  .quiet-guide h2 {
+    font-size: 19px;
+  }
+  .quiet-bean-dialog {
+    padding: 22px;
+  }
+  .quiet-next {
+    display: block;
+  }
+  .quiet-next a {
+    display: inline-block;
+    padding-top: 12px;
+  }
+  .cover-page .cover-card {
+    padding: 24px;
+  }
+  .page .action-row {
+    flex-wrap: wrap;
+  }
+}
+.quiet-bean > .bean-still {
+  height: 94px;
+  min-height: 94px;
+  flex: none;
+}
+.quiet-bean .bean-origin-type {
+  top: 14px;
+  font-size: 9px;
+}
+.quiet-bean .bean-number {
+  bottom: 19px;
+  font-size: 18px;
+}
+.quiet-bean .bean-still > small {
+  display: none;
+}
+.quiet-bean .bean-symbol {
+  right: 12px;
+  width: 90px;
+}
+.quiet-bean .bean-palette-band {
+  height: 5px;
+}
+@media (max-width: 760px) {
+  .quiet-bean > .bean-still {
+    height: 100%;
+    min-height: 170px;
+  }
+  .quiet-bean .bean-symbol {
+    width: 85%;
+    right: 0;
+  }
+  .quiet-bean .bean-number {
+    left: 14px;
+  }
+  .quiet-bean .bean-origin-type {
+    left: 14px;
+    max-width: 85%;
+  }
+}
