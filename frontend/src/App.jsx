@@ -34,3 +34,5 @@ export default function App() {
 }
 
 import './styles/simple-flow.css';
+
+import './styles/complete-flow.css';
