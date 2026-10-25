@@ -27,7 +27,7 @@ export default function Layout() {
         <Header />
         {local && (
           <div className="demo-notice" role="status">
-            체험 모드 · 기록은 이 브라우저에 저장됩니다. 원두·음악 추천은 기기에서 분석합니다. MusicBrainz 검색과 YouTube 곡 링크를 연결할 수 있습니다.
+            체험 기록은 이 브라우저에 저장돼요. 기기를 바꾸기 전 설정에서 백업해 주세요.
           </div>
         )}
         <ResourceBoundary key={location.pathname}>
