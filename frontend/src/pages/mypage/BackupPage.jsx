@@ -1,0 +1,21 @@
+import {useState,useRef} from 'react';
+import {Link} from 'react-router-dom';
+import PageShell from '../../components/common/PageShell.jsx';
+import {deviceScope} from '../../store/discoveryStore.js';
+import {backupLabels,collectDeviceBackup,parseDeviceBackup,restoreDeviceBackup} from '../../utils/deviceBackup.js';
+import {DIARY_KEY} from '../../utils/diaryStorage.js';
+function download(content,name,type='application/json'){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+export default function BackupPage(){
+  const [error,setError]=useState(''),[notice,setNotice]=useState(''),[preview,setPreview]=useState(null),[ack,setAck]=useState(false),[busy,setBusy]=useState(false);
+  const picker=useRef(null);const local=import.meta.env.VITE_USE_REAL_API!=='true';
+  function exportBackup(){try{const value=collectDeviceBackup(localStorage,deviceScope(),local);if(!Object.keys(value.sections).length)throw new Error('이 브라우저에 저장한 자료가 없습니다.');download(JSON.stringify(value,null,2),'roast-reverb-device.json');setError('');setNotice('기기에 저장된 자료를 백업했어요. 로그인 정보와 파일 접근 권한은 포함하지 않습니다.');}catch(err){setError(err.message);}}
+  async function inspect(event){const selected=event.target.files[0];event.target.value='';setPreview(null);setAck(false);setError('');if(!selected)return;setBusy(true);try{if(selected.size>5_000_000)throw new Error('5MB 이하의 기기 백업을 선택해 주세요.');const data=JSON.parse(await selected.text());const sections=parseDeviceBackup(data);if(!local&&sections.diary)throw new Error('체험 일지 백업은 체험 모드에서 복원해 주세요. 서버 기록은 변경하지 않습니다.');setPreview({...data,sections});}catch(err){setError(err.message);}finally{setBusy(false);}}
+  function restore(){try{if(!preview||!ack)return;const count=restoreDeviceBackup(localStorage,preview,deviceScope(),local);setNotice(`${count}개 자료 항목을 복원했습니다. 다시 불러오면 반영됩니다.`);setPreview(null);setAck(false);window.dispatchEvent(new Event('rr-discovery-changed'));}catch(err){setError(err.message);}}
+  return <PageShell title="백업·복구" eyebrow="KEEP YOUR MOMENTS" subtitle="기기를 바꾸기 전, 내 기록을 파일로 보관해두세요.">
+    {error&&<p className="resource-error" role="alert">{error}</p>}{notice&&<p className="device-message" role="status">{notice}</p>}
+    <section className="panel"><h2>1. 먼저 현재 기록을 백업해요</h2><p>원두 선반, 음악 후보, 감각의 기억, 취향 여정의 발견 노트, 작성 중인 초안과 사운드 선반을 하나의 파일에 담습니다.{local?' 직접 저장한 커피·음악 일지와 컬렉션도 포함합니다.':' 서버 일지와 계정은 포함하지 않습니다.'}</p><p>백업에는 개인 취향과 기록이 들어 있습니다. 안전한 곳에 보관해 주세요. 원본 파일 연결 권한은 새 브라우저에서 다시 허용해야 합니다.</p><div className="action-row"><button className="primary-button" onClick={exportBackup}>백업 파일 내려받기</button><button className="ghost-button" disabled={busy} onClick={()=>picker.current.click()}>{busy?'백업 확인 중…':'2. 복원할 파일 선택'}</button><input ref={picker} type="file" accept=".json,application/json" hidden onChange={inspect}/></div></section>
+    {preview&&<section className="panel" style={{marginTop:20}}><h2>3. 바뀔 자료를 확인하고 복원해요</h2><ul>{Object.keys(preview.sections).map(name=><li key={name}>{backupLabels[name]}</li>)}</ul><p>위 항목은 백업 내용으로 교체됩니다. 파일에 없는 항목은 유지합니다. 복원 전 현재 자료를 먼저 백업해 주세요.</p><label><input type="checkbox" checked={ack} onChange={e=>setAck(e.target.checked)}/> 현재 자료를 백업했고, 위 항목의 교체를 확인했습니다.</label><div className="action-row" style={{marginTop:15}}><button className="primary-button" disabled={!ack} onClick={restore}>확인한 자료 복원</button><button className="ghost-button" onClick={()=>{setPreview(null);setAck(false);}}>취소</button></div></section>}
+    <div className="action-row" style={{marginTop:22}}><button className="ghost-button" onClick={()=>window.location.reload()}>복원한 자료 다시 불러오기</button><Link className="ghost-button" to="/coffee">내 기록으로</Link><Link className="ghost-button" to="/mypage">설정으로</Link></div>
+    {local&&<details className="panel" style={{marginTop:22}}><summary>기록장 자료가 손상되어 열리지 않을 때</summary><p>손상된 자료를 덮어쓰기 전에 원문을 파일로 보존할 수 있어요. 이 원문은 자동 복원용 백업이 아닙니다.</p><button className="ghost-button" onClick={()=>{try{const raw=localStorage.getItem(DIARY_KEY);if(raw===null)throw new Error('기록장 원문이 없습니다.');download(raw,'roast-reverb-diary-recovery.txt','text/plain');}catch(err){setError(err.message);}}}>기록장 원문 보존</button></details>}
+  </PageShell>;
+}

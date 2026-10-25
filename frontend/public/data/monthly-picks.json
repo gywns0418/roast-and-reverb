@@ -3,12 +3,3356 @@
   "products": [
     {
       "schemaVersion": 1,
-      "title": "[10월 커피 월픽] 유에프오커피 (10/1~10/31)",
+      "title": "[글로벌 월픽] Loquat Coffee (10/12~10/18)",
+      "edition": "global",
       "month": "2026-10",
+      "saleStart": "2026-10-12",
+      "saleEnd": "2026-10-18",
+      "roastery": "Loquat Coffee",
+      "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=930",
+      "detailSourceUrl": "https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/LOQUAT/LOQUAT.json",
+      "sourceCheckedAt": "2026-10-18T01:12:25.561Z",
+      "items": [
+        {
+          "id": "930-bc8dc302",
+          "name": "자몽꿀차 (언스페셜티 블렌드)",
+          "originalName": "자몽꿀차 (언스페셜티 블렌드)",
+          "nameEnglish": "",
+          "category": "unspecialty blend",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#e85d04",
+            "#faa307",
+            "#fed9b7"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-1",
+          "name": "#1 에티오피아 아바나 에스테이트 술라자 랜드레이스 워시드",
+          "originalName": "#1 에티오피아 아바나 에스테이트 술라자 랜드레이스 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#6247aa",
+            "#99d98c",
+            "#d9ed92"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-2",
+          "name": "#2 에티오피아 아바나 에스테이트 담무 랜드레이스 허니",
+          "originalName": "#2 에티오피아 아바나 에스테이트 담무 랜드레이스 허니",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#560bad",
+            "#9163cb",
+            "#faa307"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-3",
+          "name": "#3 코스타리카 에르바수 산 로케 콜드 퍼먼테이션 워시드",
+          "originalName": "#3 코스타리카 에르바수 산 로케 콜드 퍼먼테이션 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#faa307",
+            "#ffba08",
+            "#ffd15c"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-4",
+          "name": "#4 파나마 마운트 토투마스 카투아이 워시드 26-15",
+          "originalName": "#4 파나마 마운트 토투마스 카투아이 워시드 26-15",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#f26a8d",
+            "#f49cbb",
+            "#fed9b7"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-5",
+          "name": "#5 파나마 마운트 토투마스 아라 아마루 게이샤 콜드 퍼먼테이션 내추럴 26-08",
+          "originalName": "#5 파나마 마운트 토투마스 아라 아마루 게이샤 콜드 퍼먼테이션 내추럴 26-08",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#9163cb",
+            "#f49cbb",
+            "#d9ed92"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-6",
+          "name": "#6 미국 캘리포니아 선데이스 온 토로 카투라 워시드",
+          "originalName": "#6 미국 캘리포니아 선데이스 온 토로 카투라 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#d9ed92",
+            "#dde5b6",
+            "#ffc2d1"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-7",
+          "name": "#7 미국 캘리포니아 선데이스 온 토로 게이샤 이스트 이노큘레이션 워시드",
+          "originalName": "#7 미국 캘리포니아 선데이스 온 토로 게이샤 이스트 이노큘레이션 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#ff8fab",
+            "#ffb3c6",
+            "#fed9b7"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "930-8",
+          "name": "#8 에티오피아 게샤 빌리지 SL28 다크룸 내추럴",
+          "originalName": "[10.14 깜짝 오픈] #8 에티오피아 게샤 빌리지 SL28 다크룸 내추럴",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#ff0000",
+            "#fdfcdc",
+            "#ffdc5e"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-10-12",
+          "availability": "available",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        }
+      ],
+      "detailsCheckedAt": "2026-10-18T01:12:25.562Z"
+    },
+    {
+      "schemaVersion": 1,
+      "title": "[10월 커피 스몰월픽] 언더빈 (10/18~10/31)",
+      "edition": "small",
+      "month": "2026-10",
+      "saleStart": "2026-10-18",
+      "saleEnd": "2026-10-31",
+      "roastery": "언더빈",
+      "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=945",
+      "detailSourceUrl": "https://d22c6ea6lqg2pi.cloudfront.net/UNDERBEAN/UNDERBEAN.json",
+      "sourceCheckedAt": "2026-10-24T01:11:05.863Z",
+      "items": [
+        {
+          "id": "945-bb3695b3d",
+          "name": "프루티 밀키소다 (언스페셜티 블렌드)",
+          "originalName": "프루티 밀키소다 (언스페셜티 블렌드)",
+          "nameEnglish": "Fruity Milky Soda",
+          "category": "unspecialty blend",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "Light #76",
+          "flavors": [
+            "목련",
+            "소다캔디",
+            "포도",
+            "망고스틴",
+            "황도",
+            "밀키 소다"
+          ],
+          "flavorColors": [
+            "#b4d3e8",
+            "#9163cb",
+            "#fed9b7"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "목련, 소다캔디, 포도, 망고스틴, 황도, 밀키 소다"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #76"
+            },
+            {
+              "label": "블렌드 구성",
+              "value": "Ethiopia Yirgacheffe Danche Washed 75% / Yemen Bait Alal Udaini Anaerobic Natural 25%"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 24700
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T23:55:06+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "945-b3533bd84",
+          "name": "복숭아꽃 필 레몬그라스 (언스페셜티 블렌드)",
+          "originalName": "복숭아꽃 필 레몬그라스 (언스페셜티 블렌드)",
+          "nameEnglish": "Peach Blossom & Lemongrass",
+          "category": "unspecialty blend",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "Light #81",
+          "flavors": [
+            "자스민",
+            "분홍장미",
+            "복숭아",
+            "망고",
+            "레몬그라스",
+            "황도"
+          ],
+          "flavorColors": [
+            "#ffb3c6",
+            "#ffba08",
+            "#b5e48c"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 분홍장미, 복숭아, 망고, 레몬그라스, 황도"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #81"
+            },
+            {
+              "label": "블렌드 구성",
+              "value": "Ethiopia Yirgacheffe Biloya Washed 60% / Colombia El Placer Geisha White Honey CM 20% / Colombia Los Patios Geisha Peach Honey 20%"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 23900
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T23:55:33+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "945-b8844815",
+          "name": "가을한줌 (하우스 블렌드)",
+          "originalName": "가을한줌 (하우스 블렌드)",
+          "nameEnglish": "Nut+Grain Blend",
+          "category": "blend",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "Medium Dark #57",
+          "flavors": [
+            "땅콩",
+            "구운아몬드",
+            "버터스카치",
+            "연유"
+          ],
+          "flavorColors": [
+            "#99582a",
+            "#ffdc5e",
+            "#685423"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "땅콩, 구운아몬드, 버터스카치, 연유"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Medium Dark #57"
+            },
+            {
+              "label": "블렌드 구성",
+              "value": "Brazil Cerrado Fine Cup NY2 Scr 17/18 Natural 50% / Guatemala SHB Antigua SC 16+ Washed 25% / India Robusta Kaapi Royale Washed 25%"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 1
+            },
+            {
+              "label": "바디감",
+              "value": 4
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "200g",
+              "price": 8500
+            },
+            {
+              "label": "500g",
+              "price": 18500
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-18T15:48:42+09:00",
+          "decaf": false,
+          "darkRoast": true,
+          "summary": ""
+        },
+        {
+          "id": "945-b1525926d",
+          "name": "구름한점 (하우스 블렌드)",
+          "originalName": "구름한점 (하우스 블렌드)",
+          "nameEnglish": "Summer Blend",
+          "category": "blend",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "Light #89",
+          "flavors": [
+            "라벤더",
+            "체리주스",
+            "핑크구아바",
+            "망고스틴",
+            "수박"
+          ],
+          "flavorColors": [
+            "#9f86c0",
+            "#dd2d4a",
+            "#ffb3c6"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "라벤더, 체리주스, 핑크구아바, 망고스틴, 수박"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #89"
+            },
+            {
+              "label": "블렌드 구성",
+              "value": "Ethiopia Yirgacheffe Biloya Washed 50% / Colombia El Diviso Pink Bourbon Mosto Washed 25% / Colombia El Renacer Cherry Co-Fermented Decaffeinated 15% / Colombia Las Flores Ombligon Floral Symphony Washed 10%"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "200g",
+              "price": 16200
+            },
+            {
+              "label": "500g",
+              "price": 34200
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-18T15:49:03+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "945-b870220d6",
+          "name": "디카페인 약배전 블렌드 - 체리퐁듀 (하우스 블렌드)",
+          "originalName": "디카페인 약배전 블렌드 - 체리퐁듀 (하우스 블렌드)",
+          "nameEnglish": "Cherry Fondue Blend Decaffeinated",
+          "category": "blend",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "Medium Light #78",
+          "flavors": [
+            "체리주스",
+            "라벤더",
+            "망고스틴",
+            "복숭아"
+          ],
+          "flavorColors": [
+            "#9d0208",
+            "#9f86c0",
+            "#fed9b7"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "체리주스, 라벤더, 망고스틴, 복숭아"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Medium Light #78"
+            },
+            {
+              "label": "블렌드 구성",
+              "value": "Ethiopia Yirgacheffe Halo Beriti Heirloom Natural MWP Decaffeinated 85% / Colombia El Renacer Cherry Co-Fermented Decaffeinated 15%"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 1
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "200g",
+              "price": 18000
+            },
+            {
+              "label": "500g",
+              "price": 36000
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T21:07:05+09:00",
+          "decaf": true,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "945-bea7d24bd",
+          "name": "디카페인 약배전 블렌드 - 체리퐁듀 Ver.2 (하우스 블렌드)",
+          "originalName": "[10.23 오픈] 디카페인 약배전 블렌드 - 체리퐁듀 Ver.2 (하우스 블렌드)",
+          "nameEnglish": "Cherry Fondue Blend Decaffeinated Ver.2",
+          "category": "blend",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "Medium Light #78",
+          "flavors": [
+            "체리주스",
+            "라벤더",
+            "망고스틴",
+            "복숭아"
+          ],
+          "flavorColors": [
+            "#9d0208",
+            "#9f86c0",
+            "#fed9b7"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "체리주스, 라벤더, 망고스틴, 복숭아"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Medium Light #78"
+            },
+            {
+              "label": "블렌드 구성",
+              "value": "Ethiopia Sidamo Bensa Duba Washed MWP Decaffeinated 85% / Colombia El Renacer Cherry Co-Fermented Decaffeinated 15%"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 1
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "200g",
+              "price": 18000
+            },
+            {
+              "label": "500g",
+              "price": 36000
+            }
+          ],
+          "openDate": "2026-10-23",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-23T18:32:59+09:00",
+          "decaf": true,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "945-1",
+          "name": "#1 에티오피아 구지 우라가 하로 와츄 74110 74112 74158 워시드",
+          "originalName": "#1 에티오피아 구지 우라가 하로 와츄 74110 74112 74158 워시드",
+          "nameEnglish": "Ethiopia Guji Uraga Haro Wachu 74110 74112 74158 Washed",
+          "category": "single origin",
+          "origin": "Ethiopia",
+          "region": "Haro Wachu, Uraga, Guji",
+          "variety": "74110, 74112, 74158",
+          "process": "Washed",
+          "roast": "Light #89",
+          "flavors": [
+            "자스민",
+            "얼그레이",
+            "복숭아",
+            "망고",
+            "리치"
+          ],
+          "flavorColors": [
+            "#fdfcdc",
+            "#ffb3c6",
+            "#ffba08"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 얼그레이, 복숭아, 망고, 리치"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #89"
+            },
+            {
+              "label": "국가",
+              "value": "Ethiopia"
+            },
+            {
+              "label": "지역",
+              "value": "Haro Wachu, Uraga, Guji"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "TABE"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "Haro Wachu"
+            },
+            {
+              "label": "고도",
+              "value": "1,900~2,200m"
+            },
+            {
+              "label": "품종",
+              "value": "74110, 74112, 74158"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 10450
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T19:54:15+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ethiopia · 74110, 74112, 74158 · Washed"
+        },
+        {
+          "id": "945-2",
+          "name": "#2 브라질 세하도 다테하 카투카이 2SL 아라라 파라이소 피베리 내추럴 (서머 솔스티스)",
+          "originalName": "#2 브라질 세하도 다테하 카투카이 2SL 아라라 파라이소 피베리 내추럴 (서머 솔스티스)",
+          "nameEnglish": "Brazil Cerrado Daterra Catucai 2SL, Arara, Paraiso Peaberry Natural (Summer Solstice)",
+          "category": "single origin",
+          "origin": "Brazil",
+          "region": "Cerrado, Minas Gerais",
+          "variety": "Catucai 2SL, Arara, Paraiso",
+          "process": "Natural",
+          "roast": "Medium Light #84",
+          "flavors": [
+            "스타프루트",
+            "사과주스",
+            "황도",
+            "딸기비스킷"
+          ],
+          "flavorColors": [
+            "#d9ed92",
+            "#fed9b7",
+            "#a41e1e"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "스타프루트, 사과주스, 황도, 딸기비스킷"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Medium Light #84"
+            },
+            {
+              "label": "국가",
+              "value": "Brazil"
+            },
+            {
+              "label": "지역",
+              "value": "Cerrado, Minas Gerais"
+            },
+            {
+              "label": "농장",
+              "value": "Daterra"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Daterra"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "Summer Solstice"
+            },
+            {
+              "label": "고도",
+              "value": "1,150m"
+            },
+            {
+              "label": "품종",
+              "value": "Catucai 2SL, Arara, Paraiso"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 10450
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T23:44:45+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Brazil · Catucai 2SL, Arara, Paraiso · Natural"
+        },
+        {
+          "id": "945-3",
+          "name": "#3 콜롬비아 라 테라사 치로소 워시드",
+          "originalName": "#3 콜롬비아 라 테라사 치로소 워시드",
+          "nameEnglish": "Colombia La Terraza Chiroso Washed",
+          "category": "single origin",
+          "origin": "Colombia",
+          "region": "Las Aguilas, La Argentina, Huila",
+          "variety": "Chiroso",
+          "process": "Washed",
+          "roast": "Light #93",
+          "flavors": [
+            "흰꽃",
+            "청귤",
+            "백도",
+            "청포도",
+            "동양배"
+          ],
+          "flavorColors": [
+            "#fdfcdc",
+            "#b5e48c",
+            "#fed9b7"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "흰꽃, 청귤, 백도, 청포도, 동양배"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #93"
+            },
+            {
+              "label": "국가",
+              "value": "Colombia"
+            },
+            {
+              "label": "지역",
+              "value": "Las Aguilas, La Argentina, Huila"
+            },
+            {
+              "label": "농장",
+              "value": "La Terraza"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Wbeimar Lasso"
+            },
+            {
+              "label": "고도",
+              "value": "1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "Chiroso"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 13780
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T19:54:33+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Colombia · Chiroso · Washed"
+        },
+        {
+          "id": "945-4",
+          "name": "#4 콜롬비아 엘 오브라헤 티피카 워시드",
+          "originalName": "#4 콜롬비아 엘 오브라헤 티피카 워시드",
+          "nameEnglish": "Colombia El Obraje Typica Washed",
+          "category": "single origin",
+          "origin": "Colombia",
+          "region": "Tangua, Narino",
+          "variety": "Typica",
+          "process": "Washed",
+          "roast": "Light #101",
+          "flavors": [
+            "거봉",
+            "오렌지필",
+            "블루베리",
+            "자두주스",
+            "백설탕"
+          ],
+          "flavorColors": [
+            "#560bad",
+            "#9163cb",
+            "#ff7900"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "거봉, 오렌지필, 블루베리, 자두주스, 백설탕"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #101"
+            },
+            {
+              "label": "국가",
+              "value": "Colombia"
+            },
+            {
+              "label": "지역",
+              "value": "Tangua, Narino"
+            },
+            {
+              "label": "농장",
+              "value": "El Obraje"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Pablo Andres Guerrero"
+            },
+            {
+              "label": "고도",
+              "value": "2,200m"
+            },
+            {
+              "label": "품종",
+              "value": "Typica"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 14250
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T22:12:00+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Colombia · Typica · Washed"
+        },
+        {
+          "id": "945-5",
+          "name": "#5 케냐 뚱구리 SL28 SL34 내추럴 헤비 (라이트 로스팅)",
+          "originalName": "#5 케냐 뚱구리 SL28 SL34 내추럴 헤비 (라이트 로스팅)",
+          "nameEnglish": "Kenya Thunguri SL28, SL34 Natural Heavy (Light Roasting)",
+          "category": "single origin",
+          "origin": "Kenya",
+          "region": "Mukurwe-ini, Nyeri",
+          "variety": "SL Selection (SL28, SL34)",
+          "process": "Natural Heavy",
+          "roast": "Light #88",
+          "flavors": [
+            "적포도",
+            "자두",
+            "황도",
+            "칸탈로프",
+            "라즈베리"
+          ],
+          "flavorColors": [
+            "#9163cb",
+            "#fb6f92",
+            "#ffba08"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "적포도, 자두, 황도, 칸탈로프, 라즈베리"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #88"
+            },
+            {
+              "label": "국가",
+              "value": "Kenya"
+            },
+            {
+              "label": "지역",
+              "value": "Mukurwe-ini, Nyeri"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Thunguri"
+            },
+            {
+              "label": "고도",
+              "value": "1,650~1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "SL Selection (SL28, SL34)"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural Heavy"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 14250
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T19:54:17+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Kenya · SL Selection (SL28, SL34) · Natural Heavy"
+        },
+        {
+          "id": "945-6",
+          "name": "#6 케냐 뚱구리 SL28 SL34 내추럴 헤비 (다크 로스팅)",
+          "originalName": "#6 케냐 뚱구리 SL28 SL34 내추럴 헤비 (다크 로스팅)",
+          "nameEnglish": "Kenya Thunguri SL28, SL34 Natural Heavy (Dark Roasting)",
+          "category": "single origin",
+          "origin": "Kenya",
+          "region": "Mukurwe-ini, Nyeri",
+          "variety": "SL Selection (SL28, SL34)",
+          "process": "Natural Heavy",
+          "roast": "Dark #52",
+          "flavors": [
+            "제라늄",
+            "캠벨포도",
+            "멜론",
+            "블랙베리",
+            "다크 초콜릿"
+          ],
+          "flavorColors": [
+            "#390000",
+            "#560bad",
+            "#6a040f"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "제라늄, 캠벨포도, 멜론, 블랙베리, 다크 초콜릿"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Dark #52"
+            },
+            {
+              "label": "국가",
+              "value": "Kenya"
+            },
+            {
+              "label": "지역",
+              "value": "Mukurwe-ini, Nyeri"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Thunguri"
+            },
+            {
+              "label": "고도",
+              "value": "1,650~1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "SL Selection (SL28, SL34)"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural Heavy"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 4
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 11100
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T23:47:10+09:00",
+          "decaf": false,
+          "darkRoast": true,
+          "summary": "Kenya · SL Selection (SL28, SL34) · Natural Heavy"
+        },
+        {
+          "id": "945-7",
+          "name": "#7 베트남 록 렁 엑셀사 CM 내추럴 (라이트 로스팅)",
+          "originalName": "#7 베트남 록 렁 엑셀사 CM 내추럴 (라이트 로스팅)",
+          "nameEnglish": "Vietnam Loc Rung Excelsa CM Natural (Light Roasting)",
+          "category": "single origin",
+          "origin": "Vietnam",
+          "region": "Duc Trong",
+          "variety": "Excelsa",
+          "process": "Carbonic Maceration Natural",
+          "roast": "Medium light #84",
+          "flavors": [
+            "포도",
+            "파인애플",
+            "구아바",
+            "블루베리",
+            "딸기"
+          ],
+          "flavorColors": [
+            "#7209b7",
+            "#ffdc5e",
+            "#e63946"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "포도, 파인애플, 구아바, 블루베리, 딸기"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Medium light #84"
+            },
+            {
+              "label": "국가",
+              "value": "Vietnam"
+            },
+            {
+              "label": "지역",
+              "value": "Duc Trong"
+            },
+            {
+              "label": "농장",
+              "value": "Loc Rung"
+            },
+            {
+              "label": "고도",
+              "value": "1,100m"
+            },
+            {
+              "label": "품종",
+              "value": "Excelsa"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Carbonic Maceration Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 17100
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T23:46:32+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Vietnam · Excelsa · Carbonic Maceration Natural"
+        },
+        {
+          "id": "945-8",
+          "name": "#8 베트남 록 렁 엑셀사 CM 내추럴 (다크 로스팅)",
+          "originalName": "#8 베트남 록 렁 엑셀사 CM 내추럴 (다크 로스팅)",
+          "nameEnglish": "Vietnam Loc Rung Excelsa CM Natural (Dark Roasting)",
+          "category": "single origin",
+          "origin": "Vietnam",
+          "region": "Duc Trong",
+          "variety": "Excelsa",
+          "process": "Carbonic Maceration Natural",
+          "roast": "Dark #56",
+          "flavors": [
+            "포도",
+            "구운바나나",
+            "체리",
+            "구아바",
+            "블루베리",
+            "크림브륄레"
+          ],
+          "flavorColors": [
+            "#6247aa",
+            "#9d0208",
+            "#9c6644"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "포도, 구운바나나, 체리, 구아바, 블루베리, 크림브륄레"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Dark #56"
+            },
+            {
+              "label": "국가",
+              "value": "Vietnam"
+            },
+            {
+              "label": "지역",
+              "value": "Duc Trong"
+            },
+            {
+              "label": "농장",
+              "value": "Loc Rung"
+            },
+            {
+              "label": "고도",
+              "value": "1,100m"
+            },
+            {
+              "label": "품종",
+              "value": "Excelsa"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Carbonic Maceration Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 4
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 13300
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T23:46:01+09:00",
+          "decaf": false,
+          "darkRoast": true,
+          "summary": "Vietnam · Excelsa · Carbonic Maceration Natural"
+        },
+        {
+          "id": "945-9",
+          "name": "#9 페루 라 팔마 게이샤 워시드 (라이트 로스팅)",
+          "originalName": "#9 페루 라 팔마 게이샤 워시드 (라이트 로스팅)",
+          "nameEnglish": "Peru La Palma Geisha Washed (Light Roasting)",
+          "category": "single origin",
+          "origin": "Peru",
+          "region": "La Palma, Chirinos, Cajamarca",
+          "variety": "Geisha",
+          "process": "Washed",
+          "roast": "Light #90",
+          "flavors": [
+            "자스민",
+            "베르가못",
+            "청포도",
+            "사과",
+            "복숭아",
+            "목련",
+            "밀키"
+          ],
+          "flavorColors": [
+            "#b5e48c",
+            "#ffb3c6",
+            "#fdfcdc"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 베르가못, 청포도, 사과, 복숭아, 목련, 밀키"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #90"
+            },
+            {
+              "label": "국가",
+              "value": "Peru"
+            },
+            {
+              "label": "지역",
+              "value": "La Palma, Chirinos, Cajamarca"
+            },
+            {
+              "label": "농장",
+              "value": "La Palma"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Miguel Lopez"
+            },
+            {
+              "label": "고도",
+              "value": "1,750~1,850m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 19000
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T19:54:20+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Peru · Geisha · Washed"
+        },
+        {
+          "id": "945-10",
+          "name": "#10 페루 라 팔마 게이샤 워시드 (다크 로스팅)",
+          "originalName": "#10 페루 라 팔마 게이샤 워시드 (다크 로스팅)",
+          "nameEnglish": "Peru La Palma Geisha Washed (Dark Roasting)",
+          "category": "single origin",
+          "origin": "Peru",
+          "region": "La Palma, Chirinos, Cajamarca",
+          "variety": "Geisha",
+          "process": "Washed",
+          "roast": "Dark #57",
+          "flavors": [
+            "자스민",
+            "청포도잼",
+            "황도",
+            "구운사과",
+            "다크 초콜릿"
+          ],
+          "flavorColors": [
+            "#390000",
+            "#ffba08",
+            "#555b2f"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 청포도잼, 황도, 구운사과, 다크 초콜릿"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Dark #57"
+            },
+            {
+              "label": "국가",
+              "value": "Peru"
+            },
+            {
+              "label": "지역",
+              "value": "La Palma, Chirinos, Cajamarca"
+            },
+            {
+              "label": "농장",
+              "value": "La Palma"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Miguel Lopez"
+            },
+            {
+              "label": "고도",
+              "value": "1,750~1,850m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 1
+            },
+            {
+              "label": "바디감",
+              "value": 4
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 14700
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T23:45:32+09:00",
+          "decaf": false,
+          "darkRoast": true,
+          "summary": "Peru · Geisha · Washed"
+        },
+        {
+          "id": "945-11",
+          "name": "#11 탄자니아 아카시아 힐스 게이샤 AA 풀리 워시드",
+          "originalName": "#11 탄자니아 아카시아 힐스 게이샤 AA 풀리 워시드",
+          "nameEnglish": "Tanzania Acacia Hills Geisha AA Fully Washed",
+          "category": "single origin",
+          "origin": "Tanzania",
+          "region": "Karatu",
+          "variety": "Geisha",
+          "process": "Fully Washed",
+          "roast": "Light #91",
+          "flavors": [
+            "백합",
+            "감귤",
+            "청포도",
+            "복숭아",
+            "사과",
+            "캐모마일"
+          ],
+          "flavorColors": [
+            "#fdfcdc",
+            "#ff9e00",
+            "#b5e48c"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "백합, 감귤, 청포도, 복숭아, 사과, 캐모마일"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #91"
+            },
+            {
+              "label": "국가",
+              "value": "Tanzania"
+            },
+            {
+              "label": "지역",
+              "value": "Karatu"
+            },
+            {
+              "label": "농장",
+              "value": "Acacia Hills"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Leon Christianakis"
+            },
+            {
+              "label": "고도",
+              "value": "1,750~1,950m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Fully Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 19950
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T19:54:19+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Tanzania · Geisha · Fully Washed"
+        },
+        {
+          "id": "945-12",
+          "name": "#12 탄자니아 아카시아 힐스 파카마라 AA 풀리 워시드",
+          "originalName": "[10.22 오픈] #12 탄자니아 아카시아 힐스 파카마라 AA 풀리 워시드",
+          "nameEnglish": "Tanzania Acacia Hills Pacamara AA Fully Washed",
+          "category": "single origin",
+          "origin": "Tanzania",
+          "region": "Karatu",
+          "variety": "Pacamara",
+          "process": "Fully Washed",
+          "roast": "Light #90",
+          "flavors": [
+            "자스민",
+            "감귤",
+            "자몽",
+            "청포도",
+            "복숭아",
+            "우롱차"
+          ],
+          "flavorColors": [
+            "#ff7900",
+            "#ffb3c6",
+            "#b5e48c"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 감귤, 자몽, 청포도, 복숭아, 우롱차"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #90"
+            },
+            {
+              "label": "국가",
+              "value": "Tanzania"
+            },
+            {
+              "label": "지역",
+              "value": "Karatu"
+            },
+            {
+              "label": "농장",
+              "value": "Acacia Hills"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Leon Christianakis"
+            },
+            {
+              "label": "고도",
+              "value": "1,750~1,950m"
+            },
+            {
+              "label": "품종",
+              "value": "Pacamara"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Fully Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 1
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 10930
+            }
+          ],
+          "openDate": "2026-10-22",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T19:54:19+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Tanzania · Pacamara · Fully Washed"
+        },
+        {
+          "id": "945-13",
+          "name": "#13 에티오피아 알로 타미루 사포 미니 클래식 워시드",
+          "originalName": "[10.22 오픈] #13 에티오피아 알로 타미루 사포 미니 클래식 워시드",
+          "nameEnglish": "Ethiopia Alo Tamiru Safo Mini-beans Classic Washed",
+          "category": "single origin",
+          "origin": "Ethiopia",
+          "region": "Alo, Bensa, Sidama",
+          "variety": "74158",
+          "process": "Classic Washed",
+          "roast": "Light #91",
+          "flavors": [
+            "엘더플라워",
+            "라벤더",
+            "금귤",
+            "멜론",
+            "로즈마리",
+            "얼그레이"
+          ],
+          "flavorColors": [
+            "#cdb4db",
+            "#ff9e00",
+            "#76c893"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "엘더플라워, 라벤더, 금귤, 멜론, 로즈마리, 얼그레이"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #91"
+            },
+            {
+              "label": "국가",
+              "value": "Ethiopia"
+            },
+            {
+              "label": "지역",
+              "value": "Alo, Bensa, Sidama"
+            },
+            {
+              "label": "농장",
+              "value": "Alo Coffee"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Safo Station"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Tamiru Tadesse"
+            },
+            {
+              "label": "고도",
+              "value": "2,410~2,500m"
+            },
+            {
+              "label": "품종",
+              "value": "74158"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Classic Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 1
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 17580
+            }
+          ],
+          "openDate": "2026-10-22",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T19:54:37+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ethiopia · 74158 · Classic Washed"
+        },
+        {
+          "id": "945-14",
+          "name": "#14 콜롬비아 라 에스트레야 게이샤 내추럴 (라이트 로스팅)",
+          "originalName": "[10.22 오픈] #14 콜롬비아 라 에스트레야 게이샤 내추럴 (라이트 로스팅)",
+          "nameEnglish": "Colombia La Estrella Geisha Natural (Light Roasting)",
+          "category": "single origin",
+          "origin": "Colombia",
+          "region": "Buenos Aires, La Union, Narino",
+          "variety": "Geisha",
+          "process": "Natural",
+          "roast": "Light #88",
+          "flavors": [
+            "라벤더",
+            "히비스커스",
+            "포도",
+            "블루베리",
+            "복숭아",
+            "포멜로"
+          ],
+          "flavorColors": [
+            "#9f86c0",
+            "#dd2d4a",
+            "#fed9b7"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "라벤더, 히비스커스, 포도, 블루베리, 복숭아, 포멜로"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #88"
+            },
+            {
+              "label": "국가",
+              "value": "Colombia"
+            },
+            {
+              "label": "지역",
+              "value": "Buenos Aires, La Union, Narino"
+            },
+            {
+              "label": "농장",
+              "value": "La Estrella"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Carlos Estrella"
+            },
+            {
+              "label": "고도",
+              "value": "2,200m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 20900
+            }
+          ],
+          "openDate": "2026-10-22",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T19:54:36+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Colombia · Geisha · Natural"
+        },
+        {
+          "id": "945-15",
+          "name": "#15 콜롬비아 라 에스트레야 게이샤 내추럴 (다크 로스팅)",
+          "originalName": "[10.22 오픈] #15 콜롬비아 라 에스트레야 게이샤 내추럴 (다크 로스팅)",
+          "nameEnglish": "Colombia La Estrella Geisha Natural (Dark Roasting)",
+          "category": "single origin",
+          "origin": "Colombia",
+          "region": "Buenos Aires, La Union, Narino",
+          "variety": "Geisha",
+          "process": "Natural",
+          "roast": "Dark #53",
+          "flavors": [
+            "라벤더",
+            "히비스커스",
+            "포도",
+            "황도",
+            "망고스틴"
+          ],
+          "flavorColors": [
+            "#6247aa",
+            "#480a63",
+            "#7f5539"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "라벤더, 히비스커스, 포도, 황도, 망고스틴"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Dark #53"
+            },
+            {
+              "label": "국가",
+              "value": "Colombia"
+            },
+            {
+              "label": "지역",
+              "value": "Buenos Aires, La Union, Narino"
+            },
+            {
+              "label": "농장",
+              "value": "La Estrella"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Carlos Estrella"
+            },
+            {
+              "label": "고도",
+              "value": "2,200m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 16150
+            }
+          ],
+          "openDate": "2026-10-22",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T23:44:48+09:00",
+          "decaf": false,
+          "darkRoast": true,
+          "summary": "Colombia · Geisha · Natural"
+        },
+        {
+          "id": "945-16",
+          "name": "#16 페루 엘 라우렐 게이샤 애너로빅 워시드",
+          "originalName": "[10.26 오픈] #16 페루 엘 라우렐 게이샤 애너로빅 워시드",
+          "nameEnglish": "Peru El Laurel Geisha Anaerobic Washed",
+          "category": "single origin",
+          "origin": "Peru",
+          "region": "El Vencedor, Cajamarca",
+          "variety": "Geisha",
+          "process": "Anaerobic Washed",
+          "roast": "Light #93",
+          "flavors": [
+            "분홍장미",
+            "자스민",
+            "베르가못",
+            "청포도",
+            "복숭아",
+            "라임주스"
+          ],
+          "flavorColors": [
+            "#ffb3c6",
+            "#b5e48c",
+            "#d9ed92"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "분홍장미, 자스민, 베르가못, 청포도, 복숭아, 라임주스"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #93"
+            },
+            {
+              "label": "국가",
+              "value": "Peru"
+            },
+            {
+              "label": "지역",
+              "value": "El Vencedor, Cajamarca"
+            },
+            {
+              "label": "농장",
+              "value": "El Laurel"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Yonal Fernandez"
+            },
+            {
+              "label": "고도",
+              "value": "1,750m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Anaerobic Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 15680
+            }
+          ],
+          "openDate": "2026-10-26",
+          "availability": "upcoming",
+          "sourceUpdatedAt": "2026-10-17T22:15:57+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Peru · Geisha · Anaerobic Washed"
+        },
+        {
+          "id": "945-25",
+          "name": "#25 파나마 블랙문 치로소 애너로빅 내추럴 #35",
+          "originalName": "#25 파나마 블랙문 치로소 애너로빅 내추럴 #35",
+          "nameEnglish": "Panama Black Moon Chiroso Anaerobic Natural #35",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "Boquete",
+          "variety": "Chiroso",
+          "process": "Anaerobic Natural",
+          "roast": "Light #94",
+          "flavors": [
+            "제비꽃",
+            "복숭아주스",
+            "파파야",
+            "요거트",
+            "오렌지블라썸"
+          ],
+          "flavorColors": [
+            "#9f86c0",
+            "#ffb3c6",
+            "#fdfcdc"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "제비꽃, 복숭아주스, 파파야, 요거트, 오렌지블라썸"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #94"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "Boquete"
+            },
+            {
+              "label": "농장",
+              "value": "Black Moon"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Hunter Tedman"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "#35"
+            },
+            {
+              "label": "고도",
+              "value": "1,700m"
+            },
+            {
+              "label": "품종",
+              "value": "Chiroso"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Anaerobic Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "17g",
+              "price": 10450
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T22:16:07+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Chiroso · Anaerobic Natural"
+        },
+        {
+          "id": "945-26",
+          "name": "#26 파나마 TNT 돈체오 게이샤 내추럴(프룻펀치)",
+          "originalName": "#26 파나마 TNT 돈체오 게이샤 내추럴(프룻펀치)",
+          "nameEnglish": "Panama TNT Don Cheo Geisha Natural(Fruit Punch)",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "Cotito, Volcan",
+          "variety": "Geisha",
+          "process": "Fruit Punch: Low Temperature Fermentation Natural",
+          "roast": "Light #98",
+          "flavors": [
+            "자스민",
+            "애플망고",
+            "멜론",
+            "오렌지블라썸",
+            "화이트와인"
+          ],
+          "flavorColors": [
+            "#ff9e00",
+            "#b5e48c",
+            "#fdfcdc"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 애플망고, 멜론, 오렌지블라썸, 화이트와인"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #98"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "Cotito, Volcan"
+            },
+            {
+              "label": "농장",
+              "value": "Don Cheo"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "TNT Coffee Lab"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Elizeo Mendoza"
+            },
+            {
+              "label": "고도",
+              "value": "1,550~1,600m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Fruit Punch: Low Temperature Fermentation Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "17g",
+              "price": 13700
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T21:08:34+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Geisha · Fruit Punch: Low Temperature Fermentation Natural"
+        },
+        {
+          "id": "945-27",
+          "name": "#27 콜롬비아 벨라 알레한드리아 마라게이샤 애너로빅 워시드",
+          "originalName": "#27 콜롬비아 벨라 알레한드리아 마라게이샤 애너로빅 워시드",
+          "nameEnglish": "Colombia Bella Alejandria Marageisha Anaerobic Washed",
+          "category": "special single",
+          "origin": "Colombia",
+          "region": "Huila",
+          "variety": "Marageisha",
+          "process": "Anaerobic Washed",
+          "roast": "Light #93",
+          "flavors": [
+            "자스민",
+            "라벤더",
+            "베르가못",
+            "레몬그라스",
+            "그린망고",
+            "금귤"
+          ],
+          "flavorColors": [
+            "#cdb4db",
+            "#b5e48c",
+            "#ff9e00"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 라벤더, 베르가못, 레몬그라스, 그린망고, 금귤"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #93"
+            },
+            {
+              "label": "국가",
+              "value": "Colombia"
+            },
+            {
+              "label": "지역",
+              "value": "Huila"
+            },
+            {
+              "label": "농장",
+              "value": "Bella Alejandria"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Wilder Lazo"
+            },
+            {
+              "label": "고도",
+              "value": "1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "Marageisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Anaerobic Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 20900
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T22:16:16+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Colombia · Marageisha · Anaerobic Washed"
+        },
+        {
+          "id": "945-28",
+          "name": "#28 콜롬비아 인마쿨라다 펠로우즈 팜즈 게이샤 워시드",
+          "originalName": "#28 콜롬비아 인마쿨라다 펠로우즈 팜즈 게이샤 워시드",
+          "nameEnglish": "Colombia Inmaculada Fellows Farms Geisha Washed",
+          "category": "special single",
+          "origin": "Colombia",
+          "region": "Cauca",
+          "variety": "Geisha",
+          "process": "Washed",
+          "roast": "Light #90",
+          "flavors": [
+            "라벤더",
+            "얼그레이",
+            "라임",
+            "이온음료",
+            "녹차"
+          ],
+          "flavorColors": [
+            "#9f86c0",
+            "#b5e48c",
+            "#dde5b6"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "라벤더, 얼그레이, 라임, 이온음료, 녹차"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #90"
+            },
+            {
+              "label": "국가",
+              "value": "Colombia"
+            },
+            {
+              "label": "지역",
+              "value": "Cauca"
+            },
+            {
+              "label": "농장",
+              "value": "Inmaculada Fellows Farms"
+            },
+            {
+              "label": "고도",
+              "value": "1,800~2,000m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 20900
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T20:09:53+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Colombia · Geisha · Washed"
+        },
+        {
+          "id": "945-29",
+          "name": "#29 예멘 베이트 알알 우다이니 애너로빅 내추럴",
+          "originalName": "#29 예멘 베이트 알알 우다이니 애너로빅 내추럴",
+          "nameEnglish": "Yemen Bait Alal Udaini Anaerobic Natural",
+          "category": "special single",
+          "origin": "Yemen",
+          "region": "Al-Hayma",
+          "variety": "Udaini",
+          "process": "Anaerobic Natural",
+          "roast": "Light #76",
+          "flavors": [
+            "포도",
+            "크랜베리",
+            "석류",
+            "수박",
+            "모카"
+          ],
+          "flavorColors": [
+            "#640d14",
+            "#dd2d4a",
+            "#9163cb"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "포도, 크랜베리, 석류, 수박, 모카"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #76"
+            },
+            {
+              "label": "국가",
+              "value": "Yemen"
+            },
+            {
+              "label": "지역",
+              "value": "Al-Hayma"
+            },
+            {
+              "label": "농장",
+              "value": "Bait Alal"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Bait Subaih"
+            },
+            {
+              "label": "고도",
+              "value": "2,300m"
+            },
+            {
+              "label": "품종",
+              "value": "Udaini"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Anaerobic Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 24700
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T23:23:22+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Yemen · Udaini · Anaerobic Natural"
+        },
+        {
+          "id": "945-30",
+          "name": "#30 파나마 로스트 오리진 핀카 마야 게이샤 내추럴 193_345",
+          "originalName": "#30 파나마 로스트 오리진 핀카 마야 게이샤 내추럴 193_345",
+          "nameEnglish": "Panama Lost Origin Finca Maya Geisha Natural 193_345",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "Alto Jaramillo, Boquete",
+          "variety": "Geisha",
+          "process": "Natural",
+          "roast": "Light #95",
+          "flavors": [
+            "붉은장미",
+            "핑크구아바",
+            "라임",
+            "샤인머스캣",
+            "멜론",
+            "로제와인"
+          ],
+          "flavorColors": [
+            "#dd2d4a",
+            "#ffb3c6",
+            "#b5e48c"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "붉은장미, 핑크구아바, 라임, 샤인머스캣, 멜론, 로제와인"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #95"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "Alto Jaramillo, Boquete"
+            },
+            {
+              "label": "농장",
+              "value": "Finca Maya"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Lost Origin Coffee Lab"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Margoth, Mario Guillen"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "Maya 193_345"
+            },
+            {
+              "label": "고도",
+              "value": "1,600m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "17g",
+              "price": 27100
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T20:09:27+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Geisha · Natural"
+        },
+        {
+          "id": "945-31",
+          "name": "#31 에콰도르 엘 알리살 게이샤 내추럴",
+          "originalName": "#31 에콰도르 엘 알리살 게이샤 내추럴",
+          "nameEnglish": "Ecuador El Alisal Geisha Natural",
+          "category": "special single",
+          "origin": "Ecuador",
+          "region": "Quilanga, Loja",
+          "variety": "Geisha",
+          "process": "Natural",
+          "roast": "Light #92",
+          "flavors": [
+            "자스민",
+            "복숭아",
+            "금귤",
+            "백포도",
+            "백차"
+          ],
+          "flavorColors": [
+            "#ffb3c6",
+            "#ff9e00",
+            "#fdfcdc"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 복숭아, 금귤, 백포도, 백차"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #92"
+            },
+            {
+              "label": "국가",
+              "value": "Ecuador"
+            },
+            {
+              "label": "지역",
+              "value": "Quilanga, Loja"
+            },
+            {
+              "label": "농장",
+              "value": "El Alisal"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Leonidas Jaramillo"
+            },
+            {
+              "label": "고도",
+              "value": "2,000m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 27550
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T23:38:43+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ecuador · Geisha · Natural"
+        },
+        {
+          "id": "945-32",
+          "name": "#32 콜롬비아 인마쿨라다 유게니오이데스 애너로빅 내추럴",
+          "originalName": "#32 콜롬비아 인마쿨라다 유게니오이데스 애너로빅 내추럴",
+          "nameEnglish": "Colombia Inmaculada Eugenioides Anaerobic Natural",
+          "category": "special single",
+          "origin": "Colombia",
+          "region": "Valle del Cauca",
+          "variety": "Eugenioides",
+          "process": "Anaerobic Natural",
+          "roast": "Light #89",
+          "flavors": [
+            "딸기",
+            "바나나",
+            "파인애플",
+            "구아바",
+            "블루베리"
+          ],
+          "flavorColors": [
+            "#fb6f92",
+            "#ffdc5e",
+            "#9163cb"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "딸기, 바나나, 파인애플, 구아바, 블루베리"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #89"
+            },
+            {
+              "label": "국가",
+              "value": "Colombia"
+            },
+            {
+              "label": "지역",
+              "value": "Valle del Cauca"
+            },
+            {
+              "label": "농장",
+              "value": "Inmaculada"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Holguin Family"
+            },
+            {
+              "label": "고도",
+              "value": "1,700~2,000m"
+            },
+            {
+              "label": "품종",
+              "value": "Eugenioides"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Anaerobic Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "17g",
+              "price": 29200
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T22:16:34+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Colombia · Eugenioides · Anaerobic Natural"
+        },
+        {
+          "id": "945-33",
+          "name": "#33 파나마 티에라 블랑카 게이샤 블랙라벨 콜드 퍼먼테이션 내추럴",
+          "originalName": "#33 파나마 티에라 블랑카 게이샤 블랙라벨 콜드 퍼먼테이션 내추럴",
+          "nameEnglish": "Panama Tierra Blanca Geisha Black Label CF Natural",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "Cordillera",
+          "variety": "Geisha",
+          "process": "Cold Fermentation Natural",
+          "roast": "Light #88",
+          "flavors": [
+            "자스민",
+            "베르가못",
+            "망고",
+            "블루베리",
+            "딸기"
+          ],
+          "flavorColors": [
+            "#ffba08",
+            "#9163cb",
+            "#ffb3c6"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 베르가못, 망고, 블루베리, 딸기"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #88"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "Cordillera"
+            },
+            {
+              "label": "농장",
+              "value": "Tierra Blanca"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Kyle Snider"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "Black Label"
+            },
+            {
+              "label": "고도",
+              "value": "1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Cold Fermentation Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 36500
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T20:09:25+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Geisha · Cold Fermentation Natural"
+        },
+        {
+          "id": "945-34",
+          "name": "#34 파나마 롱보드 미스티 마운틴 게이샤 워시드 7",
+          "originalName": "#34 파나마 롱보드 미스티 마운틴 게이샤 워시드 7",
+          "nameEnglish": "Panama Longboard Misty Mountain Geisha Washed 7",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "La India, Boquete",
+          "variety": "Geisha",
+          "process": "Washed",
+          "roast": "Light #95",
+          "flavors": [
+            "자스민",
+            "오렌지블라썸",
+            "백도",
+            "샤인머스캣",
+            "화이트와인",
+            "허브",
+            "목련"
+          ],
+          "flavorColors": [
+            "#ffb3c6",
+            "#b5e48c",
+            "#fdfcdc"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 오렌지블라썸, 백도, 샤인머스캣, 화이트와인, 허브, 목련"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #95"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "La India, Boquete"
+            },
+            {
+              "label": "농장",
+              "value": "Longboard, Misty Mountain"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Sophia Boudeman, Noemi Montenegro"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "7"
+            },
+            {
+              "label": "고도",
+              "value": "1,600~1,850m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "17g",
+              "price": 44000
+            }
+          ],
+          "openDate": "2026-10-18",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-10-17T20:09:27+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Geisha · Washed"
+        },
+        {
+          "id": "945-35",
+          "name": "#35 파나마 마운트 토투마스 게이샤 워시드(013 밀키웨이 콜드 퍼먼테이션)",
+          "originalName": "[10.22 오픈] #35 파나마 마운트 토투마스 게이샤 워시드(013 밀키웨이 콜드 퍼먼테이션)",
+          "nameEnglish": "Panama Mount Totumas Geisha Washed(013 Milky Way CF)",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "Los Pozos, Tierras Altas",
+          "variety": "Geisha",
+          "process": "Washed(Milky Way Cold Fermentation)",
+          "roast": "Light #96",
+          "flavors": [
+            "슈퍼자스민",
+            "레몬그라스",
+            "화이트머스크",
+            "청포도",
+            "리치"
+          ],
+          "flavorColors": [
+            "#b5e48c",
+            "#ffb3c6",
+            "#fdfcdc"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "슈퍼자스민, 레몬그라스, 화이트머스크, 청포도, 리치"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #96"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "Los Pozos, Tierras Altas"
+            },
+            {
+              "label": "농장",
+              "value": "Mount Totumas"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Karin"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "#013"
+            },
+            {
+              "label": "고도",
+              "value": "1,900m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed(Milky Way Cold Fermentation)"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "17g",
+              "price": 41000
+            }
+          ],
+          "openDate": "2026-10-22",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T23:44:02+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Geisha · Washed(Milky Way Cold Fermentation)"
+        },
+        {
+          "id": "945-36",
+          "name": "#36 콜롬비아 벨라 알레한드리아 게이샤 애너로빅 내추럴",
+          "originalName": "[10.22 오픈] #36 콜롬비아 벨라 알레한드리아 게이샤 애너로빅 내추럴",
+          "nameEnglish": "Colombia Bella Alejandria Geisha Anaerobic Natural",
+          "category": "special single",
+          "origin": "Colombia",
+          "region": "Huila",
+          "variety": "Geisha",
+          "process": "Anaerobic Natural",
+          "roast": "Light #92",
+          "flavors": [
+            "로즈마리",
+            "포멜로",
+            "히비스커스",
+            "백향과",
+            "아니스",
+            "천도복숭아"
+          ],
+          "flavorColors": [
+            "#76c893",
+            "#dd2d4a",
+            "#ffba08"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "로즈마리, 포멜로, 히비스커스, 백향과, 아니스, 천도복숭아"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #92"
+            },
+            {
+              "label": "국가",
+              "value": "Colombia"
+            },
+            {
+              "label": "지역",
+              "value": "Huila"
+            },
+            {
+              "label": "농장",
+              "value": "Bella Alejandria"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Wilder Lazo"
+            },
+            {
+              "label": "고도",
+              "value": "1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Anaerobic Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 20900
+            }
+          ],
+          "openDate": "2026-10-22",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-17T22:16:43+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Colombia · Geisha · Anaerobic Natural"
+        },
+        {
+          "id": "945-39",
+          "name": "#39 과테말라 엘 인헤르또 게이샤 드라이드 온 체리 내추럴(2026 Lot)",
+          "originalName": "[10.22 오픈] #39 과테말라 엘 인헤르또 게이샤 드라이드 온 체리 내추럴(2026 Lot)",
+          "nameEnglish": "Guatemala El Injerto Geisha Dried on Cherry Natural (2026 Lot)",
+          "category": "special single",
+          "origin": "Guatemala",
+          "region": "La Libertad, Huehuetenango",
+          "variety": "Geisha",
+          "process": "Natural (Dried on Cherry)",
+          "roast": "Medium Light #83",
+          "flavors": [
+            "자스민",
+            "허니서클",
+            "복숭아",
+            "머스켓",
+            "오렌지"
+          ],
+          "flavorColors": [
+            "#f2e9d8",
+            "#e8833a",
+            "#f7b48c"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 허니서클, 복숭아, 머스켓, 오렌지"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Medium Light #83"
+            },
+            {
+              "label": "국가",
+              "value": "Guatemala"
+            },
+            {
+              "label": "지역",
+              "value": "La Libertad, Huehuetenango"
+            },
+            {
+              "label": "농장",
+              "value": "El Injerto"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Arturo Manuel Aguirre Sáenz"
+            },
+            {
+              "label": "고도",
+              "value": "1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural (Dried on Cherry)"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 2
+            },
+            {
+              "label": "바디감",
+              "value": 4
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "50g",
+              "price": 23700
+            }
+          ],
+          "openDate": "2026-10-22",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-21T20:56:38+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Guatemala · Geisha · Natural (Dried on Cherry)"
+        },
+        {
+          "id": "945-37",
+          "name": "#37 에콰도르 크루즈 로마 파카마라 24시간 발효 워시드",
+          "originalName": "[10.26 오픈] #37 에콰도르 크루즈 로마 파카마라 24시간 발효 워시드",
+          "nameEnglish": "Ecuador Cruz Loma Pacamara 24h Fermentation Washed",
+          "category": "special single",
+          "origin": "Ecuador",
+          "region": "Pichincha",
+          "variety": "Pacamara",
+          "process": "24h Fermentation Washed",
+          "roast": "Light #89",
+          "flavors": [
+            "자스민",
+            "다크체리",
+            "석류",
+            "적포도",
+            "자두",
+            "용과"
+          ],
+          "flavorColors": [
+            "#880d1e",
+            "#9d0208",
+            "#cdb4db"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 다크체리, 석류, 적포도, 자두, 용과"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #89"
+            },
+            {
+              "label": "국가",
+              "value": "Ecuador"
+            },
+            {
+              "label": "지역",
+              "value": "Pichincha"
+            },
+            {
+              "label": "농장",
+              "value": "Cruz Loma"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Morales Rivera Family"
+            },
+            {
+              "label": "고도",
+              "value": "1,750~1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "Pacamara"
+            },
+            {
+              "label": "가공 방식",
+              "value": "24h Fermentation Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 1
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 23280
+            }
+          ],
+          "openDate": "2026-10-26",
+          "availability": "upcoming",
+          "sourceUpdatedAt": "2026-10-17T20:09:20+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ecuador · Pacamara · 24h Fermentation Washed"
+        }
+      ],
+      "detailsCheckedAt": "2026-10-24T01:11:05.865Z"
+    },
+    {
+      "schemaVersion": 1,
+      "title": "[10월 커피 월픽] 유에프오커피 (10/1~10/31)",
+      "edition": "regular",
+      "month": "2026-10",
+      "saleStart": "2026-10-01",
+      "saleEnd": "2026-10-31",
       "roastery": "유에프오커피",
       "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=901",
       "detailSourceUrl": "https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/UFO2/UFO2.json",
-      "sourceCheckedAt": "2026-10-13T13:50:11.425Z",
+      "sourceCheckedAt": "2026-10-22T11:18:47.205Z",
       "items": [
         {
           "id": "901-b81b8e01d",
@@ -317,7 +3661,7 @@
             }
           ],
           "openDate": "2026-10-05",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-09-30T16:11:44+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1643,7 +4987,7 @@
           ],
           "openDate": "2026-10-05",
           "availability": "available",
-          "sourceUpdatedAt": "2026-10-01T16:40:45+09:00",
+          "sourceUpdatedAt": "2026-10-21T11:52:27+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Ethiopia · Heirloom · Modified Honey"
@@ -1814,7 +5158,7 @@
             }
           ],
           "openDate": "2026-10-12",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-09-30T19:02:39+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1900,7 +5244,7 @@
             }
           ],
           "openDate": "2026-10-12",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-01T17:13:14+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2073,10 +5417,424 @@
           ],
           "openDate": "2026-10-12",
           "availability": "available",
-          "sourceUpdatedAt": "2026-09-30T17:24:33+09:00",
+          "sourceUpdatedAt": "2026-10-21T11:52:44+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Ethiopia · Heirloom · Modified Honey"
+        },
+        {
+          "id": "901-19",
+          "name": "#19 케냐 마운트 케냐 SL28 SL34 루이루11 AA TOP 워시드",
+          "originalName": "[10.16 오픈] #19 케냐 마운트 케냐 SL28 SL34 루이루11 AA TOP 워시드",
+          "nameEnglish": "Kenya Mount Kenya SL28, SL34, Ruiru11 AA TOP Washed",
+          "category": "single origin",
+          "origin": "Kenya",
+          "region": "Mount Kenya",
+          "variety": "SL28, SL34, Ruiru11",
+          "process": "Washed",
+          "roast": "Light #86.5",
+          "flavors": [
+            "자두",
+            "블랙체리",
+            "블랙사파이어 포도"
+          ],
+          "flavorColors": [
+            "#640d14",
+            "#560bad",
+            "#b5179e"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자두, 블랙체리, 블랙사파이어 포도"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #86.5"
+            },
+            {
+              "label": "국가",
+              "value": "Kenya"
+            },
+            {
+              "label": "지역",
+              "value": "Mount Kenya"
+            },
+            {
+              "label": "고도",
+              "value": "1,700m"
+            },
+            {
+              "label": "품종",
+              "value": "SL28, SL34, Ruiru11"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 5
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 16000
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T19:18:37+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Kenya · SL28, SL34, Ruiru11 · Washed"
+        },
+        {
+          "id": "901-20",
+          "name": "#20 케냐 예리하 셀렉션 SL28 SL34 AA TOP 워시드",
+          "originalName": "[10.16 오픈] #20 케냐 예리하 셀렉션 SL28 SL34 AA TOP 워시드",
+          "nameEnglish": "Kenya Yerihar Selection SL28, SL34 AA TOP Washed",
+          "category": "single origin",
+          "origin": "Kenya",
+          "region": "Nyeri",
+          "variety": "SL28, SL34",
+          "process": "Washed",
+          "roast": "Light #91",
+          "flavors": [
+            "크랜베리",
+            "레드커런트",
+            "히비스커스"
+          ],
+          "flavorColors": [
+            "#880d1e",
+            "#d00000",
+            "#dd2d4a"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "크랜베리, 레드커런트, 히비스커스"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #91"
+            },
+            {
+              "label": "국가",
+              "value": "Kenya"
+            },
+            {
+              "label": "지역",
+              "value": "Nyeri"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "Yerihar Selection"
+            },
+            {
+              "label": "고도",
+              "value": "1,650~1,750m"
+            },
+            {
+              "label": "품종",
+              "value": "SL28, SL34"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 4
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 16000
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T19:11:57+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Kenya · SL28, SL34 · Washed"
+        },
+        {
+          "id": "901-21",
+          "name": "#21 에티오피아 타리쿠 카레 무라고 74158 내추럴",
+          "originalName": "[10.16 오픈] #21 에티오피아 타리쿠 카레 무라고 74158 내추럴",
+          "nameEnglish": "Ethiopia Tariku Kare  Murago 74158 Natural",
+          "category": "single origin",
+          "origin": "Ethiopia",
+          "region": "Murago, Bensa, Sidama",
+          "variety": "74158",
+          "process": "Natural",
+          "roast": "Light #91.2",
+          "flavors": [
+            "라즈베리",
+            "열대과일",
+            "밀크 초콜릿"
+          ],
+          "flavorColors": [
+            "#e30b5d",
+            "#f72585",
+            "#ffba08"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "라즈베리, 열대과일, 밀크 초콜릿"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #91.2"
+            },
+            {
+              "label": "국가",
+              "value": "Ethiopia"
+            },
+            {
+              "label": "지역",
+              "value": "Murago, Bensa, Sidama"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Murago Station"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Tariku Kare"
+            },
+            {
+              "label": "고도",
+              "value": "2,250~2,350m"
+            },
+            {
+              "label": "품종",
+              "value": "74158"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 17500
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T19:18:58+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ethiopia · 74158 · Natural"
+        },
+        {
+          "id": "901-22",
+          "name": "#22 에티오피아 시다마 아르베고나 부르사 74158 워시드",
+          "originalName": "[10.16 오픈] #22 에티오피아 시다마 아르베고나 부르사 74158 워시드",
+          "nameEnglish": "Ethiopia Sidama Arbegona Bursa 74158 Washed",
+          "category": "single origin",
+          "origin": "Ethiopia",
+          "region": "Bursa, Arbegona, Sidama",
+          "variety": "74158",
+          "process": "Washed",
+          "roast": "Light #99",
+          "flavors": [
+            "화이트 플로럴",
+            "백도",
+            "오렌지"
+          ],
+          "flavorColors": [
+            "#ff9e00",
+            "#fcd5ce",
+            "#fdfcdc"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "화이트 플로럴, 백도, 오렌지"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #99"
+            },
+            {
+              "label": "국가",
+              "value": "Ethiopia"
+            },
+            {
+              "label": "지역",
+              "value": "Bursa, Arbegona, Sidama"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Bursa Main Station"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Mulugeta Muntasha, Degefu Mulugeta"
+            },
+            {
+              "label": "고도",
+              "value": "2,350m"
+            },
+            {
+              "label": "품종",
+              "value": "74158"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 2
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 18500
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T19:07:59+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ethiopia · 74158 · Washed"
+        },
+        {
+          "id": "901-23",
+          "name": "#23 에티오피아 예가체프 첼바 에얼룸 내추럴",
+          "originalName": "[10.16 오픈] #23 에티오피아 예가체프 첼바 에얼룸 내추럴",
+          "nameEnglish": "Ethiopia Yirgacheffe Chelba Heirloom Natural",
+          "category": "single origin",
+          "origin": "Ethiopia",
+          "region": "Yirgacheffe, Gedeo",
+          "variety": "Heirloom",
+          "process": "Natural",
+          "roast": "Light #96",
+          "flavors": [
+            "홍옥",
+            "베리",
+            "핵과"
+          ],
+          "flavorColors": [
+            "#b11a47",
+            "#e7143f",
+            "#df869a"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "홍옥, 베리, 핵과"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #96"
+            },
+            {
+              "label": "국가",
+              "value": "Ethiopia"
+            },
+            {
+              "label": "지역",
+              "value": "Yirgacheffe, Gedeo"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Chelba Washing Station"
+            },
+            {
+              "label": "고도",
+              "value": "1,800~2,200m"
+            },
+            {
+              "label": "품종",
+              "value": "Heirloom"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 2
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "150g",
+              "price": 16500
+            }
+          ],
+          "openDate": "2026-10-16",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-10-16T20:16:52+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Ethiopia · Heirloom · Natural"
         },
         {
           "id": "901-31",
@@ -3307,7 +7065,7 @@
           ],
           "openDate": "2026-10-05",
           "availability": "available",
-          "sourceUpdatedAt": "2026-09-30T17:27:45+09:00",
+          "sourceUpdatedAt": "2026-10-21T11:52:00+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Guatemala · Geisha · Washed"
@@ -4035,7 +7793,7 @@
             }
           ],
           "openDate": "2026-10-19",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T19:04:55+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4126,7 +7884,7 @@
             }
           ],
           "openDate": "2026-10-19",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T19:04:31+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4188,7 +7946,7 @@
             }
           ],
           "openDate": "2026-10-01",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T23:35:09+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4310,13 +8068,14 @@
             }
           ],
           "openDate": "2026-10-01",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-09-30T23:35:23+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": ""
         }
-      ]
+      ],
+      "detailsCheckedAt": "2026-10-22T11:18:47.206Z"
     }
   ]
 }

@@ -1,4 +1,5 @@
-const today = new Date().toISOString().slice(0,10);
+import {DIARY_KEY,validateDiary} from '../utils/diaryStorage.js';
+const today = new Date().toLocaleDateString('sv-SE');
 
 let coffeeSeq = 4;
 let musicSeq = 4;
@@ -135,16 +136,19 @@ function pathOnly(path) {
 }
 
 function findCoffee(id) {
-  return coffeeLogs.find((item) => String(item.coffeeLogId) === String(id)) || coffeeLogs[0];
+  const item=coffeeLogs.find((item) => String(item.coffeeLogId) === String(id));
+  if(!item)throw new Error('커피 기록을 찾을 수 없습니다.');return item;
 }
 
 function findMusic(id) {
-  return musicLogs.find((item) => String(item.musicLogId) === String(id)) || musicLogs[0];
+  const item=musicLogs.find((item) => String(item.musicLogId) === String(id));
+  if(!item)throw new Error('음악 기록을 찾을 수 없습니다.');return item;
 }
 
 function enrichPairing(pairing) {
-  const coffee = findCoffee(pairing.coffeeLogId);
-  const music = findMusic(pairing.musicLogId);
+  if(!pairing)return null;
+  const coffee = coffeeLogs.find(row=>row.coffeeLogId===pairing.coffeeLogId)||{beanName:'삭제된 커피 기록'};
+  const music = musicLogs.find(row=>row.musicLogId===pairing.musicLogId)||{trackName:'삭제된 음악 기록'};
   return {
     ...pairing,
     beanName: coffee.beanName,
@@ -192,8 +196,8 @@ function createMusic(payload) {
     trackName: payload.trackName || "Untitled Track",
     artistName: payload.artistName || "Unknown Artist",
     albumName: payload.albumName || "",
-    genre: payload.genre || "Ambient",
-    tags: payload.tags || "차분함, 기록",
+    genre: payload.genre || "",
+    tags: payload.tags || "",
     memo: payload.memo || "",
     listenedDate: payload.listenedDate || today
   };
@@ -215,11 +219,12 @@ function createCollection(payload) {
 }
 
 function createPairing(payload) {
+  findCoffee(payload.coffeeLogId);findMusic(payload.musicLogId);
   const item = {
     pairingId: pairingSeq++,
     memberId: 1,
-    coffeeLogId: payload.coffeeLogId || coffeeLogs[0].coffeeLogId,
-    musicLogId: payload.musicLogId || musicLogs[0].musicLogId,
+    coffeeLogId: payload.coffeeLogId,
+    musicLogId: payload.musicLogId,
     moodSummary: payload.moodSummary || "조용히 이어지는 페어링",
     moodTags: payload.moodTags || "차분함, 균형감",
     pairingScore: Number(payload.pairingScore ?? 88),
@@ -291,7 +296,8 @@ async function dispatchRequest(path, options = {}) {
   if (route.startsWith("/pairing/")) {
     const id = route.split("/")[2];
     if (method === "DELETE") return { deleted: true };
-    return enrichPairing(pairings.find((item) => String(item.pairingId) === String(id)) || pairings[0]);
+    const found=pairings.find((item) => String(item.pairingId) === String(id));
+    if(!found)throw new Error('페어링 기록을 찾을 수 없습니다.');return enrichPairing(found);
   }
 
   if ((route === "/collection" || route === "/collections") && method === "POST") return createCollection(payload);
@@ -328,15 +334,22 @@ async function dispatchRequest(path, options = {}) {
 const monthlyPicks = [];
 const storageKey = "roast-reverb-demo-v1";
 const tables = { coffeeLogs, musicLogs, pairings, collections, monthlyPicks };
+let storageError;
 try {
- const saved = JSON.parse(localStorage.getItem(storageKey));
- if (saved) for (const [key, items] of Object.entries(tables)) if (Array.isArray(saved[key])) items.splice(0,items.length,...saved[key]);
-} catch { /* A damaged local copy does not prevent opening the diary. */ }
+ const raw = localStorage.getItem(DIARY_KEY);
+ if (raw !== null) {
+   const saved = validateDiary(JSON.parse(raw));
+   for (const [key, items] of Object.entries(tables)) items.splice(0,items.length,...saved[key]);
+ } else {
+   // A new notebook starts empty; never claim that the visitor tasted or listened to seed examples.
+   for(const rows of [coffeeLogs,musicLogs,pairings,collections])rows.splice(0,rows.length);
+ }
+} catch { storageError=new Error('이 브라우저의 기록 자료를 읽지 못했습니다. 마이페이지에서 원본 자료를 백업하거나 이전 백업으로 복구해 주세요. 예시 기록으로 덮어쓰지 않습니다.'); }
 coffeeSeq = Math.max(0,...coffeeLogs.map(x=>x.coffeeLogId))+1;
 musicSeq = Math.max(0,...musicLogs.map(x=>x.musicLogId))+1;
 pairingSeq = Math.max(0,...pairings.map(x=>x.pairingId))+1;
 collectionSeq = Math.max(0,...collections.map(x=>x.collectionId))+1;
-export async function mockRequest(path, options={}) {
+async function executeRequest(path, options={}) {
  const method=(options.method||"GET").toUpperCase();
  const route=pathOnly(path);
  const match=route.match(/^\/(coffee|music|pairing)\/(\d+)$/);
@@ -348,7 +361,6 @@ export async function mockRequest(path, options={}) {
    result={monthly_pick_id:Date.now(),pick_month:payload.month,roastery:payload.roastery,source_url:payload.sourceUrl,options:payload.rawOptionsText.split(/\r?\n/).filter(Boolean).map((text,i)=>({monthly_pick_option_id:i+1,raw_text:text,option_name:text,score:null,score_reason:"체험 모드: 점수 분석은 서버 연결 후 제공됩니다.",dark_roast:false,decaf:false,sold_out:false}))};
    monthlyPicks.unshift(result);
   } else result=id?monthlyPicks.find(x=>x.monthly_pick_id===id):monthlyPicks;
-  if(method!=="GET") localStorage.setItem(storageKey,JSON.stringify(tables));
   return result;
  }
  if(match && ["PUT","DELETE"].includes(method)) {
@@ -357,8 +369,22 @@ export async function mockRequest(path, options={}) {
    const index=list.findIndex(x=>String(x[key])===id);
    if(index<0) throw new Error("기록을 찾을 수 없습니다.");
    if(method==="DELETE") { list.splice(index,1); result={deleted:true}; }
-   else { Object.assign(list[index],bodyOf(options)); result=list[index]; }
+   else { Object.assign(list[index],bodyOf(options),{[key]:Number(id),memberId:list[index].memberId}); result=list[index]; }
  } else result=await dispatchRequest(path,options);
- if(method!=="GET") localStorage.setItem(storageKey,JSON.stringify(tables));
  return result;
+}
+// Serial writes prevent one failed persistence attempt rolling back a concurrent edit.
+let pendingWrite=Promise.resolve();
+export function mockRequest(path,options={}) {
+ if(storageError)return Promise.reject(storageError);
+ const method=(options.method||'GET').toUpperCase();
+ if(method==='GET')return pendingWrite.then(()=>executeRequest(path,options));
+ const action=pendingWrite.then(async()=>{
+   const before=JSON.parse(JSON.stringify(tables));
+   const sequences=[coffeeSeq,musicSeq,pairingSeq,collectionSeq];
+   try {const result=await executeRequest(path,options);localStorage.setItem(storageKey,JSON.stringify(tables));return result;}
+   catch(error){for(const [name,rows] of Object.entries(tables))rows.splice(0,rows.length,...before[name]);[coffeeSeq,musicSeq,pairingSeq,collectionSeq]=sequences;throw error;}
+ });
+ pendingWrite=action.catch(()=>{});
+ return action;
 }

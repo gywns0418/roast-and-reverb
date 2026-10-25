@@ -97,11 +97,12 @@ export default function CoffeeImportPage() {
       eyebrow="Bring your coffee notes"
       subtitle="기존 Markdown 추출 기록을 확인한 뒤 내 기록장에 추가합니다."
     >
-      <section className="panel">
+      <section className="panel coffee-import-panel">
         <label className="brew-field">
           <span>날짜별 추출 기록 (.md)</span>
           <input
             className="input"
+            aria-describedby="coffee-import-file-help"
             type="file"
             accept=".md,text/markdown"
             multiple
@@ -109,8 +110,8 @@ export default function CoffeeImportPage() {
             disabled={loading}
           />
         </label>
-        <p className="brew-hint">
-          기록에 있는 정보만 가져옵니다. 원본 파일은 바꾸지 않으며, 음악은
+        <p className="brew-hint" id="coffee-import-file-help">
+          여러 Markdown 파일을 함께 선택할 수 있습니다. 기록에 있는 정보만 가져옵니다. 원본 파일은 바꾸지 않으며, 음악은
           나중에 직접 연결할 수 있습니다.
         </p>
         <p className="brew-hint">
@@ -172,7 +173,7 @@ export default function CoffeeImportPage() {
             disabled={loading || !selected}
             loading={loading}
           >
-            {loading ? "처리 중" : `${selected}건 가져오기`}
+            {loading ? "처리 중" : selected ? `${selected}건 가져오기` : rows.length ? "선택한 기록 없음" : "파일 선택 후 가져오기"}
           </Button>
           <Link className="ghost-button" to="/coffee">
             커피 기록으로

@@ -30,7 +30,7 @@ public class LastfmService {
         if (!isEnabled() || keyword == null || keyword.isBlank()) {
             return List.of();
         }
-        String url = UriComponentsBuilder.fromHttpUrl(API_URL)
+        String url = UriComponentsBuilder.fromUriString(API_URL)
                 .queryParam("method", "track.search")
                 .queryParam("track", keyword)
                 .queryParam("api_key", apiKey)

@@ -32,6 +32,7 @@ public class JwtFilter extends OncePerRequestFilter {
             try {
                 Map<String, Object> claims = jwtProvider.parseToken(header.substring(7));
                 MemberPrincipal principal = userDetailsService.loadUserByUsername(String.valueOf(claims.get("email")));
+                if(!String.valueOf(principal.getMemberId()).equals(String.valueOf(claims.get("sub")))||((Number)claims.getOrDefault("ver",0)).intValue()!=principal.getAuthVersion())throw new IllegalArgumentException("인증이 갱신되었습니다.");
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);

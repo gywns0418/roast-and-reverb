@@ -8,6 +8,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler({org.springframework.web.servlet.resource.NoResourceFoundException.class,
+        org.springframework.web.servlet.NoHandlerFoundException.class})
+    public ResponseEntity<ApiResponse<Object>> handleNotFound(Exception e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, null, "요청한 자료를 찾을 수 없습니다."));
+    }
+    @ExceptionHandler({org.springframework.http.converter.HttpMessageNotReadableException.class,
+        org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class,
+        org.springframework.web.bind.MissingServletRequestParameterException.class})
+    public ResponseEntity<ApiResponse<Object>> handleInvalidInput(Exception e) {
+        return ResponseEntity.badRequest().body(new ApiResponse<>(false, null, "입력 형식을 확인해 주세요."));
+    }
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ApiResponse<Object>> handleCustomException(CustomException e) {
         return ResponseEntity.status(e.getStatus()).body(new ApiResponse<>(false, null, e.getMessage()));

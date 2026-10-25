@@ -1,43 +1,41 @@
-import { Link, NavLink } from "react-router-dom";
-import { BarChart3, Coffee, Disc3, Headphones, Home, Library, ShoppingBasket, Sparkles, UserRound } from "lucide-react";
-import { authStore } from "../../store/authStore.js";
-
+import { NavLink } from "react-router-dom";
+import { Coffee, BookOpen, Settings, ShoppingBasket } from "lucide-react";
 const links = [
-  ["/ritual", Disc3, "나의 청음실", "blend"],
-  ["/memories", Library, "감각의 기억", "neutral"],
-  ["/dashboard", Home, "대시보드", "neutral"],
-  ["/beans", ShoppingBasket, "내 원두", "coffee"],
-  ["/coffee", Coffee, "커피 로그", "coffee"],
-  ["/music", Headphones, "음악 로그", "music"],
-  ["/pairing", Sparkles, "AI 페어링", "blend"],
-  ["/report/monthly", BarChart3, "취향 리포트", "neutral"],
-  ["/recommend", Disc3, "추천", "blend"],
-  ["/monthly-pick", ShoppingBasket, "이달의 픽", "blend"],
-  ["/collection", Library, "컬렉션", "blend"],
-  ["/mypage", UserRound, "마이페이지", "neutral"]
+  ["/dashboard", Coffee, "오늘의 한 잔"],
+  ["/coffee", BookOpen, "내 기록"],
+  ["/monthly-pick", ShoppingBasket, "원두 둘러보기"],
 ];
-
 export default function Sidebar() {
-  const isDemo = authStore.user?.demo;
-
+  const item = ([to, Icon, label]) => (
+    <NavLink
+      key={to}
+      to={to}
+      end={to === "/coffee"}
+      className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}
+    >
+      <Icon size={20} />
+      <span>{label}</span>
+    </NavLink>
+  );
   return (
-    <aside className="sidebar">
-      <NavLink className="brand" to="/ritual">
-        <span>Roast &amp; Reverb</span>
-        <small>coffee × music log</small>
-        {isDemo && <em className="demo-badge smcp" title="체험 기록은 이 브라우저에 저장됩니다.">Demo</em>}
-      </NavLink>
-      <nav>
-        <p className="nav-caption">MY DAILY RITUAL</p>
-        {links.map(([to, Icon, label, tone]) => (
-          <NavLink key={to} to={to} className={({ isActive }) => isActive ? `nav-link ${tone} active` : `nav-link ${tone}`}>
-            <Icon size={18} />
-            <span>{label}</span>
-          </NavLink>
-        ))}
+    <>
+      <aside className="sidebar">
+        <NavLink className="brand" to="/" aria-label="Roast & Reverb 소개">
+          <span>Roast &amp; Reverb</span>
+          <small>커피 한 잔, 음악 한 곡</small>
+        </NavLink>
+        <nav aria-label="주요 메뉴">
+          {links.map(item)}
+          <div className="nav-support">
+            {item(["/mypage", Settings, "설정"])}
+          </div>
+        </nav>
+        <div className="sidebar-foot">하루 한 줄이면 충분해요.</div>
+      </aside>
+      <nav className="mobile-tabbar" aria-label="모바일 빠른 메뉴">
+        {links.map(item)}
+        {item(["/mypage", Settings, "설정"])}
       </nav>
-      <div className="sidebar-session"><div className="mini-vinyl" aria-hidden="true"><i>r&amp;r</i></div><p>좋은 커피와<br/>오래 듣는 음악.</p><Link to="/ritual">나의 시간 시작하기 ↗</Link></div>
-      <div className="sidebar-foot">BREW. LISTEN. REMEMBER.</div>
-    </aside>
+    </>
   );
 }

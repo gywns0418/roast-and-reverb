@@ -14,6 +14,9 @@ import java.util.Map;
 
 @Component
 public class JwtProvider {
+    private final com.roastreverb.domain.member.mapper.MemberMapper members;
+    private final RevokedTokenMapper revoked;
+    public JwtProvider(com.roastreverb.domain.member.mapper.MemberMapper members,RevokedTokenMapper revoked){this.members=members;this.revoked=revoked;}
     private static final String ALGORITHM = "HmacSHA256";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -32,6 +35,9 @@ public class JwtProvider {
         payload.put("role", role);
         payload.put("iat", now);
         payload.put("exp", now + expirationMs);
+        payload.put("jti",java.util.UUID.randomUUID().toString());
+        var member=members.findByEmail(email);
+        payload.put("ver",member==null?0:member.getOrDefault("auth_version",0));
 
         String headerPart = encode(header);
         String payloadPart = encode(payload);
@@ -40,21 +46,27 @@ public class JwtProvider {
     }
 
     public Map<String, Object> parseToken(String token) {
+        if(token==null||token.length()>8192)throw new IllegalArgumentException("잘못된 토큰입니다.");
         String[] parts = token.split("\\.");
         if (parts.length != 3) {
             throw new IllegalArgumentException("잘못된 토큰 형식입니다.");
         }
         String signingInput = parts[0] + "." + parts[1];
-        if (!sign(signingInput).equals(parts[2])) {
+        if (!java.security.MessageDigest.isEqual(sign(signingInput).getBytes(StandardCharsets.US_ASCII),parts[2].getBytes(StandardCharsets.US_ASCII))) {
             throw new IllegalArgumentException("토큰 서명이 유효하지 않습니다.");
         }
+        var header=decode(parts[0]);
+        if(!"HS256".equals(header.get("alg"))||!"JWT".equals(header.get("typ")))throw new IllegalArgumentException("지원하지 않는 토큰입니다.");
         Map<String, Object> payload = decode(parts[1]);
         long exp = ((Number) payload.get("exp")).longValue();
         if (Instant.now().toEpochMilli() > exp) {
             throw new IllegalArgumentException("토큰이 만료되었습니다.");
         }
+        if(revoked.revoked(fingerprint(token),Instant.now().toEpochMilli())>0)throw new IllegalArgumentException("로그아웃된 토큰입니다.");
         return payload;
     }
+    private String fingerprint(String token){try{return java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(token.getBytes(StandardCharsets.UTF_8)));}catch(java.security.NoSuchAlgorithmException e){throw new IllegalStateException(e);}}
+    public void revokeToken(String token){var claims=parseToken(token);revoked.cleanup(Instant.now().toEpochMilli());revoked.revoke(fingerprint(token),((Number)claims.get("exp")).longValue());}
 
     private String sign(String data) {
         try {

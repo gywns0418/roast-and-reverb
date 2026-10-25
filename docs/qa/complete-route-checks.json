@@ -1,0 +1,450 @@
+[
+  {
+    "route": "/",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "좋았던 한 잔을기억하는 작은 습관."
+  },
+  {
+    "route": "/dashboard",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "오늘의 한 잔"
+  },
+  {
+    "route": "/coffee",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "내 기록"
+  },
+  {
+    "route": "/coffee/write",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "오늘의 커피와 음악"
+  },
+  {
+    "route": "/coffee/1",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "한 잔의 기록"
+  },
+  {
+    "route": "/coffee/1/edit",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "기록 수정"
+  },
+  {
+    "route": "/monthly-pick",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "원두 둘러보기"
+  },
+  {
+    "route": "/music",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "함께 남긴 음악"
+  },
+  {
+    "route": "/beans",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "내가 가진 원두"
+  },
+  {
+    "route": "/mypage",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "설정"
+  },
+  {
+    "route": "/backup",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "백업·복구"
+  },
+  {
+    "route": "/help",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "처음이라면"
+  },
+  {
+    "route": "/archive",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "기존 자료와 도구"
+  },
+  {
+    "route": "/archive/monthly",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "이번 달, 어떤 커피?"
+  },
+  {
+    "route": "/coffee/import",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "커피 기록 가져오기"
+  },
+  {
+    "route": "/connections",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "내 자료의 연결 상태"
+  },
+  {
+    "route": "/journey",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "나의 취향 여정"
+  },
+  {
+    "route": "/ritual",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "나의 청음실"
+  },
+  {
+    "route": "/studio",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "한 잔의 사운드"
+  },
+  {
+    "route": "/memories",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "머물렀던 나의 시간"
+  },
+  {
+    "route": "/recommend",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "오늘의 한 잔, 다음 한 곡"
+  },
+  {
+    "route": "/pairing",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "AI 페어링"
+  },
+  {
+    "route": "/report/monthly",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "기록이 들려주는 나의 취향"
+  },
+  {
+    "route": "/collection",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "컬렉션"
+  },
+  {
+    "route": "/music/write",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "음악 기록 작성"
+  },
+  {
+    "route": "/music/search",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "음악 검색"
+  },
+  {
+    "route": "/collection/write",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "컬렉션 추가"
+  },
+  {
+    "route": "/pairing/write",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "AI 페어링 생성"
+  },
+  {
+    "route": "/auth/login",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "바로 기록을 시작하세요"
+  },
+  {
+    "route": "/auth/join",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "가입 없이 체험할 수 있어요"
+  },
+  {
+    "route": "/auth/find-id",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "로그인 이메일이 기억나지 않나요?"
+  },
+  {
+    "route": "/auth/find-password",
+    "mode": "desktop",
+    "nested": 0,
+    "overflow": false,
+    "title": "비밀번호 복구 안내"
+  },
+  {
+    "route": "/",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "좋았던 한 잔을기억하는 작은 습관."
+  },
+  {
+    "route": "/dashboard",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "오늘의 한 잔"
+  },
+  {
+    "route": "/coffee",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "내 기록"
+  },
+  {
+    "route": "/coffee/write",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "오늘의 커피와 음악"
+  },
+  {
+    "route": "/coffee/1",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "한 잔의 기록"
+  },
+  {
+    "route": "/coffee/1/edit",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "기록 수정"
+  },
+  {
+    "route": "/monthly-pick",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "원두 둘러보기"
+  },
+  {
+    "route": "/music",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "함께 남긴 음악"
+  },
+  {
+    "route": "/beans",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "내가 가진 원두"
+  },
+  {
+    "route": "/mypage",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "설정"
+  },
+  {
+    "route": "/backup",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "백업·복구"
+  },
+  {
+    "route": "/help",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "처음이라면"
+  },
+  {
+    "route": "/archive",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "기존 자료와 도구"
+  },
+  {
+    "route": "/archive/monthly",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "이번 달, 어떤 커피?"
+  },
+  {
+    "route": "/coffee/import",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "커피 기록 가져오기"
+  },
+  {
+    "route": "/connections",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "내 자료의 연결 상태"
+  },
+  {
+    "route": "/journey",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "나의 취향 여정"
+  },
+  {
+    "route": "/ritual",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "나의 청음실"
+  },
+  {
+    "route": "/studio",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "한 잔의 사운드"
+  },
+  {
+    "route": "/memories",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "머물렀던 나의 시간"
+  },
+  {
+    "route": "/recommend",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "오늘의 한 잔, 다음 한 곡"
+  },
+  {
+    "route": "/pairing",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "AI 페어링"
+  },
+  {
+    "route": "/report/monthly",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "기록이 들려주는 나의 취향"
+  },
+  {
+    "route": "/collection",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "컬렉션"
+  },
+  {
+    "route": "/music/write",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "음악 기록 작성"
+  },
+  {
+    "route": "/music/search",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "음악 검색"
+  },
+  {
+    "route": "/collection/write",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "컬렉션 추가"
+  },
+  {
+    "route": "/pairing/write",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "AI 페어링 생성"
+  },
+  {
+    "route": "/auth/login",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "바로 기록을 시작하세요"
+  },
+  {
+    "route": "/auth/join",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "가입 없이 체험할 수 있어요"
+  },
+  {
+    "route": "/auth/find-id",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "로그인 이메일이 기억나지 않나요?"
+  },
+  {
+    "route": "/auth/find-password",
+    "mode": "mobile",
+    "nested": 0,
+    "overflow": false,
+    "title": "비밀번호 복구 안내"
+  }
+]

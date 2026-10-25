@@ -21,11 +21,15 @@ const java = process.env.JAVA_HOME
   : "java";
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), "rr-production-"));
 let child;
+const currentJar="backend/target/roast-and-reverb-backend-0.1.0.jar";
+let jar=process.env.RR_BASELINE_JAR||currentJar;
 let logs = "";
 const env = {
   ...process.env,
   JWT_SECRET: randomBytes(48).toString("base64"),
   SPRING_PROFILES_ACTIVE: "production",
+  GOOGLE_CLIENT_ID: "isolated-fixture-client",
+  APP_PUBLIC_ORIGIN: `http://127.0.0.1:${port}`,
 };
 async function start() {
   logs = "";
@@ -33,7 +37,7 @@ async function start() {
     java,
     [
       "-jar",
-      "backend/target/roast-and-reverb-backend-0.1.0.jar",
+      jar,
       `--server.port=${port}`,
       `--spring.datasource.url=jdbc:h2:file:${dir.replaceAll("\\", "/")}/diary;MODE=MySQL;DATABASE_TO_LOWER=TRUE;NON_KEYWORDS=MEMBER,BODY;WRITE_DELAY=0`,
     ],
@@ -92,15 +96,24 @@ try {
   );
   if (r.status !== 200) throw Error("Create failed " + r.status);
   await stop();
+  jar=currentJar;
   await start();
+  if((await api('/coffee','GET',null,token)).status!==200)throw Error('Existing session lost on upgrade');
+  const challenge=await fetch(base+'/auth/google/challenge',{method:'POST',headers:{Origin:`http://127.0.0.1:${port}`,'X-RR-Social':'1'}});
+  const cookie=challenge.headers.get('set-cookie')?.toLowerCase()||'';
+  if(challenge.status!==200||!['httponly','secure','samesite=lax'].every(flag=>cookie.includes(flag)))throw Error('OAuth session cookie protections missing');
   r = await api("/auth/login", "POST", {
     email: "durable@example.com",
     password: "persistent-test-123",
   });
   if (r.status !== 200) throw Error("Login after restart failed");
-  r = await api("/coffee", "GET", null, r.data.token);
+  const freshToken=r.data.token;
+  r = await api("/coffee", "GET", null, freshToken);
   if (!r.data.some((x) => x.bean_name === "Survives restart"))
     throw Error("Record lost on restart");
+  if((await api('/auth/logout','POST',null,freshToken)).status!==200)throw Error('Logout failed');
+  await stop();await start();
+  if((await api('/coffee','GET',null,freshToken)).status!==401)throw Error('Revoked token survived restart');
   console.log(
     "PASS: production signup, authenticated save, restart, login and durable record retrieval",
   );

@@ -1,0 +1,662 @@
+import { Link } from "react-router-dom";
+import BeanArtwork from "../../components/beans/BeanArtwork.jsx";
+import { monthlyGroups, colorFamilies, hasColor, safeColor } from "../../utils/monthlyColors.js";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ArrowUpRight,
+  ArrowRight,
+  Bookmark,
+  Check,
+  ChevronRight,
+  Link2,
+  RefreshCw,
+  Search,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
+import PageShell from "../../components/common/PageShell.jsx";
+import { monthlyCatalog, importMonthlyUrl } from "../../api/monthlyCatalog.js";
+import { monthlyPickApi } from "../../api/monthlyPickApi.js";
+
+const editions=[{key:"regular",label:"월픽"},{key:"global",label:"글로벌 월픽"},{key:"small",label:"스몰 월픽"}];
+const editionOf=item=>item.edition||(item.title?.includes("글로벌")?"global":item.title?.includes("스몰")?"small":"regular");
+const groups = Object.fromEntries(Object.entries(monthlyGroups).map(([key,value]) => [key,value.label]));
+const stateLabel = {
+  available: "구매 가능",
+  ended: "판매 종료",
+  "sold-out": "품절",
+  upcoming: "오픈 예정",
+  unknown: "재고 미확인",
+};
+const money = (value) => Number(value).toLocaleString("ko-KR") + "원";
+const dateLabel = (value) =>
+  value
+    ? new Date(value).toLocaleString("ko-KR", {
+        timeZone: "Asia/Seoul",
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : "확인 전";
+function BeanVisual({ item }) {
+  const group = monthlyGroups[item.category] || monthlyGroups.easy;
+  return <div className="bean-visual bean-information" style={{"--group-color":group.color,"--group-tint":group.tint}}><span className="bean-group-label">{group.code}</span><BeanArtwork item={item}/></div>;
+}
+function FlavorColors({ item }) {
+  return <div className="vendor-colors"><span>판매처 색감</span>{item.flavorColors?.length ? item.flavorColors.map((color,index) => <i key={index} title={color} aria-label={`판매처 색상 ${color}`} style={{backgroundColor:safeColor(color) || "#eee"}} />) : <small>미기재</small>}</div>;
+}
+function BeanDialog({ item, close, source }) {
+  const dialog = useRef(null);
+  useEffect(() => {
+    const active = document.activeElement;
+    dialog.current?.showModal();
+    return () => active?.focus();
+  }, []);
+  return (
+    <dialog
+      className="bean-dialog"
+      ref={dialog}
+      onCancel={close}
+      aria-label={`${item.name} 원두 상세`}
+    >
+      <button
+        className="dialog-close"
+        type="button"
+        aria-label="원두 상세 닫기"
+        onClick={close}
+      >
+        <X size={22} />
+      </button>
+      <div className="bean-detail-layout">
+        <BeanVisual item={item} />
+        <div className="bean-detail-copy">
+          <FlavorColors item={item} />
+          <p className="eyebrow">
+            {groups[item.category]} / {stateLabel[item.availability]}
+          </p>
+          <h2>{item.name}</h2>
+          <p className="bean-english">{item.nameEnglish}</p>
+          <div className="flavor-row">
+            {item.flavors.map((note) => (
+              <span key={note}>{note}</span>
+            ))}
+          </div>
+          <dl>
+            {item.specs.map((spec) => (
+              <div key={spec.label}>
+                <dt>{spec.label}</dt>
+                <dd>{spec.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="vendor-gauges">
+            <p>판매처 향미 지표 · 개인 평가와 별도</p>
+            {item.gauges.map((gauge) => (
+              <div key={gauge.label}>
+                <span>{gauge.label}</span>
+                <div>
+                  <i
+                    style={{
+                      width: `${(Math.max(0, Math.min(5, gauge.value)) / 5) * 100}%`,
+                    }}
+                  />
+                </div>
+                <strong>{gauge.value}</strong>
+              </div>
+            ))}
+          </div>
+          <div className="bean-prices">
+            {item.prices.map((price, index) => (
+              <span key={index}>
+                {price.label} <strong>{money(price.price)}</strong>
+              </span>
+            ))}
+          </div>
+          <div className="action-row"><Link className="ghost-button" to={`/recommend?source=monthly&bean=${encodeURIComponent(`catalog-${item.id}`)}`}>이 원두로 조합 발견 ↗</Link></div>
+          <a
+            href={source}
+            target="_blank"
+            rel="noreferrer"
+            className="primary-button"
+          >
+            판매처 원문 보기 <ArrowUpRight size={16} />
+          </a>
+          <p className="source-small">
+            긴 원두 소개와 상세 레시피는 판매처 원문에서 확인하세요. 가격·재고는
+            확인 시점 이후 달라질 수 있습니다.
+          </p>
+        </div>
+      </div>
+    </dialog>
+  );
+}
+export default function MonthlyPickPage() {
+  const [catalog, setCatalog] = useState([]),
+    [product, setProduct] = useState(null),
+    [url, setUrl] = useState(
+      "https://unspecialty.com/product/detail.html?product_no=901",
+    );
+  const [color, setColor] = useState("all");
+  const [query, setQuery] = useState(""),
+    [category, setCategory] = useState("all"),
+    [availableOnly, setAvailableOnly] = useState(false),
+    [hideDecaf, setHideDecaf] = useState(false),
+    [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [selected, setSelected] = useState([]),
+    [active, setActive] = useState(null),
+    [busy, setBusy] = useState(false),
+    [message, setMessage] = useState(""),
+    [error, setError] = useState("");
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const saved=JSON.parse(localStorage.getItem("rr-monthly-favorites-v1") || "[]");
+      return Array.isArray(saved)?saved.filter(value=>typeof value==='string'||typeof value==='number'):[];
+    } catch {
+      return [];
+    }
+  });
+  const [ownPicks, setOwnPicks] = useState([]),
+    [ownDetail, setOwnDetail] = useState(null);
+  const [showManual, setShowManual] = useState(false),
+    [manual, setManual] = useState({
+      month: "",
+      roastery: "",
+      rawOptionsText: "",
+      sourceUrl: "",
+    });
+  useEffect(() => {
+    monthlyCatalog()
+      .then((items) => {
+        setCatalog(items);
+        const first=items.find(x=>editionOf(x)==="regular")||items[0];
+        setProduct(first || null);
+        if (first) setUrl(first.sourceUrl);
+      })
+      .catch((err) => setError(err.message));
+  }, []);
+  useEffect(() => {
+    monthlyPickApi
+      .list()
+      .then((items) => setOwnPicks(items || []))
+      .catch((err) => setError(err.message));
+  }, []);
+  const beans = product?.items || [];
+  const visible = useMemo(
+    () =>
+      beans.filter(
+        (item) =>
+          (category === "all" || item.category === category) &&
+          hasColor(item, color) &&
+          (!availableOnly || item.availability === "available") &&
+          (!hideDecaf || !item.decaf) &&
+          (!favoritesOnly || favorites.includes(item.id)) &&
+          [
+            item.name,
+            item.nameEnglish,
+            item.process,
+            item.origin,
+            ...item.flavors,
+          ]
+            .join(" ")
+            .toLowerCase()
+            .includes(query.toLowerCase()),
+      ),
+    [
+      beans,
+      category,
+      color,
+      availableOnly,
+      hideDecaf,
+      favoritesOnly,
+      favorites,
+      query,
+    ],
+  );
+  const compared = beans.filter((item) => selected.includes(item.id));
+  function toggleFavorite(id) {
+    const next = favorites.includes(id)
+      ? favorites.filter((value) => value !== id)
+      : [...favorites, id];
+    try {localStorage.setItem("rr-monthly-favorites-v1", JSON.stringify(next));setFavorites(next);}catch {setError("관심 원두 저장에 실패했습니다. 브라우저 저장 공간을 확인해 주세요.");}
+  }
+  function toggleCompare(id) {
+    if (selected.includes(id))
+      setSelected(selected.filter((value) => value !== id));
+    else if (selected.length < 3) setSelected([...selected, id]);
+    else setMessage("원두는 최대 3개까지 비교할 수 있어요.");
+  }
+  async function importUrl(event) {
+    event?.preventDefault();
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const fresh = await importMonthlyUrl(url, catalog);
+      setProduct(fresh);
+      setSelected([]);
+      setMessage(
+        `${fresh.items.length}개 원두의 향미·원산지·가격 자료를 가져왔어요.`,
+      );
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function saveManual(event) {
+    event.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      const created = await monthlyPickApi.create(manual);
+      setOwnPicks([created, ...ownPicks]);
+      setOwnDetail(created);
+      setShowManual(false);
+      setMessage("내 월픽 기록에 저장했어요.");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <PageShell
+      title="이번 달, 어떤 커피?"
+      eyebrow="THE MONTHLY EDIT"
+      subtitle="새로운 원두를 발견하고, 향미를 비교하고, 다음 한 잔을 골라보세요."
+    >
+      <div className="monthly-edition-tabs" role="group" aria-label="월픽 시리즈 선택">{editions.map(edition=>{const target=catalog.find(item=>editionOf(item)===edition.key&&item.month===(product?.month||catalog[0]?.month));return <button type="button" key={edition.key} aria-pressed={editionOf(product||{})===edition.key} disabled={!target} onClick={()=>{setProduct(target);setUrl(target.sourceUrl);setSelected([]);setActive(null);setCategory('all');setColor('all');setQuery('');setAvailableOnly(false);setHideDecaf(false);setFavoritesOnly(false);setMessage('');}}>{edition.label}<small>{target?target.roastery:'아직 공개 전'}</small></button>;})}</div>
+      {product?.saleStart&&<p className="monthly-sale-period">판매 기간 {product.saleStart} ~ {product.saleEnd} · 판매처 기준</p>}
+      <div className="monthly-editorial">
+        <div>
+          <span className="edition-label">
+            {product?.month?.replace("-", ".") || "MONTHLY"} / COFFEE SELECTION
+          </span>
+          <h2>
+            {product?.roastery || "이달의 로스터리"}
+            <br />
+            <em>다음 한 잔의 발견.</em>
+          </h2>
+          <p>
+            원두 이름만 보고 고르지 않도록.
+            <br />
+            컵노트부터 가공 방식까지, 한곳에서 살펴보세요.
+          </p>
+          <button
+            type="button"
+            onClick={() =>
+              document.getElementById("monthly-beans")?.scrollIntoView()
+            }
+            className="monthly-jump"
+          >
+            원두 컬렉션 둘러보기 <ArrowRight size={19} />
+          </button>
+          <div className="edition-stats">
+            <span>
+              <b>{beans.length}</b> 원두
+            </span>
+            <span>
+              <b>
+                {new Set(beans.map((item) => item.origin).filter(Boolean)).size || "미기재"}
+              </b>{" "}
+              산지
+            </span>
+            <span>FROM UNSPECIALTY ↗</span>
+          </div>
+        </div>
+        <div className="monthly-still">
+          <img
+            src={`${import.meta.env.BASE_URL}images/ritual-editorial.png`}
+            alt="햇살 아래 커피와 레코드, 헤드폰이 놓인 장면"
+          />
+          <span>NEW COFFEE. SAME GOOD RITUAL.</span>
+        </div>
+      </div>
+      <section className="url-import">
+        <div>
+          <Link2 size={20} />
+          <div>
+            <h3>링크 하나로, 새로운 월픽.</h3>
+            <p>언스페셜티 상품 링크에서 원두 정보를 가져옵니다.</p>
+          </div>
+        </div>
+        <form onSubmit={importUrl}>
+          <input
+            type="url"
+            required
+            aria-label="월픽 상품 링크"
+            value={url}
+            onChange={(event) => setUrl(event.target.value)}
+            placeholder="https://unspecialty.com/product/detail.html?product_no=…"
+          />
+          <button className="primary-button" disabled={busy}>
+            {busy ? (
+              <RefreshCw className="spin" size={16} />
+            ) : (
+              <ArrowUpRight size={16} />
+            )}{" "}
+            {busy ? "자료 읽는 중" : "링크 가져오기"}
+          </button>
+        </form>
+      </section>
+      {error && (
+        <p role="alert" className="source-error">
+          {error}
+        </p>
+      )}
+      {message && (
+        <p role="status" className="source-success">
+          {message}
+        </p>
+      )}
+      {beans.some(item=>!item.flavors.length||!item.prices.length)&&<p className="source-small">일부 원두의 컵노트·가격은 판매처 공개 자료에 없어 원문에서 확인해 주세요.</p>}
+      <div className="monthly-source-line">
+        <span>
+          상품페이지 확인 {dateLabel(product?.sourceCheckedAt)}
+          {product?.detailsCheckedAt &&
+            ` · 원두자료 갱신 ${dateLabel(product.detailsCheckedAt)}`}
+        </span>
+        <a href={product?.sourceUrl || url} target="_blank" rel="noreferrer">
+          출처 보기 <ArrowUpRight size={13} />
+        </a>
+      </div>
+      {catalog.filter(item=>editionOf(item)===editionOf(product||{})).length > 1 && (
+        <div className="monthly-history">
+          {catalog.filter(item=>editionOf(item)===editionOf(product||{})).map((item) => (
+            <button
+              className={
+                item.sourceUrl === product?.sourceUrl
+                  ? "primary-button"
+                  : "ghost-button"
+              }
+              key={item.sourceUrl}
+              onClick={() => {
+                setProduct(item);
+                setUrl(item.sourceUrl);
+                setSelected([]);
+              }}
+            >
+              {item.month} · {item.roastery}
+            </button>
+          ))}
+        </div>
+      )}
+      <div className="monthly-section-heading" id="monthly-beans">
+        <div>
+          <p className="eyebrow">FIND YOUR NEXT FAVORITE</p>
+          <h2>
+            이달의 원두 컬렉션 <span>{visible.length}</span>
+          </h2>
+        </div>
+        <button
+          className={favoritesOnly ? "saved-filter active" : "saved-filter"}
+          onClick={() => setFavoritesOnly(!favoritesOnly)}
+        >
+          <Bookmark size={17} /> 관심 원두 <small>이 기기</small>
+        </button>
+      </div>
+      <div className="monthly-categories">
+        {[["all", "전체"], ...Object.entries(groups)].map(([key, label]) => (
+          <button
+            className={category === key ? "active" : ""}
+            key={key}
+            aria-pressed={category === key}
+            onClick={() => setCategory(key)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="monthly-color-filters" aria-label="판매처 색감 필터"><span>어떤 색감의 커피?</span><button type="button" aria-pressed={color === "all"} onClick={() => setColor("all")}><i className="color-spectrum" aria-hidden="true"/>모든 색</button>{colorFamilies.map(([key,label,hex]) => <button type="button" key={key} aria-pressed={color === key} onClick={() => setColor(key)}><i aria-hidden="true" style={{backgroundColor:hex}} />{label}</button>)}</div>
+      <p className="color-help">색감은 판매처가 표현한 원두별 팔레트입니다. 향미를 고르는 시각적 단서로 활용해보세요. 원두 심볼은 상품 사진이 아닌 정보 그래픽입니다.</p>
+      <div className="monthly-filters">
+        <label className="monthly-search">
+          <Search size={18} />
+          <input
+            aria-label="월픽 원두 검색"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="원두, 산지, 컵노트 검색"
+          />
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={availableOnly}
+            onChange={(event) => setAvailableOnly(event.target.checked)}
+          />{" "}
+          구매 가능만
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={hideDecaf}
+            onChange={(event) => setHideDecaf(event.target.checked)}
+          />{" "}
+          디카페인 숨기기
+        </label>
+      </div>
+      <div className="monthly-group-legend">{Object.entries(monthlyGroups).map(([key,group]) => <button type="button" key={key} onClick={() => setCategory(category === key ? "all" : key)} aria-pressed={category === key}><i style={{backgroundColor:group.color}} /><span>{group.label}</span><strong>{beans.filter(item => item.category === key).length}</strong></button>)}</div>
+      <div className="monthly-bean-grid">
+        {visible.map((item,index) => (
+          <Fragment key={item.id}>
+          {(index === 0 || visible[index-1].category !== item.category) && <div className="bean-group-heading" style={{"--group-color":monthlyGroups[item.category]?.color}}><span>{monthlyGroups[item.category]?.code}</span><h3>{groups[item.category]} <small>{visible.filter(bean => bean.category === item.category).length}종</small></h3></div>}
+          <article
+            className={`monthly-bean ${item.availability === "sold-out" ? "is-sold-out" : ""}`}
+            style={{"--group-color":monthlyGroups[item.category]?.color,"--group-tint":monthlyGroups[item.category]?.tint}}
+            key={item.id}
+          >
+            <div className="bean-top">
+              <button
+                className="bean-open"
+                onClick={() => setActive(item)}
+                aria-label={`${item.name} 상세 보기`}
+              >
+                <BeanVisual item={item} />
+              </button>
+              <button
+                className={`bean-save ${favorites.includes(item.id) ? "active" : ""}`}
+                aria-label={`${item.name} 관심 원두 ${favorites.includes(item.id) ? "해제" : "저장"}`}
+                onClick={() => toggleFavorite(item.id)}
+              >
+                <Bookmark
+                  size={18}
+                  fill={favorites.includes(item.id) ? "currentColor" : "none"}
+                />
+              </button>
+              <span className={`availability ${item.availability}`}>
+                {stateLabel[item.availability]}
+              </span>
+            </div>
+            <div className="bean-card-copy">
+              <p className="bean-category"><i />{groups[item.category]}</p>
+              <FlavorColors item={item} />
+              <button className="bean-title" onClick={() => setActive(item)}>
+                {item.name}
+              </button>
+              <div className="flavor-row">
+                {item.flavors.slice(0, 4).map((note) => (
+                  <span key={note}>{note}</span>
+                ))}
+              </div>
+              <p className="bean-process">
+                {item.process || item.roast || "판매처 상세 확인"}
+              </p>
+              <div className="bean-card-foot">
+                <span>
+                  {item.prices[0] ? (
+                    <>
+                      <small>{item.prices[0].label}</small>
+                      <strong>{money(item.prices[0].price)}</strong>
+                    </>
+                  ) : (
+                    "가격 미기재"
+                  )}
+                </span>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selected.includes(item.id)}
+                    onChange={() => toggleCompare(item.id)}
+                  />{" "}
+                  비교
+                </label>
+              </div>
+            </div>
+          </article>
+          </Fragment>
+        ))}
+      </div>
+      {!visible.length && (
+        <div className="monthly-empty">
+          <Search size={30} />
+          <h3>찾는 원두가 아직 없어요.</h3>
+          <p>검색어와 필터를 조정해보세요.</p>
+          <button type="button" className="ghost-button" onClick={() => { setQuery(""); setCategory("all"); setColor("all"); setAvailableOnly(false); setHideDecaf(false); setFavoritesOnly(false); }}>필터 초기화</button>
+        </div>
+      )}
+      {compared.length > 0 && (
+        <section className="compare-panel">
+          <div>
+            <h3>다음 한 잔, 나란히 비교.</h3>
+            <button className="ghost-button" onClick={() => setSelected([])}>
+              비교 비우기
+            </button>
+          </div>
+          <div className="compare-scroll">
+            <table>
+              <caption>
+                선택한 원두 {compared.length}개 비교 · 판매처 정보
+              </caption>
+              <thead>
+                <tr>
+                  <th>원두</th>
+                  {compared.map((item) => (
+                    <th key={item.id}>{item.name}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["컵노트", (item) => item.flavors.join(" · ")],
+                  ["가공 방식", (item) => item.process],
+                  ["품종", (item) => item.variety],
+                  ["로스팅", (item) => item.roast],
+                  [
+                    "가격·중량",
+                    (item) =>
+                      item.prices
+                        .map((price) => `${price.label} ${money(price.price)}`)
+                        .join(" / "),
+                  ],
+                  ["구매 상태", (item) => stateLabel[item.availability]],
+                ].map(([label, value]) => (
+                  <tr key={label}>
+                    <th>{label}</th>
+                    {compared.map((item) => (
+                      <td key={item.id}>{value(item) || "판매처 미기재"}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+      <section className="monthly-bottom">
+        <div>
+          <p className="eyebrow">MAKE IT YOURS</p>
+          <h3>발견한 원두를, 나의 한 잔으로.</h3>
+          <p>판매처의 컵노트와 내가 느낀 맛을 기록하며 비교해보세요.</p>
+        </div>
+        <a href="#/coffee/write" className="primary-button">
+          커피 기록 남기기 <ArrowUpRight size={17} />
+        </a>
+      </section>
+      <details
+        className="monthly-manual"
+        open={showManual}
+        onToggle={(event) => setShowManual(event.currentTarget.open)}
+      >
+        <summary>직접 월픽 목록 기록하기</summary>
+        <form onSubmit={saveManual}>
+          <div className="form-grid">
+            <label className="input-field">
+              월
+              <input
+                className="input"
+                type="month"
+                required
+                value={manual.month}
+                onChange={(event) =>
+                  setManual({ ...manual, month: event.target.value })
+                }
+              />
+            </label>
+            <label className="input-field">
+              로스터리
+              <input
+                className="input"
+                required
+                value={manual.roastery}
+                onChange={(event) =>
+                  setManual({ ...manual, roastery: event.target.value })
+                }
+              />
+            </label>
+          </div>
+          <label className="input-field">
+            원두 이름 · 한 줄에 하나씩
+            <textarea
+              className="textarea"
+              required
+              value={manual.rawOptionsText}
+              onChange={(event) =>
+                setManual({ ...manual, rawOptionsText: event.target.value })
+              }
+            />
+          </label>
+          <button className="primary-button" disabled={busy}>
+            내 월픽 기록에 저장
+          </button>
+        </form>
+      </details>
+      {ownPicks.length > 0 && (
+        <section className="own-pick-notes">
+          <h3>내 월픽 노트</h3>
+          <div className="monthly-history">
+            {ownPicks.map((pick) => (
+              <button
+                key={pick.monthly_pick_id}
+                className="ghost-button"
+                onClick={() =>
+                  monthlyPickApi
+                    .detail(pick.monthly_pick_id)
+                    .then(setOwnDetail)
+                    .catch((err) => setError(err.message))
+                }
+              >
+                {pick.pick_month} · {pick.roastery}
+              </button>
+            ))}
+          </div>
+          {ownDetail && (
+            <div className="own-pick-options">
+              {(ownDetail.options || []).map((option, index) => (
+                <p key={option.option_id || index}>{option.raw_text}</p>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+      {active && (
+        <BeanDialog
+          item={active}
+          source={product.sourceUrl}
+          close={() => setActive(null)}
+        />
+      )}
+    </PageShell>
+  );
+}

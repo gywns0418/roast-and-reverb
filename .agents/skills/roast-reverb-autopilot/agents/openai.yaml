@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roast & Reverb 자동 연결"
+  short_description: "Automatically refresh sources and verify Roast & Reverb."
+  default_prompt: "Use $roast-reverb-autopilot to check connected sources and maintain Roast & Reverb without manual data forwarding."

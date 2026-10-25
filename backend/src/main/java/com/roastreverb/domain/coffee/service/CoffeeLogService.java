@@ -26,7 +26,9 @@ public class CoffeeLogService {
     }
 
     public Map<String, Object> findById(Long memberId, Long coffeeLogId) {
-        return coffeeLogMapper.findById(coffeeLogId, memberId);
+        var record = coffeeLogMapper.findById(coffeeLogId, memberId);
+        if (record == null) throw new CustomException(HttpStatus.NOT_FOUND, "기록을 찾을 수 없습니다.");
+        return record;
     }
 
     public Map<String, Object> create(Map<String, Object> coffeeLog) {

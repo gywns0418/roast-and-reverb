@@ -1,250 +1,69 @@
-import { listDiaryRecords } from "../../utils/diaryRecords.js";
-import { useEffect, useState } from "react";
-import { monthlyCatalog } from "../../api/monthlyCatalog.js";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Coffee, Headphones, ArrowUpRight, Sparkles } from "lucide-react";
-import PageShell from "../../components/common/PageShell.jsx";
-import RecordArtwork from "../../components/common/RecordArtwork.jsx";
-import EmptyState from "../../components/common/EmptyState.jsx";
-import { coffeeApi } from "../../api/coffeeApi.js";
-import { musicApi } from "../../api/musicApi.js";
-import { pairingApi } from "../../api/pairingApi.js";
-import {
-  adaptCoffeeLog,
-  adaptMusicLog,
-  adaptPairing,
-} from "../../api/adapters.js";
-import { useApiResource } from "../../hooks/useApiResource.js";
+import FirstCup from "../../components/coffee/FirstCup.jsx";
 
+import Loading from "../../components/common/Loading.jsx";
+import PageShell from "../../components/common/PageShell.jsx";
+import { coffeeApi } from "../../api/coffeeApi.js";
+import { adaptCoffeeLog } from "../../api/adapters.js";
+import { listDiaryRecords } from "../../utils/diaryRecords.js";
+import { useApiResource } from "../../hooks/useApiResource.js";
 export default function DashboardPage() {
-  const [monthly, setMonthly] = useState(null);
-  useEffect(() => {
-    monthlyCatalog()
-      .then((items) => setMonthly(items[0] || null))
-      .catch(() => {});
-  }, []);
-  const { data: coffees } = useApiResource(
+  const [added, setAdded] = useState([]);
+  const { data: stored, loading } = useApiResource(
     () =>
-      listDiaryRecords(coffeeApi.list).then((items) =>
-        items.map(adaptCoffeeLog),
-      ),
+      listDiaryRecords(coffeeApi.list).then((rows) => rows.map(adaptCoffeeLog)),
     [],
     [],
   );
-  const { data: music } = useApiResource(
-    () =>
-      listDiaryRecords(musicApi.list).then((items) => items.map(adaptMusicLog)),
-    [],
-    [],
-  );
-  const { data: pairs } = useApiResource(
-    () =>
-      listDiaryRecords(pairingApi.list).then((items) =>
-        items.map(adaptPairing),
-      ),
-    [],
-    [],
-  );
-  const recent = [
-    ...coffees.map((item) => ({
-      ...item,
-      kind: "coffee",
-      title: item.bean,
-      detail: [item.brew, item.roastery].filter(Boolean).join(" · "),
-      path: `/coffee/${item.id}`,
-    })),
-    ...music.map((item) => ({
-      ...item,
-      kind: "music",
-      title: item.track,
-      detail: item.artist,
-      path: `/music/${item.id}`,
-    })),
-  ]
-    .sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, 6);
-  const last = [...pairs].sort((a, b) => b.date.localeCompare(a.date))[0];
-  const latestCoffee = [...coffees].sort((a, b) =>
-    b.date.localeCompare(a.date),
-  )[0];
-  const latestMusic = [...music].sort((a, b) =>
-    b.date.localeCompare(a.date),
-  )[0];
-  const days = new Set(
-    [...coffees, ...music].map((item) => item.date).filter(Boolean),
-  ).size;
+  const records = [
+    ...added,
+    ...stored.filter(
+      (row) => !added.some((x) => String(x.id) === String(row.id)),
+    ),
+  ].sort((a, b) => b.date.localeCompare(a.date) || Number(b.id) - Number(a.id));
+  if (loading)
+    return (
+      <PageShell title="오늘의 한 잔">
+        <Loading
+          title="나의 기록을 펼치고 있어요."
+          detail="저장한 한 잔을 확인합니다."
+        />
+      </PageShell>
+    );
   return (
     <PageShell
-      title="오늘도, 나의 리듬으로."
-      eyebrow="YOUR DAILY RITUAL"
-      subtitle="커피의 향과 음악의 여운, 그 사이에 쌓이는 나의 취향."
+      title="오늘의 한 잔"
+      subtitle="커피를 마셨다면, 기억하고 싶은 느낌만 남겨주세요."
     >
-      <div className="dashboard-hero">
-        <div className="session-copy">
-          <p className="eyebrow">BREW & LISTEN / DAILY SESSION</p>
-          <h2>
-            한 잔을 내리고,
-            <br />한 곡에 머무르는 시간.
-          </h2>
-          <p>
-            오늘의 작은 감각을 기록해두세요.
-            <br />
-            좋아하는 순간들이 나만의 리듬이 됩니다.
-          </p>
-          <div className="action-row">
-            <Link to="/coffee/write" className="primary-button">
-              오늘의 한 잔 기록 <ArrowUpRight size={17} />
-            </Link>
-            <Link to="/music/write" className="session-secondary">
-              음악 더하기 ↗
-            </Link>
+      <ol className="simple-steps" aria-label="한 잔을 남기는 순서">
+        <li>1. 느낌을 적어요</li>
+        <li>2. 원하면 음악을 골라요</li>
+        <li>3. 내 기록에 보관해요</li>
+      </ol>
+      <FirstCup
+        onSaved={(row) =>
+          setAdded((previous) => [adaptCoffeeLog(row), ...previous])
+        }
+      />
+      {records.length > 0 && (
+        <section className="simple-recent">
+          <div className="simple-section-title">
+            <h2>지난 한 잔</h2>
+            <Link to="/coffee">모든 기록 보기 →</Link>
           </div>
-        </div>
-        <div className="dashboard-photo">
-          <img
-            src={`${import.meta.env.BASE_URL}images/ritual-editorial.png`}
-            alt="커피와 레코드, 헤드폰이 놓인 브랜드 장면"
-          />
-          <span>BREW / LISTEN / REPEAT</span>
-        </div>
-      </div>
-      {monthly && (
-        <Link className="monthly-discover" to="/monthly-pick">
-          <div className="discover-date">
-            {monthly.month.slice(5)}
-            <small>MONTHLY EDIT</small>
-          </div>
-          <div>
-            <p>이번 달의 새로운 취향</p>
-            <h3>
-              {monthly.roastery} · {monthly.items.length}개의 원두
-            </h3>
-            <span>컵노트와 가격을 살펴보고, 다음 한 잔을 골라보세요.</span>
-          </div>
-          <span className="discover-arrow">
-            <ArrowUpRight size={25} />
-          </span>
-        </Link>
-      )}
-      <div className="metric-strip">
-        {[
-          ["커피 기록", coffees.length, "cups", Coffee],
-          ["음악 기록", music.length, "tracks", Headphones],
-          ["연결한 페어링", pairs.length, "pairs", Sparkles],
-          ["기록한 날", days, "days", ArrowUpRight],
-        ].map(([label, value, unit, Icon]) => (
-          <div className="metric" key={label}>
-            <span>
-              <Icon size={16} />
-              {label}
-            </span>
-            <strong>
-              {value}
-              <small>{unit}</small>
-            </strong>
-          </div>
-        ))}
-      </div>
-      <div className="dashboard-body">
-        <section className="journal-panel">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">THE JOURNAL</p>
-              <h2>최근의 순간들</h2>
-            </div>
-            <Link to="/coffee">모든 커피 기록 ↗</Link>
-          </div>
-          {recent.length ? (
-            recent.map((item) => (
-              <Link
-                key={`${item.kind}-${item.id}`}
-                to={item.path}
-                className="journal-entry"
-              >
-        <Link className="dashboard-room-entry" to="/ritual"><span>TODAY IN YOUR LISTENING ROOM</span><strong>내 취향을 기억하는 한 잔의 시간</strong><small>나의 청음실 열기 ↗</small></Link>
-                <div className={`entry-icon ${item.kind}`}>
-                  {item.kind === "coffee" ? (
-                    <Coffee size={22} />
-                  ) : (
-                    <Headphones size={22} />
-                  )}
-                </div>
-                <div>
-                  <span className="entry-date">
-                    {item.date} / {item.kind === "coffee" ? "COFFEE" : "MUSIC"}
-                  </span>
-                  <h3>{item.title}</h3>
-                  <p>{item.detail || "나의 취향 기록"}</p>
-                </div>
-                <ArrowUpRight size={18} />
+          <div className="simple-records">
+            {records.slice(0, 3).map((row) => (
+              <Link key={row.id} to={`/coffee/${row.id}`}>
+                <small>{row.date}</small>
+                <h3>{row.bean}</h3>
+                <p>{row.memo || "이날의 한 잔 다시 보기"}</p>
+                <span aria-hidden="true">→</span>
               </Link>
-            ))
-          ) : (
-            <EmptyState>
-              아직 첫 기록이 없어요. 오늘 마신 커피부터 남겨보세요.
-            </EmptyState>
-          )}
-          <Link className="journal-add" to="/coffee/write">
-            + 새로운 순간 기록하기
-          </Link>
+            ))}
+          </div>
         </section>
-        <aside className="dashboard-aside">
-          <section className="latest-session">
-            <p className="eyebrow">LAST PAIRING</p>
-            <h2>함께 남은 여운</h2>
-            {last ? (
-              <>
-                <RecordArtwork kind="blend" seed={last.artist} />
-                <h3>{last.coffee}</h3>
-                <p>
-                  {last.artist} — {last.music}
-                </p>
-                <blockquote>{last.text || last.mood}</blockquote>
-                <Link to={`/pairing/${last.id}`}>페어링 자세히 보기 ↗</Link>
-              </>
-            ) : (
-              <>
-                <RecordArtwork kind="blend" />
-                <p>한 잔과 한 곡을 골라 첫 조합을 연결해보세요.</p>
-                <Link to="/pairing/write">첫 페어링 만들기 ↗</Link>
-              </>
-            )}
-          </section>
-        </aside>
-      </div>
-      <div className="two-sides">
-        {[
-          [
-            "SIDE A / LAST BREW",
-            latestCoffee?.bean || "나의 다음 한 잔",
-            latestCoffee?.memo ||
-              "원두, 추출 조건, 식은 뒤의 맛까지 남겨보세요.",
-            "coffee",
-            latestCoffee ? `/coffee/${latestCoffee.id}` : "/coffee/write",
-          ],
-          [
-            "SIDE B / LAST LISTEN",
-            latestMusic?.track || "나의 다음 한 곡",
-            latestMusic
-              ? [latestMusic.artist, latestMusic.memo]
-                  .filter(Boolean)
-                  .join(" · ")
-              : "오늘의 기분에 머무른 곡을 기록해보세요.",
-            "music",
-            latestMusic ? `/music/${latestMusic.id}` : "/music/write",
-          ],
-        ].map(([label, title, note, kind, path]) => (
-          <Link className={`side-feature ${kind}`} to={path} key={kind}>
-            <RecordArtwork kind={kind} seed={title} small />
-            <div>
-              <p className="eyebrow">{label}</p>
-              <h3>{title}</h3>
-              <p>{note}</p>
-              <span>기록 열기 ↗</span>
-            </div>
-          </Link>
-        ))}
-      </div>
+      )}
     </PageShell>
   );
 }

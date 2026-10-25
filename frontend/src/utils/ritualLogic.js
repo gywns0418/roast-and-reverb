@@ -1,10 +1,7 @@
 import {trainPreference} from './pairingEngine.js';
 import {safeMusicUrl} from './musicCandidates.js';
-export const roomTracks=[
- {id:'room-aphex-avril',artist:'Aphex Twin',track:'Avril 14th',genre:'',tags:['piano','차분함','연주'],source:'starter',metadataSource:'R&R 시작 선곡 · 편집 태그',referenceUrl:'https://aphextwin.warp.net/release/86961-aphex-twin-drukqs'},
- {id:'room-nils-says',artist:'Nils Frahm',track:'Says',genre:'',tags:['ambient','공간감','연주'],source:'starter',metadataSource:'R&R 시작 선곡 · 편집 태그',referenceUrl:'https://www.nilsfrahm.com/works/spaces/'},
- {id:'room-khru-friday',artist:'Khruangbin',track:'Friday Morning',genre:'',tags:['guitar','부드러움','연주'],source:'starter',metadataSource:'R&R 시작 선곡 · 편집 태그',referenceUrl:'https://www.khruangbin.com/description?albumId=5'}
-];
+import {brewPlaylist} from '../data/brewPlaylist.js';
+export const roomTracks=brewPlaylist.map(song=>({...song,genre:'',source:'starter'}));
 const str=(value,limit=500)=>typeof value==='string'?value.trim().slice(0,limit):'';
 export const defaultRoom={name:'',about:'',minutes:8,explore:true};
 export function roomProfile(value={}){return {name:str(value.name,32),about:str(value.about,600),minutes:[8,15,30].includes(value.minutes)?value.minutes:8,explore:value.explore!==false};}
