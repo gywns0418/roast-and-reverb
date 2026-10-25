@@ -1,20 +1,78 @@
-import {useEffect,useState} from 'react';
-import {Link} from 'react-router-dom';
-import {authStore} from '../store/authStore.js';
-import {coffeeApi} from '../api/coffeeApi.js';
-import {adaptCoffeeLog} from '../api/adapters.js';
-import {listDiaryRecords} from '../utils/diaryRecords.js';
-import FirstCup from '../components/coffee/FirstCup.jsx';
-import TastingShelf from '../components/coffee/TastingShelf.jsx';
-import AuthModal from '../components/auth/AuthModal.jsx';
-const real=import.meta.env.VITE_USE_REAL_API==='true';
-const examples=[{id:'example-1',date:'체험 예시',bean:'오늘의 한 잔',brew:'느낌부터 시작',memo:'고소하고 끝에 초콜릿 맛이 남았어.',brewDetails:{}},{id:'example-2',date:'체험 예시',bean:'식으면서 달라진 커피',brew:'한 모금 더',memo:'처음엔 조금 낯설었는데 식으니까 달게 느껴졌어.',brewDetails:{}}];
-export default function HomePage(){
- const [records,setRecords]=useState([]),[error,setError]=useState(''),[loading,setLoading]=useState(false),[revision,refresh]=useState(0),[authMode,setAuthMode]=useState(null),[shelfOpen,setShelfOpen]=useState(false);
- useEffect(()=>{const changed=()=>refresh(x=>x+1);window.addEventListener('rr-auth-changed',changed);return()=>window.removeEventListener('rr-auth-changed',changed);},[]);
- useEffect(()=>{let active=true;setRecords([]);setError('');if(real&&!authStore.token){setLoading(false);return;}setLoading(true);listDiaryRecords(coffeeApi.list).then(rows=>{if(active)setRecords(rows.map(adaptCoffeeLog).sort((a,b)=>b.date.localeCompare(a.date)||Number(b.id)-Number(a.id)));}).catch(e=>{if(active)setError(e.message);}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[revision]);
- return <div className="studio-home first-cup-home"><header className="first-home-nav"><Link to="/" className="first-home-brand">r&r<span>ROAST & REVERB</span></Link><nav aria-label="첫 화면 메뉴"><button type="button" onClick={()=>setShelfOpen(true)}>내 진열장</button>{!real||authStore.token?<Link to="/dashboard">기록장 ↗</Link>:<button type="button" onClick={()=>setAuthMode('login')}>로그인</button>}</nav></header>
- <main className="first-home-main"><FirstCup heading="h1" onSaved={()=>{refresh(x=>x+1);setShelfOpen(true);}} collectionOpen={shelfOpen} onCollectionChange={setShelfOpen} recordCount={records.length} collection={loading?<p role="status">내 테이스팅 카드를 꺼내고 있어요…</p>:error?<div role="alert"><p>{error}</p><button className="ghost-button" onClick={()=>refresh(x=>x+1)}>진열장 다시 불러오기</button></div>:records.length?<TastingShelf key={records.length} records={records}/>:<TastingShelf records={examples} example/>}/>
- <section className="first-home-next"><div><p className="eyebrow">A LITTLE MORE, WHEN YOU WANT</p><h2>오늘은 한 줄.<br/>다음엔 한 가지만 더.</h2><p>좋았던 한 잔이 쌓이면, 내 취향의 모양이 보여요.</p></div><div><Link to="/coffee/write">원두와 추출 조건까지 남기기 ↗</Link><Link to="/journey">맛을 표현하는 짧은 가이드 ↗</Link><Link to="/monthly-pick">다음에 마실 원두 둘러보기 ↗</Link></div></section></main>
- <footer className="first-home-footer"><strong>Roast & Reverb</strong><span>한 잔의 취향. 한 곡의 여운.</span><Link to="/help">도움말</Link><a href={`${import.meta.env.BASE_URL}privacy.html`}>개인정보처리방침</a></footer>{authMode&&<AuthModal initialMode={authMode} onClose={()=>setAuthMode(null)} onAuthenticated={()=>{setAuthMode(null);refresh(x=>x+1);}}/>}</div>;
+import { Link } from "react-router-dom";
+import FirstCup from "../components/coffee/FirstCup.jsx";
+export default function HomePage() {
+  function start() {
+    document
+      .getElementById("first-cup-start")
+      ?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+        block: "start",
+      });
+    document
+      .querySelector("#first-cup-start textarea")
+      ?.focus({ preventScroll: true });
+  }
+  return (
+    <div className="studio-home simple-home">
+      <header className="first-home-nav">
+        <Link to="/" className="first-home-brand">
+          r&amp;r<span>ROAST &amp; REVERB</span>
+        </Link>
+        <Link to="/coffee">내 기록 열기 →</Link>
+      </header>
+      <main>
+        <section className="simple-intro">
+          <div>
+            <p className="eyebrow">커피 한 잔, 음악 한 곡</p>
+            <h1>
+              좋았던 한 잔을
+              <br />
+              기억하는 작은 습관.
+            </h1>
+            <p className="simple-intro-lead">
+              오늘 마신 커피의 느낌을 한 줄로 남겨요.
+              <br />
+              함께 듣고 싶은 음악은 그다음에 골라도 좋아요.
+            </p>
+            <button type="button" className="primary-button" onClick={start}>
+              한 줄 남겨보기 <span aria-hidden="true">↓</span>
+            </button>
+            <small>커피 지식도, 긴 설명도 필요 없어요.</small>
+          </div>
+          <img
+            src={import.meta.env.BASE_URL + "images/ritual-editorial.png"}
+            alt="커피와 레코드가 함께 놓인 따뜻한 테이블"
+          />
+        </section>
+        <section className="simple-how" aria-label="사용 방법">
+          <p>
+            <b>01</b> 커피의 느낌을 적고
+          </p>
+          <span aria-hidden="true">→</span>
+          <p>
+            <b>02</b> 음악을 더하고 싶다면 고르고
+          </p>
+          <span aria-hidden="true">→</span>
+          <p>
+            <b>03</b> 나만의 기록으로 보관해요
+          </p>
+        </section>
+        <div id="first-cup-start" className="simple-start">
+          <FirstCup />
+          <p className="simple-return">
+            이미 남긴 한 잔이 있나요?{" "}
+            <Link to="/coffee">내 기록에서 이어보기 →</Link>
+          </p>
+        </div>
+      </main>
+      <footer className="first-home-footer">
+        <strong>Roast &amp; Reverb</strong>
+        <span>한 잔의 취향. 한 곡의 여운.</span>
+        <Link to="/help">도움말</Link>
+        <a href={import.meta.env.BASE_URL + "privacy.html"}>개인정보처리방침</a>
+      </footer>
+    </div>
+  );
 }
