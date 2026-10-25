@@ -378,4 +378,4 @@ feature/simple-coffee-flow는 main에서 분기·최신dev통합. 사용자 요�
 
 ## 2026-10-25 전체 간소화/운영 반영 후속
 
-feature/complete-simple-service는 main분기·최신dev통합. 사용자 전체개선/운영반영 요청으로 이번작업의 main승격을승인범위로해석. 상세/수정/원두탐색/음악목록·상세/설정/백업/도움말/인증/보조도구공통을정리. 보존·실행검증·범위와한계는complete-service-review.md.84프런트테스트/build/audit0·REA제한분석,32경로데스크톱/모바일초기구조와실제저장·수정·백업복원·검색·상세초점복귀확인. Railway읽기는재인증필요UNAUTHORIZED라회원서버운영검증불가. Pages체험운영과별개로보고한다. 원본/키/유료/실사용자기록미변경. PR/배포결과후속기록.
+feature/complete-simple-service는 main분기·최신dev통합. 사용자 전체개선/운영반영 요청으로 이번작업의 main승격을승인범위로해석. 상세/수정/원두탐색/음악목록·상세/설정/백업/도움말/인증/보조도구공통을정리. 보존·실행검증·범위와한계는complete-service-review.md.85프런트테스트/build/audit0·REA제한분석,32경로데스크톱/모바일초기구조와실제저장·수정·백업복원·검색·상세초점복귀확인. Railway읽기는재인증필요UNAUTHORIZED라회원서버운영검증불가. Pages체험운영과별개로보고한다. 원본/키/유료/실사용자기록미변경. PR/배포결과후속기록.

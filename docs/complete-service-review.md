@@ -20,7 +20,7 @@
 
 ## 검증
 
-- 프론트 84테스트, production build, dependency audit 0건.
+- 프론트 85테스트, production build, dependency audit 0건.
 - REA 연결 5모듈 분석은 제한 범위이며 전체 실행/보안 증명은 아님.
 - 32개 경로를 데스크톱/390px에서 제목/초기 구조/가로 넘침/중첩 인터랙션 확인: 64개 결과, 문제 없음. docs/qa/complete-route-checks.json. 동작 확인과 구조 확인을 구분한다.
 - 실제 localhost5212의 명시 개발 QA 기록(실제 시음·청취 아님)으로 소개→한줄→곡 선택→저장→상세→감상 수정→새로고침→기존 곡 유지 확인.

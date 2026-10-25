@@ -1,3 +1,4 @@
+import {catalogAvailability} from '../../utils/catalogAvailability.js';
 import { useEffect, useRef, useState } from "react";
 import PageShell from "../../components/common/PageShell.jsx";
 import Loading from "../../components/common/Loading.jsx";
@@ -55,7 +56,7 @@ export default function MonthlyPickPage() {
   const product = catalog.find((p) => p.sourceUrl === series);
   const beans = (product?.items || []).filter(
     (b) =>
-      (!available || b.availability === "available") &&
+      (!available || catalogAvailability(product,b) === "available") &&
       [b.name, b.roastery, b.origin, b.process, ...(b.flavors || [])]
         .filter(Boolean)
         .join(" ")
@@ -144,7 +145,7 @@ export default function MonthlyPickPage() {
               >
                 <BeanArtwork item={bean} />
                 <div>
-                  <small>{status[bean.availability] || status.unknown}</small>
+                  <small>{status[catalogAvailability(product,bean)] || status.unknown}</small>
                   <h2>{bean.name}</h2>
                   <p>
                     {bean.flavors?.join(" · ") || "컵노트는 판매처에서 확인"}
@@ -182,7 +183,7 @@ export default function MonthlyPickPage() {
           <>
             <p className="quiet-muted">
               {product?.roastery} ·{" "}
-              {status[active.availability] || status.unknown}
+              {status[catalogAvailability(product,active)] || status.unknown}
             </p>
             <h2 id="quiet-bean-title">{active.name}</h2>
             <p className="quiet-note-copy">
