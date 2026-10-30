@@ -25,3 +25,9 @@
 ## 운영
 
 앞선전체간소화/운영반영요청의모바일후속으로검사후운영main/Pages반영까지수행한다. Railway회원서버는이전재인증필요상태를별도로유지하며실행완료주장/유료전환/우회서비스생성을하지않는다. 원격PR/검사/배포와공개확인결과는continuity최신기록을참조한다.
+
+## 최종 운영 검증
+
+PR#58 dev병합a854fa7, PR#59 main병합648ab67c854691950eebfa0127e08d50d38a3d8d. source57d3cda Verify41004799962와운영반영검사41005104616성공. mainVerify41005350444 frontend/backend/deployment-image모두성공·Pages41005350381성공.
+
+운영 /?v=648ab67#/coffee 를390px에서확인: 기록/원두/설정3개,저장버튼1개·미리보기버튼0,390=scroll390,초기기록0/초안없음상태. /dashboard는/coffee?write=1로이동. 공개사용자자료를작성/수정하지않음. 실제저장·인라인수정·음악보존은격리localhost5214 QA자료로확인. mobile-journal-production.png는개인자료없는운영초기화면이다. 최종후속문서/QA는feature브랜치에보존한다.
