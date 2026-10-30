@@ -1,3 +1,6 @@
+import { journalStartDestination } from "../utils/journalStart.js";
+import { useCompactLayout } from "../hooks/useCompactLayout.js";
+import { useLocation } from "react-router-dom";
 import Loading from "../components/common/Loading.jsx";
 import { lazy, Suspense } from "react";
 const ArchivePage = lazy(() => import("../pages/mypage/ArchivePage.jsx"));
@@ -81,6 +84,16 @@ const AdminStatisticsPage = lazy(
   () => import("../pages/admin/AdminStatisticsPage.jsx"),
 );
 
+function JournalStart({ children }) {
+  const compact = useCompactLayout(),
+    location = useLocation();
+  const destination = journalStartDestination(
+    compact,
+    location.pathname,
+    location.state,
+  );
+  return destination ? <Navigate to={destination} replace /> : children;
+}
 export default function AppRouter() {
   return (
     <Suspense
@@ -111,7 +124,14 @@ export default function AppRouter() {
           <Route path="/backup" element={<BackupPage />} />
           <Route path="/connections" element={<ConnectionsPage />} />
           <Route path="/memories" element={<MemoriesPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <JournalStart>
+                <DashboardPage />
+              </JournalStart>
+            }
+          />
 
           <Route
             path="/today"
@@ -127,7 +147,14 @@ export default function AppRouter() {
           <Route path="/coffee-logs" element={<CoffeeLogPage />} />
           <Route path="/logs/coffee" element={<CoffeeLogPage />} />
           <Route path="/coffee/import" element={<CoffeeImportPage />} />
-          <Route path="/coffee/write" element={<CoffeeWritePage />} />
+          <Route
+            path="/coffee/write"
+            element={
+              <JournalStart>
+                <CoffeeWritePage />
+              </JournalStart>
+            }
+          />
           <Route
             path="/coffee/new"
             element={<Navigate to="/coffee/write" replace />}
