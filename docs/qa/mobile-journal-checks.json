@@ -1,0 +1,110 @@
+[
+  {
+    "width": 320,
+    "route": "/coffee",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "/monthly-pick",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "/mypage",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "/help",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "/coffee/2",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "/coffee/2/edit",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "/coffee",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "/monthly-pick",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "/mypage",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "/help",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "/coffee/2",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "/coffee/2/edit",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 430,
+    "route": "/coffee",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 430,
+    "route": "/monthly-pick",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 430,
+    "route": "/mypage",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 430,
+    "route": "/help",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 430,
+    "route": "/coffee/2",
+    "nested": 0,
+    "overflow": false
+  },
+  {
+    "width": 430,
+    "route": "/coffee/2/edit",
+    "nested": 0,
+    "overflow": false
+  }
+]

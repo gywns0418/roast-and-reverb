@@ -10,7 +10,7 @@ export default function Sidebar() {
     <NavLink
       key={to}
       to={to}
-      end={to === "/coffee"}
+      end={false}
       className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}
     >
       <Icon size={20} />
@@ -33,8 +33,11 @@ export default function Sidebar() {
         <div className="sidebar-foot">하루 한 줄이면 충분해요.</div>
       </aside>
       <nav className="mobile-tabbar" aria-label="모바일 빠른 메뉴">
-        {links.map(item)}
-        {item(["/mypage", Settings, "설정"])}
+        {[
+          ["/coffee", BookOpen, "기록"],
+          ["/monthly-pick", ShoppingBasket, "원두"],
+          ["/mypage", Settings, "설정"],
+        ].map(item)}
       </nav>
     </>
   );
