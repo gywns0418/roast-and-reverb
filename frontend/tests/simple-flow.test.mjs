@@ -33,7 +33,7 @@ test("first visit offers one writing action and defers music and previous tools"
     );
     assert.match(nav, /오늘의 한 잔/);
     assert.match(nav, /내 기록/);
-    assert.match(nav, /원두 둘러보기/);
+    assert.match(nav, /이달의 월픽/);
     assert.doesNotMatch(
       nav,
       /AI 페어링|취향 리포트|청음실|전체 메뉴|음악 제작/,

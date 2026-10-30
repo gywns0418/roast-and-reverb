@@ -1,0 +1,369 @@
+.monthly-editions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.monthly-editions button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 76px;
+  border: 1px solid #d5ddcc;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  color: #30452b;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+.monthly-editions button[aria-pressed="true"] {
+  background: #edf2de;
+  border-color: #60784a;
+}
+.monthly-editions strong {
+  font-size: 17px;
+}
+.monthly-editions small {
+  font-size: 12px;
+  color: #6c7c5d;
+  line-height: 1.6;
+}
+.monthly-editions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.monthly-core-toolbar {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+}
+.monthly-core-search {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: #617353;
+}
+.monthly-core-search input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #cbd6c1;
+  border-radius: 9px;
+  background: #fff;
+  min-height: 48px;
+}
+.monthly-core-toolbar > button {
+  min-height: 48px;
+  white-space: nowrap;
+}
+.monthly-core-toolbar > button[aria-pressed="true"] {
+  background: #e9f0d8;
+  border-color: #74875c;
+}
+.monthly-available {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 13px;
+  color: #667859;
+  margin-top: 8px;
+}
+.monthly-bean-card {
+  min-width: 0;
+  border: 1px solid #dce2d3;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.monthly-bean-card > .bean-still {
+  height: 94px;
+  min-height: 94px;
+  flex: none;
+}
+.monthly-bean-card .bean-symbol {
+  width: 90px;
+  right: 12px;
+}
+.monthly-bean-card .bean-number {
+  font-size: 18px;
+  bottom: 18px;
+}
+.monthly-bean-card .bean-origin-type {
+  top: 14px;
+  font-size: 9px;
+}
+.monthly-bean-card .bean-still > small {
+  display: none;
+}
+.monthly-bean-card .bean-palette-band {
+  height: 5px;
+}
+.monthly-bean-copy {
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  flex: 1;
+  min-width: 0;
+}
+.monthly-bean-open {
+  font: inherit;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+}
+.monthly-bean-open small {
+  font-size: 11px;
+  color: #718161;
+  line-height: 1.7;
+}
+.monthly-bean-open h2 {
+  font-size: 17px;
+  line-height: 1.7;
+  word-break: keep-all;
+  margin: 10px 0;
+}
+.monthly-bean-open p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #607153;
+  margin: 0 0 14px;
+}
+.monthly-bean-open span {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #708263;
+  margin-top: auto;
+}
+.monthly-bean-open b {
+  font-size: 12px;
+  margin-top: 16px;
+  color: #3b5c30;
+}
+.monthly-bean-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  border-top: 1px solid #e5eadf;
+  padding-top: 12px;
+}
+.monthly-bean-actions button {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  font: inherit;
+  font-size: 12px;
+  border: 1px solid #d9e2d0;
+  background: #fafcf6;
+  border-radius: 8px;
+  color: #526b40;
+  cursor: pointer;
+}
+.monthly-bean-actions button[aria-pressed="true"] {
+  background: #eaf1d8;
+  border-color: #91a977;
+  color: #354f24;
+}
+.monthly-compare-bar {
+  position: sticky;
+  bottom: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #a8b697;
+  background: #f4f8ec;
+  padding: 14px;
+  border-radius: 12px;
+  margin-top: 24px;
+  box-shadow: 0 6px 20px #243c2915;
+}
+.monthly-compare-bar > span {
+  font-size: 14px;
+  margin-right: auto;
+}
+.monthly-local-note {
+  font-size: 12px;
+  color: #738166;
+  margin-top: 24px;
+}
+.monthly-source-tools form {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  margin: 16px 0;
+}
+.monthly-source-tools label {
+  flex: 1;
+  font-size: 13px;
+  min-width: 0;
+}
+.monthly-source-tools input {
+  display: block;
+  margin-top: 8px;
+  padding: 12px;
+  border: 1px solid #cbd5c1;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  min-height: 48px;
+}
+.monthly-source-tools > a {
+  font-size: 14px;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+.monthly-compare-dialog {
+  width: min(940px, calc(100vw - 28px));
+  max-height: 85dvh;
+  border: 0;
+  border-radius: 16px;
+  padding: 24px;
+  box-sizing: border-box;
+  background: #fafcf6;
+  color: #2f4329;
+  overflow: auto;
+}
+.monthly-compare-dialog::backdrop {
+  background: #142a2266;
+}
+.monthly-compare-dialog h2 {
+  font-size: 23px;
+  line-height: 1.6;
+}
+.monthly-compare-dialog > p {
+  font-size: 13px;
+  color: #6c7c60;
+  line-height: 1.7;
+}
+.monthly-compare-scroll {
+  overflow: auto;
+  border: 1px solid #dce4d3;
+  border-radius: 8px;
+}
+.monthly-compare-scroll table {
+  border-collapse: collapse;
+  min-width: 550px;
+  width: 100%;
+  table-layout: fixed;
+  background: white;
+}
+.monthly-compare-scroll :is(th, td) {
+  padding: 14px;
+  border-bottom: 1px solid #e0e7d9;
+  border-right: 1px solid #e0e7d9;
+  vertical-align: top;
+  text-align: left;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+.monthly-compare-scroll th {
+  font-weight: 600;
+  background: #eff4e6;
+}
+.monthly-compare-scroll tr > :first-child {
+  width: 80px;
+}
+@media (max-width: 760px) {
+  .monthly-editions {
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .monthly-editions button {
+    padding: 12px 9px;
+    min-height: 80px;
+  }
+  .monthly-editions strong {
+    font-size: 14px;
+    word-break: keep-all;
+  }
+  .monthly-editions small {
+    font-size: 10px;
+  }
+  .monthly-core-toolbar {
+    gap: 8px;
+  }
+  .monthly-core-toolbar > button {
+    font-size: 12px;
+    padding-inline: 12px;
+  }
+  .monthly-bean-card {
+    display: grid;
+    grid-template-columns: 86px minmax(0, 1fr);
+  }
+  .monthly-bean-card > .bean-still {
+    height: 100%;
+    min-height: 180px;
+  }
+  .monthly-bean-card .bean-symbol {
+    width: 90%;
+    right: 0;
+  }
+  .monthly-bean-card .bean-origin-type {
+    left: 10px;
+    max-width: 80%;
+  }
+  .monthly-bean-card .bean-number {
+    left: 10px;
+    font-size: 15px;
+  }
+  .monthly-bean-copy {
+    padding: 16px;
+  }
+  .monthly-bean-open h2 {
+    font-size: 15px;
+  }
+  .monthly-bean-open p {
+    font-size: 13px;
+  }
+  .monthly-bean-actions {
+    gap: 6px;
+  }
+  .monthly-bean-actions button {
+    font-size: 11px;
+    padding: 8px 3px;
+  }
+  .monthly-compare-bar {
+    bottom: calc(72px + env(safe-area-inset-bottom));
+    padding: 10px;
+    gap: 8px;
+  }
+  .monthly-compare-bar .primary-button {
+    font-size: 12px;
+    padding: 10px;
+  }
+  .monthly-compare-bar .ghost-button {
+    font-size: 12px;
+    padding: 10px;
+  }
+  .monthly-compare-bar > span {
+    font-size: 12px;
+  }
+  .monthly-source-tools form {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .monthly-compare-dialog {
+    padding: 18px;
+  }
+}
