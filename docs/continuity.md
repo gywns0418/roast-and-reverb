@@ -386,3 +386,5 @@ feature/mobile-single-journal은main분기. 앞선운영간소화의모바일후
 
 ## 2026-10-30 월픽 핵심 복구
 feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽3시리즈·설명·관심저장·교차비교·링크가져오기·기존개인노트 보존. 상세 범위/90테스트/모바일검증은 monthly-core.md. 사용자의 운영간소화 수정 후속이며 자동main승격규칙 변경없음. PR/게시결과 후속기록.
+
+월픽복구 게시완료: devPR60/mainPR61, 운영c7ed1f3. PR/main Verify전체성공·Pages41011934429성공·공개모바일메뉴/3시리즈확인. 첫dev게시다운로드시간초과는최신게시성공으로해소. 상세 monthly-core.md.

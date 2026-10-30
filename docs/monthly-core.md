@@ -9,3 +9,9 @@ Pages의 링크 가져오기는 기존 지원 판매처 자료에 한정된다. 
 검증: 프런트 90테스트 통과, production build 통과, runtime audit 취약점 0. 관심 ID 호환·재조회·손상/용량 실패·동시 탭·비교 한도 회귀 검사 포함. REA 6.5.0 연결/저장/worker 5파일 제한 분석 성공(전체 앱 검증을 뜻하지 않음). 실제 브라우저에서 시리즈 변경 후 교차 비교, 4번째 선택 거절, Escape 초점 복귀, 새로고침 후 관심 유지, 상세 설명·원문 링크, 링크 수집 성공 확인. 320/390/430px에서 문서 가로 넘침 0·중첩 버튼 0. 비교표만 의도적으로 내부 가로 스크롤한다.
 
 별도 checkout feature/monthly-pick-core는 main에서 분기, 최신 dev가 main에 포함됨을 확인했다. 개인 원본·실제 기록·키·요금제·서버는 변경하지 않았다. 운영 간소화에 대한 사용자의 수정 후속으로 dev 검증 후 기존 Pages 운영에 반영한다. 자동 유지관리의 main 승인 제한은 변경하지 않는다. Railway 재인증 문제와 회원 서버 검증 한계는 이전 인수인계와 동일하다.
+
+## 게시 확인
+
+PR #60 → dev 1c793495, PR #61 → main c7ed1f33338a061afe6040f348266daa351bc735 병합 완료. PR Verify 41011173892·41011550929 및 main Verify 41011934405의 frontend/backend/deployment-image 전부 성공. Pages 41011934429 성공. 이전 dev Pages 41011525874는 외부 패키지 다운로드 ETIMEDOUT으로 실패했으나 최신 main Pages에서 재빌드·게시 성공.
+
+공개 주소 https://gywns0418.github.io/roast-and-reverb/?v=c7ed1f3#/monthly-pick 에서 이번 달 월픽, 모바일 기록/월픽/설정, 3시리즈57/9/36종, 카드 표시 확인. 공개 서비스에 개인 관심/소비 기록을 생성하지 않았다. 증거 docs/qa/monthly-core-production.png. 서버 계정 기능 운영 확인을 뜻하지 않는다.
