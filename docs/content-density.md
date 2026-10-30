@@ -10,3 +10,7 @@
 검증: 프런트90테스트/build 통과, 설치audit0. REA6.5.0 5연결모듈 제한분석 성공(전체 앱 보장 아님). 실제 브라우저 coffee/monthly-pick/mypage/dashboard 4진입×320/390/430px=12검사에서 문서 가로 넘침 없음. dashboard는 기존대로 단일기록장 write=1로 연결. 월픽 상세 열기·닫기와 원문사실 표시 확인. 모바일390px 첫원두 시작 y403px(이전 약490px), 데스크톱1280px y459px(이전 약625px). 모바일은 두번째 카드가 이어지고 데스크톱은 첫행의 설명·가격·저장/비교가 보인다. 캡처 docs/qa/density-*.png.
 
 원본·개인 기록·키·유료서비스는 변경하지 않았다. 이번 운영 디자인 보완은 앞선 사용자 요청의 후속이며 자동 유지관리 main 제한은 변경하지 않는다. 게시 결과는 후속 기록.
+
+## 게시 결과
+
+PR62(dev) 5665e9e, PR63(main) b38412c61ece980fb2649993ea4483274a12fa70 병합 완료. PR Verify41026809408/41027204342 및 main Verify41027659587의 frontend/backend/deployment-image 모두 성공. Pages41027659589 성공. 공개 https://gywns0418.github.io/roast-and-reverb/?v=b38412c#/monthly-pick 에서 가로카드·제목·모바일넘침없음 확인. 운영 캡처 density-production-*.png. 추가 데스크톱1280/1920×월픽/기록/설정6검사: 넘침없음,3열/4열 확인. 운영에 개인 기록 생성하지 않음. 기존 Railway 재인증/회원서버 운영검증 한계는 그대로다.
