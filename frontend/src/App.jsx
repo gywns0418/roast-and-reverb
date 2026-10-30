@@ -36,3 +36,5 @@ export default function App() {
 import './styles/simple-flow.css';
 
 import './styles/complete-flow.css';
+
+import './styles/mobile-journal.css';

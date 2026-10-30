@@ -1,3 +1,5 @@
+import { brewPlaylist } from "../../data/brewPlaylist.js";
+import { useCompactLayout } from "../../hooks/useCompactLayout.js";
 import { useEffect, useId, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
@@ -64,6 +66,7 @@ export default function FirstCup({
   onCollectionChange,
   recordCount = 0,
 }) {
+  const compact = useCompactLayout();
   const [, authRevision] = useState(0);
   const currentScope = scope(),
     draftKey = quickDraftKey(currentScope);
@@ -247,6 +250,7 @@ export default function FirstCup({
       const result = await coffeeApi.create(payload);
       if (id !== operation.current || scope() !== owner) return;
       setSaved(result.coffeeLogId || result.coffee_log_id || result.id);
+      setPreview(true);
       setNotice("저장했어요. 내 기록에서 언제든 다시 볼 수 있어요.");
       try {
         for (const key of [draftKey, quickDraftKey("guest")]) {
@@ -272,6 +276,107 @@ export default function FirstCup({
     !(previousScope.current === "guest" && loginRequested.current)
   )
     return <p role="status">기록 공간을 바꾸고 있어요…</p>;
+  if (compact)
+    return (
+      <section className="mobile-cup" aria-labelledby={inputId + "-heading"}>
+        <h2 id={inputId + "-heading"}>{saved ? "한 잔을 남겼어요." : title}</h2>
+        {!saved ? (
+          <>
+            <label htmlFor={inputId}>
+              오늘의 느낌
+              <textarea
+                id={inputId}
+                rows={3}
+                maxLength={2000}
+                value={value.note}
+                disabled={busy === "save"}
+                onChange={(e) => change({ ...value, note: e.target.value })}
+                placeholder="고소했어, 조금 낯설었어… 기억나는 만큼만."
+              />
+            </label>
+            {value.note.trim() && (
+              <details
+                className="mobile-music-choice"
+                open={musicOpen}
+                onToggle={(e) => setMusicOpen(e.currentTarget.open)}
+              >
+                <summary>
+                  {value.soundtrack
+                    ? "♫ " + value.soundtrack.track
+                    : "음악 추가"}{" "}
+                  <small>선택</small>
+                </summary>
+                {musicOpen && (
+                  <BrewPlaylist
+                    tracks={brewPlaylist.slice(0, 3)}
+                    title="함께 듣고 싶은 곡"
+                    continuous={false}
+                    selected={value.soundtrack}
+                    onSelect={
+                      busy === "save"
+                        ? undefined
+                        : (song) =>
+                            setValue((v) => ({
+                              ...v,
+                              soundtrack: matchedSoundtrack(
+                                song,
+                                "직접 고른 브루잉 플레이리스트",
+                              ),
+                            }))
+                    }
+                  />
+                )}{" "}
+                {value.soundtrack && (
+                  <button
+                    className="ghost-button"
+                    type="button"
+                    disabled={!!busy}
+                    onClick={() =>
+                      setValue((v) => ({ ...v, soundtrack: null }))
+                    }
+                  >
+                    음악 빼기
+                  </button>
+                )}
+              </details>
+            )}
+            <button
+              type="button"
+              className="primary-button mobile-cup-save"
+              disabled={!!busy || !value.note.trim()}
+              onClick={save}
+            >
+              {busy === "save" ? "저장 중…" : "이 한 잔 저장"}
+            </button>
+          </>
+        ) : (
+          <>
+            <p>이 느낌을 내 기록에 보관했어요.</p>
+            <Link className="primary-button" to="/coffee">
+              내 기록 보기
+            </Link>
+          </>
+        )}
+        {notice && (
+          <p role="status" className="mobile-form-status">
+            {notice}
+          </p>
+        )}
+        {error && <p role="alert">{error}</p>}
+        {storageError && <p role="alert">{storageError}</p>}
+        {authMode && (
+          <AuthModal
+            initialMode={authMode}
+            onClose={() => {
+              setAuthMode(null);
+              loginRequested.current = false;
+            }}
+            onAuthenticated={() => setAuthMode(null)}
+          />
+        )}
+      </section>
+    );
+
   return (
     <section className="first-cup" aria-labelledby={`${inputId}-heading`}>
       <div className="first-cup-note">
