@@ -1,0 +1,426 @@
+/* Content-led layouts: use the available canvas without adding navigation. */
+.app-shell .page {
+  max-width: 1560px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px 32px 32px;
+}
+.page .page-heading {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+}
+.page .page-heading h1 {
+  font-size: 28px;
+  line-height: 1.3;
+}
+.page .page-heading .subtitle {
+  margin: 8px 0 0;
+  line-height: 1.6;
+}
+.page .workspace-content {
+  max-width: none;
+  width: 100%;
+  min-width: 0;
+}
+.page .page-content {
+  display: block;
+}
+.simple-topbar {
+  min-height: 64px;
+}
+.page .quiet-section {
+  padding: 22px;
+  margin: 0 0 16px;
+}
+.page .quiet-details {
+  margin: 16px 0;
+}
+.page .quiet-facts > div {
+  padding: 10px 0;
+}
+.page .page-footer {
+  margin-top: 28px;
+}
+.page-monthly-pick .page-heading {
+  background: #e7edd8;
+  border: 1px solid #d3dec1;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+.monthly-editions {
+  margin-bottom: 14px;
+  gap: 10px;
+}
+.monthly-editions button {
+  min-height: 60px;
+  padding: 12px 16px;
+  gap: 3px;
+}
+.monthly-core-toolbar {
+  gap: 10px;
+}
+.monthly-core-search input {
+  margin-top: 4px;
+  padding: 10px 12px;
+}
+.monthly-available {
+  margin-top: 0;
+}
+.page-monthly-pick .quiet-source {
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  background: #efeee5;
+  border-radius: 8px;
+}
+.page-monthly-pick .quiet-source p {
+  margin: 0;
+}
+.page-monthly-pick .quiet-source small {
+  margin-top: 4px;
+  line-height: 1.6;
+}
+.page-monthly-pick .quiet-bean-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.monthly-bean-card {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  border-color: #d3d9c9;
+  box-shadow: 0 2px 7px #25372b05;
+}
+.monthly-bean-card > .bean-still {
+  height: 100%;
+  min-height: 180px;
+}
+.monthly-bean-card .bean-number {
+  left: 9px;
+  font-size: 12px;
+}
+.monthly-bean-card .bean-origin-type {
+  left: 9px;
+  max-width: 58px;
+}
+.monthly-bean-card .bean-symbol {
+  width: 65px;
+  right: 4px;
+}
+.monthly-bean-copy {
+  padding: 14px;
+}
+.monthly-bean-open h2 {
+  margin: 5px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.monthly-bean-open p {
+  margin-bottom: 7px;
+  line-height: 1.6;
+}
+.monthly-bean-open b {
+  margin-top: 8px;
+}
+.monthly-bean-actions {
+  margin-top: 10px;
+  padding-top: 8px;
+  gap: 5px;
+}
+.journal-welcome {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 22px;
+  align-items: center;
+  background: #e9eddf;
+  border: 1px solid #d9dfcd;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+.journal-welcome img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.journal-welcome > div {
+  padding: 18px 22px 18px 0;
+}
+.journal-welcome small {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #657257;
+}
+.journal-welcome h2 {
+  margin: 6px 0;
+  font-size: 22px;
+  line-height: 1.4;
+}
+.journal-welcome p {
+  margin: 0 0 8px;
+  color: #5a6953;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.journal-welcome a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+  color: #3c5733;
+  text-decoration: underline;
+}
+@media (min-width: 1100px) {
+  .page-mypage .workspace-content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .page-mypage .quiet-link-list {
+    margin: 0;
+  }
+  .page-mypage .quiet-details {
+    margin: 0;
+  }
+}
+@media (min-width: 1700px) {
+  .page-monthly-pick .quiet-bean-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (min-width: 761px) and (max-width: 1150px) {
+  .page-monthly-pick .quiet-bean-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .app-shell .page {
+    padding: 14px 12px 24px;
+  }
+  .page .page-heading {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+  }
+  .page .page-heading h1 {
+    font-size: 23px;
+  }
+  .page .page-heading .subtitle {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  .page-monthly-pick .page-heading {
+    padding: 14px 16px;
+  }
+  .monthly-editions {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .monthly-editions button {
+    padding: 9px 8px;
+    min-height: 60px;
+    gap: 2px;
+  }
+  .monthly-editions strong {
+    font-size: 13px;
+  }
+  .monthly-editions small {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+  .monthly-core-search {
+    font-size: 11px;
+  }
+  .monthly-core-toolbar > button {
+    padding-inline: 10px;
+  }
+  .monthly-available {
+    font-size: 12px;
+  }
+  .page-monthly-pick .quiet-source {
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+  .page-monthly-pick .quiet-source p {
+    font-size: 12px;
+  }
+  .page-monthly-pick .quiet-source small {
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .page-monthly-pick .quiet-bean-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .monthly-bean-card {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+  .monthly-bean-card > .bean-still {
+    min-height: 160px;
+  }
+  .monthly-bean-copy {
+    padding: 11px 12px;
+  }
+  .monthly-bean-open h2 {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .monthly-bean-open p {
+    font-size: 12px;
+  }
+  .monthly-bean-open b {
+    font-size: 11px;
+    margin-top: 5px;
+  }
+  .monthly-bean-actions {
+    margin-top: 8px;
+    padding-top: 6px;
+  }
+  .journal-welcome {
+    grid-template-columns: 78px 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .journal-welcome img {
+    height: 100%;
+    min-height: 144px;
+  }
+  .journal-welcome > div {
+    padding: 12px 10px 12px 0;
+  }
+  .journal-welcome h2 {
+    font-size: 17px;
+  }
+  .journal-welcome p {
+    font-size: 12px;
+    margin-bottom: 0;
+  }
+  .journal-welcome a {
+    font-size: 12px;
+  }
+  .mobile-composer {
+    padding: 14px;
+  }
+  .mobile-cup h2 {
+    font-size: 19px;
+    margin-bottom: 12px;
+  }
+  .mobile-cup textarea {
+    min-height: 96px;
+    margin-bottom: 12px;
+  }
+  .mobile-journal-home {
+    gap: 12px;
+  }
+  .mobile-journal-entry > summary {
+    padding: 14px 36px 14px 14px;
+  }
+  .page .quiet-section {
+    padding: 18px;
+  }
+}
+/* Keep primary content above the fold; controls share one row. */
+.page-monthly-pick .page-heading {
+  padding: 14px 18px;
+  margin-bottom: 12px;
+}
+.page-monthly-pick .page-heading > div {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.page-monthly-pick .page-heading .subtitle {
+  margin: 0;
+}
+.monthly-core-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: end;
+  margin-bottom: 12px;
+}
+.monthly-core-toolbar .monthly-available {
+  min-height: 48px;
+  white-space: nowrap;
+}
+.page-monthly-pick .quiet-source {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+.page-monthly-pick .quiet-source small {
+  flex-basis: 100%;
+}
+@media (min-width: 761px) {
+  .app-shell .simple-topbar {
+    height: 60px;
+    min-height: 60px;
+    padding-block: 8px;
+  }
+  .app-shell .demo-notice {
+    padding-block: 8px;
+  }
+}
+@media (max-width: 760px) {
+  .page-monthly-pick .page-heading > div {
+    display: block;
+  }
+  .page-monthly-pick .page-heading .subtitle {
+    margin-top: 4px;
+  }
+  .monthly-core-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+    margin-bottom: 8px;
+  }
+  .monthly-core-toolbar .monthly-available {
+    grid-column: 1/-1;
+    min-height: 32px;
+  }
+  .monthly-core-toolbar input[type="checkbox"] {
+    min-width: 20px;
+    min-height: 20px;
+  }
+  .page-monthly-pick .quiet-source {
+    padding: 8px 10px;
+    gap: 4px 8px;
+  }
+  .page-monthly-pick .quiet-source small {
+    margin-top: 0;
+  }
+}
+@media (min-width: 761px) {
+  .page-coffee .workspace-content:has(.journal-welcome) {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 20px;
+    align-items: start;
+  }
+  .page-coffee .workspace-content:has(.journal-welcome) > .journal-welcome {
+    grid-column: 1;
+    grid-row: 1/4;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+  }
+  .page-coffee .workspace-content:has(.journal-welcome) .journal-welcome img {
+    height: 220px;
+  }
+  .page-coffee .workspace-content:has(.journal-welcome) .journal-welcome > div {
+    padding: 24px;
+  }
+  .page-coffee .workspace-content:has(.journal-welcome) .simple-section-title {
+    display: none;
+  }
+  .page-coffee .workspace-content:has(.journal-welcome) .simple-records:empty {
+    display: none;
+  }
+  .journal-desktop-composer {
+    margin: 0 !important;
+  }
+  .journal-desktop-composer .first-cup-note {
+    padding: 0;
+    border: 0;
+  }
+}

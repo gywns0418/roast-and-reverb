@@ -213,15 +213,15 @@ export default function MonthlyPickPage() {
               관심 원두{" "}
               {allBeans.filter((b) => favorites.includes(String(b.id))).length}
             </button>
+            <label className="monthly-available">
+              <input
+                type="checkbox"
+                checked={available}
+                onChange={(e) => setAvailable(e.target.checked)}
+              />
+              구매 가능만
+            </label>
           </div>
-          <label className="monthly-available">
-            <input
-              type="checkbox"
-              checked={available}
-              onChange={(e) => setAvailable(e.target.checked)}
-            />
-            구매 가능한 원두만
-          </label>
           {product && (
             <div className="quiet-source">
               <p>

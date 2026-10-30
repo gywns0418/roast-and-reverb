@@ -150,6 +150,23 @@ export default function CoffeeLogPage() {
         <Loading title="나의 기록을 펼치고 있어요." />
       ) : (
         <>
+          {!rows.length && !query && (
+            <section className="journal-welcome" aria-label="기록 시작 안내">
+              <img
+                src={import.meta.env.BASE_URL + "images/pairing-editorial.webp"}
+                alt=""
+              />
+              <div>
+                <small>COFFEE × MUSIC JOURNAL</small>
+                <h2>한 잔의 맛, 한 곡의 기억.</h2>
+                <p>
+                  커피에서 느낀 향과 오늘의 기분을 한 줄로 남겨보세요. 함께 들은
+                  음악도 더할 수 있어요.
+                </p>
+                <Link to="/monthly-pick">이번 달 원두부터 둘러보기 →</Link>
+              </div>
+            </section>
+          )}
           {compact ? (
             <div className="mobile-journal-home">
               {!writer && (
@@ -263,7 +280,12 @@ export default function CoffeeLogPage() {
                   </Link>
                 ))}
               </div>
-              {!visible.length && (
+              {!rows.length && !query && (
+                <section className="quiet-section journal-desktop-composer">
+                  <FirstCup onSaved={(row) => update(adaptCoffeeLog(row))} />
+                </section>
+              )}
+              {!visible.length && rows.length > 0 && (
                 <p className="simple-empty">
                   {query
                     ? "찾는 기록이 없어요. 다른 말로 찾아보세요."
