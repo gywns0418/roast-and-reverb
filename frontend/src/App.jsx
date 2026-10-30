@@ -38,3 +38,5 @@ import './styles/simple-flow.css';
 import './styles/complete-flow.css';
 
 import './styles/mobile-journal.css';
+
+import './styles/monthly-core.css';
