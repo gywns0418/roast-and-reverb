@@ -154,7 +154,7 @@ export default function CoffeeLogPage() {
             <section className="journal-welcome" aria-label="기록 시작 안내">
               <img
                 src={import.meta.env.BASE_URL + "images/pairing-editorial.webp"}
-                alt=""
+                alt="커피잔과 레코드를 함께 배치한 서비스 연출 이미지"
               />
               <div>
                 <small>COFFEE × MUSIC JOURNAL</small>

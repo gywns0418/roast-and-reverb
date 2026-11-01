@@ -46,3 +46,5 @@ import './styles/monthly-core.css';
 import './styles/content-density.css';
 
 import "./styles/privacy.css";
+
+import "./styles/accessibility.css";
