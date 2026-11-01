@@ -190,7 +190,8 @@ export default function FirstCup({
     if (busy || (request.current && !request.current.signal.aborted)) return;
     const original = value.note.trim();
     if (!original) {
-      setError("잘 모르겠다는 말도 좋아요. 오늘의 느낌을 한 줄만 적어 주세요.");
+      setError("오늘의 느낌을 한 줄 적어 주세요. 짧게 적어도 괜찮아요.");
+      document.getElementById(inputId)?.focus();
       return;
     }
     setError("");
@@ -198,7 +199,7 @@ export default function FirstCup({
     setNotice("");
     const id = ++operation.current,
       owner = currentScope;
-    if (useAI && ai?.available) {
+    if (useAI && (!real || ai?.available)) {
       const controller = new AbortController();
       request.current = controller;
       setBusy("organize");
@@ -428,12 +429,13 @@ export default function FirstCup({
                 type="button"
                 className="primary-button first-cup-primary"
                 disabled={!!busy}
-                onClick={() => prepare(false)}
+                onClick={() => prepare(!real)}
               >
-                다음: 기록 확인하기 <ArrowRight size={18} />
+                {busy === "organize" ? "기록 카드를 정리하는 중…" : "기록 카드 확인하기"} <ArrowRight size={18} />
               </button>
             )}
-            {!saved && !example && (!real || authStore.token) && (
+            {!saved && !real && <p className="first-ai-status">적어주신 문장에서 맛과 내린 방법을 함께 정리해요. 저장 전 카드에서 확인해 주세요.</p>}
+            {!saved && !example && real && authStore.token && (
               <>
                 <p className="first-ai-status" role="status">
                   {!ai
