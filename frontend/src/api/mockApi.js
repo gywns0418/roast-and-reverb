@@ -234,13 +234,14 @@ export function localRequest(path,options={}) {
  if(storageError)return Promise.reject(storageError);
  const method=(options.method||'GET').toUpperCase();
  if(method==='GET')return pendingWrite.then(()=>executeRequest(path,options));
- const action=pendingWrite.then(async()=>{
+ const write=async()=>{
    if(localStorage.getItem(storageKey)!==persistedDiary)throw Error("다른 탭이나 복구 작업에서 기록이 변경됐습니다. 현재 초안을 보관하고 새로고침한 뒤 다시 저장해 주세요.");
    const before=JSON.parse(JSON.stringify(tables));
    const sequences=[coffeeSeq,musicSeq,pairingSeq,collectionSeq];
-   try {const result=await executeRequest(path,options);const serialized=JSON.stringify(tables);localStorage.setItem(storageKey,serialized);persistedDiary=serialized;return result;}
+   try {const result=await executeRequest(path,options);const serialized=JSON.stringify(tables);if(localStorage.getItem(storageKey)!==persistedDiary)throw Error("다른 탭에서 기록이 변경됐습니다. 새로고침한 뒤 다시 저장해 주세요.");localStorage.setItem(storageKey,serialized);persistedDiary=serialized;return result;}
    catch(error){for(const [name,rows] of Object.entries(tables))rows.splice(0,rows.length,...before[name]);[coffeeSeq,musicSeq,pairingSeq,collectionSeq]=sequences;throw error;}
- });
+ };
+ const action=pendingWrite.then(()=>globalThis.navigator?.locks?.request?globalThis.navigator.locks.request("rr-personal-diary",write):write());
  pendingWrite=action.catch(()=>{});
  return action;
 }
