@@ -424,3 +424,5 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 
 ## 2026-11-01 필터 강조 이어서 수정
 전체 현대 배색 main PR77(b4420bb), Pages41274890731/Verify41274890661 success 확인. 사용자 추가 요청은 필터의 진한 면 채움/이중 테두리를 다른 강조로 변경하는 것. feature/filter-emphasis(main b4420bb 분기)에서 투명 바탕·체크·굵기·밑줄로 전환. aria-pressed/44px 조작 영역/키보드 포커스/기존 필터 로직 유지. 100 tests 및 build 통과.
+
+게시 확인: dev PR78(62f3427), main PR79(7dc1cce) 병합. main Pages41286522084/Verify41286522002 success. 운영에서 선택 필터 bg투명/상단테두리0/하단2px/700/그림자none 및 싱글16종→초기화56종 확인. 모바일375px 가로넘침 없음, 체크16개 슬롯 중 선택2개. 증거 .local/filter-emphasis-production.png. 이전 현대 전체 배색 PR77 검증도 완료.
