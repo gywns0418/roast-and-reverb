@@ -47,7 +47,7 @@ export default function JoinPage() {
     return (
       <section className="page cover-page">
         <div className="cover-card">
-          <h1>가입 없이 체험할 수 있어요</h1>
+          <h1>가입 없이 사용할 수 있어요</h1>
           <TrialNotice />
           <Link to="/">서비스 소개로 돌아가기 →</Link>
         </div>

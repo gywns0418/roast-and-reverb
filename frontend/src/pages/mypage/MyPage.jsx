@@ -37,12 +37,13 @@ export default function MyPage() {
         </h2>
         <p>
           {local
-            ? "체험 기록은 이 브라우저에 저장됩니다. 다른 기기로 자동 동기화되지 않아요."
+            ? "기기 기록은 이 브라우저에 저장됩니다. 다른 기기로 자동 동기화되지 않아요."
             : "커피 일지는 로그인한 계정에, 원두 파일과 보조 도구 자료는 이 기기에 저장됩니다."}
         </p>
         <Link className="primary-button" to="/backup">
           내 자료 백업·복구
         </Link>
+        {local && <p>GitHub Pages로 운영합니다. 회원 서버와 기기 간 자동 동기화 없이 기록·원두·월픽·추천·통계·연주를 이 기기에서 사용합니다. AI 정리와 대화는 설명 가능한 규칙 도우미로 제공됩니다.</p>}
       </section>
       <nav className="quiet-link-list" aria-label="기록장 설정">
         <Link to="/music">
@@ -50,6 +51,9 @@ export default function MyPage() {
         </Link>
         <Link to="/beans">
           내 원두 관리<span>→</span>
+        </Link>
+        <Link to="/archive">
+          모든 기록 기능과 도구<span>→</span>
         </Link>
         <Link to="/help">
           이용 방법<span>→</span>

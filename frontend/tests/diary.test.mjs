@@ -36,13 +36,12 @@ test("diary edits and deletion survive a new module load", async () => {
     false,
   );
 });
-test("local accounts never claim administrator access", async () => {
-  const user = await mockRequest("/auth/login", { method: "POST", body: "{}" });
-  assert.equal(user.role, "USER");
-  assert.equal(user.demo, true);
+test("local notebook never fabricates a server login", async () => {
+  await assert.rejects(mockRequest('/auth/login',{method:'POST',body:'{}'}),/가입 없이/);
 });
 
 test("imported unknown brew method and ratings stay unknown on save", async () => {
+  const {mockRequest}=await import("../src/api/mockApi.js?reload=unrated");
   const created = await mockRequest("/coffee", {
     method: "POST",
     body: JSON.stringify({
