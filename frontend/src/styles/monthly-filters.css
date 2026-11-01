@@ -3,7 +3,7 @@
 .monthly-restored-filters legend{font-size:14px;font-weight:700;margin-bottom:8px}
 .monthly-filter-chips{display:flex;gap:8px;flex-wrap:wrap}
 .monthly-filter-chips button{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:9px 8px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:#33472f;font:inherit;font-size:14px;cursor:pointer}
-.monthly-filter-chips button[aria-pressed=true]{background:transparent;color:#2341b3;border-bottom-color:#3155d9;font-weight:700;box-shadow:none}
+.monthly-filter-chips button[aria-pressed=true]{background:transparent;color:#263b2d;border-bottom-color:#a24f35;font-weight:700;box-shadow:none}
 .monthly-filter-chips small{color:inherit!important;font-size:12px}
 .monthly-filter-chips i{width:16px;height:16px;border:1px solid #53614e;border-radius:50%;flex:none}
 .monthly-filter-options{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
@@ -18,3 +18,7 @@
 @media(max-width:600px){.monthly-restored-filters{padding:14px}.monthly-filter-options{gap:8px 14px}.monthly-filter-options button{margin-left:0}.monthly-section-heading h2{font-size:18px}.monthly-filter-chips button{font-size:13px;padding:8px 10px}}
 
 .monthly-filter-check{display:inline-block;width:12px;flex:0 0 12px;font-size:14px;font-weight:700;line-height:1;color:inherit}
+
+.monthly-filter-chips button:hover{color:#263b2d;border-bottom-color:#9aa98f}
+.monthly-filter-chips button[aria-pressed=true]:hover{border-bottom-color:#a24f35}
+.monthly-filter-chips button[aria-pressed=true] .monthly-filter-check{color:#a24f35}

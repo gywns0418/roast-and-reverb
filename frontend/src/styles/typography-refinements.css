@@ -1,0 +1,6 @@
+/* Keep typography refinements without replacing the existing palette. */
+:root{--rr-ui-font:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic",sans-serif}
+body{font-family:var(--rr-ui-font)}
+body .brand,body .brand span{font-family:var(--rr-ui-font);font-weight:750;letter-spacing:-.7px}
+body .first-home-brand{font-family:var(--rr-ui-font);font-style:normal;font-weight:800;letter-spacing:-2px}
+body .first-home-brand span{letter-spacing:1px}
