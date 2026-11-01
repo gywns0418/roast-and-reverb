@@ -428,3 +428,5 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 
 ## 2026-11-01 기존 배색 복구와 개선안
 사용자 정정: 전체 재도색이 아니라 기존 색 안에서 소수 강조만 원함. feature/restore-palette(main7dc1cce 분기)에서 modern-theme 전역 재도색 제거, 정책5쪽 기존 style만 복원(본문 보존), 서체 개선은 무색상 typography-refinements로 분리. 필터 체크/밑줄을 소량 테라코타로 표시하며 기본 녹색/크림/흰색과 모든 기능 유지. 100 tests/build 통과. docs/design-improvement-plan.md에 개선 우선순위와 근거/플러그인 후보 정리. Product Design/Figma 미설치 검색 확인 및 추천, 연결 완료 아님.
+
+게시 확인: dev PR80(e2f6e40), main PR81(962addb) 병합. main Pages41287254136 및 Verify41287254212 success. 실제 운영 월픽의 어두운 녹색 사이드바·크림 배경·녹색 기본 UI·작은 테라코타 체크/밑줄 확인. 필터56종과 관심/비교 유지. 증거 .local/restored-palette-production.png. 디자인 개선안은 제안 문서만 작성, 추가 전체 개편 미적용. Product Design/Figma는 추천 상태이며 연결 확인 없음.
