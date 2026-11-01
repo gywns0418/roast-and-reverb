@@ -83,3 +83,16 @@ Git/PR/배포의 최종 결과는 아래에 검증 후 추가한다.
 - [운영 게시 증거](qa/privacy-production.png). 개인 기록 삭제·메일 발송은 수행하지 않았다.
 - 이번 배포는 기존 GitHub Pages 운영 사이트에 대한 것이다. Railway 회원 서버 배포·키 변경·결제·요금제 변경은 수행하지 않았다.
 - 사업자정보·외부 권리·국외이전 및 백업 보관 조건의 기존 확인 항목은 그대로 남는다.
+
+
+## 2026-11-01 Railway 갱신 시도 — 인증 복구 필요
+
+사용자가 Railway 배포도 명시적으로 요청했다. 새 서비스/유료 플랜을 만들지 않고 기존 프로젝트와 서비스를 확인했다.
+
+- Railway 플러그인 읽기 요청이 `UNAUTHORIZED / requires reauthentication`으로 거절됨. 설치된 CLI는 없음. 비밀키나 브라우저 인증 토큰을 추출하지 않았다.
+- 기존 Chrome 로그인으로 서비스 화면 열람 가능. 프로젝트 `5b3ed910-315b-42fa-bdfc-f1531a692c75`, production `368c4b5f-8d55-4353-b11c-89c5745616aa`, 서비스 `b2f33a1e-c31f-4cfc-9cea-9a0ebac62881`.
+- 실제 기존 운영 URL은 https://roast-and-reverb.up.railway.app/ . 서버는 Online이며 활성 배포 `a94b9c58-8e78-4af5-83d6-d086301edf7a`는 PR50 기반의 13일 전 배포로 표시됨. `coffee-music-diary` 볼륨 연결 유지. 체험 크레딧 잔여 표시 확인, 유료 변경 없음.
+- Source Repo는 같은 저장소, branch는 dev이나 화면에 `Auto deploy unavailable / Could not load branches` 표시. 재조회와 저장소 검색도 실패. 기존 배포의 Redeploy는 옛 버전 재배포이므로 실행하지 않음. 소스/볼륨/환경변수/계정 변경 없음.
+- 공개 읽기 확인: `/healthz` 200, `/privacy.html` 200이지만 11월1일 새 정책 없음, `/terms.html` 401. 새 개인정보 기능이 Railway에 게시됐다고 주장하지 않는다.
+- Codex Railway 앱 재연결을 사용자에게 요청했으며 응답 대기. 현재 브라우저 탭을 handoff로 보존. [연결 오류 증거](qa/railway-connection-blocked.png).
+- 병행 작업으로 origin/main이 `0e3de67`(PR67 11월월픽)까지 이동했다. 인증 복구 뒤 최신 main의 CI와 변경 범위를 다시 확인하고 개인정보 기능·11월 데이터를 함께 보존하는 배포 SHA를 선택한다.

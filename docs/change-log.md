@@ -264,3 +264,6 @@ CI신규실패: npm audit가 Vite7.3.6의수정가능advisory묶음을HIGH로검
 
 
 2026-11-01 운영배포 승인·완료: PR65 dev→main 병합ce7f742. PR Verify41260517719/main Verify41260530152/Pages41260530185 전체성공. 운영루트 정책5개·라이선스전문200,11월1일시행일,선택기본해제·삭제확인전비활성·Enter/Escape초점복귀확인. privacy-accessibility-review.md 운영배포완료와 qa/privacy-production.png 참고. Railway회원서버/키/결제/개인기록미변경.
+
+
+2026-11-01 Railway갱신요청: 플러그인재인증필요,브라우저GitHub브랜치조회도실패. 기존서버Online/healthz200이나새개인정보기능미반영(terms401). 신규배포·키·소스·볼륨·유료변경없음. 사용자Railway재연결응답대기. 세부 privacy-accessibility-review.md Railway갱신시도 참고.
