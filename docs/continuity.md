@@ -442,3 +442,9 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 User selected the first displayed whole-app concept (exec-51d6e8ed-cb11-4351-8fee-ad6228696f75.png). Implemented desktop dashboard writing/history columns; records empty state and row layout; settings panels; shared divider headings, form disclosure and control styles. Existing mobile compact journal routing is preserved.
 Only unspecialty blend gets individual note art (5 current); other 51 use shared beans/common-bean.webp across regular/global/small. Added cocoa/tomato art and three raster guide steps. No public source catalog/HEX edits or private data seed. Source changes trigger review through check-illustration-coverage.mjs; rules copied to maintained autopilot skill. Weekly Saturday09KST automation updated and monthly-first09KST roast-reverb heartbeat created, quiet on no change. Never restore Railway.
 105 frontend tests and production build pass. Browser checked desktop key screens and390px settings/monthly/writing; no overflow or broken assets. Fresh final tab zero errors. Source + actual combined visual comparison and fixed P2s recorded in design-qa.md (passed). Feature branch feature/complete-artwork from main755f460. Dev publication allowed; main merge requires final explicit confirmation under AGENTS.
+
+
+## 2026-11-01 월픽 글꼴·간격 마무리 / 운영 승인
+사용자가 이미지 누락 보완, 띄어쓰기·글자 간격·폰트 개선과 운영 배포를 명시 승인했다. 개발에 준비된 카카오 크림·토마토 가든을 포함한 5종 이미지와 Writing Desk 변경을 함께 운영에 반영한다. 원문 데이터는 보존하고 카드 제목의 중복 분류 괄호만 표시에서 생략한다. 향미 단어 단위 줄바꿈, 용량·가격 구분(150 g · 18,000원), 한글 시스템 산세리프, 제목/본문 행간·여백을 정리했다. 향미 HEX와 기존 필터는 유지한다.
+
+Feature monthly-type-polish includes previous artwork22b2283. User explicitly authorized production including PR92, so do not ask again. Verify dev update, merge PR92 with expected latest dev SHA, monitor main Pages/Verify and check actual production assets.

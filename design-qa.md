@@ -26,3 +26,8 @@ Core interactions: empty-state button focuses textarea; writing produces a previ
 P3 follow-up only: concept has bean art on a white field; shipped common art intentionally retains its warm cream paper background to match card artwork. Actual empty states use text instead of the concept's invented empty thumbnails. These do not block the requested composition or functionality.
 
 Validation: 105 frontend tests passed; Vite production build passed; illustration coverage pending=[] (5 individual + 51 common).
+
+## Monthly typography follow-up (2026-11-01)
+final result: passed
+User supplied captures identify duplicate category suffixes, cramped metadata, uneven word/separator wraps and two artworks absent from production. Compared the supplied 698px card-region image against normalized 680px implementation card-region crop in .local/monthly-polish/comparison.jpg. Desktop1280px and mobile390px inspected at the same regular/unspecialty filter state. Missing production images already exist in the development change and all five individual assets loaded in the browser. No new illustration policy change.
+Typography uses system Korean sans; category appears once in a badge; note tokens stay together; price units/separator and numeric hierarchy are consistent. Source names/flavors/prices/HEX remain unchanged in data. Palette unchanged. Fields/buttons keep44px targets. No horizontal overflow at390px. Actual card imagery is sharp at the rendered sizes. Cocoa mobile and tomato keyboard-focus captures retained. No remaining P0/P1/P2.
