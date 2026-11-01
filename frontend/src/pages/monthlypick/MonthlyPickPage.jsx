@@ -1,3 +1,7 @@
+import { Fragment } from "react";
+import {monthlyGroups,colorFamilies} from "../../utils/monthlyColors.js";
+import {filterMonthlyBeans,groupMonthlyBeans} from "../../utils/monthlyFilters.js";
+import "../../styles/monthly-filters.css";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
@@ -39,6 +43,9 @@ export default function MonthlyPickPage() {
     [series, setSeries] = useState(""),
     [query, setQuery] = useState(""),
     [available, setAvailable] = useState(false),
+    [category,setCategory]=useState("all"),
+    [color,setColor]=useState("all"),
+    [hideDecaf,setHideDecaf]=useState(false),
     [favoritesOnly, setFavoritesOnly] = useState(false),
     [selected, setSelected] = useState([]),
     [active, setActive] = useState(null),
@@ -89,22 +96,15 @@ export default function MonthlyPickPage() {
   const candidates = favoritesOnly
     ? allBeans.filter((b) => favorites.includes(String(b.id)))
     : allBeans.filter((b) => b.owner.sourceUrl === series);
-  const beans = candidates.filter(
-    (b) =>
-      (!available || catalogAvailability(b.owner, b) === "available") &&
-      [b.name, b.owner.roastery, b.origin, b.process, ...(b.flavors || [])]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase()
-        .includes(query.toLowerCase()),
-  );
+  const beans=filterMonthlyBeans(candidates,{query,category,color,available,hideDecaf});
+  const grouped=groupMonthlyBeans(beans);
+  function clearFilters(){setQuery("");setCategory("all");setColor("all");setAvailable(false);setHideDecaf(false);setFavoritesOnly(false);}
   const compared = allBeans.filter((b) => selected.includes(String(b.id)));
   function choose(p) {
     if (!p) return;
     setSeries(p.sourceUrl);
     setUrl(p.sourceUrl);
-    setQuery("");
-    setFavoritesOnly(false);
+    clearFilters();
   }
   function favorite(id) {
     try {
@@ -213,15 +213,23 @@ export default function MonthlyPickPage() {
               관심 원두{" "}
               {allBeans.filter((b) => favorites.includes(String(b.id))).length}
             </button>
-            <label className="monthly-available">
-              <input
-                type="checkbox"
-                checked={available}
-                onChange={(e) => setAvailable(e.target.checked)}
-              />
-              구매 가능만
-            </label>
           </div>
+          <section className="monthly-restored-filters" aria-label="월픽 원두 필터">
+            <fieldset><legend>원두 분류</legend><div className="monthly-filter-chips">
+              {[["all","전체"],...Object.entries(monthlyGroups).map(([key,value])=>[key,value.label])].map(([key,label])=><button key={key} type="button" aria-pressed={category===key} onClick={()=>setCategory(key)}>{label} <small>{key==='all'?candidates.length:candidates.filter(bean=>bean.category===key).length}종</small></button>)}
+            </div></fieldset>
+            <fieldset><legend>판매처 향미 색상</legend><div className="monthly-filter-chips">
+              <button type="button" aria-pressed={color==='all'} onClick={()=>setColor('all')}>모든 색</button>
+              {colorFamilies.map(([key,label,hex])=><button key={key} type="button" aria-pressed={color===key} onClick={()=>setColor(key)}><i aria-hidden="true" style={{backgroundColor:hex}}/>{label}</button>)}
+            </div></fieldset>
+            <div className="monthly-filter-options">
+              <label><input type="checkbox" checked={available} onChange={e=>setAvailable(e.target.checked)}/>구매 가능만</label>
+              <label><input type="checkbox" checked={hideDecaf} onChange={e=>setHideDecaf(e.target.checked)}/>디카페인 숨기기</label>
+              <button type="button" className="ghost-button" onClick={clearFilters}>필터 초기화</button>
+            </div>
+            <p className="monthly-filter-caption">색상은 판매처 원두 팔레트의 비슷한 색끼리 묶은 분류예요. 맛을 측정한 값은 아니며, 검색·분류·색상·판매 조건을 함께 적용합니다.</p>
+            <p className="monthly-filter-results" role="status">조건에 맞는 원두 <strong>{beans.length}종</strong> / {candidates.length}종{favoritesOnly?' · 관심 원두에서 찾는 중':''}</p>
+          </section>
           {product && (
             <div className="quiet-source">
               <p>
@@ -256,8 +264,10 @@ export default function MonthlyPickPage() {
           )}
           {message && <p role="status">{message}</p>}
           <div className="quiet-bean-grid">
-            {beans.map((bean) => (
-              <article className="monthly-bean-card" key={bean.id}>
+            {grouped.map(({key,group,items})=><Fragment key={key||'unknown'}>
+              <div className="monthly-section-heading" style={{"--group-color":group.color,"--group-tint":group.tint}}><h2>{group.label}</h2><span>{items.length}종</span></div>
+              {items.map((bean) => (
+              <article className="monthly-bean-card" style={{"--group-color":group.color,"--group-tint":group.tint}} key={bean.id}>
                 <BeanArtwork item={bean} />
                 <div className="monthly-bean-copy">
                   <button
@@ -270,7 +280,8 @@ export default function MonthlyPickPage() {
                         stateLabel.unknown}{" "}
                       · {bean.owner.roastery}
                     </small>
-                    <h2>{bean.name}</h2>
+                    <span className="monthly-category-label">{group.label}</span>
+                    <h3>{bean.name}</h3>
                     <p>
                       {bean.flavors?.join(" · ") || "컵노트는 판매처에서 확인"}
                     </p>
@@ -301,13 +312,13 @@ export default function MonthlyPickPage() {
                   </div>
                 </div>
               </article>
-            ))}
+            ))}</Fragment>)}
           </div>
           {!beans.length && (
             <p className="simple-empty">
               {favoritesOnly
                 ? "이 조건의 관심 원두가 없어요. 원두 카드에서 관심 저장을 눌러보세요."
-                : "맞는 원두가 없어요. 검색어나 판매 조건을 바꿔보세요."}
+                : "맞는 원두가 없어요. 검색어·분류·색상 조건을 바꾸거나 필터를 초기화해 보세요."}
             </p>
           )}
           {compared.length > 0 && (

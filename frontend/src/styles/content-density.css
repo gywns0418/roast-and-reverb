@@ -108,7 +108,7 @@
 .monthly-bean-copy {
   padding: 14px;
 }
-.monthly-bean-open h2 {
+.monthly-bean-open :is(h2,h3) {
   margin: 5px 0;
   font-size: 16px;
   line-height: 1.5;
@@ -259,7 +259,7 @@
   .monthly-bean-copy {
     padding: 11px 12px;
   }
-  .monthly-bean-open h2 {
+  .monthly-bean-open :is(h2,h3) {
     font-size: 14px;
     line-height: 1.45;
   }
