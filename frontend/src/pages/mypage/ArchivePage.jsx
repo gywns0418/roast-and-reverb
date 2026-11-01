@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 const groups = [
   [
-    "예전 기록",
+    "음악과 기억",
     [
       ["/music", "음악 기록"],
       ["/pairing", "연결한 페어링"],
@@ -12,7 +12,7 @@ const groups = [
     ],
   ],
   [
-    "필요할 때 쓰는 보조 도구",
+    "발견과 기록 도구",
     [
       ["/journey", "감상 가이드"],
       ["/ritual", "청음실"],
@@ -27,14 +27,15 @@ const groups = [
 export default function ArchivePage() {
   return (
     <PageShell
-      title="기존 자료와 도구"
-      subtitle="기존 자료는 보존했습니다. 필요할 때만 열어보세요."
+      title="기록과 도구"
+      subtitle="음악과 원두, 취향을 이어가는 기능을 한곳에서 찾아보세요."
     >
       <Link className="quiet-back" to="/mypage">
         ← 설정
       </Link>
+      <div className="tool-directory">
       {groups.map(([title, links]) => (
-        <details className="quiet-details" key={title}>
+        <details className="quiet-details" key={title} open>
           <summary>{title}</summary>
           <nav className="quiet-link-list">
             {links.map(([to, label]) => (
@@ -46,6 +47,7 @@ export default function ArchivePage() {
           </nav>
         </details>
       ))}
+      </div>
       <p className="quiet-muted">
         보조 도구에서 만든 자료도 백업에 포함됩니다. 페이지를 열었다고 시음·청취
         이력을 추가하지 않아요.

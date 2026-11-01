@@ -8,6 +8,8 @@ permissions:
 jobs:
   frontend:
     runs-on: ubuntu-latest
+    env:
+      ONNXRUNTIME_NODE_INSTALL: skip
     defaults:
       run:
         working-directory: frontend

@@ -43,7 +43,7 @@ export default function MyPage() {
         <Link className="primary-button" to="/backup">
           내 자료 백업·복구
         </Link>
-        {local && <p>GitHub Pages로 운영합니다. 회원 서버와 기기 간 자동 동기화 없이 기록·원두·월픽·추천·통계·연주를 이 기기에서 사용합니다. AI 정리와 대화는 설명 가능한 규칙 도우미로 제공됩니다.</p>}
+        {local && <p>기록·원두·음악은 이 기기에서 관리합니다. 문장 정리와 음악 설정은 기기 내 도우미가 처리하며, 기기를 옮길 때는 백업 파일을 사용해 주세요.</p>}
       </section>
       <nav className="quiet-link-list" aria-label="기록장 설정">
         <Link to="/music">
@@ -63,9 +63,9 @@ export default function MyPage() {
         </a>
       </nav>
       <details className="quiet-details">
-        <summary>기존 자료와 보조 도구</summary>
-        <p>앞서 사용하던 기능은 자료와 함께 보관했습니다.</p>
-        <Link to="/archive">보관함 열기 →</Link>
+        <summary>더 많은 기록과 도구</summary>
+        <p>음악·취향 가이드·연주와 이전 월픽 노트를 함께 확인할 수 있어요.</p>
+        <Link to="/archive">기록과 도구 열기 →</Link>
       </details>
       {!local && (
         <section className="quiet-section">

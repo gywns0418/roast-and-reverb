@@ -26,10 +26,10 @@ export default function CollectionPage() {
 
   return (
     <PageShell title="컬렉션" eyebrow="Collection" subtitle="LP/CD 소장품과 페어링 기록을 함께 관리합니다.">
-      <div className="filter-row">
-        <button className={format === "ALL" ? "primary-button" : "ghost-button"} onClick={() => setFormat("ALL")}>전체</button>
-        <button className={format === "LP" ? "primary-button" : "ghost-button"} onClick={() => setFormat("LP")}>LP</button>
-        <button className={format === "CD" ? "primary-button" : "ghost-button"} onClick={() => setFormat("CD")}>CD</button>
+      <div className="filter-row" role="group" aria-label="소장 음반 형식">
+        <button type="button" aria-pressed={format === "ALL"} className={format === "ALL" ? "primary-button" : "ghost-button"} onClick={() => setFormat("ALL")}>전체</button>
+        <button type="button" aria-pressed={format === "LP"} className={format === "LP" ? "primary-button" : "ghost-button"} onClick={() => setFormat("LP")}>LP</button>
+        <button type="button" aria-pressed={format === "CD"} className={format === "CD" ? "primary-button" : "ghost-button"} onClick={() => setFormat("CD")}>CD</button>
       </div>
       {featured && (
         <div className="specimen-card">
@@ -46,7 +46,7 @@ export default function CollectionPage() {
           </span>
         </div>
         {filteredItems.length === 0
-          ? <EmptyState icon="wave">{items.length === 0 ? "아직 채워지지 않은 컬렉션이에요." : `${format} 소장품이 아직 없어요.`}</EmptyState>
+          ? <div className="collection-empty"><EmptyState icon="wave">{items.length === 0 ? "아직 소장 음반이 없어요. 좋아하는 한 장부터 남겨보세요." : `${format} 소장품이 아직 없어요.`}</EmptyState><Link className="primary-button" to="/collection/write">소장 음반 추가</Link></div>
           : <div className="collection-shelf">{filteredItems.map((item) => (
             <article className="collection-album" key={item.id}><RecordArtwork seed={item.artist + item.title} label={item.title}/><div className="card-head"><span className="format-chip">{item.format}</span><span>MY COLLECTION</span></div><h3>{item.title}</h3><p>{item.artist}</p>{item.note && <p className="album-note">{item.note}</p>}</article>
           ))}<Link to="/collection/write" className="library-add"><span>+</span><h3>다음 소장 음반</h3><p>좋아하는 한 장을 선반에 더해요.</p><b>음반 추가 ↗</b></Link></div>}

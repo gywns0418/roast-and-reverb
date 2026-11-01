@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import PageShell from "../../components/common/PageShell.jsx";
+import { currentMonthlyCatalog } from "../../utils/currentMonthlyCatalog.js";
 import { monthlyCatalog, importMonthlyUrl } from "../../api/monthlyCatalog.js";
 import { monthlyPickApi } from "../../api/monthlyPickApi.js";
 
@@ -169,7 +170,8 @@ export default function MonthlyPickPage() {
     monthlyCatalog()
       .then((items) => {
         setCatalog(items);
-        const first=items.find(x=>editionOf(x)==="regular")||items[0];
+        const current=currentMonthlyCatalog(items);
+        const first=current.find(x=>editionOf(x)==="regular")||current[0];
         setProduct(first || null);
         if (first) setUrl(first.sourceUrl);
       })
@@ -266,7 +268,7 @@ export default function MonthlyPickPage() {
       eyebrow="THE MONTHLY EDIT"
       subtitle="새로운 원두를 발견하고, 향미를 비교하고, 다음 한 잔을 골라보세요."
     >
-      <div className="monthly-edition-tabs" role="group" aria-label="월픽 시리즈 선택">{editions.map(edition=>{const target=catalog.find(item=>editionOf(item)===edition.key&&item.month===(product?.month||catalog[0]?.month));return <button type="button" key={edition.key} aria-pressed={editionOf(product||{})===edition.key} disabled={!target} onClick={()=>{setProduct(target);setUrl(target.sourceUrl);setSelected([]);setActive(null);setCategory('all');setColor('all');setQuery('');setAvailableOnly(false);setHideDecaf(false);setFavoritesOnly(false);setMessage('');}}>{edition.label}<small>{target?target.roastery:'아직 공개 전'}</small></button>;})}</div>
+      <div className="monthly-edition-tabs" role="group" aria-label="월픽 시리즈 선택">{editions.filter(edition=>currentMonthlyCatalog(catalog).some(item=>editionOf(item)===edition.key)).map(edition=>{const target=currentMonthlyCatalog(catalog).find(item=>editionOf(item)===edition.key);return <button type="button" key={edition.key} aria-pressed={editionOf(product||{})===edition.key} disabled={!target} onClick={()=>{setProduct(target);setUrl(target.sourceUrl);setSelected([]);setActive(null);setCategory('all');setColor('all');setQuery('');setAvailableOnly(false);setHideDecaf(false);setFavoritesOnly(false);setMessage('');}}>{edition.label}<small>{target?target.roastery:'아직 공개 전'}</small></button>;})}</div>
       {product?.saleStart&&<p className="monthly-sale-period">판매 기간 {product.saleStart} ~ {product.saleEnd} · 판매처 기준</p>}
       <div className="monthly-editorial">
         <div>
