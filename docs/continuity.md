@@ -484,3 +484,4 @@ feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현�
 최신원본갱신시 기존검사가 첫상품=정규/56종/모든블렌드검토완료를 고정가정해3건실패하는것을 재현. 정규를edition으로찾고 전체월의파일/분류불변성·날짜창·빈노트fallback을 검증하도록수정.106테스트/build/설치audit0·REA5모듈제한분석·알려진비밀패턴검사 통과. REA는전체앱검증아님.
 
 브라우저표면 inventory없음·IAB unavailable로 실제데스크톱/모바일화면과키보드동작의이번재확인은차단됨. 기존UI코드는변경하지않았으며 자동검사/이미지파일과HTTP확인으로대체가능범위만검증. 화면점검완료로보고하지않음. main/요금제/서버/개인기록미변경. devPR와Pages결과후속기록.
+2026-11-01 운영배포 승인·완료: PR65 dev→main 병합ce7f742. PR Verify41260517719/main Verify41260530152/Pages41260530185 전체성공. 운영루트 정책5개·라이선스전문200,11월1일시행일,선택기본해제·삭제확인전비활성·Enter/Escape초점복귀확인. privacy-accessibility-review.md 운영배포완료와 qa/privacy-production.png 참고. Railway회원서버/키/결제/개인기록미변경.
