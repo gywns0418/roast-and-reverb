@@ -420,3 +420,7 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 
 ## 2026-11-01 전체 현대적 배색
 사용자 확인: 전체 색 조합을 현대적으로. feature/modern-theme(main6be1e5f 분기)에 마지막 공통 modern-theme.css로 차가운 회백/흰색/슬레이트/코발트 테마 적용. 밝은 사이드바, 파란 활성 상태, 산세리프 브랜드, 옅은 카드 경계. 홈·기록·월픽·설정·보조 도구와 정책5쪽의 기본 배색을 일관되게 변경. 월픽 필터와 원문 향미 HEX/사진 내용 보존. canonical design-guide에는 기존 변경을 덮어쓰지 않고 최신 배색 지침만 append. 100 tests 및 build 통과.
+
+
+## 2026-11-01 필터 강조 이어서 수정
+전체 현대 배색 main PR77(b4420bb), Pages41274890731/Verify41274890661 success 확인. 사용자 추가 요청은 필터의 진한 면 채움/이중 테두리를 다른 강조로 변경하는 것. feature/filter-emphasis(main b4420bb 분기)에서 투명 바탕·체크·굵기·밑줄로 전환. aria-pressed/44px 조작 영역/키보드 포커스/기존 필터 로직 유지. 100 tests 및 build 통과.
