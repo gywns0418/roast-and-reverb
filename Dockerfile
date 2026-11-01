@@ -1,7 +1,8 @@
 FROM node:22-alpine AS frontend
 WORKDIR /frontend
 COPY frontend/package*.json ./
-RUN npm ci
+# Frontend uses ONNX in the browser; do not download Node CUDA binaries.
+RUN ONNXRUNTIME_NODE_INSTALL=skip npm ci
 COPY frontend/ ./
 ENV VITE_USE_REAL_API=true
 ENV VITE_API_BASE_URL=/api
