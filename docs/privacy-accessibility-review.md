@@ -57,3 +57,15 @@
 공식 참고: [개인정보보호위원회 처리방침 작성지침 안내](https://pipc.go.kr/np/cop/bbs/selectBoardArticle.do?bbsId=BS074&mCode=C020010000&nttId=10125), [개인정보 포털](https://www.privacy.go.kr/), [W3C 최소 명도 대비](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html), [W3C WCAG 키보드 기준](https://www.w3.org/TR/WCAG21/#keyboard).
 
 Git/PR/배포의 최종 결과는 아래에 검증 후 추가한다.
+
+
+## 최종 Git·검사·게시 결과
+
+- 구현 커밋 `095d1d5`, [PR #64](https://github.com/gywns0418/roast-and-reverb/pull/64)는 dev 병합 완료(`ed67c1a`).
+- PR Verify [41256387219](https://github.com/gywns0418/roast-and-reverb/actions/runs/41256387219) 전체 성공: 프런트/서버/이미지 기동·읽기전용 보안검사·Trivy·ZAP 포함.
+- dev Verify [41256686771](https://github.com/gywns0418/roast-and-reverb/actions/runs/41256686771) 및 Pages [41256686781](https://github.com/gywns0418/roast-and-reverb/actions/runs/41256686781) 성공.
+- [공개 개발판](https://gywns0418.github.io/roast-and-reverb/dev/#/auth/join)에서 정책 5개 HTTP 200/11월1일 시행일 확인. 개인정보 설정의 선택 미체크/삭제 비활성 확인. [게시 증거](qa/privacy-published.png).
+- 운영 main은 `b38412c` 유지. 운영 개인정보 페이지의 10월17일 방침 유지 확인. 실제 Railway 회원 서버 배포는 수행하지 않았다.
+- REA 6.5.0의 기존 연결 모듈 5개 정적 분석은 parseFailures=0. 새 개인정보 기능을 포함한 전체 앱의 실행 검증이나 보안 인증이 아니다.
+- 기존 9개 버전 변경은 각 원래 checkout에서 미커밋 상태로 유지. 검토용 변경 파일과 원래 branch/base SHA manifest를 로컬 `.local/all-versions-privacy-changes.zip`에 보관. 이 묶음에 DB·환경변수·개인 기록을 넣지 않았다.
+- 이 최종 문서/게시 캡처 후속은 실행 코드와 별개로 보존하며 새 main 승격을 수행하지 않는다.
