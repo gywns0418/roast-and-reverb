@@ -36,6 +36,12 @@ export default function DashboardPage() {
       title="오늘의 한 잔"
       subtitle="커피를 마셨다면, 기억하고 싶은 느낌만 남겨주세요."
     >
+      <div className="writing-desk">
+      <div className="writing-desk-compose" id="today-note">
+      <div className="writing-desk-intro">
+        <div><h2>오늘의 한 잔</h2><p>커피를 마셨다면, 기억하고 싶은 느낌만 남겨주세요.</p></div>
+        <img src={import.meta.env.BASE_URL + "images/beans/common-bean.webp"} width="100" height="132" alt="" aria-hidden="true" />
+      </div>
       <ol className="simple-steps" aria-label="한 잔을 남기는 순서">
         <li>1. 느낌을 적어요</li>
         <li>2. 원하면 음악을 골라요</li>
@@ -46,13 +52,14 @@ export default function DashboardPage() {
           setAdded((previous) => [adaptCoffeeLog(row), ...previous])
         }
       />
-      {records.length > 0 && (
+      </div>
         <section className="simple-recent">
           <div className="simple-section-title">
             <h2>지난 한 잔</h2>
             <Link to="/coffee">모든 기록 보기 →</Link>
           </div>
           <div className="simple-records">
+            {!records.length && <div className="desk-empty"><h3>아직 남긴 한 잔이 없어요.</h3><p>오늘의 느낌을 적으면 이곳에서 다시 만날 수 있어요.</p><button type="button" className="ghost-button" onClick={() => document.querySelector("#today-note textarea")?.focus()}>첫 한 잔 남기기 →</button></div>}
             {records.slice(0, 3).map((row) => (
               <Link key={row.id} to={`/coffee/${row.id}`}>
                 <small>{row.date}</small>
@@ -63,7 +70,7 @@ export default function DashboardPage() {
             ))}
           </div>
         </section>
-      )}
+      </div>
     </PageShell>
   );
 }

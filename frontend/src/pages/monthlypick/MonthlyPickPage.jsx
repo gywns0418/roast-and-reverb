@@ -38,12 +38,6 @@ const price = (bean) =>
     : "판매처에서 가격 확인";
 const displayDate = (value) =>
   value ? new Date(value).toLocaleDateString("ko-KR") : "확인 전";
-const flavorIllustration = (bean) => {
-  const filename = bean.name.startsWith("피치 베리 블룸") ? "monthly-peach-berry.png"
-    : bean.name.startsWith("그레이프 버스트") ? "monthly-grape.png"
-    : bean.name.startsWith("레몬 스플래쉬") ? "monthly-lemon.png" : null;
-  return filename ? `${import.meta.env.BASE_URL}images/${filename}` : null;
-};
 export default function MonthlyPickPage() {
   const [catalog, setCatalog] = useState([]),
     [filtersExpanded, setFiltersExpanded] = useState(false),
@@ -289,8 +283,7 @@ export default function MonthlyPickPage() {
               {items.map((bean) => (
               <article className="monthly-bean-card" style={{"--group-color":group.color,"--group-tint":group.tint}} key={bean.id}>
                 <div className="monthly-card-art">
-                  <BeanArtwork item={bean} decorative={Boolean(flavorIllustration(bean))} />
-                  {flavorIllustration(bean) && <img src={flavorIllustration(bean)} alt={`${bean.flavors?.join(", ")} 향미를 표현한 일러스트이며 실제 상품 사진이 아닙니다.`} loading="lazy" />}
+                  <BeanArtwork item={bean} />
                 </div>
                 <div className="monthly-bean-copy">
                   <button

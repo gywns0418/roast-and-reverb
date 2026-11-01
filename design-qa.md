@@ -1,57 +1,28 @@
-# Monthly Library design QA
-
-Reference: selected option 2, exec-5847c535-72ad-471c-afe6-a0c0e0de6421.png (1487횞1058). Existing React product, original palette and source data preserved.
-
-## Initial comparison
-Evidence: .local/library-qa/comparison-before.png; source and implementation combined at same 1487횞1058 viewport.
-- P1: Missing botanical flavor assets in leading cards. Generate and place peach/berry, grape and lemon illustrations with honest alt text. Existing information artwork remains for other beans.
-- P2: Long filter panel pushes options below viewport. Reduce filter spacing; mobile must expose collapsible filters and show cards sooner.
-- P2: Selected category underline spans full panel. Limit visual emphasis to text underline and check.
-
-Initial result: blocked.
-
-## Preserved production constraints
-Keep device-storage notice, category headings, original navigation/fonts, full actual prices/sale status, archive/favorites/compare and all 56 actual beans. Mock's invented product prices and unavailable beans are not production data. No fake ratings.
-
-Second comparison: .local/library-qa/comparison-after.png. Botanical assets now placed, filter density improved, mobile toggle unexpectedly visible on desktop (P2). Fix with page-scoped display rule, then recapture.
-
-## Final comparison
-Evidence: .local/library-qa/comparison-final.png (reference left, implementation right, both1487×1058); mobile-final.png390×844.
-- Typography: existing Korean sans-serif/brand retained, readable title/price, complete wrapping.
-- Layout: left filters and two-column cards reproduce selected composition. Production storage notice, actual longer names and category headings intentionally add space. Mobile collapses filters with labeled aria-expanded toggle and uses1column.
-- Colors: original cream/white/green, tiny terracotta checks/underlines and unmodified vendor HEX.
-- Image quality: three generated botanical illustrations fit slots without distortion and include honest alt; other beans retain original informational artwork. Final images all load, duplicate announcements removed.
-- Content: actual prices, available/upcoming states and all56 beans retained. Mock-only product facts excluded.
-- Interactions: house category4; empty search0 and recovery text; reset56; mobile toggle opens/closes, category works; detail opens/closes. No overflow390 (content375), no error logs on clean reload.
-- Earlier P1/P2 findings resolved. P3: more botanical illustrations possible later; remaining original artwork intentionally preserved.
-
-Checklist: layout, palette, images, data, desktop/mobile and primary interactions checked;102tests and build passed.
+# Writing Desk / artwork design QA
 
 final result: passed
 
+## Target and evidence
+Selected displayed option 1: exec-51d6e8ed-cb11-4351-8fee-ad6228696f75.png, a concept board with main desktop and smaller records/settings previews. Implementation: React app at http://127.0.0.1:5221/. Captures in .local/artwork-qa/. comparison-final.jpg places the source main-screen crop and top-of-page implementation in the same comparison image. Desktop CSS viewport 1280×800, screenshot 1265×791 after scrollbars; source board main-screen crop 1425×590 normalized proportionally to 1100px width. It is a conceptual board, not a pixel-identical frame. Mock empty-record thumbnails, non-existent search tabs and bulk deletion are deliberately omitted; actual data and the existing 2,000-character limit remain authoritative. Existing local-storage notice remains visible.
 
-# Cross-screen consistency QA — 2026-11-01
-Visual direction: user's selected option2, extended through existing page layouts and source assets. Not a pixel clone of the monthly page onto unrelated tasks. Current-run source screenshots: .local/all-screen-audit/01–28; private screenshots remain local.
-Initial combined comparisons: compare-core.png, compare-forms.png, compare-discover.png, compare-tools.png (before left/after right, same1280 viewport, raster1265×712).
-- Resolved: inconsistent header/card system,32px fields, heavy filled selection, hidden tools, oversized search action, unclear empty-state copy.
-- P2 remaining: journey still has two large introduction sections; compress bridge. Legacy monthly hero stays too tall despite smaller type; inspect actual child heights. Single legacy series selection uses full-width underline; remove redundant singleton tab.
-- Source state differs on Beans: existing user data on deployed origin vs empty local origin, intentionally not copied or fabricated. Compare shell/controls, do not claim exact populated card parity.
-Current cross-screen result: blocked pending fixes and mobile/interaction checks.
+## Iteration and fixes
+- P2: old desktop :has(.journal-welcome) grid overrode the hidden introduction and made the records empty state a promotional two-column screen. Explicit hidden and layout rules now produce the centered empty record panel. Verified records.png.
+- P2: music selection was gated behind preview despite the target showing an optional choice during writing. Existing playlist disclosure is now available before preview; controlled open state prevents a stale expanded body after edits. Tested keyboard/focus and visible playlist options.
+- P2: large filled page headings conflicted with the chosen quiet workspace. Shared headings now use a divider; the dashboard has one visible introductory heading inside its writing panel.
+- P2: additional step text increased form density; removed it visually from the desk while keeping the separate full help guide.
 
+## Five fidelity surfaces
+- Typography: existing system/Korean font preserved; 30px desk title, 14–16px body/input hierarchy, real labels and visible count. No new remote font calls.
+- Rhythm/layout: two-column desktop writing/history, single-column narrow layout; 20–28px panel spacing, 44px controls. Settings uses paired panels, records uses horizontal rows. Compared dashboard, records and settings at readable full resolution.
+- Colors/tokens: original cream/white/forest-green, small terracotta accent; no cobalt recolor or filled filter pills. Vendor source HEX unchanged.
+- Imagery: central BeanArtwork renders 5 individual unspecialty artworks and 51 shared beans; house blend filter renders 4 shared images. No broken images. Three guide images fit within their step frames. Decorative images have empty alt; informative bean wrappers describe actual notes and illustrative status.
+- Content: no fabricated history or ingredient claims; real empty state and storage/backup limitations preserved. Global/small follow identical helper policy, covered by tests.
 
-## Cross-screen final comparison
-Combined current-run sources/implementation: compare-core.png, compare-forms.png, compare-discover.png, compare-tools.png, then compare-final.png after fixes. Focused full-size settings/forms and mobile-final-review.png also inspected. Source layout on unrelated routes is retained rather than cloned from the monthly route; selected option2 supplies palette/card/selection rhythm.
-- Fonts/typography: original brand and Korean sans serif preserved;28px desktop24px mobile headings,16px inputs, readable labels/full wrapping.
-- Spacing/layout: shared14px card corners, clear gaps,44px controls; left/right tool groups open; compact report/ritual/journey/legacy introductions. No horizontal overflow in24 mobile routes (390 viewport,375 content).
-- Colors/tokens: original cream/white/green retained; terracotta underline only for selected filters/presets. No new overall recolor.
-- Images: existing source art and accessible captions preserved; current monthly botanical assets still load. No new approximated artwork. Private populated bean screenshot not copied into local data or uploaded.
-- Copy/content: accurate local-mode pairing/import wording; starter-track count not hardcoded; honest empty search and collection add action; all source data and storage untouched.
-- Interactions: record card preview works without save;LP/CD aria-pressed toggles; collection add route; search with no stored songs; sound preset aria-pressed; tools navigation; privacy dialog opens/closes. No browser error logs.
-- Earlier P2 journey/legacy height fixed and recaptured on desktop/mobile; singleton legacy selector removed, unavailable global/small not rendered; archive records retained. Mobile music-search loading capture rejected and replaced by settled final state.
-- P3: small decorative editorial graphics intentionally retained, additional custom imagery not needed. Saved-record detail and administrator visual states not verified in absence of applicable account/records.
+## Browser coverage
+Desktop: dashboard, records, settings, monthly, help, archive, backup, bean inventory, coffee write, music, recommendation and monthly report. No horizontal overflow or broken images on checked screens. Fresh final browser tab reports zero console errors. Historical temporary HMR syntax error was fixed before the successful rebuild and fresh-tab check.
+Mobile: actual 390×844 viewport for settings and monthly, no horizontal overflow; cards, collapsed filters and bottom navigation remain readable. Mobile retains the existing compact journal entry route.
+Core interactions: empty-state button focuses textarea; writing produces a preview card with detected notes; optional music expands and shows the existing selection tool; monthly search/category reset works.
 
-Final checklist: existing functions/data preserved;29 audit states recorded;24 mobile paths checked; visual comparisons accepted; regression tests/build required before publication.
+P3 follow-up only: concept has bean art on a white field; shipped common art intentionally retains its warm cream paper background to match card artwork. Actual empty states use text instead of the concept's invented empty thumbnails. These do not block the requested composition or functionality.
 
-final result: passed
-
-Final contrast correction: form boundaries retain existing --rr-line (#74836d), rather than a lighter card separator. Text/field focus contrast retained; no data/control behavior changes.
+Validation: 105 frontend tests passed; Vite production build passed; illustration coverage pending=[] (5 individual + 51 common).
