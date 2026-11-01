@@ -10,3 +10,5 @@
 기준: [WCAG 2.2 텍스트 대비](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [WAI 이미지 대체 텍스트 판단](https://www.w3.org/WAI/tutorials/images/decision-tree/).
 
 검증 범위: 97 frontend tests 및 Vite build 통과. 홈/도움말/월픽/첫 기록 화면의 실제 DOM 색상·배경으로 간이 대비 검사, 원두 설명/그림 안내 접근성 트리 및 모바일 줄바꿈 확인. 이는 전체 서비스 WCAG 준수 인증이 아니며 동영상·사용자 사진 내부의 픽셀 대비나 모든 상호작용 상태의 전수 검사를 뜻하지 않는다.
+
+게시 확인: dev PR72(3095961), main PR73(4efc1ad) 병합. main Pages 41270145225 및 Verify 41270145178 success. 운영 첫 화면에서 3단계 그림 안내, 운영 월픽에서 56개 원두 정보 그림의 접근 가능한 설명 확인. 홈/도움말/월픽/첫 기록 기본 상태 간이 대비 검사 미달0건. 모바일 홈/도움말은 가로 넘침 없음(375px clientWidth=scrollWidth), 대비 검사 미달0건. 증거 .local/visual-guide-production.png 및 .local/visual-guide-mobile.png.

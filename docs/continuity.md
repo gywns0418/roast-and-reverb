@@ -412,3 +412,5 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 
 ## 2026-11-01 시각 접근성과 그림 안내
 사용자 요청: 글자/배경 대비 및 이미지 대체 설명, 한눈에 이해하는 그림. feature/visual-accessibility(main ac703d5에서 분기)에 자체 SVG 3단계 안내, 원두 그래픽 설명/사용자 사진 alt, 대비 높은 공통 스타일과 sr-only 추가. 상세 docs/visual-accessibility.md. 테스트97 및 build 통과. 게시/실측 결과 후속 기록.
+
+게시 확인: dev PR72(3095961), main PR73(4efc1ad) 병합. main Pages 41270145225 및 Verify 41270145178 success. 운영 첫 화면에서 3단계 그림 안내, 운영 월픽에서 56개 원두 정보 그림의 접근 가능한 설명 확인. 홈/도움말/월픽/첫 기록 기본 상태 간이 대비 검사 미달0건. 모바일 홈/도움말은 가로 넘침 없음(375px clientWidth=scrollWidth), 대비 검사 미달0건. 증거 .local/visual-guide-production.png 및 .local/visual-guide-mobile.png.
