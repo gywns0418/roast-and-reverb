@@ -80,7 +80,7 @@ export function parseSourceHtml(html, url, now = new Date()) {
     title,
     ...edition,
     month: `${year}-${edition.month.slice(5)}`,
-    roastery: title.replace(/^.*?월픽\]\s*/, "").replace(/\s*\(.*$/, ""),
+    roastery: title.replace(/^\[[^\]]*월픽[^\]]*\]\s*/, "").replace(/\s*\(.*$/, "").trim(),
     sourceUrl: sourceUrl(url),
     detailSourceUrl: dataUrl(unescapeHtml(detail)),
     stock,
