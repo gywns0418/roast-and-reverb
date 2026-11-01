@@ -98,3 +98,9 @@ body .sidebar .nav-support{border-top-color:#e1e6ef}
 
 body .simple-home .first-home-brand{color:#172033}
 body .simple-home .simple-intro-lead{color:#526079}
+
+body .mobile-tabbar .nav-link{color:#526079}
+body .mobile-tabbar .nav-link.active,body .mobile-tabbar .nav-link.active:hover{background:#edf2ff;color:#2341b3}
+body .mobile-tabbar .nav-link svg{color:inherit}
+body .mobile-cup textarea,body .mobile-note-editor textarea{background:#fff;color:#172033;border-color:#7d899c}
+body .mobile-cup label,body .mobile-note-editor label,body .mobile-form-status{color:#526079}
