@@ -125,3 +125,10 @@ test('discover all coffee editions, exclude old months and machines, respect act
  const product=normalizeMonthlySource(metadata,{items:[{name:'Coffee',type:'single origin',openAt:0,details:{specs:[]}}]},new Date('2026-10-19T01:00:00Z'));
  assert.equal(product.items[0].openDate,'2026-10-12');assert.equal(product.items[0].availability,'ended');
 });
+
+ test('November title with sale period inside brackets preserves roastery', () => {
+ const html='<meta property="og:title" content="[11월 커피 월픽 (11/1~11/30)] 비로소커피 - 언스페셜티 몰"><usf-general-price-list rel="https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/BIROSO/BIROSO.json">';
+ const metadata=parseSourceHtml(html,'https://unspecialty.com/product/detail.html?product_no=944',new Date('2026-11-01T00:00:00Z'));
+ assert.equal(metadata.roastery,'비로소커피'); assert.equal(metadata.month,'2026-11');
+ assert.equal(metadata.saleStart,'2026-11-01'); assert.equal(metadata.saleEnd,'2026-11-30');
+ });
