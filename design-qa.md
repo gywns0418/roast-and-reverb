@@ -53,3 +53,5 @@ Combined current-run sources/implementation: compare-core.png, compare-forms.png
 Final checklist: existing functions/data preserved;29 audit states recorded;24 mobile paths checked; visual comparisons accepted; regression tests/build required before publication.
 
 final result: passed
+
+Final contrast correction: form boundaries retain existing --rr-line (#74836d), rather than a lighter card separator. Text/field focus contrast retained; no data/control behavior changes.

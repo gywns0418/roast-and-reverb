@@ -15,9 +15,9 @@
 .page .workspace-content .input-field>span{font-size:14px;line-height:1.5;color:#43573f}
 .page .workspace-content :is(input,select):not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden]):not([type=file]){
   min-height:44px;padding:10px 12px;font-size:16px;line-height:1.4;border-radius:8px;
-  border:1px solid #cfd7c8;background:#fbfbf8;color:#263b2d;max-width:100%;box-sizing:border-box;
+  border:1px solid var(--rr-line,#74836d);background:#fbfbf8;color:#263b2d;max-width:100%;box-sizing:border-box;
 }
-.page .workspace-content textarea{font-size:15px;line-height:1.75;padding:12px 14px;border-radius:10px;border-color:#cfd7c8;box-sizing:border-box;max-width:100%}
+.page .workspace-content textarea{font-size:15px;line-height:1.75;padding:12px 14px;border-radius:10px;border-color:var(--rr-line,#74836d);box-sizing:border-box;max-width:100%}
 .page .workspace-content .form-grid{gap:20px 18px;margin-bottom:20px;align-items:start}
 .page .workspace-content .action-row{gap:10px;flex-wrap:wrap;margin-block:16px}
 .page .workspace-content :is(.primary-button,.ghost-button){min-height:44px;line-height:1.5;border-radius:8px;padding:10px 16px}
