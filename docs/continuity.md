@@ -436,3 +436,15 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 
 ## 2026-11-01 전체 화면 디자인 일관성
 사용자 요청: 다른 화면도 전체 점검 후 플러그인으로 개선. feature/design-consistency(main e815020 분기 후 이전 확정시안2 feature/monthly-library 포함)에서 Product Design 감사29상태/모바일24경로 확인. 공통 design-consistency.css로 녹색/크림 유지, 제목/카드/44px입력/버튼/밑줄선택/빈상태 통일. 도구기본펼침2열, 설정문구간결화, 컬렉션선택aria-pressed/추가진입/등록조건, 검색배치와빈상태, 기기페어링/가져오기문구정정, 추천하드코딩선곡수제거, 기존월픽노트판매가능시리즈만표시와소개축소. 기존자료·저장키·외부연결·계정기능 변경없음. 개인캡처 .local에만보관, 공개보고서 docs/design-audit.md. 디자인QA비교후수정재검증 passed. 테스트/CI/게시결과 후속확인. main PR86 기존시안2와이번수정함께반영하도록설명갱신예정, 최종운영확인대기.
+
+
+## 2026-11-01 Writing Desk 1 + shared bean policy
+User selected the first displayed whole-app concept (exec-51d6e8ed-cb11-4351-8fee-ad6228696f75.png). Implemented desktop dashboard writing/history columns; records empty state and row layout; settings panels; shared divider headings, form disclosure and control styles. Existing mobile compact journal routing is preserved.
+Only unspecialty blend gets individual note art (5 current); other 51 use shared beans/common-bean.webp across regular/global/small. Added cocoa/tomato art and three raster guide steps. No public source catalog/HEX edits or private data seed. Source changes trigger review through check-illustration-coverage.mjs; rules copied to maintained autopilot skill. Weekly Saturday09KST automation updated and monthly-first09KST roast-reverb heartbeat created, quiet on no change. Never restore Railway.
+105 frontend tests and production build pass. Browser checked desktop key screens and390px settings/monthly/writing; no overflow or broken assets. Fresh final tab zero errors. Source + actual combined visual comparison and fixed P2s recorded in design-qa.md (passed). Feature branch feature/complete-artwork from main755f460. Dev publication allowed; main merge requires final explicit confirmation under AGENTS.
+
+
+## 2026-11-01 월픽 글꼴·간격 마무리 / 운영 승인
+사용자가 이미지 누락 보완, 띄어쓰기·글자 간격·폰트 개선과 운영 배포를 명시 승인했다. 개발에 준비된 카카오 크림·토마토 가든을 포함한 5종 이미지와 Writing Desk 변경을 함께 운영에 반영한다. 원문 데이터는 보존하고 카드 제목의 중복 분류 괄호만 표시에서 생략한다. 향미 단어 단위 줄바꿈, 용량·가격 구분(150 g · 18,000원), 한글 시스템 산세리프, 제목/본문 행간·여백을 정리했다. 향미 HEX와 기존 필터는 유지한다.
+
+Feature monthly-type-polish includes previous artwork22b2283. User explicitly authorized production including PR92, so do not ask again. Verify dev update, merge PR92 with expected latest dev SHA, monitor main Pages/Verify and check actual production assets.

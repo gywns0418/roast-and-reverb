@@ -424,6 +424,7 @@ export default function FirstCup({
                 placeholder="맛, 원두, 내린 방법… 기억나는 것만 한 번에 말해주세요."
               />
             </label>
+            <small className="cup-character-count" aria-live="off">{value.note.length.toLocaleString()} / 2,000자</small>
             {!preview && !saved && (
               <button
                 type="button"
@@ -485,9 +486,10 @@ export default function FirstCup({
                 </div>
               </>
             )}
-            {!saved && preview && (
+            {!saved && (
               <details
                 className="simple-music-choice"
+                open={musicOpen}
                 onToggle={(event) => setMusicOpen(event.currentTarget.open)}
               >
                 <summary>

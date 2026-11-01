@@ -1,0 +1,68 @@
+{
+  "944-b7d5272a1": {
+    "file": "monthly-peach-berry.png",
+    "kind": "flavor",
+    "notes": [
+      "복숭아",
+      "라즈베리",
+      "딸기",
+      "장미",
+      "꿀"
+    ],
+    "name": "피치 베리 블룸 (언스페셜티 블렌드)",
+    "category": "unspecialty blend"
+  },
+  "944-b63482145": {
+    "file": "monthly-grape.png",
+    "kind": "flavor",
+    "notes": [
+      "청포도",
+      "포도주스",
+      "베리",
+      "캔디",
+      "주시"
+    ],
+    "name": "그레이프 버스트 (언스페셜티 블렌드)",
+    "category": "unspecialty blend"
+  },
+  "944-bbf7041e5": {
+    "file": "monthly-lemon.png",
+    "kind": "flavor",
+    "notes": [
+      "자스민",
+      "레몬",
+      "청사과",
+      "백도",
+      "레몬그라스",
+      "꿀"
+    ],
+    "name": "레몬 스플래쉬 (언스페셜티 블렌드)",
+    "category": "unspecialty blend"
+  },
+  "944-b228b3af9": {
+    "file": "beans/944-b228b3af9.webp",
+    "kind": "flavor",
+    "notes": [
+      "코코아 파우더",
+      "밀크 초콜릿",
+      "헤이즐넛",
+      "바닐라",
+      "크림"
+    ],
+    "name": "카카오 크림 (언스페셜티 블렌드)",
+    "category": "unspecialty blend"
+  },
+  "944-b325c3fb5": {
+    "file": "beans/944-b325c3fb5.webp",
+    "kind": "flavor",
+    "notes": [
+      "토마토",
+      "레드커런트",
+      "자몽",
+      "허브",
+      "브라운 슈거"
+    ],
+    "name": "토마토 가든 (언스페셜티 블렌드)",
+    "category": "unspecialty blend"
+  }
+}
