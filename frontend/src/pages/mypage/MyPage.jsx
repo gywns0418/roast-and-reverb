@@ -4,6 +4,7 @@ import PageShell from "../../components/common/PageShell.jsx";
 import GoogleSignIn from "../../components/auth/GoogleSignIn.jsx";
 import { authStore } from "../../store/authStore.js";
 import { authApi } from "../../api/authApi.js";
+import { ArrowRight, Music2, Coffee, Grid2X2, BookOpen, ShieldCheck, FolderDown } from "lucide-react";
 export default function MyPage() {
   const local = import.meta.env.VITE_USE_REAL_API !== "true",
     navigate = useNavigate();
@@ -29,7 +30,8 @@ export default function MyPage() {
       title="설정"
       subtitle="기록을 보관하고, 필요한 기능만 꺼내 쓰세요."
     >
-      <section className="quiet-section">
+      <section className="quiet-section settings-storage">
+        <FolderDown size={26} aria-hidden="true" />
         <h2>
           {local
             ? "이 브라우저의 기록장"
@@ -43,30 +45,17 @@ export default function MyPage() {
         <Link className="primary-button" to="/backup">
           내 자료 백업·복구
         </Link>
-        {local && <p>기록·원두·음악은 이 기기에서 관리합니다. 문장 정리와 음악 설정은 기기 내 도우미가 처리하며, 기기를 옮길 때는 백업 파일을 사용해 주세요.</p>}
+        {local && <div className="settings-storage-facts"><span>이 브라우저에 보관</span><span>백업 파일로 다른 기기에 이동</span><span>복원 전 바뀔 자료 확인</span></div>}
       </section>
       <nav className="quiet-link-list" aria-label="기록장 설정">
-        <Link to="/music">
-          함께 남긴 음악<span>→</span>
-        </Link>
-        <Link to="/beans">
-          내 원두 관리<span>→</span>
-        </Link>
-        <Link to="/archive">
-          모든 기록 기능과 도구<span>→</span>
-        </Link>
-        <Link to="/help">
-          이용 방법<span>→</span>
-        </Link>
-        <a href={import.meta.env.BASE_URL + "privacy.html"}>
-          개인정보처리방침<span>→</span>
-        </a>
+        {[{to:"/music",Icon:Music2,title:"함께 남긴 음악",text:"커피와 함께 듣고 기록한 곡을 살펴봐요."},{to:"/beans",Icon:Coffee,title:"내 원두 관리",text:"가진 원두와 남은 상태를 한곳에서 관리해요."},{to:"/archive",Icon:Grid2X2,title:"기록과 발견 도구",text:"취향, 추천, 청음실과 모든 기록 기능을 열어요."}].map(({to,Icon,title,text})=><Link key={to} to={to}><Icon size={21} aria-hidden="true"/><div><strong>{title}</strong><small>{text}</small></div><ArrowRight size={17} aria-hidden="true"/></Link>)}
       </nav>
-      <details className="quiet-details">
-        <summary>더 많은 기록과 도구</summary>
-        <p>음악·취향 가이드·연주와 이전 월픽 노트를 함께 확인할 수 있어요.</p>
-        <Link to="/archive">기록과 도구 열기 →</Link>
-      </details>
+      <section className="settings-help" aria-label="도움말과 개인정보">
+        <Link to="/help"><BookOpen size={22} aria-hidden="true"/><div><strong>기록장 이용 방법</strong><p>느낌 한 줄부터 음악 선택, 저장까지.</p></div><ArrowRight size={17} aria-hidden="true"/></Link>
+        <a href={import.meta.env.BASE_URL + "privacy.html"}>
+          <ShieldCheck size={22} aria-hidden="true"/><div><strong>개인정보와 내 자료</strong><p>어떤 정보가 저장되는지 확인해요.</p></div><ArrowRight size={17} aria-hidden="true"/>
+        </a>
+      </section>
       {!local && (
         <section className="quiet-section">
           <h2>계정</h2>
