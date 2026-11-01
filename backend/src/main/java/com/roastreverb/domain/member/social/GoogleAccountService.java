@@ -10,13 +10,15 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GoogleAccountService {
+ private final PolicyConsentMapper policyConsents;
  private final MemberMapper members; private final SocialIdentityMapper identities;
  private final PasswordEncoder passwords; private final JwtProvider tokens;
- public GoogleAccountService(MemberMapper members,SocialIdentityMapper identities,PasswordEncoder passwords,JwtProvider tokens) {
+ public GoogleAccountService(MemberMapper members,SocialIdentityMapper identities,PasswordEncoder passwords,JwtProvider tokens,PolicyConsentMapper policyConsents) {
+  this.policyConsents=policyConsents;
   this.members=members;this.identities=identities;this.passwords=passwords;this.tokens=tokens;
  }
  @Transactional
- public Map<String,Object> finish(Jwt identity, Long linkMember) {
+ public Map<String,Object> finish(Jwt identity, Long linkMember, boolean consentAccepted) {
   String subject=identity.getSubject(); Long memberId=identities.memberFor(subject);
   if(linkMember!=null) {
    if(memberId!=null&&!memberId.equals(linkMember)) throw conflict("다른 기록장에 연결된 Google 계정입니다.");
@@ -25,6 +27,7 @@ public class GoogleAccountService {
    if(memberId==null) identities.insert(subject,linkMember);
    memberId=linkMember;
   } else if(memberId==null) {
+   if(!consentAccepted)throw new CustomException(HttpStatus.BAD_REQUEST,"신규 가입에는 만 14세 이상 확인과 현재 약관·개인정보 동의가 필요합니다.");
    String email=identity.getClaimAsString("email");
    if(identities.emailOwner(email)!=null) throw conflict("이미 사용하는 이메일입니다. 이메일로 로그인한 뒤 마이페이지에서 Google을 연결해 주세요.");
    Map<String,Object> member=new HashMap<>();
@@ -34,6 +37,7 @@ public class GoogleAccountService {
    member.put("nickname",name==null||name.isBlank()?"나의 기록장":name.substring(0,Math.min(60,name.length())));
    member.put("role","USER");member.put("status","ACTIVE");
    members.insert(member);memberId=((Number)member.get("memberId")).longValue();
+   policyConsents.record(memberId,com.roastreverb.domain.member.service.PolicyConsent.VERSION);
    identities.insert(subject,memberId);
   }
   Map<String,Object> member=members.findById(memberId);

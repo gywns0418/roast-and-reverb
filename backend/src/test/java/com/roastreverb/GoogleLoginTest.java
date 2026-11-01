@@ -32,13 +32,13 @@ class GoogleLoginTest {
   return Jwt.withTokenValue("test").header("alg","RS256").issuer("https://accounts.google.com").subject(sub).audience(List.of(audience)).issuedAt(Instant.now().minusSeconds(10)).expiresAt(expiry).claim("email",email).claim("email_verified",verified).claim("name","Google test").claim("nonce",nonce).build();
  }
  org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder finish(Flow flow,String value) {
-  return post("/api/auth/google/complete").session(flow.session()).header("Origin",origin).header("X-RR-Social","1").contentType("application/json").content("{\"credential\":\""+value+"\"}");
+  return post("/api/auth/google/complete").session(flow.session()).header("Origin",origin).header("X-RR-Social","1").contentType("application/json").content("{\"policyVersion\":\"2026-11-01\",\"ageConfirmed\":\"true\",\"termsAccepted\":\"true\",\"privacyAccepted\":\"true\",\"credential\":\""+value+"\"}");
  }
  @Test void browserProofAndLinkRequireProtection() throws Exception {
   mvc.perform(post("/api/auth/google/challenge").header("Origin","http://localhost:5199").header("X-RR-Social","1")).andExpect(status().isUnauthorized());
   mvc.perform(post("/api/auth/google/challenge").header("Origin",origin)).andExpect(status().isUnauthorized());
   mvc.perform(post("/api/members/me/google/challenge").header("Origin",origin).header("X-RR-Social","1")).andExpect(status().isUnauthorized());
-  mvc.perform(post("/api/auth/google/complete").header("Origin",origin).header("X-RR-Social","1").contentType("application/json").content("{\"credential\":\"bad\"}")).andExpect(status().isUnauthorized());
+  mvc.perform(post("/api/auth/google/complete").header("Origin",origin).header("X-RR-Social","1").contentType("application/json").content("{\"policyVersion\":\"2026-11-01\",\"ageConfirmed\":\"true\",\"termsAccepted\":\"true\",\"privacyAccepted\":\"true\",\"credential\":\"bad\"}")).andExpect(status().isUnauthorized());
  }
  @Test void verifiedSubjectReturnsSameAccountAndNonceCannotReplay() throws Exception {
   Flow flow=begin(null);when(verifier.verify("valid")).thenReturn(identity(flow,"new-google-sub","google-new@example.com","test-client",flow.nonce(),true,Instant.now().plusSeconds(300)));
@@ -56,7 +56,7 @@ class GoogleLoginTest {
   }
  }
  @Test void existingEmailNeverAutoLinksAndExplicitLinkPreservesRecords() throws Exception {
-  var joined=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"email\":\"google-existing@example.com\",\"password\":\"safe-test-password\",\"nickname\":\"Existing\"}")).andExpect(status().isOk()).andReturn();
+  var joined=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"policyVersion\":\"2026-11-01\",\"ageConfirmed\":true,\"termsAccepted\":true,\"privacyAccepted\":true,\"email\":\"google-existing@example.com\",\"password\":\"safe-test-password\",\"nickname\":\"Existing\"}")).andExpect(status().isOk()).andReturn();
   var member=json.readTree(joined.getResponse().getContentAsString()).path("data");long id=member.path("memberId").asLong();String auth="Bearer "+member.path("token").asText();
   mvc.perform(post("/api/coffee").header("Authorization",auth).contentType("application/json").content("{\"beanName\":\"Account preservation fixture\",\"drinkDate\":\"2026-10-01\"}")).andExpect(status().isOk());
   Flow anonymous=begin(null);when(verifier.verify("collision")).thenReturn(identity(anonymous,"existing-sub","google-existing@example.com","test-client",anonymous.nonce(),true,Instant.now().plusSeconds(300)));

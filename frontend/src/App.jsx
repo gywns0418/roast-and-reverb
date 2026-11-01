@@ -1,3 +1,4 @@
+import PrivacyControls from "./components/common/PrivacyControls.jsx";
 import { HashRouter, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import AppErrorBoundary from "./components/common/AppErrorBoundary.jsx";
@@ -28,6 +29,7 @@ export default function App() {
     <AppErrorBoundary><HashRouter>
       <ScrollReset />
       <AppRouter />
+      <PrivacyControls />
       <LoadingHost />
     </HashRouter></AppErrorBoundary>
   );
@@ -42,3 +44,5 @@ import './styles/mobile-journal.css';
 import './styles/monthly-core.css';
 
 import './styles/content-density.css';
+
+import "./styles/privacy.css";

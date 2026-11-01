@@ -12,8 +12,10 @@ import java.util.Map;
 public class MemberService {
     private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
+    private final com.roastreverb.domain.member.mapper.PolicyConsentMapper policyConsents;
 
-    public MemberService(MemberMapper memberMapper, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberMapper memberMapper, PasswordEncoder passwordEncoder, com.roastreverb.domain.member.mapper.PolicyConsentMapper policyConsents) {
+        this.policyConsents=policyConsents;
         this.memberMapper = memberMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -26,7 +28,9 @@ public class MemberService {
         return memberMapper.findByEmail(email);
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public Map<String, Object> join(Map<String, Object> member) {
+        PolicyConsent.require(member);
         String email = String.valueOf(member.get("email"));
         String password = String.valueOf(member.get("password"));
         if (email.length()>120 || !email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$") || !validPassword(password)) {
@@ -41,6 +45,7 @@ public class MemberService {
         member.put("status", "ACTIVE");
         member.put("password", passwordEncoder.encode(String.valueOf(member.get("password"))));
         memberMapper.insert(member);
+        policyConsents.record(((Number)member.get("memberId")).longValue(),PolicyConsent.VERSION);
         return memberMapper.findById(((Number) member.get("memberId")).longValue());
     }
 

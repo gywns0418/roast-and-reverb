@@ -77,7 +77,7 @@ async function api(route, method = "GET", body, token) {
 }
 try {
   await start();
-  let r = await api("/auth/join", "POST", {
+  let r = await api("/auth/join", "POST", {policyVersion:"2026-11-01",ageConfirmed:true,termsAccepted:true,privacyAccepted:true,
     email: "durable@example.com",
     password: "persistent-test-123",
     nickname: "Durable",

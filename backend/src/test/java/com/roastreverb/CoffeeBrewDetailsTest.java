@@ -14,7 +14,7 @@ class CoffeeBrewDetailsTest {
  @Autowired MockMvc mvc;
  @Autowired ObjectMapper json;
  @Test void detailsSurvivePartialUpdateAndInvalidMeasurementsAreRejected() throws Exception {
-  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"email\":\"brew-test@example.com\",\"password\":\"coffee-test-123\",\"nickname\":\"Brewer\"}"))
+  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"policyVersion\":\"2026-11-01\",\"ageConfirmed\":true,\"termsAccepted\":true,\"privacyAccepted\":true,\"email\":\"brew-test@example.com\",\"password\":\"coffee-test-123\",\"nickname\":\"Brewer\"}"))
    .andExpect(status().isOk()).andReturn();
   var user=json.readTree(signup.getResponse().getContentAsString()).path("data");
   String auth="Bearer "+user.path("token").asText();
