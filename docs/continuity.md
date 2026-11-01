@@ -428,3 +428,7 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 
 ## 2026-11-01 기존 배색 복구와 개선안
 사용자 정정: 전체 재도색이 아니라 기존 색 안에서 소수 강조만 원함. feature/restore-palette(main7dc1cce 분기)에서 modern-theme 전역 재도색 제거, 정책5쪽 기존 style만 복원(본문 보존), 서체 개선은 무색상 typography-refinements로 분리. 필터 체크/밑줄을 소량 테라코타로 표시하며 기본 녹색/크림/흰색과 모든 기능 유지. 100 tests/build 통과. docs/design-improvement-plan.md에 개선 우선순위와 근거/플러그인 후보 정리. Product Design/Figma 미설치 검색 확인 및 추천, 연결 완료 아님.
+
+
+## 2026-11-01 확정 시안2 월픽 라이브러리
+사용자 선택2번(exec-5847c535)을 feature/monthly-library(main e815020에서 분기)에 구현. 왼쪽 전체 검색/분류/색상/옵션 필터+오른쪽2열 카드, 모바일 필터토글/1열. 기존 팔레트, 실제56종/판매기간/관심/비교/가져오기 유지. Built-in Image Gen 향미일러스트3개 public/images/monthly-*.png 추가(실제상품아님alt), 나머지 원두는 기존 정보그래픽. 병합 시안비교 및390×844 검증, 분류4/빈검색0/초기화56/상세/모바일토글 확인, 가로넘침/오류 없음. design-qa.md passed.102tests/build통과. dev게시 및 mainPR 준비, 운영최종반영은 AGENTS의 main확인 규칙에 따라 사용자확인 후.
