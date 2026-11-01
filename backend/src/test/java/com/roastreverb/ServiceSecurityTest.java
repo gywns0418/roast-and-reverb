@@ -15,7 +15,7 @@ class ServiceSecurityTest {
  @Autowired ObjectMapper json;
  @Test void anonymousCannotReadRecords() throws Exception {mvc.perform(get("/api/coffee")).andExpect(status().isUnauthorized());}
  @Test void cupAndSoundtrackAreSavedTogetherAndSurvivePartialEdit() throws Exception {
-  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"email\":\"cup-soundtrack@example.com\",\"password\":\"test-cup-password\",\"nickname\":\"Test\"}"))
+  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"policyVersion\":\"2026-11-01\",\"ageConfirmed\":true,\"termsAccepted\":true,\"privacyAccepted\":true,\"email\":\"cup-soundtrack@example.com\",\"password\":\"test-cup-password\",\"nickname\":\"Test\"}"))
    .andExpect(status().isOk()).andReturn();
   String auth="Bearer "+json.readTree(signup.getResponse().getContentAsString()).path("data").path("token").asText();
   var details=java.util.Map.of("doseGrams",16,"momentNote","User's own cup and music impression","soundtrack",java.util.Map.of("version",1,"kind","matched","track","Fixture track","listened",false));
@@ -41,7 +41,7 @@ class ServiceSecurityTest {
   mvc.perform(post("/api/companion/chat").contentType("application/json").content("{}")).andExpect(status().isUnauthorized());
  }
  @Test void importedGrinderExplanationIsPreservedWithoutTruncation() throws Exception {
-  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"email\":\"grind-import@example.com\",\"password\":\"test-grind-password\",\"nickname\":\"Test\"}"))
+  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"policyVersion\":\"2026-11-01\",\"ageConfirmed\":true,\"termsAccepted\":true,\"privacyAccepted\":true,\"email\":\"grind-import@example.com\",\"password\":\"test-grind-password\",\"nickname\":\"Test\"}"))
     .andExpect(status().isOk()).andReturn();
   String auth="Bearer "+json.readTree(signup.getResponse().getContentAsString()).path("data").path("token").asText();
   String explanation="Grinder calibration explanation, preserving all original detail. ".repeat(5);
@@ -58,7 +58,7 @@ class ServiceSecurityTest {
   mvc.perform(post("/api/auth/join").contentType("application/json").content("{broken")).andExpect(status().isBadRequest());
  }
  @Test void signupCannotGrantAdminAndUsersAreIsolated() throws Exception {
-  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"email\":\"security@example.com\",\"password\":\"secure-password-123\",\"nickname\":\"Tester\",\"role\":\"ADMIN\"}"))
+  var signup=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"policyVersion\":\"2026-11-01\",\"ageConfirmed\":true,\"termsAccepted\":true,\"privacyAccepted\":true,\"email\":\"security@example.com\",\"password\":\"secure-password-123\",\"nickname\":\"Tester\",\"role\":\"ADMIN\"}"))
     .andExpect(status().isOk()).andReturn();
   var data=json.readTree(signup.getResponse().getContentAsString()).path("data");
   assertEquals("USER",data.path("role").asText());

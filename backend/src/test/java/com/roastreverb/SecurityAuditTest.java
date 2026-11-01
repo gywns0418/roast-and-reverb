@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureMockMvc
 class SecurityAuditTest {
  @Autowired MockMvc mvc; @Autowired ObjectMapper json;
- String signup(String name)throws Exception{return "Bearer "+json.readTree(mvc.perform(post("/api/auth/join").contentType("application/json").content(json.writeValueAsString(Map.of("email",name+"@example.com","password","security-test-123","nickname",name)))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString()).path("data").path("token").asText();}
+ String signup(String name)throws Exception{return "Bearer "+json.readTree(mvc.perform(post("/api/auth/join").contentType("application/json").content(json.writeValueAsString(Map.of("policyVersion","2026-11-01","ageConfirmed",true,"termsAccepted",true,"privacyAccepted",true,"email",name+"@example.com","password","security-test-123","nickname",name)))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString()).path("data").path("token").asText();}
  long create(String resource,String auth,Map<String,Object> body,String key)throws Exception{return json.readTree(mvc.perform(post("/api/"+resource).header("Authorization",auth).contentType("application/json").content(json.writeValueAsString(body))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString()).path("data").path(key).asLong();}
  @Test void otherMembersCannotReadOrChangeRealRecordsOrLinkForeignPairings()throws Exception{
   String a=signup("owner-a"),b=signup("owner-b");
@@ -37,7 +37,7 @@ class SecurityAuditTest {
   mvc.perform(put("/api/members/me/password").header("Authorization",auth).contentType("application/json").content("{\"currentPassword\":\"wrong\",\"password\":\"new-password-123\"}")).andExpect(status().isUnauthorized());
   mvc.perform(put("/api/members/me/password").header("Authorization",auth).contentType("application/json").content("{\"currentPassword\":\"security-test-123\",\"password\":\"new-password-123\"}")).andExpect(status().isOk());
   mvc.perform(get("/api/members/me").header("Authorization",auth)).andExpect(status().isUnauthorized());
-  mvc.perform(post("/api/auth/login").contentType("application/json").content("{\"email\":\"password-proof@example.com\",\"password\":\"new-password-123\"}")).andExpect(status().isOk());
+  mvc.perform(post("/api/auth/login").contentType("application/json").content("{\"policyVersion\":\"2026-11-01\",\"ageConfirmed\":true,\"termsAccepted\":true,\"privacyAccepted\":true,\"email\":\"password-proof@example.com\",\"password\":\"new-password-123\"}")).andExpect(status().isOk());
  }
  @Test void logoutRevokesTokenAndTamperingCannotAuthenticate()throws Exception{
   String auth=signup("logout-proof");
@@ -50,7 +50,7 @@ class SecurityAuditTest {
   mvc.perform(options("/api/coffee").header("Origin","https://security-audit.invalid").header("Access-Control-Request-Method","GET")).andExpect(status().isForbidden()).andExpect(header().doesNotExist("Access-Control-Allow-Origin"));
  }
  @Test void invalidPasswordsAndSensitivePathsAreRejected()throws Exception{
-  mvc.perform(post("/api/auth/join").contentType("application/json").content(json.writeValueAsString(Map.of("email","long-password@example.com","nickname","Fixture","password","가".repeat(30))))).andExpect(status().isBadRequest());
+  mvc.perform(post("/api/auth/join").contentType("application/json").content(json.writeValueAsString(Map.of("policyVersion","2026-11-01","ageConfirmed",true,"termsAccepted",true,"privacyAccepted",true,"email","long-password@example.com","nickname","Fixture","password","가".repeat(30))))).andExpect(status().isBadRequest());
   for(String path:List.of("/.env","/.git/config","/h2-console","/actuator/env","/api/admin/dashboard"))mvc.perform(get(path)).andExpect(status().isUnauthorized());
  }
 }

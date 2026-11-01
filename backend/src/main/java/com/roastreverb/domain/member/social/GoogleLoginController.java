@@ -55,7 +55,7 @@ public class GoogleLoginController {
    ||!Boolean.TRUE.equals(identity.getClaimAsBoolean("email_verified"))||email==null||email.length()>120
    ||identity.getExpiresAt()==null||!identity.getExpiresAt().isAfter(Instant.now())
    ||identity.getSubject()==null||identity.getSubject().isBlank()||identity.getSubject().length()>255)throw unauthorized();
-  try { return ApiResponse.ok(accounts.finish(identity,challenge.linkMember())); }
+  try { return ApiResponse.ok(accounts.finish(identity,challenge.linkMember(),"2026-11-01".equals(body.get("policyVersion"))&&"true".equals(body.get("ageConfirmed"))&&"true".equals(body.get("termsAccepted"))&&"true".equals(body.get("privacyAccepted")))); }
   catch(org.springframework.dao.DataIntegrityViolationException e){throw new CustomException(HttpStatus.CONFLICT,"계정 연결 상태가 변경됐습니다. 다시 로그인해 주세요.");}
  }
  private void requireEnabled(String header,HttpServletRequest request){
