@@ -50,3 +50,5 @@ import "./styles/privacy.css";
 import "./styles/accessibility.css";
 
 import "./styles/typography-refinements.css";
+
+import "./styles/design-consistency.css";

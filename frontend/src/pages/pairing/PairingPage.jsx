@@ -17,7 +17,7 @@ export default function PairingPage() {
   );
 
   return (
-    <PageShell title="AI 페어링" eyebrow="Signal Read" subtitle="커피와 음악, 두 신호가 만난 기록을 확인하고 보관합니다.">
+    <PageShell title={import.meta.env.VITE_USE_REAL_API === "true" ? "AI 페어링" : "커피와 음악 페어링"} eyebrow="Signal Read" subtitle="커피와 음악, 두 신호가 만난 기록을 확인하고 보관합니다.">
       <div className="action-row">
         <Link to="/pairing/write" className="primary-button">페어링 생성</Link>
       </div>
