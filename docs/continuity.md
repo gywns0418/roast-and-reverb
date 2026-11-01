@@ -448,3 +448,10 @@ Only unspecialty blend gets individual note art (5 current); other 51 use shared
 사용자가 이미지 누락 보완, 띄어쓰기·글자 간격·폰트 개선과 운영 배포를 명시 승인했다. 개발에 준비된 카카오 크림·토마토 가든을 포함한 5종 이미지와 Writing Desk 변경을 함께 운영에 반영한다. 원문 데이터는 보존하고 카드 제목의 중복 분류 괄호만 표시에서 생략한다. 향미 단어 단위 줄바꿈, 용량·가격 구분(150 g · 18,000원), 한글 시스템 산세리프, 제목/본문 행간·여백을 정리했다. 향미 HEX와 기존 필터는 유지한다.
 
 Feature monthly-type-polish includes previous artwork22b2283. User explicitly authorized production including PR92, so do not ask again. Verify dev update, merge PR92 with expected latest dev SHA, monitor main Pages/Verify and check actual production assets.
+
+
+## 2026-11-02 버튼·정렬·다른 화면 구성 보완
+사용자가 버튼의 완성도, 작성/지난 기록의 정렬, 월픽 외 화면의 빈 느낌, 흰 패널과 원두 그림 배경의 불일치를 지적했다. 기존 Writing Desk 1번을 유지하며 주요/보조 버튼의 채움·테두리·hover/active/focus/disabled를 통일하고, 작성/최근 기록 패널의 위아래 끝을 맞춘다. 대시보드 원두는 기존 두 알 그림을 참조 편집한 투명 WebP를 사용해 흰 패널과 자연스럽게 이어지게 한다. 월픽 공통 원두 자산은 그대로 둔다.
+내 기록에는 실제 저장 수·음악을 더한 기록 수·최근 기록일을 표시하며, 빈 상태는 작은 그림과 안내/작성 동작을 함께 제공한다. 기록 목록은 공통 컵 그림·날짜·제목·감상·이동을 정렬한다. 설정은 보관 안내, 음악/원두/도구의 설명 있는 목록, 도움말/개인정보 카드로 구성한다. 원두 탐색과 백업의 실제 동작으로 연결하는 카드를 제공한다. 가짜 기록/통계는 만들지 않는다.
+
+Corrective branch feature/interface-cohesion starts from main840917a. Screenshots and local verification data remain ignored under .local/browser only. Original bean and monthly5/51 policy preserved.
