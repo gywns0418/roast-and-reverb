@@ -408,3 +408,5 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 
 ## 2026-11-01 첫 한 잔 버튼 사용성 수정
 입력 전 로컬 정리 버튼이 disabled여서 금지 커서가 보이고 원문 카드 확인 버튼과 역할이 중복됐다. GitHub 기기 모드에서는 기록 카드 확인 버튼 하나로 원문 맛/방법 정리와 미리보기를 수행한다. 빈 입력은 버튼을 잠그지 않고 입력란 포커스와 구체 안내를 제공한다. 서버 버전 분기는 유지. 97 tests 및 Vite build 성공.
+
+게시 확인: dev PR70(fe634fa), main PR71(ac703d5) 병합. main Pages 41269456843 및 Verify 41269456814 success. 운영 #/dashboard에서 별도 정리 버튼 없음, 기본 버튼 enabled/cursor:pointer 확인. 빈 입력 안내·포커스와 단일 버튼 맛 추출·미리보기는 로컬 브라우저 검증. 스크린샷 .local/cup-action-production.png, 개인 기록 새 저장 없음.
