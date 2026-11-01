@@ -1,3 +1,4 @@
+import JournalGuide from "../components/common/JournalGuide.jsx";
 import { Link } from "react-router-dom";
 import FirstCup from "../components/coffee/FirstCup.jsx";
 export default function HomePage() {
@@ -41,23 +42,7 @@ export default function HomePage() {
             </button>
             <small>커피 지식도, 긴 설명도 필요 없어요.</small>
           </div>
-          <img
-            src={import.meta.env.BASE_URL + "images/ritual-editorial.png"}
-            alt="커피와 레코드가 함께 놓인 따뜻한 테이블"
-          />
-        </section>
-        <section className="simple-how" aria-label="사용 방법">
-          <p>
-            <b>01</b> 커피의 느낌을 적고
-          </p>
-          <span aria-hidden="true">→</span>
-          <p>
-            <b>02</b> 음악을 더하고 싶다면 고르고
-          </p>
-          <span aria-hidden="true">→</span>
-          <p>
-            <b>03</b> 나만의 기록으로 보관해요
-          </p>
+          <JournalGuide compact />
         </section>
         <div id="first-cup-start" className="simple-start">
           <FirstCup />
