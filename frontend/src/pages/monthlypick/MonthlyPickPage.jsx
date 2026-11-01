@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import {monthlyGroups,colorFamilies} from "../../utils/monthlyColors.js";
 import {filterMonthlyBeans,groupMonthlyBeans} from "../../utils/monthlyFilters.js";
 import "../../styles/monthly-filters.css";
+import "../../styles/monthly-library.css";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
@@ -37,8 +38,15 @@ const price = (bean) =>
     : "판매처에서 가격 확인";
 const displayDate = (value) =>
   value ? new Date(value).toLocaleDateString("ko-KR") : "확인 전";
+const flavorIllustration = (bean) => {
+  const filename = bean.name.startsWith("피치 베리 블룸") ? "monthly-peach-berry.png"
+    : bean.name.startsWith("그레이프 버스트") ? "monthly-grape.png"
+    : bean.name.startsWith("레몬 스플래쉬") ? "monthly-lemon.png" : null;
+  return filename ? `${import.meta.env.BASE_URL}images/${filename}` : null;
+};
 export default function MonthlyPickPage() {
   const [catalog, setCatalog] = useState([]),
+    [filtersExpanded, setFiltersExpanded] = useState(false),
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
     [series, setSeries] = useState(""),
@@ -166,13 +174,57 @@ export default function MonthlyPickPage() {
   }
   return (
     <PageShell
-      title="이번 달 월픽"
+      title={`${new Intl.DateTimeFormat("ko-KR", {timeZone:"Asia/Seoul",month:"long"}).format(new Date())} 월픽`}
       subtitle="이달의 로스터리와 다음 한 잔을 골라보세요."
     >
       {loading ? (
         <Loading title="월픽 원두를 살펴보고 있어요." />
       ) : (
         <>
+          <div className="monthly-library">
+          <aside className="monthly-library-filters" aria-label="월픽 검색과 필터" data-expanded={filtersExpanded}>
+          <div className="monthly-core-toolbar">
+            <label className="monthly-core-search">
+              원두 검색
+              <input
+                type="search"
+                placeholder="원두 이름, 산지, 컵노트"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </label>
+            <button
+              type="button"
+              className="ghost-button"
+              aria-pressed={favoritesOnly}
+              onClick={() => {
+                setFavoritesOnly((v) => !v);
+                setQuery("");
+              }}
+            >
+              관심 원두{" "}
+              {allBeans.filter((b) => favorites.includes(String(b.id))).length}
+            </button>
+          </div>
+          <button type="button" className="ghost-button monthly-filter-toggle" aria-expanded={filtersExpanded} aria-controls="monthly-library-filter-panel" onClick={() => setFiltersExpanded(value => !value)}>필터 {filtersExpanded ? "접기" : "펼치기"} · {beans.length}종</button>
+          <section id="monthly-library-filter-panel" className="monthly-restored-filters" aria-label="월픽 원두 필터">
+            <fieldset><legend>원두 분류</legend><div className="monthly-filter-chips">
+              {[["all","전체"],...Object.entries(monthlyGroups).map(([key,value])=>[key,value.label])].map(([key,label])=><button key={key} type="button" aria-pressed={category===key} onClick={()=>setCategory(key)}><span className="monthly-filter-check" aria-hidden="true">{category===key?"✓":""}</span>{label} <small>{key==='all'?candidates.length:candidates.filter(bean=>bean.category===key).length}종</small></button>)}
+            </div></fieldset>
+            <fieldset><legend>판매처 향미 색상</legend><div className="monthly-filter-chips">
+              <button type="button" aria-pressed={color==='all'} onClick={()=>setColor('all')}><span className="monthly-filter-check" aria-hidden="true">{color==='all'?"✓":""}</span>모든 색</button>
+              {colorFamilies.map(([key,label,hex])=><button key={key} type="button" aria-pressed={color===key} onClick={()=>setColor(key)}><span className="monthly-filter-check" aria-hidden="true">{color===key?"✓":""}</span><i aria-hidden="true" style={{backgroundColor:hex}}/>{label}</button>)}
+            </div></fieldset>
+            <div className="monthly-filter-options">
+              <label><input type="checkbox" checked={available} onChange={e=>setAvailable(e.target.checked)}/>구매 가능만</label>
+              <label><input type="checkbox" checked={hideDecaf} onChange={e=>setHideDecaf(e.target.checked)}/>디카페인 숨기기</label>
+              <button type="button" className="ghost-button" onClick={clearFilters}>필터 초기화</button>
+            </div>
+            <p className="monthly-filter-caption">색상은 판매처 원두 팔레트의 비슷한 색끼리 묶은 분류예요. 맛을 측정한 값은 아니며, 검색·분류·색상·판매 조건을 함께 적용합니다.</p>
+            <p className="monthly-filter-results" role="status">조건에 맞는 원두 <strong>{beans.length}종</strong> / {candidates.length}종{favoritesOnly?' · 관심 원두에서 찾는 중':''}</p>
+          </section>
+          </aside>
+          <div className="monthly-library-results">
           <div
             className="monthly-editions"
             style={{gridTemplateColumns: `repeat(${Math.max(1, editions.filter(([key]) => currentCatalog.some(p => p.edition === key)).length)}, minmax(0, 1fr))`}}
@@ -198,53 +250,14 @@ export default function MonthlyPickPage() {
             })}
           </div>
           {!currentCatalog.length && <p role="status">현재 선택할 수 있는 월픽이 없어요. 판매 기간이 확인되면 표시됩니다. 저장한 관심 원두는 계속 확인할 수 있어요.</p>}
-          <div className="monthly-core-toolbar">
-            <label className="monthly-core-search">
-              원두 검색
-              <input
-                type="search"
-                placeholder="원두 이름, 산지, 컵노트"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-            </label>
-            <button
-              type="button"
-              className="ghost-button"
-              aria-pressed={favoritesOnly}
-              onClick={() => {
-                setFavoritesOnly((v) => !v);
-                setQuery("");
-              }}
-            >
-              관심 원두{" "}
-              {allBeans.filter((b) => favorites.includes(String(b.id))).length}
-            </button>
-          </div>
-          <section className="monthly-restored-filters" aria-label="월픽 원두 필터">
-            <fieldset><legend>원두 분류</legend><div className="monthly-filter-chips">
-              {[["all","전체"],...Object.entries(monthlyGroups).map(([key,value])=>[key,value.label])].map(([key,label])=><button key={key} type="button" aria-pressed={category===key} onClick={()=>setCategory(key)}><span className="monthly-filter-check" aria-hidden="true">{category===key?"✓":""}</span>{label} <small>{key==='all'?candidates.length:candidates.filter(bean=>bean.category===key).length}종</small></button>)}
-            </div></fieldset>
-            <fieldset><legend>판매처 향미 색상</legend><div className="monthly-filter-chips">
-              <button type="button" aria-pressed={color==='all'} onClick={()=>setColor('all')}><span className="monthly-filter-check" aria-hidden="true">{color==='all'?"✓":""}</span>모든 색</button>
-              {colorFamilies.map(([key,label,hex])=><button key={key} type="button" aria-pressed={color===key} onClick={()=>setColor(key)}><span className="monthly-filter-check" aria-hidden="true">{color===key?"✓":""}</span><i aria-hidden="true" style={{backgroundColor:hex}}/>{label}</button>)}
-            </div></fieldset>
-            <div className="monthly-filter-options">
-              <label><input type="checkbox" checked={available} onChange={e=>setAvailable(e.target.checked)}/>구매 가능만</label>
-              <label><input type="checkbox" checked={hideDecaf} onChange={e=>setHideDecaf(e.target.checked)}/>디카페인 숨기기</label>
-              <button type="button" className="ghost-button" onClick={clearFilters}>필터 초기화</button>
-            </div>
-            <p className="monthly-filter-caption">색상은 판매처 원두 팔레트의 비슷한 색끼리 묶은 분류예요. 맛을 측정한 값은 아니며, 검색·분류·색상·판매 조건을 함께 적용합니다.</p>
-            <p className="monthly-filter-results" role="status">조건에 맞는 원두 <strong>{beans.length}종</strong> / {candidates.length}종{favoritesOnly?' · 관심 원두에서 찾는 중':''}</p>
-          </section>
           {product && (
             <div className="quiet-source">
-              <p>
+              <h2>
                 {favoritesOnly
                   ? "모든 시리즈의 관심 원두"
                   : product.month + " · " + product.roastery}{" "}
                 · {beans.length}종
-              </p>
+              </h2>
               {!favoritesOnly && (
                 <a href={product.sourceUrl} target="_blank" rel="noreferrer">
                   판매처 원문 ↗
@@ -275,7 +288,10 @@ export default function MonthlyPickPage() {
               <div className="monthly-section-heading" style={{"--group-color":group.color,"--group-tint":group.tint}}><h2>{group.label}</h2><span>{items.length}종</span></div>
               {items.map((bean) => (
               <article className="monthly-bean-card" style={{"--group-color":group.color,"--group-tint":group.tint}} key={bean.id}>
-                <BeanArtwork item={bean} />
+                <div className="monthly-card-art">
+                  <BeanArtwork item={bean} decorative={Boolean(flavorIllustration(bean))} />
+                  {flavorIllustration(bean) && <img src={flavorIllustration(bean)} alt={`${bean.flavors?.join(", ")} 향미를 표현한 일러스트이며 실제 상품 사진이 아닙니다.`} loading="lazy" />}
+                </div>
                 <div className="monthly-bean-copy">
                   <button
                     type="button"
@@ -378,6 +394,8 @@ export default function MonthlyPickPage() {
             </form>
             <Link to="/archive/monthly">나의 월픽 노트 · 상세 자료 관리 →</Link>
           </details>
+          </div>
+          </div>
         </>
       )}
       {error && (
