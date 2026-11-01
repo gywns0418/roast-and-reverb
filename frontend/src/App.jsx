@@ -49,4 +49,4 @@ import "./styles/privacy.css";
 
 import "./styles/accessibility.css";
 
-import "./styles/modern-theme.css";
+import "./styles/typography-refinements.css";
