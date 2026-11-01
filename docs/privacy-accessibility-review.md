@@ -69,3 +69,17 @@ Git/PR/배포의 최종 결과는 아래에 검증 후 추가한다.
 - REA 6.5.0의 기존 연결 모듈 5개 정적 분석은 parseFailures=0. 새 개인정보 기능을 포함한 전체 앱의 실행 검증이나 보안 인증이 아니다.
 - 기존 9개 버전 변경은 각 원래 checkout에서 미커밋 상태로 유지. 검토용 변경 파일과 원래 branch/base SHA manifest를 로컬 `.local/all-versions-privacy-changes.zip`에 보관. 이 묶음에 DB·환경변수·개인 기록을 넣지 않았다.
 - 이 최종 문서/게시 캡처 후속은 실행 코드와 별개로 보존하며 새 main 승격을 수행하지 않는다.
+
+
+## 2026-11-01 운영 배포 완료
+
+사용자가 이 대화에서 ‘운영배포’를 명시적으로 승인했다. [PR #65](https://github.com/gywns0418/roast-and-reverb/pull/65)를 dev → main으로 병합했으며 운영 SHA는 `ce7f742630b5e2f1109d36e10251b5be15dc39c6`이다. main과 검증된 dev의 파일 차이는 없다.
+
+- PR Verify [41260517719](https://github.com/gywns0418/roast-and-reverb/actions/runs/41260517719) 성공.
+- main Verify [41260530152](https://github.com/gywns0418/roast-and-reverb/actions/runs/41260530152) 전체 성공: 프런트·서버·이미지·Trivy·ZAP 포함.
+- 운영 Pages [41260530185](https://github.com/gywns0418/roast-and-reverb/actions/runs/41260530185) 성공.
+- [운영 사이트](https://gywns0418.github.io/roast-and-reverb/)에서 개인정보/약관/환불/쿠키/권리 안내 및 라이선스 전문 모두 HTTP 200. 운영 개인정보처리방침 시행일 2026년11월1일 확인.
+- 공개 운영 UI에서 선택적 재생 미체크, 삭제 확인 전 버튼 비활성, Enter로 설정 열기/Escape 닫기 후 원래 설정 버튼으로 초점 복귀 확인. 해당 화면의 외부 출처 script 0, iframe 0.
+- [운영 게시 증거](qa/privacy-production.png). 개인 기록 삭제·메일 발송은 수행하지 않았다.
+- 이번 배포는 기존 GitHub Pages 운영 사이트에 대한 것이다. Railway 회원 서버 배포·키 변경·결제·요금제 변경은 수행하지 않았다.
+- 사업자정보·외부 권리·국외이전 및 백업 보관 조건의 기존 확인 항목은 그대로 남는다.

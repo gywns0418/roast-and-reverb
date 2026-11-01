@@ -261,3 +261,6 @@ CI신규실패: npm audit가 Vite7.3.6의수정가능advisory묶음을HIGH로검
 사용자 최종 범위는 Roast & Reverb 전체 버전. 정책4종/쿠키선택/가입동의·서버검사·동의시각보관/SDK명시연결/삭제요청·기기삭제/접근성 개선을 각 버전의 기존 화면과 저장 형식을 유지하며 로컬 반영. 구체 범위와 검증·남은 운영정보는 privacy-accessibility-review.md. 기존9개 checkout 변경은 미커밋이며 최신 main분기 feature/privacy-accessibility 통합본에서 dev PR 준비. main승격/실서버배포/메일전송/실제개인자료삭제는 수행하지 않음.
 
 최종 결과: 구현095d1d5, PR64 dev병합ed67c1a. PR Verify41256387219·dev Verify41256686771·Pages41256686781 전체성공. 공개/dev/ 정책5개200·시행일11월1일·설정선택미체크/삭제확인전비활성확인. 운영main b38412c/실제회원서버미변경. 기존9개버전로컬미커밋·변경파일ZIP보존. 세부사항 privacy-accessibility-review.md 최종결과 참조.
+
+
+2026-11-01 운영배포 승인·완료: PR65 dev→main 병합ce7f742. PR Verify41260517719/main Verify41260530152/Pages41260530185 전체성공. 운영루트 정책5개·라이선스전문200,11월1일시행일,선택기본해제·삭제확인전비활성·Enter/Escape초점복귀확인. privacy-accessibility-review.md 운영배포완료와 qa/privacy-production.png 참고. Railway회원서버/키/결제/개인기록미변경.
