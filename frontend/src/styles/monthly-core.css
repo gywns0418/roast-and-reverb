@@ -134,7 +134,7 @@
   color: #718161;
   line-height: 1.7;
 }
-.monthly-bean-open h2 {
+.monthly-bean-open :is(h2,h3) {
   font-size: 17px;
   line-height: 1.7;
   word-break: keep-all;
@@ -330,7 +330,7 @@
   .monthly-bean-copy {
     padding: 16px;
   }
-  .monthly-bean-open h2 {
+  .monthly-bean-open :is(h2,h3) {
     font-size: 15px;
   }
   .monthly-bean-open p {
