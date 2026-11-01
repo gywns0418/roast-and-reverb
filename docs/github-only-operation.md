@@ -30,3 +30,14 @@ GitHub Pages는 정적 호스팅이므로 상시 백엔드·비밀 키 기반 �
 - 프론트엔드 97개 테스트 통과: 저장 실패 롤백, 손상 자료 보호, 수정 후 재모듈화 복원, 삭제 관계 정리, 실제 통계, 월픽 근거 부족 점수 보류, 로컬 문장 추출 포함.
 - Vite 운영 빌드 성공. 백엔드 코드는 변경하지 않았음.
 - UI와 Pages 배포 결과는 배포 완료 뒤 continuity에 기록.
+
+
+### GitHub 전용 운영 게시 확인 — 2026-11-01
+- dev PR #68 병합: 0586314fb0ab69546e57934abbf7020cb25c9d7f.
+- main PR #69 병합: 9ae4556ce6be3bd0951ef256bfedaafb915ca082. 현재 사용자 요청을 GitHub 운영 전환의 명시적 승인으로 적용.
+- 기능 코드 head ad2efbcaf0d72febcd56b033e353027ced7134cf의 Verify 41268597174 성공. main Verify 41268813331 성공(frontend/backend/deployment-image), main Pages 41268813304 성공, dev Pages 41268805813 성공.
+- 운영 /#/mypage에서 GitHub Pages·기기 저장·규칙 도우미 안내 확인. 공개 카탈로그 2026-11 비로소커피 56종 확인.
+- 로컬 브라우저 QA: 문장 맛/방법 추출→저장→새로고침 후 유지, 음악 설정 65 BPM/여운85% 제안→1:02 연주/WAV 생성, 전체 기기 백업 다운로드 확인. 개인 백업과 QA 자료는 공개 저장소에 올리지 않음.
+- npm audit --omit=dev --audit-level=high: 0 vulnerabilities. security-source-check 통과(전체 비밀정보 감사라는 의미는 아님). 프론트 97 tests 성공.
+- Railway는 실행 중단, 소스 연결 없음, 최신 배포 없음, 보류 변경 없음. 기존 200MB 볼륨 보존. 원본 계정 자료 자동 이전/삭제 없음. 저장소 보관 비용 가능성은 남음.
+- 증거 화면은 격리 worktree .local/github-only-production.png 및 .local/railway-stopped.png. 기존 다른 버전 checkout의 미커밋 변경은 그대로 보존.
