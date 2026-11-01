@@ -31,7 +31,7 @@ export default function MusicSearchPage() {
   return (
     <PageShell title="음악 검색" eyebrow="Music Library" subtitle="내 기록에서 곡과 앨범을 찾습니다.">
       <section className="panel">
-        <form className="form-grid" onSubmit={e=>{e.preventDefault();handleSearch();}}>
+        <form className="form-grid music-search-form" onSubmit={e=>{e.preventDefault();handleSearch();}}>
           <Input placeholder="곡 또는 아티스트 검색" value={keyword} onChange={(event) => {setKeyword(event.target.value);setLimit(SHOWN_LIMIT);}} />
           <Button type="submit" disabled={loading}>검색</Button>
         </form>
@@ -41,7 +41,7 @@ export default function MusicSearchPage() {
           <span className="oldnum">{Math.min(visible.length, limit)} / {visible.length}건</span>
         </div>
         {!loading && visible.length === 0
-          ? <EmptyState icon="wave">일치하는 곡을 찾지 못했어요. 다른 검색어로 시도해보세요.</EmptyState>
+          ? <EmptyState icon="wave">{results.length === 0 ? "아직 저장한 음악이 없어요. 한 잔과 함께 들은 곡을 먼저 남겨보세요." : "일치하는 곡을 찾지 못했어요. 다른 검색어로 시도해보세요."}</EmptyState>
           : (
             <div className="card-grid">
               {visible.slice(0, limit).map((item) => <MusicCard item={item} key={item.id} />)}

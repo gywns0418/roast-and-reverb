@@ -28,3 +28,28 @@ Evidence: .local/library-qa/comparison-final.png (reference left, implementation
 Checklist: layout, palette, images, data, desktop/mobile and primary interactions checked;102tests and build passed.
 
 final result: passed
+
+
+# Cross-screen consistency QA — 2026-11-01
+Visual direction: user's selected option2, extended through existing page layouts and source assets. Not a pixel clone of the monthly page onto unrelated tasks. Current-run source screenshots: .local/all-screen-audit/01–28; private screenshots remain local.
+Initial combined comparisons: compare-core.png, compare-forms.png, compare-discover.png, compare-tools.png (before left/after right, same1280 viewport, raster1265×712).
+- Resolved: inconsistent header/card system,32px fields, heavy filled selection, hidden tools, oversized search action, unclear empty-state copy.
+- P2 remaining: journey still has two large introduction sections; compress bridge. Legacy monthly hero stays too tall despite smaller type; inspect actual child heights. Single legacy series selection uses full-width underline; remove redundant singleton tab.
+- Source state differs on Beans: existing user data on deployed origin vs empty local origin, intentionally not copied or fabricated. Compare shell/controls, do not claim exact populated card parity.
+Current cross-screen result: blocked pending fixes and mobile/interaction checks.
+
+
+## Cross-screen final comparison
+Combined current-run sources/implementation: compare-core.png, compare-forms.png, compare-discover.png, compare-tools.png, then compare-final.png after fixes. Focused full-size settings/forms and mobile-final-review.png also inspected. Source layout on unrelated routes is retained rather than cloned from the monthly route; selected option2 supplies palette/card/selection rhythm.
+- Fonts/typography: original brand and Korean sans serif preserved;28px desktop24px mobile headings,16px inputs, readable labels/full wrapping.
+- Spacing/layout: shared14px card corners, clear gaps,44px controls; left/right tool groups open; compact report/ritual/journey/legacy introductions. No horizontal overflow in24 mobile routes (390 viewport,375 content).
+- Colors/tokens: original cream/white/green retained; terracotta underline only for selected filters/presets. No new overall recolor.
+- Images: existing source art and accessible captions preserved; current monthly botanical assets still load. No new approximated artwork. Private populated bean screenshot not copied into local data or uploaded.
+- Copy/content: accurate local-mode pairing/import wording; starter-track count not hardcoded; honest empty search and collection add action; all source data and storage untouched.
+- Interactions: record card preview works without save;LP/CD aria-pressed toggles; collection add route; search with no stored songs; sound preset aria-pressed; tools navigation; privacy dialog opens/closes. No browser error logs.
+- Earlier P2 journey/legacy height fixed and recaptured on desktop/mobile; singleton legacy selector removed, unavailable global/small not rendered; archive records retained. Mobile music-search loading capture rejected and replaced by settled final state.
+- P3: small decorative editorial graphics intentionally retained, additional custom imagery not needed. Saved-record detail and administrator visual states not verified in absence of applicable account/records.
+
+Final checklist: existing functions/data preserved;29 audit states recorded;24 mobile paths checked; visual comparisons accepted; regression tests/build required before publication.
+
+final result: passed

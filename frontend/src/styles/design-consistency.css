@@ -1,0 +1,144 @@
+/* Extend the selected Monthly Library system across existing screens. */
+.app-shell .page:not(.page-monthly-pick) .page-heading {
+  background:#e9eddf;border:1px solid #dce2d2;border-radius:14px;
+  padding:18px 22px;margin-bottom:22px;
+}
+.app-shell .page .page-heading h1{font-size:28px;line-height:1.35;letter-spacing:-.035em}
+.app-shell .page .page-heading .subtitle{font-size:14px;line-height:1.7;color:#4c5e49;margin:7px 0 0}
+.page .workspace-content :is(.panel,.quiet-section,.quiet-details,.ledger,.first-cup-note){
+  border-color:#dce1d6;border-radius:14px;box-shadow:none;
+}
+.page .workspace-content :is(.panel,.quiet-section){padding:24px}
+.page .workspace-content :is(.panel,.quiet-section)>h2{font-size:23px;line-height:1.45;margin-top:0}
+.page .workspace-content :is(.panel,.quiet-section)>p{max-width:76ch;font-size:14px;line-height:1.85;color:#4f604b}
+.page .workspace-content .input-field{gap:8px;min-width:0}
+.page .workspace-content .input-field>span{font-size:14px;line-height:1.5;color:#43573f}
+.page .workspace-content :is(input,select):not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden]):not([type=file]){
+  min-height:44px;padding:10px 12px;font-size:16px;line-height:1.4;border-radius:8px;
+  border:1px solid #cfd7c8;background:#fbfbf8;color:#263b2d;max-width:100%;box-sizing:border-box;
+}
+.page .workspace-content textarea{font-size:15px;line-height:1.75;padding:12px 14px;border-radius:10px;border-color:#cfd7c8;box-sizing:border-box;max-width:100%}
+.page .workspace-content .form-grid{gap:20px 18px;margin-bottom:20px;align-items:start}
+.page .workspace-content .action-row{gap:10px;flex-wrap:wrap;margin-block:16px}
+.page .workspace-content :is(.primary-button,.ghost-button){min-height:44px;line-height:1.5;border-radius:8px;padding:10px 16px}
+.page .workspace-content :is(button,a,input,select,textarea,summary):focus-visible{outline:3px solid #58724b;outline-offset:3px}
+.page .workspace-content .filter-row{display:flex;flex-wrap:wrap;gap:8px 16px;margin:18px 0}
+.page .workspace-content .filter-row button{background:transparent;color:#42563a;border:0;border-bottom:2px solid transparent;border-radius:0;box-shadow:none;padding:10px 8px;min-height:44px}
+.page .workspace-content .filter-row :is(button[aria-pressed=true],button.primary-button){font-weight:700;border-bottom-color:#a24f35;color:#263b2d}
+.page .workspace-content .empty-state{background:transparent;border:0;border-radius:0;min-height:120px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:22px 0;gap:10px;text-align:left}
+.page .workspace-content .empty-state p{margin:0;font-size:15px;line-height:1.8;color:#4f604b}
+.page .workspace-content .empty-state .motif{opacity:.6}
+.page .workspace-content .collection-empty{padding-bottom:8px}
+.page .workspace-content .music-search-form{grid-template-columns:minmax(0,1fr) auto;align-items:end}
+.page .workspace-content .music-search-form>button{align-self:end;min-width:100px}
+.page .workspace-content .quiet-link-list{border-color:#dce1d6;border-radius:14px;overflow:hidden;background:#fff}
+.page .workspace-content .quiet-link-list>a{min-height:52px;font-size:15px;padding:14px 18px;transition:background-color .15s}
+.page .workspace-content .quiet-link-list>a:hover{background:#f3f5ec}
+.page .workspace-content .tool-directory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:0 0 20px;align-items:start}
+.page .workspace-content .tool-directory .quiet-details{margin:0;padding:18px}
+.tool-directory summary{font-size:19px;color:#263b2d}
+.tool-directory .quiet-link-list{border:0}
+.page .workspace-content .first-cup-note{padding:26px}
+.page .workspace-content .first-cup-note h2{font-size:25px;line-height:1.4;margin:0 0 12px}
+.page .workspace-content .simple-steps{gap:12px;margin:0 0 20px;line-height:1.7}
+.page .workspace-content .journal-welcome{border-color:#dce1d6;background:#eef1e5;border-radius:14px}
+.page .workspace-content .journal-welcome>div{padding:20px}
+.page .workspace-content .journal-welcome h2{font-size:22px;line-height:1.5}
+.page .workspace-content .bean-library-hero{padding:22px 24px;min-height:0;border:1px solid #dce2d2;border-radius:14px}
+.page .workspace-content .library-intro{padding:22px 24px;min-height:0;border:1px solid #dce2d2;border-radius:14px}
+.page .workspace-content .inventory-intro{padding:20px 24px;min-height:0;border:1px solid #dce2d2;border-radius:14px;margin-bottom:18px}
+.page .workspace-content .inventory-intro h2{font-size:24px;line-height:1.4;margin:0 0 12px}
+.page .workspace-content .inventory-intro p{font-size:14px;line-height:1.8;margin:0;max-width:70ch}
+.page .workspace-content .inventory-intro>strong{font-size:36px}
+.page .workspace-content .library-toolbar{display:flex;align-items:center;gap:12px;margin:20px 0}
+.page .workspace-content .library-search{flex:1;min-width:0}
+.page .workspace-content .library-search input{width:100%}
+.page .workspace-content .bean-shelf-grid{gap:18px}
+.page .workspace-content .owned-bean{border:1px solid #dce1d6;border-radius:14px;box-shadow:none;overflow:hidden}
+.page .workspace-content .owned-bean-copy{padding:18px}
+.page .workspace-content :is(.pairing-intro,.report-hero){min-height:200px;border-radius:14px;overflow:hidden;grid-template-columns:1.2fr .8fr}
+.page .workspace-content :is(.pairing-intro,.report-hero)>div:first-child{padding:26px}
+.page .workspace-content :is(.pairing-intro,.report-hero) h2{font-size:28px;line-height:1.4;margin:0 0 12px}
+.page .workspace-content :is(.pairing-intro,.report-hero) .record-art{min-height:200px;max-height:240px}
+.page .workspace-content .metric-strip{border-color:#dce1d6;border-radius:14px;margin:20px 0}
+.page .workspace-content .metric{padding:20px}
+.page .workspace-content .metric strong{font-size:28px}
+.page .workspace-content .memory-summary{background:#fff;border:1px solid #dce1d6;border-radius:14px;padding:22px;margin:0 0 20px}
+.page .workspace-content .memory-summary>div+div{border-left:1px solid #e0e5d8;padding-left:18px}
+.page .workspace-content .discovery-empty{background:#fff;border:1px solid #dce1d6;border-radius:14px;padding:24px}
+.page .workspace-content .discovery-compose h2{font-size:25px;margin-top:0;line-height:1.4}
+.page .workspace-content .device-message{font-size:13px;line-height:1.8;padding:12px 16px;border-radius:10px;margin:0 0 18px}
+.page .workspace-content .engine-intro{padding:22px;background:#fff;border:1px solid #dce1d6;border-radius:14px}
+.page .workspace-content .engine-intro h2{font-size:24px;line-height:1.4;margin:0 0 12px}
+.page .workspace-content .engine-intro p{max-width:76ch;line-height:1.8}
+.page .workspace-content .cup-journey-entry{padding:20px 24px}
+.page .workspace-content .cup-journey-entry h2{font-size:23px;line-height:1.4}
+.page .workspace-content .cup-journey-entry ol{margin:12px 0;padding-left:20px;line-height:1.8}
+.page .workspace-content .cup-journey-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 24px;align-items:center}
+.page .workspace-content .cup-journey-entry>h2,.page .workspace-content .cup-journey-entry>p,.page .workspace-content .cup-journey-entry>ol{grid-column:1;margin:0}
+.page .workspace-content .cup-journey-entry>ol{font-size:13px;margin-top:6px}
+.page .workspace-content .cup-journey-entry>a{grid-column:2;grid-row:1/4;max-width:210px;white-space:normal;text-align:center}
+.page .workspace-content .journey-welcome{padding:26px;margin-top:20px}
+.page .workspace-content .journey-welcome h2{font-size:28px;line-height:1.4;max-width:28ch}
+.page .workspace-content .journey-welcome p{font-size:14px;line-height:1.85;max-width:65ch}
+.page .workspace-content .journey-teaser{padding:16px 20px;margin-bottom:16px;border:1px solid #dce2d2}
+.page .workspace-content .room-welcome{padding:20px 0;gap:20px}
+.page .workspace-content .room-welcome h2{font-size:30px;line-height:1.4;margin:0 0 12px}
+.page .workspace-content .room-seal{width:90px;height:90px;flex:none}
+.page .workspace-content .room-seal b{font-size:32px}
+.page .workspace-content .sound-moods button{background:transparent;box-shadow:none;border:0;border-bottom:2px solid transparent;border-radius:0;min-height:44px}
+.page .workspace-content .sound-moods button[aria-pressed=true]{background:transparent;box-shadow:none;color:#263b2d;border-bottom-color:#a24f35;font-weight:700}
+.page .workspace-content .monthly-edition-tabs{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.page .workspace-content .monthly-edition-tabs button{background:transparent;color:#263b2d;border:0;border-bottom:2px solid transparent;border-radius:0;box-shadow:none}
+.page .workspace-content .monthly-edition-tabs button[aria-pressed=true]{border-bottom-color:#a24f35;background:transparent}
+.page .workspace-content .monthly-edition-tabs:has(button:only-child){display:none}
+.page .workspace-content .monthly-editorial{min-height:220px;border-radius:14px}
+.page .workspace-content .monthly-editorial>div:first-child{padding:24px}
+.page .workspace-content .monthly-editorial h2{font-size:30px;line-height:1.4}
+.page .workspace-content .monthly-editorial h2{margin:8px 0 12px}
+.page .workspace-content .monthly-editorial .edition-stats{margin-top:14px}
+.page .workspace-content .monthly-editorial .monthly-jump{margin-top:10px}
+.page .workspace-content .monthly-still{min-height:220px;max-height:280px}
+.page .workspace-content .monthly-still img{height:100%;object-fit:cover}
+.simple-home .simple-intro{gap:44px;padding:42px 0 32px}
+.simple-home .simple-intro h1{font-size:clamp(32px,3.7vw,48px)}
+.simple-home .simple-start{padding:40px 0}
+.simple-home .journal-guide-card{border-color:#dce1d6;border-radius:14px;box-shadow:none}
+.cover-page .cover-card{border-color:#dce1d6;border-radius:14px;box-shadow:none}
+@media(max-width:900px){
+  .page .workspace-content .tool-directory{grid-template-columns:1fr}
+  .page .workspace-content :is(.pairing-intro,.report-hero){grid-template-columns:1fr .65fr}
+  .page .workspace-content .library-toolbar{flex-wrap:wrap}
+}
+@media(max-width:600px){
+  .app-shell .page:not(.page-monthly-pick) .page-heading{padding:16px;margin-bottom:18px}
+  .app-shell .page .page-heading h1{font-size:24px}
+  .app-shell .page .page-heading .subtitle{font-size:13px}
+  .page .workspace-content :is(.panel,.quiet-section,.first-cup-note){padding:18px}
+  .page .workspace-content .form-grid{grid-template-columns:1fr;gap:16px}
+  .page .workspace-content :is(input,select,textarea){font-size:16px}
+  .page .workspace-content .music-search-form{grid-template-columns:minmax(0,1fr) auto;gap:10px}
+  .page .workspace-content .music-search-form>button{min-width:70px;padding:10px 12px}
+  .page .workspace-content :is(.pairing-intro,.report-hero){grid-template-columns:1fr;min-height:0}
+  .page .workspace-content :is(.pairing-intro,.report-hero) .record-art{min-height:140px;max-height:160px}
+  .page .workspace-content :is(.pairing-intro,.report-hero)>div:first-child{padding:20px}
+  .page .workspace-content :is(.pairing-intro,.report-hero) h2{font-size:25px}
+  .page .workspace-content .metric{padding:16px}
+  .page .workspace-content .memory-summary{padding:18px 14px;gap:10px}
+  .page .workspace-content .memory-summary>div+div{padding-left:10px}
+  .page .workspace-content .room-welcome h2{font-size:26px}
+  .page .workspace-content .journey-welcome h2{font-size:25px}
+  .page .workspace-content .cup-journey-entry{display:block}
+  .page .workspace-content .cup-journey-entry>p{margin:10px 0}
+  .page .workspace-content .cup-journey-entry>a{margin-top:14px;max-width:100%}
+  .page .workspace-content .cup-journey-entry h2{font-size:20px}
+  .page .workspace-content .cup-journey-entry>p{font-size:13px;line-height:1.75}
+  .page .workspace-content .cup-journey-entry>ol{display:none}
+  .page .workspace-content .monthly-editorial .monthly-still{display:none}
+  .page .workspace-content .room-welcome p:not(.eyebrow){font-size:14px;line-height:1.75}
+  .page .workspace-content .journey-teaser p{font-size:12px;line-height:1.7}
+  .page .workspace-content .library-toolbar>select{flex:1;min-width:150px}
+  .page .workspace-content .library-toolbar .library-search{flex-basis:100%}
+  .simple-home .simple-intro{gap:24px;padding:24px 0}
+}
+@media(prefers-reduced-motion:reduce){.page .workspace-content .quiet-link-list>a{transition:none}}

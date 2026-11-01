@@ -115,8 +115,7 @@ export default function CoffeeImportPage() {
           나중에 직접 연결할 수 있습니다.
         </p>
         <p className="brew-hint">
-          실제 계정 모드에서는 저장 버튼을 누른 기록만 서버로 전송됩니다. 체험
-          모드에서는 이 브라우저에 저장됩니다.
+          {import.meta.env.VITE_USE_REAL_API === "true" ? "저장 버튼을 누른 기록만 로그인한 계정으로 전송됩니다." : "가져온 기록은 이 브라우저에 저장됩니다. 기기를 옮기기 전 백업해 주세요."}
         </p>
         {message && (
           <p role="alert" className="resource-error">
