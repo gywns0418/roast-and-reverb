@@ -1,4 +1,4 @@
-import { mockRequest } from "./mockApi.js";
+import { localRequest } from "./mockApi.js";
 import { authStore } from "../store/authStore.js";
 import {readApiResponse} from './response.js';
 
@@ -7,7 +7,7 @@ const USE_REAL_API = import.meta.env.VITE_USE_REAL_API === "true";
 
 export async function request(path, options = {}) {
   if (!USE_REAL_API) {
-    return mockRequest(path, options);
+    return localRequest(path, options);
   }
 
   const token = authStore.token;

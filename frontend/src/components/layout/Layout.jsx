@@ -48,7 +48,7 @@ export default function Layout() {
         {local && (
           <div className="demo-notice" role="status">
             <span className="notice-desktop">
-              체험 기록은 이 브라우저에 저장돼요. 기기를 바꾸기 전 설정에서
+              기기 기록은 이 브라우저에 저장돼요. 기기를 바꾸기 전 설정에서
               백업해 주세요.
             </span>
             <span className="notice-mobile">
