@@ -2,7 +2,7 @@
 body .app-shell .page .workspace-content :is(.primary-button,.ghost-button){display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:11px 18px;border-radius:10px;font-family:var(--rr-ui-font);font-size:14px;font-weight:650;line-height:1.5;text-decoration:none;box-sizing:border-box;transition:background-color .15s,border-color .15s,box-shadow .15s;cursor:pointer}
 body .app-shell .page .workspace-content .primary-button{background:#294331;color:#fff;border:1px solid #294331;box-shadow:0 2px 3px #20342912}
 body .app-shell .page .workspace-content .primary-button:hover:not(:disabled){background:#203628;border-color:#203628;box-shadow:0 3px 7px #20342920}
-body .app-shell .page .workspace-content .ghost-button{background:#fff;border:1px solid #9aa78f;color:#304b34;box-shadow:none}
+body .app-shell .page .workspace-content .ghost-button{background:#fff;border:1px solid #74836d;color:#304b34;box-shadow:none}
 body .app-shell .page .workspace-content .ghost-button:hover:not(:disabled){background:#f1f4e9;border-color:#687e5d}
 body .app-shell .page .workspace-content :is(.primary-button,.ghost-button):active:not(:disabled){box-shadow:inset 0 2px 4px #102a191f}
 body .app-shell .page .workspace-content :is(.primary-button,.ghost-button):disabled{opacity:.55;cursor:default;box-shadow:none}
