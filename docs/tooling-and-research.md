@@ -72,3 +72,15 @@
 - 공개 읽기 확인: `/healthz` 200, `/privacy.html` 200이지만 11월1일 새 정책 없음, `/terms.html` 401. 새 개인정보 기능이 Railway에 게시됐다고 주장하지 않는다.
 - Codex Railway 앱 재연결을 사용자에게 요청했으며 응답 대기. 현재 브라우저 탭을 handoff로 보존. [연결 오류 증거](qa/railway-connection-blocked.png).
 - 병행 작업으로 origin/main이 `0e3de67`(PR67 11월월픽)까지 이동했다. 인증 복구 뒤 최신 main의 CI와 변경 범위를 다시 확인하고 개인정보 기능·11월 데이터를 함께 보존하는 배포 SHA를 선택한다.
+
+
+## 2026-11-01 Railway 연결 복구 성공·실배포 등록·대기
+
+인앱 브라우저에서 사용자의 ChatGPT 로그인을 확인하고 Railway 플러그인 연결 관리 → 연결 → 기존 계정 Google 인증을 통해 OAuth 재연결을 완료했다. 이후 Railway 서비스 조회가 정상화됐다. 인증 토큰·비밀번호·API 키를 추출하거나 문서에 보관하지 않았다.
+
+- 기존 production 서비스와 `/data` 200MB 볼륨·도메인·환경변수 유지. 소스는 검증/Pages 성공한 main `0e3de67d3fd2a6d20896823973d1bb7573192917`로 갱신, CPU1/RAM500MB/유휴정지/healthz/재시작3회·드레인20초·겹침0초를 준비했다. 변경12개는 destructive:false였고 서비스/볼륨 삭제가 없었다.
+- 사용자가 최종 배포를 명시 승인했으나 accept-deploy 도구는 두 번 ‘사용자 승인 없음’으로 취소했다. 다른 API나 UI 자동클릭으로 우회하지 않았다. 사용자가 인앱 Railway 화면의 Deploy 버튼을 직접 누른 후 배포 `8889ab29-fd78-4be0-9a02-5b435bbb3778`가 2026-11-01 11:24:47 KST에 실제 등록됐다.
+- 실제 신규 배포 상태는 `QUEUED`, 초기화/빌드 미시작·빌드 로그 없음. 기존 `a94b9c58-8e78-4af5-83d6-d086301edf7a`(#50/5296ea2) 배포가 계속 SUCCESS/Online 상태다. 서비스 경고·최근 실패0.
+- 사용자의 ‘재시도’ 요청으로 신규 배포 ID에 공식 redeploy를 한 번 호출했으나 Railway가 `Cannot redeploy without a snapshot ... (QUEUED)`로 거절했다. canRedeploy:false 확인. 옛 #50 빌드를 재배포하거나, 기존 요청을 취소해 대기 순서를 잃거나, 새 서비스를 만들거나, 유료로 전환하지 않았다.
+- 연결은 복구 완료다. 남은 조건은 Railway가 대기 중인 배포를 빌드하는 것이다. 새 정책이 Railway에 반영됐다고 주장하지 않는다. 완료 시 동일 배포 ID의 SUCCESS 및 실제 healthz/정책5개/회원 API 인증보호를 확인한다.
+- [공식 배포 상태·혼잡 시 제한 안내](https://docs.railway.com/deployments/reference#deployments-paused---limited-access)는 무료 플랜의 빌드가 혼잡 시 대기할 수 있음을 설명한다. 이번 지연의 정확한 원인이나 완료시각은 확인되지 않았다.

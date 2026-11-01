@@ -267,3 +267,6 @@ CI신규실패: npm audit가 Vite7.3.6의수정가능advisory묶음을HIGH로검
 
 
 2026-11-01 Railway갱신요청: 플러그인재인증필요,브라우저GitHub브랜치조회도실패. 기존서버Online/healthz200이나새개인정보기능미반영(terms401). 신규배포·키·소스·볼륨·유료변경없음. 사용자Railway재연결응답대기. 세부 privacy-accessibility-review.md Railway갱신시도 참고.
+
+
+2026-11-01 Railway OAuth재연결성공. 사용자가Deploy직접실행해신규8889ab29(main0e3de67)등록. 현재QUEUED/빌드미시작·기존5296ea2서버정상. 사용자재시도요청의공식redeploy는스냅샷없음으로거절. 새개인정보기능Railway미게시·대기. 세부 privacy-accessibility-review.md Railway연결복구성공 참고.
