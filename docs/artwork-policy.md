@@ -27,3 +27,8 @@ Unused individual illustrations created before the user's scope correction remai
 
 ## Maintenance
 Run node scripts/check-illustration-coverage.mjs from repo root. Exit 2 means a new/changed unspecialty blend needs source-grounded image review. All other categories must retain the shared bean asset. The scheduled routines also review home, dashboard, forms, records, settings, tools and mobile; they cannot silently merge main or restart Railway.
+
+## 2026-11-02 dashboard-only transparent edit
+Built-in image_gen edit of existing common-bean.webp, with transparent_background=true. Result is RGBA with alpha0–255, optimized to360×480 WebP preserving alpha. Output: frontend/public/images/beans/common-bean-cutout.webp. Existing monthly shared asset remains unchanged. Original: C:/Users/gywns/.codex/generated_images/01a1946a-f606-7b13-84ac-3745206cdacf/exec-9c7b3650-1cd1-4009-94f0-f92a723be6e0.png.
+Prompt:
+> Edit target: the attached existing two green coffee beans watercolor artwork. Remove only the flat warm cream/peach paper background completely to true alpha transparency. Preserve the exact two-bean composition, colors, texture, watercolor edges and botanical realism. No new objects, no text, no white rectangle, no background surface or cast shadow. Standalone transparent cutout for an existing white website panel. Keep generous but modest transparent padding around the beans. Output an RGBA PNG.

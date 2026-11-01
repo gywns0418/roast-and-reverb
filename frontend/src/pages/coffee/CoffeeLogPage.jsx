@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Loading from "../../components/common/Loading.jsx";
 import FirstCup from "../../components/coffee/FirstCup.jsx";
+import JournalNextSteps from "../../components/common/JournalNextSteps.jsx";
 import { coffeeApi } from "../../api/coffeeApi.js";
 import { adaptCoffeeLog } from "../../api/adapters.js";
 import { listDiaryRecords } from "../../utils/diaryRecords.js";
@@ -253,8 +254,13 @@ export default function CoffeeLogPage() {
             </div>
           ) : (
             <>
+              <div className="journal-overview" aria-label="내 커피 기록 요약">
+                <div><span>남긴 한 잔</span><strong>{rows.length}<small>잔</small></strong></div>
+                <div><span>음악을 더한 기록</span><strong>{rows.filter(row => row.brewDetails?.soundtrack).length}<small>잔</small></strong></div>
+                <div><span>가장 최근 기록</span><strong className="journal-last-date">{[...rows].sort((a,b)=>b.date.localeCompare(a.date))[0]?.date || "첫 한 잔을 기다려요"}</strong></div>
+              </div>
               <div className="simple-section-title">
-                <p>{rows.length}개의 한 잔</p>
+                <h2 className="journal-list-title">나의 커피 일지</h2>
                 <Link className="primary-button" to="/dashboard">
                   새 한 잔 남기기
                 </Link>
@@ -273,6 +279,7 @@ export default function CoffeeLogPage() {
               <div className="simple-records">
                 {visible.map((row) => (
                   <Link key={row.id} to={"/coffee/" + row.id}>
+                    <img className="record-cup-art" src={import.meta.env.BASE_URL + "images/guide-cup.webp"} alt="" aria-hidden="true" width="64" height="64" />
                     <small>{row.date}</small>
                     <h2>{row.bean}</h2>
                     <p>{row.memo || "이날의 한 잔 다시 보기"}</p>
@@ -282,11 +289,13 @@ export default function CoffeeLogPage() {
               </div>
               {!rows.length && !query && (
                 <section className="quiet-section journal-desktop-empty">
+                  <img src={import.meta.env.BASE_URL + "images/guide-save.webp"} alt="" aria-hidden="true" width="120" height="120" />
                   <h2>아직 기록이 없어요.</h2>
                   <p>오늘의 한 잔을 기록하면, 커피와 함께 남긴 이야기가 여기에 모여요.</p>
                   <Link className="primary-button" to="/dashboard">오늘 기록하기 →</Link>
                 </section>
               )}
+              <JournalNextSteps omit="/dashboard" />
               {!visible.length && rows.length > 0 && (
                 <p className="simple-empty">
                   {query
