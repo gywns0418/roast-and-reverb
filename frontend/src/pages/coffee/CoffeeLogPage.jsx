@@ -151,7 +151,7 @@ export default function CoffeeLogPage() {
       ) : (
         <>
           {!rows.length && !query && (
-            <section className="journal-welcome" aria-label="기록 시작 안내">
+            <section className="journal-welcome" aria-label="기록 시작 안내" hidden={!compact}>
               <img
                 src={import.meta.env.BASE_URL + "images/pairing-editorial.webp"}
                 alt="커피잔과 레코드를 함께 배치한 서비스 연출 이미지"
@@ -281,8 +281,10 @@ export default function CoffeeLogPage() {
                 ))}
               </div>
               {!rows.length && !query && (
-                <section className="quiet-section journal-desktop-composer">
-                  <FirstCup onSaved={(row) => update(adaptCoffeeLog(row))} />
+                <section className="quiet-section journal-desktop-empty">
+                  <h2>아직 기록이 없어요.</h2>
+                  <p>오늘의 한 잔을 기록하면, 커피와 함께 남긴 이야기가 여기에 모여요.</p>
+                  <Link className="primary-button" to="/dashboard">오늘 기록하기 →</Link>
                 </section>
               )}
               {!visible.length && rows.length > 0 && (
