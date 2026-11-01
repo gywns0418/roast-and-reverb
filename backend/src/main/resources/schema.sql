@@ -167,3 +167,12 @@ CREATE TABLE IF NOT EXISTS social_identity (
 
 ALTER TABLE member ADD COLUMN IF NOT EXISTS auth_version INT NOT NULL DEFAULT 0;
 CREATE TABLE IF NOT EXISTS revoked_token (token_hash VARCHAR(64) PRIMARY KEY, expires_at BIGINT NOT NULL);
+
+CREATE TABLE IF NOT EXISTS member_policy_consent (
+ member_id BIGINT NOT NULL,
+ policy_version VARCHAR(20) NOT NULL,
+ age_confirmed BOOLEAN NOT NULL,
+ accepted_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY(member_id,policy_version),
+ FOREIGN KEY(member_id) REFERENCES member(member_id) ON DELETE CASCADE
+);

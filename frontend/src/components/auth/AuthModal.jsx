@@ -1,3 +1,4 @@
+import RegistrationConsent from "./RegistrationConsent.jsx";
 import GoogleSignIn from './GoogleSignIn.jsx';
 import { useState,useEffect,useRef } from "react";
 import Button from "../common/Button.jsx";
@@ -11,6 +12,7 @@ export default function AuthModal({ initialMode = "login", onClose, onAuthentica
   useEffect(()=>{const previous=document.activeElement;dialog.current?.querySelector("input,button")?.focus();return()=>previous?.focus?.();},[]);
   function keys(event){if(event.key==="Escape"&&!loading)onClose?.();if(event.key!=="Tab")return;const fields=[...dialog.current.querySelectorAll("button:not([disabled]),input:not([disabled]),a[href]")];const first=fields[0],last=fields.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}}
   const [mode, setMode] = useState(initialMode);
+  const [consent,setConsent]=useState({age:false,terms:false,privacy:false});
   const [form, setForm] = useState({ nickname: "slow brew", email: "", password: "" });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,6 +23,7 @@ export default function AuthModal({ initialMode = "login", onClose, onAuthentica
   const isFindPassword = mode === "find-password";
 
   async function handleSubmit() {
+    if (isJoin) { if (!consent.age || !consent.terms || !consent.privacy) { setMessage("나이 확인과 필수 동의 항목을 확인해 주세요."); return; } }
     if(loading)return;
     setLoading(true);
     setMessage("");
@@ -32,7 +35,7 @@ export default function AuthModal({ initialMode = "login", onClose, onAuthentica
 
       let user = null;
       try {
-        user = isJoin ? await authApi.join(form) : await authApi.login(form);
+        user = isJoin ? await authApi.join({...form,policyVersion:"2026-11-01",ageConfirmed:consent.age,termsAccepted:consent.terms,privacyAccepted:consent.privacy}) : await authApi.login(form);
       } catch (err) {
         if (err.status) {
           setMessage(err.message || "요청에 실패했습니다.");
@@ -69,6 +72,7 @@ export default function AuthModal({ initialMode = "login", onClose, onAuthentica
           {isJoin && <Input placeholder="닉네임" value={form.nickname} onChange={update("nickname")} />}
           <Input required autoComplete="email" type="email" placeholder="이메일" value={form.email} onChange={update("email")} />
           {!isFindId && !isFindPassword && <Input required minLength={isJoin?8:undefined} maxLength={isJoin?72:undefined} autoComplete={isJoin?"new-password":"current-password"} type="password" placeholder="비밀번호" value={form.password} onChange={update("password")} />}
+          {isJoin&&<RegistrationConsent value={consent} onChange={setConsent}/>}
           <Button type="submit" disabled={loading||isFindId||isFindPassword} loading={loading}>
             {loading ? "처리 중" : isJoin ? "계정 만들기" : isFindId ? "계정 정보 받기" : isFindPassword ? "재설정 링크 받기" : "로그인"}
           </Button>

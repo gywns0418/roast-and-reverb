@@ -1,3 +1,4 @@
+import RegistrationConsent from "../../components/auth/RegistrationConsent.jsx";
 import GoogleSignIn from "../../components/auth/GoogleSignIn.jsx";
 import TrialNotice from "../../components/auth/TrialNotice.jsx";
 import { useState } from "react";
@@ -9,6 +10,7 @@ import { authStore } from "../../store/authStore.js";
 
 export default function JoinPage() {
   const navigate = useNavigate();
+  const [consent,setConsent]=useState({age:false,terms:false,privacy:false});
   const [form, setForm] = useState({
     nickname: "slow brew",
     email: "",
@@ -21,13 +23,14 @@ export default function JoinPage() {
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
 
   async function handleJoin() {
+    if (!consent.age || !consent.terms || !consent.privacy) { setError("나이 확인과 필수 동의 항목을 확인해 주세요."); return; }
     if (loading) return;
     setLoading(true);
     setError("");
     try {
       let user = null;
       try {
-        user = await authApi.join(form);
+        user = await authApi.join({...form,policyVersion:"2026-11-01",ageConfirmed:consent.age,termsAccepted:consent.terms,privacyAccepted:consent.privacy});
       } catch (err) {
         throw err;
       }
@@ -91,6 +94,7 @@ export default function JoinPage() {
             value={form.password}
             onChange={update("password")}
           />
+          <RegistrationConsent value={consent} onChange={setConsent}/>
           <Button
             type="submit"
             disabled={loading || import.meta.env.VITE_USE_REAL_API !== "true"}

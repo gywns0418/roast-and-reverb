@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-01",
+  "fonts": "System fonts; Google Fonts automatic stylesheet requests removed.",
+  "images": [
+    {
+      "file": "coffee-editorial.webp",
+      "sha256": "0015f891f15e7e16176eb9a69e66824d57a53d99b9c2bef5b63727889f1b0e53",
+      "provenance": "Project-generated editorial artwork; see docs/design-guide.md. Not an official product or album photo."
+    },
+    {
+      "file": "house-editorial.webp",
+      "sha256": "7bf786a0a633548c692c1dc83ba1e5f5c261b486188552f088cea06dbe986c35",
+      "provenance": "Project-generated editorial artwork; see docs/design-guide.md. Not an official product or album photo."
+    },
+    {
+      "file": "music-editorial.webp",
+      "sha256": "b5100efb07d0f61f2ce39504ef2bb5311898149d061b93e479fde955b81da6d7",
+      "provenance": "Project-generated editorial artwork; see docs/design-guide.md. Not an official product or album photo."
+    },
+    {
+      "file": "pairing-editorial.webp",
+      "sha256": "e37a8c441e051951c600e5856d7ae6601a0bc31d0ccc091d9b380748fecc6e36",
+      "provenance": "Project-generated editorial artwork; see docs/design-guide.md. Not an official product or album photo."
+    },
+    {
+      "file": "ritual-editorial.png",
+      "sha256": "936f266bf37029a25dea3db900c46b255eb56c7ff0fe19fe65a9c7b82c1280d1",
+      "provenance": "Project-generated editorial artwork; see docs/design-guide.md. Not an official product or album photo."
+    },
+    {
+      "file": "special-editorial.webp",
+      "sha256": "398b25212ede0ee9f2433e770b5f6120cc859278f62f9ed236dd2363b55092d6",
+      "provenance": "Project-generated editorial artwork; see docs/design-guide.md. Not an official product or album photo."
+    }
+  ],
+  "limitations": "Project creation records are provenance evidence, not a third-party rights clearance. Uploaded photos and external media require their own rights."
+}

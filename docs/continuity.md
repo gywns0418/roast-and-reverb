@@ -389,3 +389,7 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 
 ## 2026-10-30 화면 밀도 보완
 사용자 핵심요구: 기능단순화와별개로화면은꽉차게. feature/content-density(main분기): 공통폭/여백,월픽가로카드/도구모음,빈기록소개+기존입력,설정2열.90테스트/build·모바일12검사성공. 상세 content-density.md. 기존데이터/메뉴보존·PR/게시결과후속기록.
+
+
+## 2026-11-01 전체 버전 개인정보·접근성 점검
+사용자 최종 범위는 Roast & Reverb 전체 버전. 정책4종/쿠키선택/가입동의·서버검사·동의시각보관/SDK명시연결/삭제요청·기기삭제/접근성 개선을 각 버전의 기존 화면과 저장 형식을 유지하며 로컬 반영. 구체 범위와 검증·남은 운영정보는 privacy-accessibility-review.md. 기존9개 checkout 변경은 미커밋이며 최신 main분기 feature/privacy-accessibility 통합본에서 dev PR 준비. main승격/실서버배포/메일전송/실제개인자료삭제는 수행하지 않음.

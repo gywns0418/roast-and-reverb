@@ -14,7 +14,7 @@ class MonthlyPickSecurityTest {
  @Autowired MockMvc mvc;
  @Autowired ObjectMapper json;
  private String account(String email) throws Exception {
-  var result=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"email\":\""+email+"\",\"password\":\"coffee-test-123\",\"nickname\":\"Picker\"}")).andExpect(status().isOk()).andReturn();
+  var result=mvc.perform(post("/api/auth/join").contentType("application/json").content("{\"policyVersion\":\"2026-11-01\",\"ageConfirmed\":true,\"termsAccepted\":true,\"privacyAccepted\":true,\"email\":\""+email+"\",\"password\":\"coffee-test-123\",\"nickname\":\"Picker\"}")).andExpect(status().isOk()).andReturn();
   return "Bearer "+json.readTree(result.getResponse().getContentAsString()).path("data").path("token").asText();
  }
  @Test void sourceRequiresAuthenticationAndScoringCannotModifyAnotherMembersPick() throws Exception {
