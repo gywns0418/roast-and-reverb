@@ -9,6 +9,7 @@ import Loading from "../../components/common/Loading.jsx";
 import BeanArtwork from "../../components/beans/BeanArtwork.jsx";
 import { monthlyCatalog, importMonthlyUrl } from "../../api/monthlyCatalog.js";
 import { catalogAvailability } from "../../utils/catalogAvailability.js";
+import { currentMonthlyCatalog } from "../../utils/currentMonthlyCatalog.js";
 import {
   readMonthlyFavorites,
   saveMonthlyFavorite,
@@ -74,7 +75,8 @@ export default function MonthlyPickPage() {
       .then((rows) => {
         if (live) {
           setCatalog(rows);
-          const first = rows.find((p) => p.edition === "regular") || rows[0];
+          const current = currentMonthlyCatalog(rows);
+          const first = current.find((p) => p.edition === "regular") || current[0];
           setSeries(first?.sourceUrl || "");
           setUrl(first?.sourceUrl || "");
         }
@@ -89,19 +91,20 @@ export default function MonthlyPickPage() {
       live = false;
     };
   }, []);
-  const product = catalog.find((p) => p.sourceUrl === series);
+  const currentCatalog = currentMonthlyCatalog(catalog);
+  const product = currentCatalog.find((p) => p.sourceUrl === series) || currentCatalog[0];
   const allBeans = catalog.flatMap((owner) =>
     owner.items.map((bean) => ({ ...bean, owner })),
   );
   const candidates = favoritesOnly
     ? allBeans.filter((b) => favorites.includes(String(b.id)))
-    : allBeans.filter((b) => b.owner.sourceUrl === series);
+    : allBeans.filter((b) => b.owner.sourceUrl === product?.sourceUrl);
   const beans=filterMonthlyBeans(candidates,{query,category,color,available,hideDecaf});
   const grouped=groupMonthlyBeans(beans);
   function clearFilters(){setQuery("");setCategory("all");setColor("all");setAvailable(false);setHideDecaf(false);setFavoritesOnly(false);}
   const compared = allBeans.filter((b) => selected.includes(String(b.id)));
   function choose(p) {
-    if (!p) return;
+    if (!p || !currentMonthlyCatalog([p]).length) return;
     setSeries(p.sourceUrl);
     setUrl(p.sourceUrl);
     clearFilters();
@@ -148,7 +151,9 @@ export default function MonthlyPickPage() {
       ]);
       choose(fresh);
       setMessage(
-        fresh.roastery +
+        !currentMonthlyCatalog([fresh]).length
+          ? "자료를 확인했지만 현재 판매 기간이 아니어서 월픽 선택에는 표시하지 않아요. 저장한 관심 원두는 유지됩니다."
+          : fresh.roastery +
           " 원두 " +
           fresh.items.length +
           "종의 자료를 확인했어요.",
@@ -170,17 +175,18 @@ export default function MonthlyPickPage() {
         <>
           <div
             className="monthly-editions"
+            style={{gridTemplateColumns: `repeat(${Math.max(1, editions.filter(([key]) => currentCatalog.some(p => p.edition === key)).length)}, minmax(0, 1fr))`}}
             role="group"
             aria-label="월픽 시리즈"
           >
-            {editions.map(([key, label]) => {
-              const p = catalog.find((row) => row.edition === key);
+            {editions.filter(([key]) => currentCatalog.some(row => row.edition === key)).map(([key, label]) => {
+              const p = currentCatalog.find((row) => row.edition === key);
               return (
                 <button
                   key={key}
                   type="button"
                   disabled={!p}
-                  aria-pressed={!favoritesOnly && p?.sourceUrl === series}
+                  aria-pressed={!favoritesOnly && p?.sourceUrl === product?.sourceUrl}
                   onClick={() => choose(p)}
                 >
                   <strong>{label}</strong>
@@ -191,6 +197,7 @@ export default function MonthlyPickPage() {
               );
             })}
           </div>
+          {!currentCatalog.length && <p role="status">현재 선택할 수 있는 월픽이 없어요. 판매 기간이 확인되면 표시됩니다. 저장한 관심 원두는 계속 확인할 수 있어요.</p>}
           <div className="monthly-core-toolbar">
             <label className="monthly-core-search">
               원두 검색
