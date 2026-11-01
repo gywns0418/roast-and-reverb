@@ -146,7 +146,7 @@ export default function FirstCup({
   }
   useEffect(() => {
     let alive = true;
-    if (real && authStore.token)
+    if (!real || authStore.token)
       companionApi
         .status()
         .then((v) => {
@@ -206,7 +206,7 @@ export default function FirstCup({
         const fields = await companionApi.organize(original, controller.signal);
         if (id !== operation.current || scope() !== owner) return;
         setValue((v) => ({ ...v, ...literalCupFields(fields, original) }));
-        setNotice("AI가 적어주신 말만 골라 정리했어요. 확인하고 보관하세요.");
+        setNotice("적어주신 말에서 맛과 추출 방법을 골라 정리했어요. 확인하고 보관하세요.");
       } catch (err) {
         if (id !== operation.current || scope() !== owner) return;
         setNotice(
@@ -229,7 +229,7 @@ export default function FirstCup({
       setNotice(
         real && authStore.token
           ? "입력한 그대로 카드를 만들었어요. AI 정리는 현재 사용할 수 없어요."
-          : "입력한 그대로 만든 체험 카드예요. 아직 저장하지 않았어요.",
+          : "입력한 그대로 만든 카드예요. 아직 저장하지 않았어요.",
       );
     if (id === operation.current && scope() === owner) setPreview(true);
   }
@@ -433,13 +433,13 @@ export default function FirstCup({
                 다음: 기록 확인하기 <ArrowRight size={18} />
               </button>
             )}
-            {!saved && !example && real && authStore.token && (
+            {!saved && !example && (!real || authStore.token) && (
               <>
                 <p className="first-ai-status" role="status">
                   {!ai
                     ? "AI 정리 상태 확인 중…"
                     : ai.available
-                      ? "원두·맛·방법을 한 문장으로 적으면 AI 정리를 시도할 수 있어요."
+                      ? "입력한 문장에서 맛과 추출 방법을 정리합니다. 기기 내 규칙을 사용하며 원두명은 직접 확인해 주세요."
                       : ai.state === "quota_exhausted"
                         ? "AI 정리가 잠시 중단됐어요. 서비스의 AI 이용 한도를 확인하고 있습니다. 원문 카드는 바로 만들 수 있어요."
                         : ai.state === "missing_key"
@@ -457,7 +457,7 @@ export default function FirstCup({
                       <Sparkles size={16} />
                       {busy === "organize"
                         ? "한 문장을 정리하고 있어요…"
-                        : "AI로 한 번에 정리해보기"}
+                        : "문장에서 맛·방법 정리하기"}
                     </button>
                   )}
                   {ai && !ai.available && (
@@ -633,14 +633,14 @@ export default function FirstCup({
             )}
             {storageError && <p role="alert">{storageError}</p>}
             <p className="first-cup-privacy">
-              {ai?.available
-                ? "‘AI로 한 번에 정리해보기’를 누를 때만 이 문장을 OpenAI로 보냅니다. "
+              {real && ai?.available
+                ? "‘문장에서 맛·방법 정리하기’를 누를 때만 이 문장을 OpenAI로 보냅니다. "
                 : ""}
               {real && !authStore.token
                 ? "가입 전에도 카드 만들기와 음악 듣기를 체험해요. 보관할 때만 로그인하세요."
                 : real
                   ? "보관한 카드는 내 계정에서 다시 꺼내볼 수 있어요."
-                  : "체험 기록은 이 브라우저에 보관됩니다."}
+                  : "기기 기록은 이 브라우저에 보관됩니다."}
             </p>
           </>
         )}

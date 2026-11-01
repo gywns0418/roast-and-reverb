@@ -393,3 +393,10 @@ feature/monthly-pick-core: 모바일 3메뉴 기록/월픽/설정 유지. 월픽
 
 ## 2026-11-01 전체 버전 개인정보·접근성 점검
 사용자 최종 범위는 Roast & Reverb 전체 버전. 정책4종/쿠키선택/가입동의·서버검사·동의시각보관/SDK명시연결/삭제요청·기기삭제/접근성 개선을 각 버전의 기존 화면과 저장 형식을 유지하며 로컬 반영. 구체 범위와 검증·남은 운영정보는 privacy-accessibility-review.md. 기존9개 checkout 변경은 미커밋이며 최신 main분기 feature/privacy-accessibility 통합본에서 dev PR 준비. main승격/실서버배포/메일전송/실제개인자료삭제는 수행하지 않음.
+
+
+## 2026-11-01 GitHub 전용 운영 전환
+- 사용자 요청에 따라 Railway 실행 중단 및 GitHub 소스 자동 배포 연결 해제. 기존 볼륨은 보존. 신규 Railway 배포를 재시도하지 않는다.
+- feature/github-only는 origin/main 0e3de67에서 새 격리 worktree로 분기. 다른 기존 버전 수정 보존.
+- 브라우저 체험 모드를 운영 기록장으로 전환하고 고정 예시 API 분석/통계/회원 응답 제거. 문장 정리·음악 설정은 기기 규칙, 실제 기록 통계와 월픽 특성 점수, 기존 저장소 키/백업 호환 유지.
+- 97 frontend tests 및 Vite build 성공. 기능별 범위/원본 데이터 보관은 docs/github-only-operation.md 참고.
