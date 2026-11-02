@@ -28,19 +28,23 @@ export default function HomePage() {
           <div>
             <p className="eyebrow">커피 한 잔, 음악 한 곡</p>
             <h1>
-              좋았던 한 잔을
+              좋았던 커피,
               <br />
-              기억하는 작은 습관.
+              다음에도 고를 수 있게.
             </h1>
             <p className="simple-intro-lead">
-              오늘 마신 커피의 느낌을 한 줄로 남겨요.
+              내 말로 남긴 맛을 다시 보고, 다음 원두를 골라요.
               <br />
-              함께 듣고 싶은 음악은 그다음에 골라도 좋아요.
+              음악 한 곡을 더하면 그날의 분위기도 함께 남아요.
             </p>
             <button type="button" className="primary-button" onClick={start}>
               한 줄 남겨보기 <span aria-hidden="true">↓</span>
             </button>
-            <small>커피 지식도, 긴 설명도 필요 없어요.</small>
+            <small>원두 이름을 몰라도 괜찮아요. 기억나는 느낌부터.</small>
+            <div className="consumer-discover">
+              <span>아직 마실 커피를 고르는 중인가요?</span>
+              <Link to="/monthly-pick">이달의 원두 둘러보기 →</Link>
+            </div>
           </div>
           <JournalGuide compact />
         </section>

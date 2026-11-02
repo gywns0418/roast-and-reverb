@@ -3,7 +3,7 @@ import { ArrowRight, BookOpen, PackageOpen, FolderDown } from "lucide-react";
 
 const steps = [
   { to: "/dashboard", Icon: BookOpen, title: "한 잔 남기기", text: "맛을 잘 몰라도, 오늘 기억나는 느낌부터." },
-  { to: "/monthly-pick", Icon: PackageOpen, title: "다음 원두 찾기", text: "이달의 원두를 향미와 색으로 살펴보세요." },
+  { to: "/monthly-pick", Icon: PackageOpen, title: "다음 원두 찾기", text: "좋아했던 맛을 컵노트로 검색하고, 용량별 가격을 비교해보세요." },
   { to: "/backup", Icon: FolderDown, title: "기록 안전하게 보관하기", text: "기기를 옮기기 전 백업 파일로 챙겨두세요." },
 ];
 
