@@ -47,3 +47,19 @@ Mobile390×844 settings and compact record empty state inspected: no horizontal 
 Validation:105 tests pass and production Vite build passes.
 
 Additional coverage: music list and archive directory inspected at desktop after applying the same system; actual counts, compact illustrated music empty state and existing write route verified. Tool descriptions map only to existing routes. after-music.png and after-archive.png accepted; no overflow/broken assets.
+
+## 2026-11-02 design-only visual polish
+final result: passed
+
+Constraint: preserve the selected Writing Desk/Monthly Library frame and every feature. Changes are presentation CSS, static asset references, and removal of a repeated house-blend category suffix in display. No API/store/router/handler/recommendation/storage logic or source catalog changed. Test assertions and coverage reference only update the expected image filename.
+
+References checked: https://atlassian.design/foundations/spacing (actual browser screenshot reference-spacing.png), https://atlassian.design/foundations/typography, https://carbondesignsystem.com/components/button/usage/, https://www.nngroup.com/articles/visual-hierarchy-ux-definition/. Principles applied within the existing cream/white/green brand: consistent spacing, restrained hierarchy, a clear primary/secondary control distinction and purposeful grouping. No reference branding/assets copied. User requested autonomous judgment within the existing frame, so the existing selected visual remains the target.
+
+Evidence .local/visual-polish/: before/after captures at1280px CSS desktop; comparison-dashboard.jpg, comparison-final-monthly.jpg and comparison-mypage.jpg combine source and implementation at800px each, same content state/viewport. Original captures inspected for readable control/typography details. guide-fix comparison combines before/fixed direct help-route screenshots. Actual bean art checked at full resolution and in shared house-blend cards.
+
+Required surfaces: system Korean sans retained with clear28px page title/22px section/14px body/12–13px metadata. Gaps use the existing4/8px rhythm (16/24px typical); panel and button radii unified, subtle border/shadow separate white surfaces from cream. Main/action text and #74836d boundaries/focus remain legible; source flavor HEX unchanged. Two-bean composition retained, recolored to cinnamon/tan light roast with true alpha. It is generic illustrative art, not an assertion about actual vendor roast levels. Five individual flavor artworks remain unchanged; other51 use the new shared art.
+
+P2 fixed: inherited three-column topbar grid left the help link floating mid-header; flex now aligns it to the right content edge. Shared ghost-button display overrode the existing desktop monthly filter-toggle visibility; scoped responsive CSS restores desktop rail/mobile toggle without changing the handler. P1 fixed: guide raster sizing depended on a lazy bean stylesheet, so direct /help navigation could cover descriptions with320px images. Rules now always load; measured image/frame heights are120px and all descriptions visible. Re-captured after fixes.
+
+Checked desktop: home, dashboard, monthly, records, settings, recommendation, owned beans, backup, music, archive, monthly report and help. No overflow or broken images. Mobile390×844 monthly and settings: no overflow; original filter expand/select/collapse works. No persistence writes during this task. Existing local verification record is not a production seed. All core navigation and data semantics preserved.
+No remaining P0/P1/P2; no new functional features.105 frontend tests, production build and artwork coverage pass.

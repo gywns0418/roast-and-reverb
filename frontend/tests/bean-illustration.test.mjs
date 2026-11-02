@@ -8,7 +8,7 @@ test('individual flavor art is limited to unspecialty blends; other categories s
   const current=catalog.products.find(p=>p.month==='2026-11'&&p.edition==='regular');
   const blend=current.items.find(b=>b.category==='unspecialty blend');
   assert.equal(beanIllustration(blend).kind,'flavor');
-  assert.equal(beanIllustration({...blend,category:'blend'}).file,'beans/common-bean.webp');
+  assert.equal(beanIllustration({...blend,category:'blend'}).file,'beans/light-roast.webp');
   for(const category of ['single origin','specialty single origin','drip bag','blend',undefined])assert.equal(beanIllustration({...blend,category}).kind,'coffee');
   assert.equal(beanIllustration({...blend,id:'catalog-'+blend.id}).kind,'flavor');
 });
@@ -19,7 +19,7 @@ test('new or changed blend notes require review for regular/global/small; never 
     assert.equal(needsBlendIllustration({...blend,edition}),false);
     assert.equal(needsBlendIllustration({id:'new',category:'unspecialty blend',edition,flavors:['레몬']}),true);
   }
-  assert.equal(beanIllustration({name:'https://example.com/private.png'}).file,'beans/common-bean.webp');
+  assert.equal(beanIllustration({name:'https://example.com/private.png'}).file,'beans/light-roast.webp');
 });
 test('all current card assets and three guide illustrations exist; original vendor colors stay intact',()=>{
   const before=JSON.stringify(catalog);

@@ -41,7 +41,7 @@ export default function DashboardPage() {
       <div className="writing-desk-compose" id="today-note">
       <div className="writing-desk-intro">
         <div><h2>오늘의 한 잔</h2><p>커피를 마셨다면, 기억하고 싶은 느낌만 남겨주세요.</p></div>
-        <img src={import.meta.env.BASE_URL + "images/beans/common-bean-cutout.webp"} width="100" height="132" alt="" aria-hidden="true" />
+        <img src={import.meta.env.BASE_URL + "images/beans/light-roast.webp"} width="100" height="132" alt="" aria-hidden="true" />
       </div>
       <ol className="simple-steps" aria-label="한 잔을 남기는 순서">
         <li>1. 느낌을 적어요</li>
