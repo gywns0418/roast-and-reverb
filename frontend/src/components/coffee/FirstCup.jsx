@@ -412,16 +412,18 @@ export default function FirstCup({
           <div className="first-cup-collection">{collection}</div>
         ) : (
           <>
+            <p className="consumer-note-example" id={`${inputId}-example`}>예를 들면 “고소하고 끝맛이 달았어. 내일 또 마시고 싶어.”</p>
             <label className="first-cup-input" htmlFor={inputId}>
               <span>오늘의 느낌 한 줄</span>
               <textarea
                 id={inputId}
+                aria-describedby={`${inputId}-example`}
                 rows={3}
                 maxLength={2000}
                 value={value.note}
                 disabled={busy === "save" || !!saved}
                 onChange={(e) => change({ ...value, note: e.target.value })}
-                placeholder="맛, 원두, 내린 방법… 기억나는 것만 한 번에 말해주세요."
+                placeholder="맛, 기분, 원두 이름… 기억나는 것만 적어주세요."
               />
             </label>
             <small className="cup-character-count" aria-live="off">{value.note.length.toLocaleString()} / 2,000자</small>
@@ -496,8 +498,8 @@ export default function FirstCup({
                   음악도 함께 남길까요? <span>선택</span>
                 </summary>
                 <p>
-                  마음에 드는 곡을 고르면 이 기록에 함께 보관돼요. 음악 없이
-                  저장해도 좋아요.
+                  이 한 잔과 함께 듣고 싶은 곡을 골라 그날의 분위기도 남겨보세요.
+                  선택한 곡은 기록에 함께 보관돼요. 음악 없이 저장해도 좋아요.
                 </p>
                 {musicOpen && (
                   <BrewPlaylist

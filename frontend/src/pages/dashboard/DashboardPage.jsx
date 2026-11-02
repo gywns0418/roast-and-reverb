@@ -73,7 +73,7 @@ export default function DashboardPage() {
               </Link>
             ))}
           </div>
-          <div className="desk-storage-note"><strong>한 줄씩 쌓이는 나의 취향</strong><p>잘 쓴 문장보다 오늘 느낀 그대로를 남겨보세요. 음악은 원할 때만 더해도 좋아요.</p></div>
+          <div className="desk-storage-note"><strong>다음에 어떤 커피를 마실지 고민될 때</strong><p>지난 기록에서 좋았던 맛을 다시 읽어보세요. 월픽에서 비슷한 컵노트를 찾아볼 수 있어요.</p><Link to="/monthly-pick">다음 원두 살펴보기 →</Link></div>
         </section>
       </div>
       <JournalNextSteps omit="/dashboard" />

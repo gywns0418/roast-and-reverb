@@ -144,7 +144,7 @@ export default function CoffeeLogPage() {
       subtitle={
         compact
           ? undefined
-          : "짧게 남긴 한 줄에서, 그날의 한 잔을 다시 떠올려요."
+          : "좋았던 맛을 다시 읽고, 다음에 마실 커피의 힌트를 찾아보세요."
       }
     >
       {loading ? (
@@ -291,7 +291,7 @@ export default function CoffeeLogPage() {
                 <section className="quiet-section journal-desktop-empty">
                   <img src={import.meta.env.BASE_URL + "images/guide-save.webp"} alt="" aria-hidden="true" width="120" height="120" />
                   <h2>아직 기록이 없어요.</h2>
-                  <p>오늘의 한 잔을 기록하면, 커피와 함께 남긴 이야기가 여기에 모여요.</p>
+                  <p>“다시 마시고 싶어”라는 느낌부터 남겨보세요. 원두 이름을 몰라도 내 말로 적은 맛을 다시 찾을 수 있어요.</p>
                   <Link className="primary-button" to="/dashboard">오늘 기록하기 →</Link>
                 </section>
               )}
