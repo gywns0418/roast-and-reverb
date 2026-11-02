@@ -8,7 +8,7 @@ export default function JournalGuide({compact=false}){
  return <section className={`journal-guide${compact?' journal-guide-compact':''}`} aria-label="그림으로 보는 기록 방법">
   <h2>한 잔을 남기는 세 단계</h2>
   <ol>{steps.map((step,index)=><li key={step.kind}>
-   <div className="journal-guide-picture"><img src={`${import.meta.env.BASE_URL}images/guide-${step.kind}.webp`} alt="" aria-hidden="true" loading="lazy" width="320" height="320"/><span aria-hidden="true">{index+1}</span></div>
+   <div className="journal-guide-picture"><img src={`${import.meta.env.BASE_URL}images/guide-${step.kind}.webp`} alt="" aria-hidden="true" loading={compact ? "eager" : "lazy"} width="320" height="320"/><span aria-hidden="true">{index+1}</span></div>
    <h3><span className="sr-only">{index+1}단계. </span>{step.title}</h3><p>{step.text}</p>
    {step.to&&<Link to={step.to}>{step.action} →</Link>}
   </li>)}</ol>
