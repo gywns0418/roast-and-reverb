@@ -455,3 +455,12 @@ Feature monthly-type-polish includes previous artwork22b2283. User explicitly au
 내 기록에는 실제 저장 수·음악을 더한 기록 수·최근 기록일을 표시하며, 빈 상태는 작은 그림과 안내/작성 동작을 함께 제공한다. 기록 목록은 공통 컵 그림·날짜·제목·감상·이동을 정렬한다. 설정은 보관 안내, 음악/원두/도구의 설명 있는 목록, 도움말/개인정보 카드로 구성한다. 원두 탐색과 백업의 실제 동작으로 연결하는 카드를 제공한다. 가짜 기록/통계는 만들지 않는다.
 
 Corrective branch feature/interface-cohesion starts from main840917a. Screenshots and local verification data remain ignored under .local/browser only. Original bean and monthly5/51 policy preserved.
+
+
+## 2026-11-02 기능을 유지한 시각적 다듬기 / 라이트 로스팅 원두
+사용자가 기본 틀과 모든 기능을 유지하면서 레퍼런스를 참고해 자율적으로 디자인만 개선하도록 요청했다. 기존 Writing Desk/월픽 라이브러리 구조를 유지한다. API·저장·추천·라우팅·이벤트 로직은 변경하지 않는다. CSS와 정적 이미지 참조, 중복 분류의 표시만 다듬는다.
+Atlassian spacing/typography, Carbon button hierarchy, NN/g visual hierarchy의 원칙을 기존 크림/흰색/녹색 브랜드 안에 적용한다.4/8px 기반 간격,14px 본문·명확한 제목 단계,46px 주요 버튼,절제된 경계·그림자,정렬된 상단 링크와 덜 노란 메뉴 선택 강조를 사용한다. 입력/버튼 테두리와 포커스의 대비는 유지하며 원문 향미HEX는 보존한다.
+기본 원두는 기존 두 알 수채화 구도를 참조 편집한 시나몬빛 연갈색 라이트 로스팅 연출 이미지 frontend/public/images/beans/light-roast.webp로 교체한다. 투명 배경이며 대시보드와 공통 원두 카드에서 재사용한다. 특정 상품의 실제 로스팅 상태를 단정하는 사진이 아니다. 개별 향미5종/공통51종 정책과 일반·글로벌·스몰 동일 적용을 유지한다.
+직접 안내 페이지에 진입할 때 카드 밖으로 커지던 이미지 스타일을 항상 로드되는 공통 CSS로 옮긴다. 데스크톱의 불필요한 필터 펼치기 버튼은 기존 반응형 의도대로 숨기고 모바일의 기존 펼치기/접기 동작은 유지한다.
+
+Branch feature/visual-polish from main962810c. No runtime behavior changes; test expected asset paths and coverage asset reference updated only for the new image name. Public catalog unchanged.

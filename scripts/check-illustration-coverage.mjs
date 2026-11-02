@@ -7,7 +7,7 @@ const today=process.argv.find(value=>value.startsWith('--today='))?.slice(8)||ko
 if(!/^\d{4}-\d{2}-\d{2}$/.test(today))throw new Error('Expected --today=YYYY-MM-DD');
 const catalog=JSON.parse(await readFile(resolve('frontend/public/data/monthly-picks.json'),'utf8'));
 const imageRoot=resolve('frontend/public/images');
-const pending=[],files=new Set(['beans/common-bean.webp']);
+const pending=[],files=new Set(['beans/light-roast.webp']);
 const editions=currentMonthlyCatalog(catalog.products,today).map(product=>{
   let individual=0;
   for(const bean of product.items){

@@ -54,3 +54,4 @@ import "./styles/typography-refinements.css";
 import "./styles/design-consistency.css";
 import "./styles/writing-desk.css";
 import "./styles/interface-cohesion.css";
+import "./styles/visual-polish.css";
