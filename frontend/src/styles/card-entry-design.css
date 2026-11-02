@@ -35,6 +35,7 @@
 .monthly-compare-dialog th[scope=row]{white-space:nowrap;min-width:72px}
 
 /* Consumer value: two honest entry points and contextual guidance. */
+.simple-home .simple-intro .journal-guide-picture>img{display:block;width:100%;height:100%;object-fit:contain}
 .simple-intro .consumer-discover{display:grid;gap:6px;margin-top:24px;padding-top:18px;border-top:1px solid #dce2d4;max-width:390px;font-size:14px;line-height:1.7}
 .consumer-discover>span{color:#52624c}
 .consumer-discover>a,.desk-storage-note>a{color:#2c5038;font-weight:650;text-decoration:underline;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center;width:fit-content}
