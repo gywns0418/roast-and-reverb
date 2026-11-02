@@ -464,3 +464,11 @@ Atlassian spacing/typography, Carbon button hierarchy, NN/g visual hierarchy의 
 직접 안내 페이지에 진입할 때 카드 밖으로 커지던 이미지 스타일을 항상 로드되는 공통 CSS로 옮긴다. 데스크톱의 불필요한 필터 펼치기 버튼은 기존 반응형 의도대로 숨기고 모바일의 기존 펼치기/접기 동작은 유지한다.
 
 Branch feature/visual-polish from main962810c. No runtime behavior changes; test expected asset paths and coverage asset reference updated only for the new image name. Public catalog unchanged.
+
+
+## 2026-11-02 용량별 가격·팔레트·첫 화면 구성
+사용자가 용량/가격의 어색한 줄바꿈, 필터 이중 밑줄, 작은 색상 표시, 글 위주의 첫 화면과 반복되는 기본 이미지를 지적했다. 가격은 가짜 선택 컨트롤 대신 용량별 정보 행으로 표시하고 용량 왼쪽/금액 오른쪽을 맞춘다. 카드·상세·비교표에서 같은 표시를 재사용하며 판매처 가격 값은 그대로 유지한다.
+선택 필터는 밑줄을 모두 제거하고 옅은 배경/체크/왼쪽 표시선으로 구분한다. 키보드 포커스와 aria-pressed는 보존한다. 실제 판매처 HEX를 카드 본문의 22×16px(모바일24×18px) 팔레트로 표시하며 하단 색띠도12px로 넓힌다. 색을 컵노트와 임의 대응하거나 바꾸지 않는다.
+오늘의 한 잔은 기존 작성/최근 기록 두 열을 유지하면서 작성 패널 상단을 커피·레코드·노트의 가로형 일러스트가 있는 소개 영역으로 구성한다. 첫 화면 기본 원두 아이콘을 새 투명 연출 이미지 journal-entry.webp로 대체한다. 새 모바일 방문의 안내에도 같은 이미지를 사용한다. 최근 기록/기록 목록의 반복 컵 그림은 기존 자체 coffee-editorial.webp 사진 썸네일로 바꾼다. 월픽 공통 원두의 라이트 로스팅 색과 개별 향미5종/공통51종 정책은 유지한다. 저장·추천·필터·관심·비교 등의 동작은 변경하지 않는다.
+
+Branch feature/card-and-entry-design starts from main3ab5dba. Browser verified source price rows200g14400/500g28800/1kg46800 and detail/comparison rendering, focus restoration, filter underline/border0, mobile390px no overflow and24×18swatches. Comparison test selections cleared; no public data changed.

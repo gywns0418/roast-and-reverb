@@ -154,8 +154,8 @@ export default function CoffeeLogPage() {
           {!rows.length && !query && (
             <section className="journal-welcome" aria-label="기록 시작 안내" hidden={!compact}>
               <img
-                src={import.meta.env.BASE_URL + "images/pairing-editorial.webp"}
-                alt="커피잔과 레코드를 함께 배치한 서비스 연출 이미지"
+                src={import.meta.env.BASE_URL + "images/journal-entry.webp"}
+                alt="커피잔과 레코드, 빈 노트를 함께 그린 서비스 연출 일러스트"
               />
               <div>
                 <small>COFFEE × MUSIC JOURNAL</small>
@@ -279,7 +279,7 @@ export default function CoffeeLogPage() {
               <div className="simple-records">
                 {visible.map((row) => (
                   <Link key={row.id} to={"/coffee/" + row.id}>
-                    <img className="record-cup-art" src={import.meta.env.BASE_URL + "images/guide-cup.webp"} alt="" aria-hidden="true" width="64" height="64" />
+                    <img className="record-cup-art" src={import.meta.env.BASE_URL + "images/coffee-editorial.webp"} alt="" aria-hidden="true" width="64" height="64" />
                     <small>{row.date}</small>
                     <h2>{row.bean}</h2>
                     <p>{row.memo || "이날의 한 잔 다시 보기"}</p>

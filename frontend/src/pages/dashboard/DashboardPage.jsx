@@ -41,7 +41,7 @@ export default function DashboardPage() {
       <div className="writing-desk-compose" id="today-note">
       <div className="writing-desk-intro">
         <div><h2>오늘의 한 잔</h2><p>커피를 마셨다면, 기억하고 싶은 느낌만 남겨주세요.</p></div>
-        <img src={import.meta.env.BASE_URL + "images/beans/light-roast.webp"} width="100" height="132" alt="" aria-hidden="true" />
+        <img src={import.meta.env.BASE_URL + "images/journal-entry.webp"} width="640" height="427" alt="" aria-hidden="true" />
       </div>
       <ol className="simple-steps" aria-label="한 잔을 남기는 순서">
         <li>1. 느낌을 적어요</li>
@@ -63,7 +63,7 @@ export default function DashboardPage() {
             {!records.length && <div className="desk-empty"><h3>아직 남긴 한 잔이 없어요.</h3><p>오늘의 느낌을 적으면 이곳에서 다시 만날 수 있어요.</p><button type="button" className="ghost-button" onClick={() => document.querySelector("#today-note textarea")?.focus()}>첫 한 잔 남기기 →</button></div>}
             {records.slice(0, 3).map((row) => (
               <Link key={row.id} to={`/coffee/${row.id}`}>
-                <img className="recent-cup-art" src={import.meta.env.BASE_URL + "images/guide-cup.webp"} alt="" aria-hidden="true" width="52" height="64" />
+                <img className="recent-cup-art" src={import.meta.env.BASE_URL + "images/coffee-editorial.webp"} alt="" aria-hidden="true" width="52" height="64" />
                 <div className="recent-cup-copy">
                 <small>{row.date}</small>
                 <h3>{row.bean}</h3>
