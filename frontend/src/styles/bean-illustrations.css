@@ -1,5 +1,3 @@
 .bean-still:has(.bean-flavor-illustration){background:#f6e9de}
 .bean-still .bean-flavor-illustration{position:absolute;inset:34px 0 40px;width:100%;height:calc(100% - 74px);object-fit:contain;opacity:1}
 .bean-still .bean-origin-type,.bean-still .bean-number,.bean-still>small{z-index:1}
-.journal-guide-picture>img{display:block;width:100%;height:100%;object-fit:contain;border-radius:10px}
-.journal-guide-compact .journal-guide-picture>img{max-width:100%;max-height:100%}

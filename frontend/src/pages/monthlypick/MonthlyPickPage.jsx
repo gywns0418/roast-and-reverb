@@ -298,7 +298,7 @@ export default function MonthlyPickPage() {
                       · {bean.owner.roastery}
                     </small>
                     <span className="monthly-category-label">{group.label}</span>
-                    <h3>{bean.name.replace(/\s*\(언스페셜티 블렌드\)\s*$/, "")}</h3>
+                    <h3>{bean.name.replace(/\s*\((?:언스페셜티 블렌드|하우스 블렌드)\)\s*$/, "")}</h3>
                     <p className="monthly-note-list">
                       {bean.flavors?.length ? bean.flavors.map((note,index)=><span className="monthly-note" key={index}>{note}{index < bean.flavors.length-1 && <span aria-hidden="true"> · </span>}</span>) : "컵노트는 판매처에서 확인"}
                     </p>
