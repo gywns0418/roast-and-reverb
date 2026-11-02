@@ -167,12 +167,13 @@ export default function MonthlyPickPage() {
   return (
     <PageShell
       title={`${new Intl.DateTimeFormat("ko-KR", {timeZone:"Asia/Seoul",month:"long"}).format(new Date())} 월픽`}
-      subtitle="이달의 로스터리와 다음 한 잔을 골라보세요."
+      subtitle="좋아했던 맛으로 찾아보고, 가격을 비교해 다음 한 잔을 골라보세요."
     >
       {loading ? (
         <Loading title="월픽 원두를 살펴보고 있어요." />
       ) : (
         <>
+          <details className="consumer-monthly-guide"><summary>처음이라면 · 원두 고르는 순서 보기</summary><p>좋아하는 맛을 검색 → 관심 원두 저장 → 비교 선택으로 나란히 보기</p><small>컵노트와 색상은 판매처의 설명이며, 내 취향에 맞는지는 직접 마신 기록과 함께 판단해 주세요.</small></details>
           <div className="monthly-library">
           <aside className="monthly-library-filters" aria-label="월픽 검색과 필터" data-expanded={filtersExpanded}>
           <div className="monthly-core-toolbar">

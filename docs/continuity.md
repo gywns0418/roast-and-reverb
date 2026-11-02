@@ -472,3 +472,6 @@ Branch feature/visual-polish from main962810c. No runtime behavior changes; test
 오늘의 한 잔은 기존 작성/최근 기록 두 열을 유지하면서 작성 패널 상단을 커피·레코드·노트의 가로형 일러스트가 있는 소개 영역으로 구성한다. 첫 화면 기본 원두 아이콘을 새 투명 연출 이미지 journal-entry.webp로 대체한다. 새 모바일 방문의 안내에도 같은 이미지를 사용한다. 최근 기록/기록 목록의 반복 컵 그림은 기존 자체 coffee-editorial.webp 사진 썸네일로 바꾼다. 월픽 공통 원두의 라이트 로스팅 색과 개별 향미5종/공통51종 정책은 유지한다. 저장·추천·필터·관심·비교 등의 동작은 변경하지 않는다.
 
 Branch feature/card-and-entry-design starts from main3ab5dba. Browser verified source price rows200g14400/500g28800/1kg46800 and detail/comparison rendering, focus restoration, filter underline/border0, mobile390px no overflow and24×18swatches. Comparison test selections cleared; no public data changed.
+
+## 2026-11-02 소비자 리뷰 및 개선
+feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현재 운영 화면에서 감사. 가치 제안/월픽 진입/입력 예시/선택 음악 설명/재방문 안내 보완. 기능·카탈로그·개인 데이터 로직 유지. 105 tests 및 build 통과. docs/consumer-review.md에 관찰과 가설/한계 구별.

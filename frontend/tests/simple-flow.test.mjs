@@ -18,7 +18,7 @@ test("first visit offers one writing action and defers music and previous tools"
     const home = renderToStaticMarkup(
       React.createElement(MemoryRouter, null, React.createElement(Home)),
     );
-    assert.match(home, /좋았던 한 잔을/);
+    assert.match(home, /좋았던 커피,/);
     assert.match(home, /한 줄 남겨보기/);
     assert.equal((home.match(/<textarea/g) || []).length, 1);
     assert.doesNotMatch(
