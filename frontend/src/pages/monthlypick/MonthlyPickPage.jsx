@@ -29,14 +29,11 @@ const stateLabel = {
   ended: "판매 종료",
   unknown: "재고 미확인",
 };
-const price = (bean) =>
-  bean.prices?.length
-    ? bean.prices
-        .map(
-          (p) => String(p.label || "용량 미확인").replace(/(\d)\s*(kg|g|ml|mL)\b/g, "$1 $2") + " · " + Number(p.price).toLocaleString("ko-KR") + "원",
-        )
-        .join(" · ")
-    : "판매처에서 가격 확인";
+function PriceRows({ bean }) {
+  return <span className="monthly-price-list">
+    {bean.prices?.length ? bean.prices.map((option,index)=><span className="monthly-price-option" key={index}><span>{String(option.label || "용량 미확인").replace(/(\d)\s*(kg|g|ml|mL)\b/g, "$1 $2")}</span><strong>{Number(option.price).toLocaleString("ko-KR")}원</strong></span>) : <span>판매처에서 가격 확인</span>}
+  </span>;
+}
 const displayDate = (value) =>
   value ? new Date(value).toLocaleDateString("ko-KR") : "확인 전";
 export default function MonthlyPickPage() {
@@ -302,7 +299,8 @@ export default function MonthlyPickPage() {
                     <p className="monthly-note-list">
                       {bean.flavors?.length ? bean.flavors.map((note,index)=><span className="monthly-note" key={index}>{note}{index < bean.flavors.length-1 && <span aria-hidden="true"> · </span>}</span>) : "컵노트는 판매처에서 확인"}
                     </p>
-                    <span className="monthly-price">{price(bean)}</span>
+                    {bean.flavorColors?.some(color => /^#[0-9a-f]{6}$/i.test(color)) && <span className="monthly-visible-palette"><span>향미 색상</span><span className="monthly-palette-swatches" role="img" aria-label={"판매처 향미 색상 " + bean.flavorColors.filter(color => /^#[0-9a-f]{6}$/i.test(color)).join(", ")}>{bean.flavorColors.filter(color => /^#[0-9a-f]{6}$/i.test(color)).map((color,index)=><i key={index} style={{backgroundColor:color}} aria-hidden="true" />)}</span></span>}
+                    <PriceRows bean={bean} />
                     <b>원두 설명 보기 →</b>
                   </button>
                   <div className="monthly-bean-actions">
@@ -429,7 +427,7 @@ export default function MonthlyPickPage() {
               {active.flavors?.join(" · ") ||
                 "컵노트는 원문에서 확인해 주세요."}
             </p>
-            <p>{price(active)}</p>
+            <PriceRows bean={active} />
             <dl className="quiet-facts">
               {active.specs?.map((s, i) => (
                 <div key={i}>
@@ -513,7 +511,7 @@ export default function MonthlyPickPage() {
                 ["가공", (b) => b.process || "미기재"],
                 ["품종", (b) => b.variety || "미기재"],
                 ["로스팅", (b) => b.roast || "미기재"],
-                ["가격", price],
+                ["가격", (b) => <PriceRows bean={b} />],
                 [
                   "판매 상태",
                   (b) => stateLabel[catalogAvailability(b.owner, b)],
