@@ -475,3 +475,12 @@ Branch feature/card-and-entry-design starts from main3ab5dba. Browser verified s
 
 ## 2026-11-02 소비자 리뷰 및 개선
 feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현재 운영 화면에서 감사. 가치 제안/월픽 진입/입력 예시/선택 음악 설명/재방문 안내 보완. 기능·카탈로그·개인 데이터 로직 유지. 105 tests 및 build 통과. docs/consumer-review.md에 관찰과 가설/한계 구별.
+## 2026-11-07 주간 점검
+
+한국시각11월7일. 기존 canonical checkout의 사용자 미커밋 변경 보존, 허용 개인 원본 snapshot 변경없음. 원본 내용은 게시하지 않음. main99d1202에서 feature/weekly-review-20261107 격리 분기·devb3a7f23 통합(이미포함). 당월 공식자동발견: 글로벌SEY7종 신규, 정규비로소56→58종 및 원문/판매상태 갱신. 이전달 글로벌/스몰/정규 보존, 반복수집 changed:false. 이번달 스몰은 공식발견목록에 없어10월자료를11월로 바꾸지 않음.
+
+이미지: 11월정규58종 중 검토된 언스페셜티블렌드5개 개별그림 유지,나머지53개 공통. 글로벌7개 공통. 글로벌 익스클루시브1개는 판매처type이 unspecialty blend이나 공개JSON 컵노트가 모두 공란. checker는 pending1/exit2를 정확히 보고함. 향미를 추측해서 생성하지 않고 공통그림으로 유지하며 원문노트가생길때 재검토. 판매처 HEX그대로보존. 지시의 공통파일경로 beans/common-bean.webp에 기존최신연갈색 light-roast.webp를 복사하고 이미지선택기/검사경로 일치(시각적방향변경없음). 카테고리변경/실제식재료포함/상품사진 주장은 하지않음.
+
+최신원본갱신시 기존검사가 첫상품=정규/56종/모든블렌드검토완료를 고정가정해3건실패하는것을 재현. 정규를edition으로찾고 전체월의파일/분류불변성·날짜창·빈노트fallback을 검증하도록수정.106테스트/build/설치audit0·REA5모듈제한분석·알려진비밀패턴검사 통과. REA는전체앱검증아님.
+
+브라우저표면 inventory없음·IAB unavailable로 실제데스크톱/모바일화면과키보드동작의이번재확인은차단됨. 기존UI코드는변경하지않았으며 자동검사/이미지파일과HTTP확인으로대체가능범위만검증. 화면점검완료로보고하지않음. main/요금제/서버/개인기록미변경. devPR와Pages결과후속기록.
