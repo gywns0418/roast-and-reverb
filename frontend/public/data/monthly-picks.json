@@ -3,6 +3,210 @@
   "products": [
     {
       "schemaVersion": 1,
+      "title": "[글로벌 월픽 (11/6~11/12)] SEY",
+      "edition": "global",
+      "month": "2026-11",
+      "saleStart": "2026-11-06",
+      "saleEnd": "2026-11-12",
+      "roastery": "SEY",
+      "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=1004",
+      "detailSourceUrl": "https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/SEY/SEY.json",
+      "sourceCheckedAt": "2026-11-07T00:54:05.865Z",
+      "items": [
+        {
+          "id": "1004-b558687e7",
+          "name": "[익스클루시브] 페루 찰와 차요크 SL9* 워시드",
+          "originalName": "[익스클루시브] 페루 찰와 차요크 SL9* 워시드",
+          "nameEnglish": "",
+          "category": "unspecialty blend",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#9d0208",
+            "#f26a8d",
+            "#ff7900"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-11-06",
+          "availability": "sold-out",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "1004-1",
+          "name": "#1 에티오피아 알로 사포 74158 워시드",
+          "originalName": "#1 에티오피아 알로 사포 74158 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#b5e48c",
+            "#f49cbb",
+            "#fdfcdc"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-11-06",
+          "availability": "sold-out",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "1004-2",
+          "name": "#2 에티오피아 시다마 봄베 74158 허니",
+          "originalName": "#2 에티오피아 시다마 봄베 74158 허니",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#76c893",
+            "#f26a8d",
+            "#ffd60a"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-11-06",
+          "availability": "sold-out",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "1004-3",
+          "name": "#3 콜롬비아 라 카시타 커튼콜 치로소 워시드",
+          "originalName": "#3 콜롬비아 라 카시타 커튼콜 치로소 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#f49cbb",
+            "#ffdc5e",
+            "#fdfcdc"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-11-06",
+          "availability": "sold-out",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "1004-4",
+          "name": "#4 케냐 캄바라레 SL* 워시드",
+          "originalName": "#4 케냐 캄바라레 SL* 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#99d98c",
+            "#ffba08",
+            "#560bad"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-11-06",
+          "availability": "sold-out",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "1004-5",
+          "name": "#5 콜롬비아 엘 히라솔 핑크 버번 워시드",
+          "originalName": "#5 콜롬비아 엘 히라솔 핑크 버번 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#b5e48c",
+            "#dd2d4a",
+            "#560bad"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-11-06",
+          "availability": "sold-out",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        },
+        {
+          "id": "1004-6",
+          "name": "#6 에콰도르 핀카 솔레다드 메호라도 TyOxy 워시드",
+          "originalName": "#6 에콰도르 핀카 솔레다드 메호라도 TyOxy 워시드",
+          "nameEnglish": "",
+          "category": "single origin",
+          "origin": "",
+          "region": "",
+          "variety": "",
+          "process": "",
+          "roast": "",
+          "flavors": [],
+          "flavorColors": [
+            "#ff0000",
+            "#dd2d4a",
+            "#d00000"
+          ],
+          "specs": [],
+          "gauges": [],
+          "prices": [],
+          "openDate": "2026-11-06",
+          "availability": "sold-out",
+          "sourceUpdatedAt": null,
+          "decaf": false,
+          "darkRoast": false,
+          "summary": ""
+        }
+      ],
+      "detailsCheckedAt": "2026-11-07T00:54:05.867Z"
+    },
+    {
+      "schemaVersion": 1,
       "title": "[11월 커피 월픽 (11/1~11/30)] 비로소커피",
       "edition": "regular",
       "month": "2026-11",
@@ -11,7 +215,7 @@
       "roastery": "비로소커피",
       "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=944",
       "detailSourceUrl": "https://d22c6ea6lqg2pi.cloudfront.net/BIROSO2/BIROSO2.json",
-      "sourceCheckedAt": "2026-11-01T01:18:46.546Z",
+      "sourceCheckedAt": "2026-11-07T00:54:06.392Z",
       "items": [
         {
           "id": "944-b7d5272a1",
@@ -264,7 +468,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-31T18:54:21+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1071,7 +1275,7 @@
             }
           ],
           "openDate": "2026-11-01",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-27T11:22:23+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1607,7 +1811,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-27T12:03:03+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1695,7 +1899,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-27T11:25:27+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1787,7 +1991,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-26T15:10:06+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2963,7 +3167,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-31T23:38:26+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3055,7 +3259,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-27T12:03:03+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3147,7 +3351,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-25T23:27:58+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3243,7 +3447,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-27T12:03:03+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3331,7 +3535,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-27T11:29:33+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3423,11 +3627,193 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-27T11:29:44+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Panama · Geisha · Washed"
+        },
+        {
+          "id": "944-53",
+          "name": "#53 파나마 레리다 게이샤 내추럴 #07681",
+          "originalName": "[11.4 오픈] #53 파나마 레리다 게이샤 내추럴 #07681",
+          "nameEnglish": "Panama Lérida Geisha Natural #07681",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "Jaramillo, Boquete, Chiriqui",
+          "variety": "Geisha",
+          "process": "Natural",
+          "roast": "Light #99",
+          "flavors": [
+            "베르가못",
+            "라벤더",
+            "열대과일",
+            "레몬그라스"
+          ],
+          "flavorColors": [
+            "#ffd60a",
+            "#cdb4db",
+            "#b5e48c"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "베르가못, 라벤더, 열대과일, 레몬그라스"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #99"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "Jaramillo, Boquete, Chiriqui"
+            },
+            {
+              "label": "농장",
+              "value": "Lérida Esplendorosa Estate"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Amoruso Family"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "#07681"
+            },
+            {
+              "label": "고도",
+              "value": "1,600m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 36000
+            }
+          ],
+          "openDate": "2026-11-04",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-11-03T18:37:50+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Geisha · Natural"
+        },
+        {
+          "id": "944-55",
+          "name": "#55 파나마 로스 포소스 CCD 게이샤 인트린식 내추럴",
+          "originalName": "[11.4 오픈] #55 파나마 로스 포소스 CCD 게이샤 인트린식 내추럴",
+          "nameEnglish": "Panama Los Pozos CCD Geisha Intrinsic Natural",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "Tierras Altas",
+          "variety": "Geisha",
+          "process": "Intrinsic Natural",
+          "roast": "Light #94",
+          "flavors": [
+            "블루베리",
+            "그린망고",
+            "카스카라",
+            "우롱티"
+          ],
+          "flavorColors": [
+            "#6247aa",
+            "#d9ed92",
+            "#9d0208"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "블루베리, 그린망고, 카스카라, 우롱티"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #94"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "Tierras Altas"
+            },
+            {
+              "label": "농장",
+              "value": "Finca Los Pozos"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Creativa Coffee District (CCD)"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "CDNLG25087"
+            },
+            {
+              "label": "고도",
+              "value": "1,800m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Intrinsic Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "100g",
+              "price": 31000
+            }
+          ],
+          "openDate": "2026-11-04",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-11-03T18:37:50+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Geisha · Intrinsic Natural"
         },
         {
           "id": "944-46",
@@ -3699,7 +4085,7 @@
           ],
           "openDate": "2026-11-09",
           "availability": "upcoming",
-          "sourceUpdatedAt": "2026-10-26T15:10:07+09:00",
+          "sourceUpdatedAt": "2026-11-02T10:04:38+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Peru · Geisha · Washed"
@@ -4597,7 +4983,7 @@
           "summary": ""
         }
       ],
-      "detailsCheckedAt": "2026-11-01T01:18:46.549Z"
+      "detailsCheckedAt": "2026-11-07T00:54:06.393Z"
     },
     {
       "schemaVersion": 1,

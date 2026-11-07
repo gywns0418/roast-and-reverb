@@ -19,6 +19,7 @@ test('November catalog selects regular only and preserves expired source data', 
   assert.ok(Array.isArray(rows));
   const before = JSON.stringify(rows);
   assert.deepEqual(currentMonthlyCatalog(rows,'2026-11-01').map(p=>p.edition),['regular']);
-  assert.equal(currentMonthlyCatalog(rows,'2026-11-01')[0].items.length,56);
+  assert.equal(currentMonthlyCatalog(rows,'2026-11-01')[0].items.length,rows.find(p=>p.month==='2026-11'&&p.edition==='regular').items.length);
+  assert.ok(currentMonthlyCatalog(rows,'2026-11-07').some(p=>p.edition==='global'));
   assert.equal(JSON.stringify(rows),before);
 });
