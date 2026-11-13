@@ -1,7 +1,9 @@
 import { Fragment } from "react";
 import {monthlyGroups,colorFamilies} from "../../utils/monthlyColors.js";
 import {filterMonthlyBeans,groupMonthlyBeans} from "../../utils/monthlyFilters.js";
+import {parseTasteQuery,tasteExamples,roastBadge} from "../../utils/tasteQuery.js";
 import "../../styles/monthly-filters.css";
+import "../../styles/monthly-taste.css";
 import "../../styles/monthly-library.css";
 import "../../styles/monthly-polish.css";
 import { useEffect, useRef, useState } from "react";
@@ -100,6 +102,7 @@ export default function MonthlyPickPage() {
     ? allBeans.filter((b) => favorites.includes(String(b.id)))
     : allBeans.filter((b) => b.owner.sourceUrl === product?.sourceUrl);
   const beans=filterMonthlyBeans(candidates,{query,category,color,available,hideDecaf});
+  const reading=parseTasteQuery(query.trim());
   const grouped=groupMonthlyBeans(beans);
   function clearFilters(){setQuery("");setCategory("all");setColor("all");setAvailable(false);setHideDecaf(false);setFavoritesOnly(false);}
   const compared = allBeans.filter((b) => selected.includes(String(b.id)));
@@ -178,10 +181,10 @@ export default function MonthlyPickPage() {
           <aside className="monthly-library-filters" aria-label="월픽 검색과 필터" data-expanded={filtersExpanded}>
           <div className="monthly-core-toolbar">
             <label className="monthly-core-search">
-              원두 검색
+              맛이나 원두로 찾기
               <input
                 type="search"
-                placeholder="원두 이름, 산지, 컵노트"
+                placeholder="예: 산미 적고 고소한 · 원두 이름 · 산지"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
@@ -199,6 +202,26 @@ export default function MonthlyPickPage() {
               {allBeans.filter((b) => favorites.includes(String(b.id))).length}
             </button>
           </div>
+          <div className="monthly-taste-examples" role="group" aria-label="맛으로 찾기 예시">
+            {tasteExamples.map((example) => (
+              <button key={example} type="button" aria-pressed={query.trim() === example} onClick={() => setQuery(query.trim() === example ? "" : example)}>
+                {example}
+              </button>
+            ))}
+          </div>
+          {reading.terms.length > 0 && (
+            <div className="monthly-taste-reading" role="status">
+              <span>이렇게 찾고 있어요</span>
+              <ul>
+                {reading.terms.map((term) => <li key={term.key}>{term.label}</li>)}
+                {reading.words.map((word) => <li key={"word-" + word} className="monthly-taste-word">“{word}” 포함</li>)}
+              </ul>
+              <small>
+                판매처 컵노트{reading.usesGauges ? "와 판매처 향미 지표(1~5)" : ""} 기준이에요.
+                {reading.usesGauges ? " 지표가 없는 원두는 이 조건에서 빠져요." : ""}
+              </small>
+            </div>
+          )}
           <button type="button" className="ghost-button monthly-filter-toggle" aria-expanded={filtersExpanded} aria-controls="monthly-library-filter-panel" onClick={() => setFiltersExpanded(value => !value)}>필터 {filtersExpanded ? "접기" : "펼치기"} · {beans.length}종</button>
           <section id="monthly-library-filter-panel" className="monthly-restored-filters" aria-label="월픽 원두 필터">
             <fieldset><legend>원두 분류</legend><div className="monthly-filter-chips">
@@ -295,7 +318,12 @@ export default function MonthlyPickPage() {
                         stateLabel.unknown}{" "}
                       · {bean.owner.roastery}
                     </small>
-                    <span className="monthly-category-label">{group.label}</span>
+                    <span className="monthly-card-badges">
+                      <span className="monthly-category-label">{group.label}</span>
+                      {roastBadge(bean) && <span className="monthly-badge">{roastBadge(bean)}</span>}
+                      {bean.decaf && <span className="monthly-badge">디카페인</span>}
+                      {favorites.includes(String(bean.id)) && <span className="monthly-badge monthly-badge-saved">♥ 관심</span>}
+                    </span>
                     <h3>{bean.name.replace(/\s*\((?:언스페셜티 블렌드|하우스 블렌드)\)\s*$/, "")}</h3>
                     <p className="monthly-note-list">
                       {bean.flavors?.length ? bean.flavors.map((note,index)=><span className="monthly-note" key={index}>{note}{index < bean.flavors.length-1 && <span aria-hidden="true"> · </span>}</span>) : "컵노트는 판매처에서 확인"}
