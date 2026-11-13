@@ -1,0 +1,18 @@
+/* Taste-phrase search (example chips + reading) and card badges for 월픽. */
+.monthly-taste-examples{display:flex;gap:8px;margin:10px 0 0;padding:2px 0 4px;overflow-x:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.monthly-taste-examples button{flex:0 0 auto;min-height:44px;padding:8px 14px;border:1px solid #c9d3c1;border-radius:999px;background:#fff;color:#263b2d;font:inherit;font-size:14px;white-space:nowrap;cursor:pointer}
+.monthly-taste-examples button:hover{border-color:#74836d;background:#f4f7f0}
+.monthly-taste-examples button[aria-pressed=true]{border-color:#294633;background:#294633;color:#fff;font-weight:700}
+.monthly-taste-examples button:focus-visible{outline:3px solid #a24f35;outline-offset:2px}
+.monthly-taste-reading{margin:12px 0 0;padding:12px 14px;border-left:3px solid #a24f35;border-radius:0 8px 8px 0;background:#f7f4ec;color:#263b2d}
+.monthly-taste-reading>span{display:block;margin-bottom:6px;font-size:13px;font-weight:700;color:#52624d}
+.monthly-taste-reading ul{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.monthly-taste-reading li{padding:4px 10px;border-radius:999px;background:#e6ede0;font-size:14px;font-weight:600}
+.monthly-taste-reading li.monthly-taste-word{background:#fff;border:1px solid #dce3d6;font-weight:500}
+.monthly-taste-reading small{display:block;margin-top:8px;color:#52624d;font-size:12.5px;line-height:1.5}
+.monthly-card-badges{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.monthly-card-badges .monthly-category-label{margin:0}
+.monthly-badge{display:inline-block;padding:2px 8px;border-radius:999px;background:#fff;border:1px solid #dce3d6;color:#263b2d;font-size:12px;font-weight:600;line-height:1.5;white-space:nowrap}
+.monthly-badge-saved{border-color:#a24f35;color:#8a3f29}
+@media(max-width:700px){.monthly-badge{font-size:11.5px}}
+@media(prefers-reduced-motion:reduce){.monthly-taste-examples{scroll-behavior:auto}}

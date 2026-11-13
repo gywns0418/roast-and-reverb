@@ -494,3 +494,9 @@ feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현�
 - 충돌 상태였던 백엔드 PR #51(원두 구매 양식 다운로드)은 GitHub 전용 운영으로 효과가 없어 닫음.
 - 작업 도구를 Codex에서 Claude Code로 옮김: 상위 폴더 `CLAUDE.md`와 `.claude/skills/`(roast-reverb-autopilot, roast-reverb-continuity, roast-reverb-pipeline), 월초 점검 예약 작업(매월 1일 09:00). 이 저장소의 `.agents/skills/`는 그대로 둠. Codex 자동화 2개는 아직 켜져 있으니 중복 실행을 피하려면 꺼야 함.
 - 다음 할 일: 11/13~ 글로벌 월픽과 11월 스몰 월픽 수집(주간 점검).
+
+## 2026-11-13 Coffing 벤치마킹 / REA 6.9.0
+- coffing.kr 공개 웹·웹 지도·Google Play 소개만 분석(로그인 화면 이후와 앱 파일은 보지 않음). 결론과 적용 범위는 docs/coffing-benchmark.md.
+- 적용: 월픽 맛 표현 검색(utils/tasteQuery.js), 예시 칩, 해석 표시, 카드 배지. 판매처 자료만 근거로 하며 맛을 측정하거나 추천 점수를 만들지 않음.
+- 다음 후보: 내 기록의 좋았던 커피를 바탕으로 월픽에 "내 Pick" 표시.
+- 개발 PC에 REA(rea-agents) 6.9.0 전역 설치와 Claude Code MCP 등록 완료(Node 24.22.1 필요). scripts/rea-review.ps1은 아직 6.5.0 고정.
