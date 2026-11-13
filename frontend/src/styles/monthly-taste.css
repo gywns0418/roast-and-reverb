@@ -16,3 +16,13 @@
 .monthly-badge-saved{border-color:#a24f35;color:#8a3f29}
 @media(max-width:700px){.monthly-badge{font-size:11.5px}}
 @media(prefers-reduced-motion:reduce){.monthly-taste-examples{scroll-behavior:auto}}
+/* 내 취향과 닮은 원두 (from my own judged records) */
+.monthly-mine-toggle{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:44px;margin:10px 0 0;padding:8px 14px;border:1px solid #294633;border-radius:10px;background:#fff;color:#294633;font:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+.monthly-mine-toggle span{min-width:0;text-align:left}
+.monthly-mine-toggle small{flex:0 0 auto;font-weight:500;font-size:13px;color:#294633}
+.monthly-mine-toggle[aria-pressed=true] small{color:#e6ede0}
+.monthly-mine-toggle:hover{background:#f4f7f0}
+.monthly-mine-toggle[aria-pressed=true]{background:#294633;color:#fff}
+.monthly-mine-toggle:focus-visible{outline:3px solid #a24f35;outline-offset:2px}
+.monthly-mine-hint{margin:10px 0 0;color:#52624d;font-size:13px;line-height:1.5}
+.monthly-badge.monthly-badge-mine{white-space:normal;border-radius:8px;border-color:#294633;background:#294633;color:#fff}

@@ -41,7 +41,7 @@
     padding-bottom: 16px;
   }
   .mobile-tabbar {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   .mobile-tabbar .nav-link {

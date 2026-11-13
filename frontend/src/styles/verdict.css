@@ -1,0 +1,14 @@
+/* Optional "다시 마시고 싶나요?" judgement buttons. */
+.verdict-picker{margin:14px 0 4px;padding:0;border:0;min-width:0}
+.verdict-picker legend{margin-bottom:8px;padding:0;color:#263b2d;font-size:15px;font-weight:700}
+.verdict-picker>div{display:flex;flex-wrap:wrap;gap:8px}
+.verdict-picker button{min-height:44px;padding:8px 14px;border:1px solid #c9d3c1;border-radius:999px;background:#fff;color:#263b2d;font:inherit;font-size:14px;cursor:pointer}
+.verdict-picker button:hover{border-color:#74836d;background:#f4f7f0}
+.verdict-picker button:focus-visible{outline:3px solid #a24f35;outline-offset:2px}
+.verdict-picker button[aria-pressed=true]{border-color:#294633;background:#294633;color:#fff;font-weight:700}
+.verdict-picker button[data-verdict=not-mine][aria-pressed=true]{border-color:#8a3f29;background:#8a3f29}
+.verdict-picker small{display:block;margin-top:8px;color:#52624d;font-size:12.5px;line-height:1.5}
+.verdict-picker:disabled{opacity:.65}
+.verdict-picker-compact legend{font-size:13.5px;margin-bottom:6px}
+.verdict-picker-compact button{padding:6px 12px;font-size:13.5px}
+.detail-verdict p[role=status]{margin-top:10px;color:#294633}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Loading from "../../components/common/Loading.jsx";
@@ -8,6 +9,32 @@ import { coffeeApi } from "../../api/coffeeApi.js";
 import { adaptCoffeeLog } from "../../api/adapters.js";
 import { useApiResource } from "../../hooks/useApiResource.js";
 import { readSoundtrack } from "../../utils/coffeeSoundtrack.js";
+import VerdictPicker from "../../components/coffee/VerdictPicker.jsx";
+import { saveCoffeeVerdict } from "../../api/verdictApi.js";
+import { verdictOf } from "../../utils/tasteProfile.js";
+function DetailVerdict({ id, cup }) {
+  const [verdict, setVerdict] = useState(verdictOf(cup));
+  const [state, setState] = useState({ busy: false, message: "", error: "" });
+  async function change(next) {
+    const previous = verdict;
+    setVerdict(next);
+    setState({ busy: true, message: "", error: "" });
+    try {
+      await saveCoffeeVerdict(id, next);
+      setState({ busy: false, message: next ? "판단을 저장했어요. 나의 취향에 반영돼요." : "판단을 지웠어요.", error: "" });
+    } catch (e) {
+      setVerdict(previous);
+      setState({ busy: false, message: "", error: e.message || "판단을 저장하지 못했어요. 기록은 그대로예요." });
+    }
+  }
+  return (
+    <section className="quiet-section detail-verdict">
+      <VerdictPicker value={verdict} onChange={change} disabled={state.busy} />
+      {state.message && <p role="status">{state.message} <Link to="/taste">나의 취향 보기 →</Link></p>}
+      {state.error && <p role="alert" className="resource-error">{state.error}</p>}
+    </section>
+  );
+}
 export default function CoffeeDetailPage() {
   const { id } = useParams();
   const { data: cup, loading } = useApiResource(
@@ -40,6 +67,7 @@ export default function CoffeeDetailPage() {
           기록 수정하기
         </Link>
       </article>
+      {cup.id !== undefined && <DetailVerdict key={id} id={id} cup={cup} />}
       {song && (
         <section className="quiet-section">
           <h2>함께 남긴 음악</h2>
