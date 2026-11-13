@@ -485,3 +485,12 @@ feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현�
 
 브라우저표면 inventory없음·IAB unavailable로 실제데스크톱/모바일화면과키보드동작의이번재확인은차단됨. 기존UI코드는변경하지않았으며 자동검사/이미지파일과HTTP확인으로대체가능범위만검증. 화면점검완료로보고하지않음. main/요금제/서버/개인기록미변경. devPR와Pages결과후속기록.
 2026-11-01 운영배포 승인·완료: PR65 dev→main 병합ce7f742. PR Verify41260517719/main Verify41260530152/Pages41260530185 전체성공. 운영루트 정책5개·라이선스전문200,11월1일시행일,선택기본해제·삭제확인전비활성·Enter/Escape초점복귀확인. privacy-accessibility-review.md 운영배포완료와 qa/privacy-production.png 참고. Railway회원서버/키/결제/개인기록미변경.
+
+## 2026-11-12 11월 월픽 운영 반영 / Claude Code 전환
+
+- 사용자 승인으로 dev → main PR #106 병합(c0de153). main Verify 43045502569, Pages 43045502315 성공.
+- 운영 `/roast-and-reverb/data/monthly-picks.json`에서 2026-11 정규 비로소커피 58종, 글로벌 SEY 7종(11/6~11/12) 확인. 이전 달 자료 보존.
+- 11/7에 못 했던 화면 확인을 앱 내장 브라우저로 수행: dev·운영 월픽 데스크톱, dev 월픽·첫 화면 390px. 가로 넘침·깨진 이미지·콘솔 오류 없음. 쿠키 안내는 필수만 선택.
+- 충돌 상태였던 백엔드 PR #51(원두 구매 양식 다운로드)은 GitHub 전용 운영으로 효과가 없어 닫음.
+- 작업 도구를 Codex에서 Claude Code로 옮김: 상위 폴더 `CLAUDE.md`와 `.claude/skills/`(roast-reverb-autopilot, roast-reverb-continuity, roast-reverb-pipeline), 월초 점검 예약 작업(매월 1일 09:00). 이 저장소의 `.agents/skills/`는 그대로 둠. Codex 자동화 2개는 아직 켜져 있으니 중복 실행을 피하려면 꺼야 함.
+- 다음 할 일: 11/13~ 글로벌 월픽과 11월 스몰 월픽 수집(주간 점검).

@@ -267,3 +267,7 @@ CI신규실패: npm audit가 Vite7.3.6의수정가능advisory묶음을HIGH로검
 - 브라우저 체험 모드를 운영 기록장으로 전환하고 고정 예시 API 분석/통계/회원 응답 제거. 문장 정리·음악 설정은 기기 규칙, 실제 기록 통계와 월픽 특성 점수, 기존 저장소 키/백업 호환 유지.
 - 97 frontend tests 및 Vite build 성공. 기능별 범위/원본 데이터 보관은 docs/github-only-operation.md 참고.
 2026-11-01 운영배포 승인·완료: PR65 dev→main 병합ce7f742. PR Verify41260517719/main Verify41260530152/Pages41260530185 전체성공. 운영루트 정책5개·라이선스전문200,11월1일시행일,선택기본해제·삭제확인전비활성·Enter/Escape초점복귀확인. privacy-accessibility-review.md 운영배포완료와 qa/privacy-production.png 참고. Railway회원서버/키/결제/개인기록미변경.
+
+## 2026-11-12 11월 월픽 운영 반영
+- PR #106으로 11/7 dev 갱신(정규 58종, SEY 7종)을 main에 반영. Verify·Pages 성공, 운영 데이터와 화면 확인.
+- 오래된 백엔드 PR #51 닫음(GitHub 전용 운영으로 효과 없음, dev와 충돌).
