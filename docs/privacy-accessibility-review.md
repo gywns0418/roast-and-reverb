@@ -57,3 +57,17 @@
 공식 참고: [개인정보보호위원회 처리방침 작성지침 안내](https://pipc.go.kr/np/cop/bbs/selectBoardArticle.do?bbsId=BS074&mCode=C020010000&nttId=10125), [개인정보 포털](https://www.privacy.go.kr/), [W3C 최소 명도 대비](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html), [W3C WCAG 키보드 기준](https://www.w3.org/TR/WCAG21/#keyboard).
 
 Git/PR/배포의 최종 결과는 아래에 검증 후 추가한다.
+
+
+## 2026-11-01 운영 배포 완료
+
+사용자가 이 대화에서 ‘운영배포’를 명시적으로 승인했다. [PR #65](https://github.com/gywns0418/roast-and-reverb/pull/65)를 dev → main으로 병합했으며 운영 SHA는 `ce7f742630b5e2f1109d36e10251b5be15dc39c6`이다. main과 검증된 dev의 파일 차이는 없다.
+
+- PR Verify [41260517719](https://github.com/gywns0418/roast-and-reverb/actions/runs/41260517719) 성공.
+- main Verify [41260530152](https://github.com/gywns0418/roast-and-reverb/actions/runs/41260530152) 전체 성공: 프런트·서버·이미지·Trivy·ZAP 포함.
+- 운영 Pages [41260530185](https://github.com/gywns0418/roast-and-reverb/actions/runs/41260530185) 성공.
+- [운영 사이트](https://gywns0418.github.io/roast-and-reverb/)에서 개인정보/약관/환불/쿠키/권리 안내 및 라이선스 전문 모두 HTTP 200. 운영 개인정보처리방침 시행일 2026년11월1일 확인.
+- 공개 운영 UI에서 선택적 재생 미체크, 삭제 확인 전 버튼 비활성, Enter로 설정 열기/Escape 닫기 후 원래 설정 버튼으로 초점 복귀 확인. 해당 화면의 외부 출처 script 0, iframe 0.
+- [운영 게시 증거](qa/privacy-production.png). 개인 기록 삭제·메일 발송은 수행하지 않았다.
+- 이번 배포는 기존 GitHub Pages 운영 사이트에 대한 것이다. Railway 회원 서버 배포·키 변경·결제·요금제 변경은 수행하지 않았다.
+- 사업자정보·외부 권리·국외이전 및 백업 보관 조건의 기존 확인 항목은 그대로 남는다.
