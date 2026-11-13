@@ -18,6 +18,7 @@ const ConnectionsPage = lazy(
   () => import("../pages/mypage/ConnectionsPage.jsx"),
 );
 const MemoriesPage = lazy(() => import("../pages/ritual/MemoriesPage.jsx"));
+const TastePage = lazy(() => import("../pages/taste/TastePage.jsx"));
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout/Layout.jsx";
 const BeansPage = lazy(() => import("../pages/beans/BeansPage.jsx"));
@@ -220,6 +221,7 @@ export default function AppRouter() {
           <Route path="/recommend" element={<RecommendPage />} />
           <Route path="/recommendations" element={<RecommendPage />} />
           <Route path="/monthly-pick" element={<MonthlyPickPage />} />
+          <Route path="/taste" element={<TastePage />} />
 
           <Route path="/collection" element={<CollectionPage />} />
           <Route path="/collections" element={<CollectionPage />} />

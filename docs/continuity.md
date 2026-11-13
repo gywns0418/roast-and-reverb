@@ -500,3 +500,8 @@ feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현�
 - 적용: 월픽 맛 표현 검색(utils/tasteQuery.js), 예시 칩, 해석 표시, 카드 배지. 판매처 자료만 근거로 하며 맛을 측정하거나 추천 점수를 만들지 않음.
 - 다음 후보: 내 기록의 좋았던 커피를 바탕으로 월픽에 "내 Pick" 표시.
 - 개발 PC에 REA(rea-agents) 6.9.0 전역 설치와 Claude Code MCP 등록 완료(Node 24.22.1 필요). scripts/rea-review.ps1은 아직 6.5.0 고정.
+
+## 2026-11-13 취향 여정
+- 서비스 중심을 "기록할수록 나만의 커피가 또렷해지는 곳"으로 정리(docs/taste-journey-plan.md). 월픽은 매달 다른 로스터리로 취향을 확인하는 무대.
+- 구현: 판단 3단계(utils/tasteProfile.js, components/coffee/VerdictPicker.jsx, api/verdictApi.js), 나의 취향 화면(pages/taste/TastePage.jsx), 월픽 내 취향 필터·배지. 근거는 사용자가 고른 판단과 직접 쓴 감상, 판매처 컵노트뿐이며 점수를 만들지 않음.
+- 다음 후보: 같은 원두의 "다음 잔에서 바꿔볼 것" 모아 보기(레시피 개선), 커뮤니티(서버·비용·개인정보 결정 필요), 기획 플러그인(Product Management, Design) 설치 후 사용자 여정 점검.
