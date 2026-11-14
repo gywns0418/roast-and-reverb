@@ -47,15 +47,10 @@ export default function MyPage() {
         </Link>
         {local && <div className="settings-storage-facts"><span>이 브라우저에 보관</span><span>백업 파일로 다른 기기에 이동</span><span>복원 전 바뀔 자료 확인</span></div>}
       </section>
-      <nav className="quiet-link-list" aria-label="기록장 설정">
-        {[{to:"/music",Icon:Music2,title:"함께 남긴 음악",text:"커피와 함께 듣고 기록한 곡을 살펴봐요."},{to:"/beans",Icon:Coffee,title:"내 원두 관리",text:"가진 원두와 남은 상태를 한곳에서 관리해요."},{to:"/archive",Icon:Grid2X2,title:"기록과 발견 도구",text:"취향, 추천, 청음실과 모든 기록 기능을 열어요."}].map(({to,Icon,title,text})=><Link key={to} to={to}><Icon size={21} aria-hidden="true"/><div><strong>{title}</strong><small>{text}</small></div><ArrowRight size={17} aria-hidden="true"/></Link>)}
+      <nav className="quiet-link-list" aria-label="기록장 설정과 도움말">
+        {[{to:"/music",Icon:Music2,title:"함께 남긴 음악",text:"커피와 함께 듣고 기록한 곡을 살펴봐요."},{to:"/beans",Icon:Coffee,title:"내 원두 관리",text:"가진 원두와 남은 상태를 한곳에서 관리해요."},{to:"/archive",Icon:Grid2X2,title:"기록과 발견 도구",text:"취향, 추천, 청음실과 모든 기록 기능을 열어요."},{to:"/help",Icon:BookOpen,title:"기록장 이용 방법",text:"느낌 한 줄부터 음악 선택, 저장까지."}].map(({to,Icon,title,text})=><Link key={to} to={to}><Icon size={21} aria-hidden="true"/><div><strong>{title}</strong><small>{text}</small></div><ArrowRight size={17} aria-hidden="true"/></Link>)}
+        <a href={import.meta.env.BASE_URL + "privacy.html"}><ShieldCheck size={21} aria-hidden="true"/><div><strong>개인정보와 내 자료</strong><small>어떤 정보가 저장되는지 확인해요.</small></div><ArrowRight size={17} aria-hidden="true"/></a>
       </nav>
-      <section className="settings-help" aria-label="도움말과 개인정보">
-        <Link to="/help"><BookOpen size={22} aria-hidden="true"/><div><strong>기록장 이용 방법</strong><p>느낌 한 줄부터 음악 선택, 저장까지.</p></div><ArrowRight size={17} aria-hidden="true"/></Link>
-        <a href={import.meta.env.BASE_URL + "privacy.html"}>
-          <ShieldCheck size={22} aria-hidden="true"/><div><strong>개인정보와 내 자료</strong><p>어떤 정보가 저장되는지 확인해요.</p></div><ArrowRight size={17} aria-hidden="true"/>
-        </a>
-      </section>
       {!local && (
         <section className="quiet-section">
           <h2>계정</h2>

@@ -57,4 +57,4 @@ import "./styles/interface-cohesion.css";
 import "./styles/visual-polish.css";
 import "./styles/card-entry-design.css";
 import "./styles/brand.css";
-import "./styles/cupping.css";
+import "./styles/ink.css";
