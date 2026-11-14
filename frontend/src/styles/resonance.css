@@ -1,0 +1,365 @@
+/* ─────────────────────────────────────────────────────────────
+   Resonance — Roast & Reverb design v3 (dev only, 2026-11-14)
+   Full system and rationale: docs/design-v3-resonance.md
+   Prototype: public/prototype/resonance.html
+
+   - Light and dark are both first-class (data-theme on <html>).
+   - Korean reads in Pretendard; English display words in Bricolage Grotesque.
+   - Depth comes from surface lightness, glass blur and light — not shadows.
+   - The monthly bean list (.quiet-bean-grid) is frozen exactly as the owner
+     approved it and is excluded from every rule below except its own block.
+   ───────────────────────────────────────────────────────────── */
+@import "@fontsource-variable/bricolage-grotesque/opsz.css";
+
+:root {
+  --rs-font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --rs-display: "Bricolage Grotesque Variable", "Pretendard Variable", sans-serif;
+  --rs-s1: 4px; --rs-s2: 8px; --rs-s3: 12px; --rs-s4: 16px; --rs-s5: 24px; --rs-s6: 32px; --rs-s7: 48px; --rs-s8: 64px;
+  --rs-r-control: 12px; --rs-r-card: 18px; --rs-r-sheet: 28px; --rs-r-pill: 999px;
+  --rs-blur: 20px;
+  --rs-ease: cubic-bezier(.2, .8, .2, 1); --rs-ease-reverb: cubic-bezier(.16, 1, .3, 1);
+  --rs-fast: 160ms; --rs-base: 240ms; --rs-slow: 420ms;
+}
+:root, html[data-theme="light"] {
+  --rs-bg: #F4F3EF; --rs-surface: #FFFFFF; --rs-surface-2: #EDECE7; --rs-glass: rgba(255, 255, 255, .64); --rs-glass-line: rgba(18, 19, 24, .08);
+  --rs-text: #121318; --rs-text-2: #474A54; --rs-text-3: #62656F; --rs-line: #DEDCD5;
+  --rs-coffee: #B23E22; --rs-sound: #3446C9; --rs-focus: #3446C9; --rs-on-accent: #FFFFFF;
+  --rs-panel: #121318; --rs-panel-text: #F4F3EF; --rs-panel-text-2: #BFC1C9; --rs-panel-line: rgba(255, 255, 255, .14); --rs-panel-link: #FF9A7A;
+  --rs-aura-line: rgba(18, 19, 24, .16);
+  --rs-on-text-2: #C4C6CE;
+}
+html[data-theme="dark"] {
+  --rs-bg: #0C0D11; --rs-surface: #15161C; --rs-surface-2: #1D1F27; --rs-glass: rgba(21, 22, 28, .62); --rs-glass-line: rgba(255, 255, 255, .08);
+  --rs-text: #F3F2ED; --rs-text-2: #B9BBC4; --rs-text-3: #9497A2; --rs-line: #2A2C35;
+  --rs-coffee: #FF8A66; --rs-sound: #9AAAFF; --rs-focus: #9AAAFF; --rs-on-accent: #0C0D11;
+  --rs-panel: #1D1F27; --rs-panel-text: #F3F2ED; --rs-panel-text-2: #B9BBC4; --rs-panel-line: rgba(255, 255, 255, .1); --rs-panel-link: #FF9A7A;
+  --rs-aura-line: rgba(255, 255, 255, .16);
+  --rs-on-text-2: #474A54;
+  color-scheme: dark;
+}
+/* Older layers read these names. */
+:root, html[data-theme] {
+  --rr-ui-font: var(--rs-font); --rr-display-font: var(--rs-font);
+  --rr-paper: var(--rs-bg); --rr-card: var(--rs-surface); --rr-ink: var(--rs-text); --rr-ink-soft: var(--rs-text-2);
+  --rr-forest: var(--rs-text); --rr-moss: var(--rs-coffee); --rr-line: var(--rs-line); --rr-roast: var(--rs-coffee);
+}
+
+/* ── Ground & type ──────────────────────────────────────── */
+html body, html body .app-shell, html body .app-shell .main, html body .studio-home {
+  background: var(--rs-bg); color: var(--rs-text); font-family: var(--rs-font);
+  transition: background-color var(--rs-slow) var(--rs-ease), color var(--rs-slow) var(--rs-ease);
+}
+html body { font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: anywhere; }
+html body :is(button, input, textarea, select) { font-family: var(--rs-font); }
+html body .app-shell :is(strong, b, dd, td, .num) { font-variant-numeric: tabular-nums; }
+html body ::selection { background: color-mix(in srgb, var(--rs-coffee) 30%, transparent); }
+html body :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible { outline: 2px solid var(--rs-focus) !important; outline-offset: 3px !important; }
+
+/* ── Navigation rail ────────────────────────────────────── */
+html body .app-shell .sidebar { background: var(--rs-bg); color: var(--rs-text); border-right: 1px solid var(--rs-line); }
+html body .app-shell .sidebar .brand { display: grid; grid-template-columns: 26px 1fr; column-gap: 10px; align-items: center; padding: 0 6px 20px; border: 0; color: var(--rs-text); }
+html body .app-shell .sidebar .brand-orb { grid-row: span 2; width: 26px; height: 26px; border-radius: 50%; background: conic-gradient(from 210deg, var(--rs-coffee), var(--rs-sound), var(--rs-coffee)); box-shadow: 0 0 0 5px color-mix(in srgb, var(--rs-coffee) 16%, transparent); }
+html body .app-shell .sidebar .brand span { font-family: var(--rs-display); font-variation-settings: "opsz" 48; font-weight: 720; font-size: 20px; letter-spacing: -0.04em; color: var(--rs-text); }
+html body .app-shell .sidebar .brand span::after { display: none; }
+html body .app-shell .sidebar .brand small { font-size: 12px; color: var(--rs-text-3); opacity: 1; letter-spacing: 0; text-transform: none; font-family: var(--rs-font); }
+html body .app-shell .sidebar nav { display: grid; gap: 4px; counter-reset: none; }
+html body .app-shell .sidebar nav > .nav-link {
+  display: flex; align-items: center; gap: 12px; min-height: 52px; margin: 0; padding: 6px 12px;
+  border: 0 !important; border-radius: var(--rs-r-control) !important; background: transparent; box-shadow: none !important;
+  color: var(--rs-text-2); font-weight: 640; transition: background var(--rs-fast), color var(--rs-fast);
+}
+html body .app-shell .sidebar nav > .nav-link::before { content: none !important; display: none !important; }
+html body .app-shell .sidebar nav > .nav-link svg { display: block; flex: none; }
+html body .app-shell .sidebar .nav-label { display: flex; flex-direction: column; line-height: 1.25; font-size: 15px; }
+html body .app-shell .sidebar .nav-label small { font-size: 12px; font-weight: 500; color: var(--rs-text-3); margin-top: 2px; }
+html body .app-shell .sidebar nav > .nav-link:hover { background: var(--rs-surface-2); color: var(--rs-text); }
+html body .app-shell .sidebar nav > .nav-link.active { background: var(--rs-text); color: var(--rs-bg); font-weight: 760; }
+html body .app-shell .sidebar nav > .nav-link.active .nav-label small { color: var(--rs-on-text-2); }
+html body .app-shell .sidebar .sidebar-foot { color: var(--rs-text-3); border-top: 1px solid var(--rs-line); padding-top: 14px; font-size: 13px; font-family: var(--rs-font); opacity: 1; }
+
+/* Glass top bar */
+html body .app-shell .topbar {
+  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--rs-glass); border-bottom: 1px solid var(--rs-glass-line);
+  -webkit-backdrop-filter: blur(var(--rs-blur)) saturate(1.4); backdrop-filter: blur(var(--rs-blur)) saturate(1.4);
+  color: var(--rs-text-2);
+}
+html body .app-shell .topbar > span:first-child { font-size: 14px; font-weight: 640; color: var(--rs-text-2); }
+html body .app-shell .topbar .topbar-actions { display: inline-flex; align-items: center; gap: 12px; }
+html body .app-shell .topbar a { color: var(--rs-text); font-size: 14px; font-weight: 600; }
+html body .theme-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rs-line); background: var(--rs-surface); color: var(--rs-text); cursor: pointer; transition: transform var(--rs-fast) var(--rs-ease); }
+html body .theme-toggle:active { transform: scale(.94); }
+html body .app-shell .demo-notice { background: transparent; border-bottom: 1px solid var(--rs-line); color: var(--rs-text-3); font-size: 13px; }
+
+/* ── Page header ────────────────────────────────────────── */
+html body .app-shell .page .page-heading,
+html body .app-shell .page.page-monthly-pick .page-heading {
+  display: block; background: transparent !important; border: 0 !important; border-radius: 0 !important;
+  padding: 8px 0 28px !important; margin: 0 0 8px !important; box-shadow: none !important;
+}
+html body .app-shell .page .page-heading::after { display: none !important; }
+html body .app-shell .page .page-heading > div { display: block; }
+html body .app-shell .page .page-heading .page-heading-index {
+  display: block; margin: 0 0 10px; font-family: var(--rs-display); font-variation-settings: "opsz" 24; font-weight: 640;
+  font-size: 15px; letter-spacing: -0.01em; color: var(--rs-coffee);
+}
+html body .app-shell .page .page-heading h1 { font-family: var(--rs-font); font-weight: 820; font-size: clamp(32px, 3.4vw, 48px); line-height: 1.1; letter-spacing: -0.045em; color: var(--rs-text); margin: 0; }
+html body .app-shell .page .page-heading .subtitle { font-size: 16px; line-height: 1.6; color: var(--rs-text-2); margin: 12px 0 0; max-width: 60ch; }
+html body .app-shell .page-dashboard > .page-heading { position: absolute !important; width: 1px; height: 1px; padding: 0 !important; margin: 0 !important; overflow: hidden; clip-path: inset(50%); }
+
+/* ── Surfaces ───────────────────────────────────────────── */
+html body .app-shell .workspace-content > * + * { margin-top: var(--rs-s5); }
+html body .app-shell .workspace-content :is(
+  .panel, .taste-card, .taste-empty, .writing-desk-compose, .simple-recent, .journal-welcome,
+  .quiet-section, .quiet-link-list, .quiet-details, .consumer-monthly-guide, .monthly-library-filters,
+  .compare-person, .inventory-intro, .discovery-empty, .journal-next-steps, .taste-map,
+  .mobile-composer, .mobile-journal-entry
+),
+html body .studio-home :is(.first-cup-note, .mobile-cup) {
+  background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important;
+  border-radius: var(--rs-r-card) !important; box-shadow: none !important; color: var(--rs-text);
+}
+html body .app-shell .workspace-content :is(.first-cup-note, .monthly-restored-filters) { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+html body .app-shell .mobile-composer .mobile-cup { border: 0 !important; background: transparent !important; padding: 0 !important; }
+html body .app-shell .writing-desk { gap: var(--rs-s5); }
+html body .app-shell .writing-desk .writing-desk-intro { background: transparent !important; border-bottom: 1px solid var(--rs-line); border-radius: 0; align-items: center; }
+html body .app-shell .workspace-content .consumer-note-example { background: transparent !important; border-left: 3px solid var(--rs-coffee); border-radius: 0; color: var(--rs-text-2); }
+
+/* Headings inside content */
+html body .app-shell .workspace-content :is(h2, h3):not(.quiet-bean-grid *) { color: var(--rs-text); letter-spacing: -0.03em; font-family: var(--rs-font); }
+html body .app-shell .workspace-content h2:not(.quiet-bean-grid *) { font-size: 21px; line-height: 1.35; font-weight: 800; }
+html body .app-shell .workspace-content .writing-desk-intro h2 { font-size: clamp(26px, 2.4vw, 34px); line-height: 1.2; }
+
+/* ── Focus panel (the liked dark block) ─────────────────── */
+html body .app-shell .workspace-content :is(.desk-month, .journal-overview, .taste-summary, .settings-storage) {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--rs-panel) !important; color: var(--rs-panel-text) !important;
+  border: 1px solid var(--rs-panel-line) !important; border-radius: var(--rs-r-card) !important; box-shadow: none !important;
+}
+html body .app-shell .workspace-content :is(.desk-month, .journal-overview, .taste-summary, .settings-storage)::before {
+  content: ""; position: absolute; z-index: -1; inset: -40% -10% auto auto; width: 70%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--rs-coffee) 38%, transparent), transparent 62%), radial-gradient(circle at 30% 70%, color-mix(in srgb, var(--rs-sound) 30%, transparent), transparent 58%);
+  filter: blur(30px); opacity: .55; pointer-events: none;
+}
+html body .app-shell .workspace-content :is(.desk-month, .journal-overview, .taste-summary, .settings-storage) :is(span, small, p, dt, li) { color: var(--rs-panel-text-2) !important; }
+html body .app-shell .workspace-content :is(.desk-month, .journal-overview, .taste-summary, .settings-storage) :is(h2, strong, dd) { color: var(--rs-panel-text) !important; }
+html body .app-shell .workspace-content :is(.desk-month, .journal-overview, .taste-summary, .settings-storage) a:not(.primary-button):not(.ghost-button) { color: var(--rs-panel-link) !important; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; font-weight: 700; }
+html body .app-shell .workspace-content :is(.desk-month dd, .journal-overview strong, .taste-summary strong) { font-family: var(--rs-font) !important; font-weight: 820 !important; letter-spacing: -0.045em !important; line-height: 1 !important; }
+html body .app-shell .workspace-content .desk-month { padding: 22px 24px 18px; margin-bottom: var(--rs-s5); }
+html body .app-shell .workspace-content .desk-month > p { font-weight: 720; font-size: 13px; margin: 0 0 12px; }
+html body .app-shell .workspace-content .desk-month dl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 8px; }
+html body .app-shell .workspace-content .desk-month dl div { display: flex; flex-direction: column-reverse; gap: 6px; }
+html body .app-shell .workspace-content .desk-month dd { margin: 0; font-size: 44px; }
+html body .app-shell .workspace-content .desk-month dt { font-size: 13px; }
+html body .app-shell .workspace-content .desk-month a { display: block; padding: 8px 0 2px; font-size: 14px; }
+html body .app-shell .workspace-content .desk-month a.desk-backup-due { border-top: 1px solid var(--rs-panel-line); margin-top: 6px; padding-top: 10px; }
+html body .app-shell .workspace-content .journal-overview { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 0 !important; }
+html body .app-shell .workspace-content .journal-overview > div { padding: 22px 24px; border: 0 !important; border-right: 1px solid var(--rs-panel-line) !important; background: transparent !important; display: flex; flex-direction: column; gap: 10px; }
+html body .app-shell .workspace-content .journal-overview > div:last-child { border-right: 0 !important; }
+html body .app-shell .workspace-content .journal-overview strong { font-size: 44px; }
+html body .app-shell .workspace-content .journal-overview strong small { font-size: 15px; font-weight: 600; margin-left: 4px; letter-spacing: 0; }
+html body .app-shell .workspace-content .journal-overview .journal-last-date { font-size: 20px !important; letter-spacing: -0.02em !important; line-height: 1.3 !important; }
+html body .app-shell .workspace-content .taste-summary { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 !important; padding: 0 !important; }
+html body .app-shell .workspace-content .taste-summary > div { background: transparent !important; border: 0 !important; border-right: 1px solid var(--rs-panel-line) !important; border-radius: 0 !important; padding: 22px 24px; align-items: flex-start; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+html body .app-shell .workspace-content .taste-summary > div:last-child { border-right: 0 !important; }
+html body .app-shell .workspace-content .taste-summary strong { font-size: 44px; }
+html body .app-shell .page-mypage .workspace-content { display: block; }
+html body .app-shell .workspace-content .settings-storage { display: grid !important; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "icon icon" "title action" "text action" "facts facts"; column-gap: 24px; padding: 28px !important; }
+html body .app-shell .workspace-content .settings-storage > svg { grid-area: icon; color: var(--rs-panel-link); margin-bottom: 12px; }
+html body .app-shell .workspace-content .settings-storage h2 { grid-area: title; margin: 0 0 6px; font-size: 24px; }
+html body .app-shell .workspace-content .settings-storage > p { grid-area: text; margin: 0; }
+html body .app-shell .workspace-content .settings-storage > .primary-button { grid-area: action; align-self: center; background: var(--rs-panel-text) !important; color: var(--rs-panel) !important; border-color: var(--rs-panel-text) !important; }
+html body .app-shell .workspace-content .settings-storage-facts { grid-area: facts; display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--rs-panel-line); }
+html body .app-shell .workspace-content .settings-storage-facts span { font-size: 14px; }
+
+/* ── Lists ──────────────────────────────────────────────── */
+html body .app-shell .workspace-content .quiet-link-list { display: block !important; padding: 0 !important; overflow: hidden; }
+html body .app-shell .workspace-content .quiet-link-list > a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 18px; align-items: center; gap: 16px; min-height: 76px; padding: 16px 24px; margin: 0; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; color: var(--rs-text); text-decoration: none; }
+html body .app-shell .workspace-content .quiet-link-list > a + a { border-top: 1px solid var(--rs-line) !important; }
+html body .app-shell .workspace-content .quiet-link-list > a:hover { background: var(--rs-surface-2) !important; }
+html body .app-shell .workspace-content .quiet-link-list strong { display: block; font-size: 16px; font-weight: 720; color: var(--rs-text); }
+html body .app-shell .workspace-content .quiet-link-list :is(small, p) { display: block; margin: 3px 0 0; font-size: 14px; color: var(--rs-text-2); line-height: 1.55; }
+html body .app-shell .workspace-content .quiet-link-list svg { color: var(--rs-text-2); }
+html body .app-shell .workspace-content .journal-next-steps { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 !important; padding: 0 !important; overflow: hidden; }
+html body .app-shell .workspace-content .journal-next-steps > a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 18px; align-items: center; gap: 16px; padding: 22px 24px; margin: 0; background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; color: var(--rs-text); }
+html body .app-shell .workspace-content .journal-next-steps > a + a { border-left: 1px solid var(--rs-line) !important; }
+html body .app-shell .workspace-content .journal-next-steps > a:hover { background: var(--rs-surface-2) !important; }
+html body .app-shell .workspace-content .journal-next-steps strong { font-size: 16px; font-weight: 720; color: var(--rs-text); }
+html body .app-shell .workspace-content .journal-next-steps p { margin: 3px 0 0; font-size: 14px; color: var(--rs-text-2); }
+html body .app-shell .workspace-content .journal-next-steps svg { color: var(--rs-text-2); }
+
+/* Records list */
+html body .app-shell .workspace-content .simple-records > a { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-control) !important; box-shadow: none !important; color: var(--rs-text); transition: transform var(--rs-base) var(--rs-ease), border-color var(--rs-base); }
+html body .app-shell .workspace-content .simple-records > a:hover { transform: translateY(-2px); border-color: var(--rs-text-3) !important; }
+html body .app-shell .resonance-aura { display: block; }
+html body .app-shell .workspace-content :is(.recent-cup-art, .record-cup-art) { width: 52px !important; height: 52px !important; flex: none; border-radius: 50%; object-fit: initial; background: none !important; }
+html body .app-shell .workspace-content .desk-aura { width: 112px; height: 112px; flex: none; }
+html body .app-shell .workspace-content :is(.journal-welcome-aura, .journal-empty-aura) { width: 120px; height: 120px; flex: none; }
+
+/* ── Links ──────────────────────────────────────────────── */
+html body .app-shell .workspace-content :is(.taste-card-head a, .simple-section-title a, .desk-storage-note a, .desk-empty a, .simple-return a, .monthly-mine-hint a, .quiet-source a, .compare-privacy a, .journal-welcome a),
+html body .studio-home :is(.consumer-discover a, .simple-return a) {
+  color: var(--rs-text); font-weight: 700; text-decoration: underline; text-decoration-color: var(--rs-coffee); text-decoration-thickness: 2px; text-underline-offset: 4px;
+}
+
+/* ── Controls ───────────────────────────────────────────── */
+html body :is(.app-shell, .studio-home) :is(.primary-button, .ghost-button):not(.quiet-bean-grid *) {
+  border-radius: var(--rs-r-pill) !important; min-height: 48px; padding: 11px 22px; font-weight: 720; letter-spacing: -0.015em; box-shadow: none !important;
+  transition: background var(--rs-fast), color var(--rs-fast), border-color var(--rs-fast), transform var(--rs-fast) var(--rs-ease);
+}
+html body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *) { background: var(--rs-text) !important; border: 1px solid var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *):hover:not(:disabled) { background: var(--rs-coffee) !important; border-color: var(--rs-coffee) !important; color: var(--rs-on-accent) !important; }
+html body :is(.app-shell, .studio-home) .ghost-button:not(.quiet-bean-grid *) { background: transparent !important; border: 1px solid var(--rs-line) !important; color: var(--rs-text) !important; }
+html body :is(.app-shell, .studio-home) .ghost-button:not(.quiet-bean-grid *):hover:not(:disabled) { border-color: var(--rs-text) !important; }
+html body :is(.app-shell, .studio-home) :is(.primary-button, .ghost-button):not(.quiet-bean-grid *):active { transform: scale(.97); }
+html body :is(.app-shell, .studio-home) :is(.primary-button, .ghost-button):disabled { opacity: .45; }
+html body .app-shell .workspace-content :is(input:not([type=checkbox]):not([type=radio]), textarea, select, .library-search):not(.quiet-bean-grid *),
+html body .studio-home textarea {
+  border-radius: var(--rs-r-control) !important; border: 1px solid var(--rs-line) !important; background: var(--rs-surface-2) !important; color: var(--rs-text) !important; box-shadow: none !important;
+}
+html body :is(.app-shell, .studio-home) :is(input, textarea)::placeholder { color: var(--rs-text-3); opacity: 1; }
+html body .app-shell .workspace-content :is(input, textarea, select):focus { border-color: var(--rs-focus) !important; }
+html body .app-shell input[type=checkbox], html body .app-shell input[type=radio] { accent-color: var(--rs-coffee); }
+
+/* Chips, verdicts, taste */
+html body .app-shell .taste-chips li { border-radius: var(--rs-r-pill); background: var(--rs-text); color: var(--rs-bg); font-weight: 720; }
+html body .app-shell .taste-chips li small { color: var(--rs-on-text-2); }
+html body .app-shell .taste-chips-muted li { background: transparent; color: var(--rs-text-2); border: 1px solid var(--rs-line); }
+html body .app-shell .verdict-picker button { border-radius: var(--rs-r-pill); background: var(--rs-surface); color: var(--rs-text); border: 1px solid var(--rs-line); min-height: 44px; }
+html body .app-shell .verdict-picker button[aria-pressed="true"] { background: var(--rs-text); border-color: var(--rs-text); color: var(--rs-bg); }
+html body .app-shell .workspace-content .taste-matches li { border-radius: var(--rs-r-control); background: var(--rs-surface-2); border-color: var(--rs-line); }
+html body .app-shell .workspace-content .taste-matches em { color: var(--rs-coffee); }
+html body .app-shell .workspace-content .taste-roastery-check li { background: var(--rs-surface-2); border-radius: var(--rs-r-control); }
+html body .app-shell .workspace-content .taste-share pre { border-radius: var(--rs-r-control); background: var(--rs-surface-2); color: var(--rs-text); }
+html body .app-shell .workspace-content .compare-person::before { background: linear-gradient(90deg, var(--rs-coffee), var(--rs-sound)); height: 3px; }
+html body .app-shell .workspace-content .compare-me { background: var(--rs-surface-2) !important; }
+html body .app-shell .workspace-content .compare-who { font-family: var(--rs-font); font-weight: 820; letter-spacing: -0.03em; color: var(--rs-text); }
+
+/* Taste map */
+.taste-map { padding: 28px; }
+.taste-map-head { display: flex; align-items: center; gap: 24px; margin-bottom: 8px; }
+.taste-map-aura { width: 120px; height: 120px; flex: none; }
+.taste-map-kicker { margin: 0 0 4px; font-family: var(--rs-display); font-weight: 640; font-size: 15px; color: var(--rs-coffee); }
+html body .app-shell .workspace-content .taste-map h2 { margin: 0 0 6px; font-size: 24px; }
+.taste-map-head p:last-child { margin: 0; color: var(--rs-text-2); max-width: 56ch; }
+.taste-map-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.taste-map-body svg { width: 100%; max-width: 440px; justify-self: center; display: block; }
+.taste-map-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.taste-map-table :is(th, td) { padding: 12px 8px; border-bottom: 1px solid var(--rs-line); text-align: left; }
+.taste-map-table thead th { color: var(--rs-text-3); font-weight: 600; font-size: 13px; }
+.taste-map-table tbody th { font-weight: 640; color: var(--rs-text); }
+.taste-map-table tbody th i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
+.taste-map-table td { font-weight: 760; color: var(--rs-text); }
+
+/* ── Monthly page around the frozen list ────────────────── */
+html body .page-monthly-pick .monthly-editions button { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; color: var(--rs-text) !important; }
+html body .page-monthly-pick .monthly-editions button[aria-pressed=true] { background: var(--rs-text) !important; border-color: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body .page-monthly-pick .monthly-editions button[aria-pressed=true] small { color: var(--rs-on-text-2) !important; }
+html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button { color: var(--rs-text-2); }
+html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button[aria-pressed=true] { background: var(--rs-surface-2) !important; color: var(--rs-text) !important; border-radius: var(--rs-r-control) !important; }
+html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button[aria-pressed=true] .monthly-filter-check { color: var(--rs-coffee); }
+html body .page-monthly-pick :is(.monthly-mine-toggle, .monthly-taste-examples button) { border-radius: var(--rs-r-pill) !important; }
+html body .page-monthly-pick :is(.quiet-bean-dialog, .monthly-compare-dialog) { border-radius: var(--rs-r-sheet); background: var(--rs-surface); color: var(--rs-text); border: 1px solid var(--rs-line); }
+
+/* FROZEN: monthly bean list exactly as approved (v2), in both themes. */
+html body .page-monthly-pick .quiet-bean-grid {
+  color-scheme: light;
+  /* v2 values the approved list was drawn with */
+  --rr-ink: #171916; --rr-ink-soft: #50544C; --rr-line: #DAD7CD; --rr-card: #FBFAF7; --rr-paper: #ECEAE3;
+  --rr-roast: #C2402A; --rr-forest: #171916; --rr-moss: #C2402A; --rr-ui-font: var(--rs-font); --rr-display-font: var(--rs-font);
+}
+html body .page-monthly-pick .quiet-bean-grid { color: #171916; line-height: normal; }
+/* Dark: a paper backdrop drawn outside the box so the list keeps the same size. */
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid { background: #ECEAE3; border-radius: 4px; box-shadow: 0 0 0 16px #ECEAE3; }
+html body .page-monthly-pick .quiet-bean-grid .monthly-bean-card { background: #FBFAF7 !important; border: 1px solid #DAD7CD !important; border-radius: 6px !important; box-shadow: none !important; }
+html body .page-monthly-pick .quiet-bean-grid .monthly-bean-card:hover { border-color: #171916 !important; }
+html body .page-monthly-pick .quiet-bean-grid .monthly-badge { border-radius: 4px; }
+html body .page-monthly-pick .quiet-bean-grid .monthly-category-label { border-radius: 3px; }
+html body .page-monthly-pick .quiet-bean-grid .monthly-section-heading { border-bottom: 1px solid #171916; }
+html body .page-monthly-pick .quiet-bean-grid .monthly-section-heading h2 { color: #171916 !important; font-family: var(--rs-font); font-size: 20px !important; font-weight: 800 !important; letter-spacing: -0.7px !important; line-height: 28px !important; }
+
+/* ── Mobile tab bar: floating glass ─────────────────────── */
+html body .app-shell .mobile-tabbar {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  background: var(--rs-glass) !important; border: 1px solid var(--rs-glass-line) !important; box-shadow: none !important;
+  -webkit-backdrop-filter: blur(var(--rs-blur)) saturate(1.4); backdrop-filter: blur(var(--rs-blur)) saturate(1.4);
+}
+html body .app-shell .mobile-tabbar .nav-link { color: var(--rs-text-2) !important; background: transparent !important; border-radius: 16px !important; box-shadow: none !important; font-weight: 640; font-size: 12px; }
+html body .app-shell .mobile-tabbar .nav-link.active { background: var(--rs-text) !important; color: var(--rs-bg) !important; font-weight: 760; }
+
+/* ── Landing ────────────────────────────────────────────── */
+html body .studio-home .first-home-nav { border-bottom: 1px solid var(--rs-line); }
+html body .studio-home .first-home-brand { font-family: var(--rs-display); font-weight: 760; letter-spacing: -0.04em; color: var(--rs-text); }
+html body .studio-home .first-home-brand span { color: var(--rs-text-3); }
+html body .studio-home .first-home-nav a { color: var(--rs-text); }
+html body .studio-home .simple-intro h1 { font-family: var(--rs-font); font-weight: 840; font-size: clamp(40px, 5.4vw, 76px); line-height: 1.05; letter-spacing: -0.055em; color: var(--rs-text); }
+html body .studio-home .simple-intro h1 em { font-style: normal; background: linear-gradient(90deg, var(--rs-coffee), var(--rs-sound)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+html body .studio-home .simple-intro .eyebrow { font-family: var(--rs-display); font-weight: 640; font-size: 15px; letter-spacing: -0.01em; text-transform: none; color: var(--rs-coffee); }
+html body .studio-home :is(.simple-intro-lead, small, .consumer-discover span, .first-home-footer, .simple-return) { color: var(--rs-text-2); }
+html body .studio-home .home-aura-figure { margin: 0; display: grid; justify-items: center; gap: 12px; }
+html body .studio-home .home-aura-figure .resonance-aura { width: min(420px, 100%); height: auto; aspect-ratio: 1; }
+html body .studio-home .home-aura-figure figcaption { font-size: 14px; color: var(--rs-text-3); text-align: center; max-width: 32ch; }
+html body .home-loop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 28px 0 0; padding: 0; list-style: none; background: var(--rs-panel); border-radius: var(--rs-r-card); color: var(--rs-panel-text); border: 1px solid var(--rs-panel-line); }
+html body .home-loop li { padding: 18px 18px 16px; font-size: 14px; color: var(--rs-panel-text-2); line-height: 1.55; }
+html body .home-loop li + li { border-left: 1px solid var(--rs-panel-line); }
+html body .home-loop b { display: block; font-family: var(--rs-display); font-size: 13px; font-weight: 720; color: var(--rs-panel-link); margin-bottom: 6px; }
+html body .home-loop strong { display: block; color: var(--rs-panel-text); font-size: 16px; font-weight: 800; margin-bottom: 2px; }
+html body .studio-home :is(.first-home-footer, .rr-policy-footer) { background: transparent; border-color: var(--rs-line); }
+
+/* ── Overlays & footers ─────────────────────────────────── */
+html body .ritual-loading { background: color-mix(in srgb, var(--rs-bg) 92%, transparent) !important; color: var(--rs-text) !important; }
+html body .ritual-loading .eyebrow { color: var(--rs-coffee); font-family: var(--rs-display); }
+html body .ritual-loading p { color: var(--rs-text-2); }
+html body :is(.rr-cookie-banner, .rr-privacy-dialog) { border-radius: var(--rs-r-card); border: 1px solid var(--rs-line); background: var(--rs-surface); color: var(--rs-text); box-shadow: 0 24px 60px rgba(0, 0, 0, .18); }
+html body :is(.rr-cookie-banner, .rr-privacy-dialog) :is(p, label, span, li) { color: var(--rs-text-2); }
+html body :is(.rr-cookie-banner, .rr-privacy-dialog) :is(h2, h3, strong) { color: var(--rs-text); }
+html body :is(.rr-cookie-banner, .rr-privacy-dialog) button { border-radius: var(--rs-r-pill); background: var(--rs-surface); color: var(--rs-text); border: 1px solid var(--rs-line); }
+html body .rr-policy-footer { background: var(--rs-bg) !important; color: var(--rs-text-2) !important; }
+html body .rr-policy-footer a { color: var(--rs-text) !important; }
+html body .app-shell .page-footer { border-top: 1px solid var(--rs-line); color: var(--rs-text-3); }
+html body .app-shell .page-footer a { color: var(--rs-text-2); }
+html body .app-shell .skip-link { border-radius: var(--rs-r-pill); background: var(--rs-text); color: var(--rs-bg); }
+
+/* ── Dark mode: older layers hard-code light colours ────── */
+html[data-theme="dark"] body .app-shell .workspace-content :is(p, li, small, span, label, dt, dd, summary, legend, td, th, em, figcaption, time, b):not(.quiet-bean-grid *):not(.resonance-aura *) { color: var(--rs-text-2); }
+html[data-theme="dark"] body .app-shell .workspace-content :is(h2, h3, h4, strong, a):not(.quiet-bean-grid *):not(.primary-button):not(.ghost-button) { color: var(--rs-text); }
+html[data-theme="dark"] body .app-shell .workspace-content :is(div, section, article, aside, nav, details, li, a, label, fieldset, header, form, ul, ol, dl, p, small, span):not(.quiet-bean-grid):not(.quiet-bean-grid *):not(.resonance-aura *):not([style*="background"]) { background-color: transparent; }
+html[data-theme="dark"] body .app-shell .workspace-content button:not(.quiet-bean-grid *):not(.primary-button):not(.ghost-button):not([aria-pressed="true"]):not([style*="background"]) { background-color: var(--rs-surface); color: var(--rs-text); border-color: var(--rs-line); }
+html[data-theme="dark"] body .app-shell .workspace-content :is(.resource-error, [role="alert"]) { color: #FF9A9A; }
+
+@media (max-width: 760px) {
+  html body .app-shell .page .page-heading h1 { font-size: 32px; }
+  html body .app-shell .workspace-content :is(.journal-overview, .taste-summary) { grid-template-columns: 1fr 1fr; }
+  html body .app-shell .workspace-content :is(.journal-overview, .taste-summary) > div { padding: 18px; border-right: 0 !important; border-bottom: 1px solid var(--rs-panel-line) !important; }
+  html body .app-shell .workspace-content :is(.journal-overview, .taste-summary) > div:nth-child(odd) { border-right: 1px solid var(--rs-panel-line) !important; }
+  html body .app-shell .workspace-content .taste-summary > div:nth-last-child(-n + 2) { border-bottom: 0 !important; }
+  html body .app-shell .workspace-content .journal-overview > div:last-child { grid-column: 1 / -1; border-right: 0 !important; border-bottom: 0 !important; }
+  html body .app-shell .workspace-content :is(.journal-overview strong, .taste-summary strong, .desk-month dd) { font-size: 36px; }
+  html body .app-shell .workspace-content .settings-storage { grid-template-columns: 1fr; grid-template-areas: "icon" "title" "text" "action" "facts"; padding: 22px !important; }
+  html body .app-shell .workspace-content .settings-storage > .primary-button { justify-self: start; margin-top: 18px; }
+  html body .app-shell .workspace-content .journal-next-steps { grid-template-columns: 1fr; }
+  html body .app-shell .workspace-content .journal-next-steps > a + a { border-left: 0 !important; border-top: 1px solid var(--rs-line) !important; }
+  html body .app-shell .workspace-content .quiet-link-list > a { padding: 14px 18px; }
+  html body .app-shell .workspace-content .desk-aura { width: 84px; height: 84px; }
+  .taste-map { padding: 20px; }
+  .taste-map-head { flex-direction: column; align-items: flex-start; }
+  .taste-map-aura { width: 88px; height: 88px; }
+  .taste-map-body { grid-template-columns: 1fr; gap: 16px; }
+  html body .home-loop { grid-template-columns: 1fr; }
+  html body .home-loop li + li { border-left: 0; border-top: 1px solid var(--rs-panel-line); }
+  html body .app-shell .mobile-tabbar { left: 10px !important; right: 10px !important; bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important; width: auto !important; border-radius: 22px !important; padding: 6px !important; }
+  html body .app-shell .topbar .topbar-actions a { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body *, html body *::before, html body *::after { transition: none !important; animation: none !important; }
+}
+html body .app-shell .page-footer :is(span, a) { color: var(--rs-text-2) !important; }
+html body .rr-policy-footer :is(button, span, small) { color: var(--rs-text) !important; background: transparent !important; }
+
+/* Landing in dark mode: the first-cup card and footer hard-code light colours. */
+html[data-theme="dark"] body .studio-home :is(p, li, small, span, label, summary, figcaption, a):not(.resonance-aura *):not(.home-loop *) { color: var(--rs-text-2); }
+html[data-theme="dark"] body .studio-home :is(h1, h2, h3, strong):not(.home-loop *) { color: var(--rs-text); }
+html[data-theme="dark"] body .studio-home :is(.first-cup-note, .first-cup-note *, .first-home-footer, .simple-start, details):not(textarea):not(button):not(.resonance-aura *) { background-color: transparent; }
+html[data-theme="dark"] body .studio-home .first-cup-note { background: var(--rs-surface) !important; }
+html[data-theme="dark"] body .studio-home .first-cup-note .eyebrow { color: var(--rs-coffee); }
+html body .app-shell .workspace-content .compare-privacy { color: var(--rs-text-2); }
