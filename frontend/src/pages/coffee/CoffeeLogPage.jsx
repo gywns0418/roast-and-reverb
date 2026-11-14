@@ -9,6 +9,9 @@ import { adaptCoffeeLog } from "../../api/adapters.js";
 import { listDiaryRecords } from "../../utils/diaryRecords.js";
 import { useApiResource } from "../../hooks/useApiResource.js";
 import { useCompactLayout } from "../../hooks/useCompactLayout.js";
+import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
+import { familiesInText } from "../../utils/tasteQuery.js";
+import { familyColors } from "../../utils/resonanceAura.js";
 const Editor = lazy(
   () => import("../../components/coffee/MobileRecordEditor.jsx"),
 );
@@ -153,10 +156,7 @@ export default function CoffeeLogPage() {
         <>
           {!rows.length && !query && (
             <section className="journal-welcome" aria-label="기록 시작 안내" hidden={!compact}>
-              <img
-                src={import.meta.env.BASE_URL + "images/journal-entry.webp"}
-                alt="커피잔과 레코드, 빈 노트를 함께 그린 서비스 연출 일러스트"
-              />
+              <ResonanceAura className="journal-welcome-aura" seedKey="welcome" />
               <div>
                 <small>COFFEE × MUSIC JOURNAL</small>
                 <h2>한 잔의 맛, 한 곡의 기억.</h2>
@@ -279,7 +279,7 @@ export default function CoffeeLogPage() {
               <div className="simple-records">
                 {visible.map((row) => (
                   <Link key={row.id} to={"/coffee/" + row.id}>
-                    <img className="record-cup-art" src={import.meta.env.BASE_URL + "images/coffee-editorial.webp"} alt="" aria-hidden="true" width="64" height="64" />
+                    <ResonanceAura className="record-cup-art" seedKey={String(row.id)} rings={4} colors={familiesInText([row.memo, row.raw?.tasteNote].filter(Boolean).join(" ")).map((k) => familyColors[k])} />
                     <small>{row.date}</small>
                     <h2>{row.bean}</h2>
                     <p>{row.memo || "이날의 한 잔 다시 보기"}</p>
@@ -289,7 +289,7 @@ export default function CoffeeLogPage() {
               </div>
               {!rows.length && !query && (
                 <section className="quiet-section journal-desktop-empty">
-                  <img src={import.meta.env.BASE_URL + "images/guide-save.webp"} alt="" aria-hidden="true" width="120" height="120" />
+                  <ResonanceAura className="journal-empty-aura" seedKey="empty" />
                   <h2>아직 기록이 없어요.</h2>
                   <p>“다시 마시고 싶어”라는 느낌부터 남겨보세요. 원두 이름을 몰라도 내 말로 적은 맛을 다시 찾을 수 있어요.</p>
                   <Link className="primary-button" to="/dashboard">오늘 기록하기 →</Link>

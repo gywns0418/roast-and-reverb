@@ -1,12 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 
-// Sheet index shown above each page title, like the header row of a cupping form.
-const sheets = { dashboard: "01", coffee: "02", taste: "03", "monthly-pick": "04", mypage: "05" };
-const today = () => {
-  const d = new Date();
-  const day = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][d.getDay()];
-  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")} ${day}`;
-};
+// English display word for each destination; the Korean title stays the real heading.
+const kickers = { dashboard: "Today", coffee: "Journal", "monthly-pick": "Discover", taste: "Taste", mypage: "Me", backup: "Me", help: "Me", music: "Journal", beans: "Me", archive: "Me" };
 
 export default function PageShell({ title, subtitle, children }) {
   const { pathname } = useLocation();
@@ -14,12 +9,7 @@ export default function PageShell({ title, subtitle, children }) {
   return (
     <section className={"page page-" + section}>
       <header className="page-heading">
-        <p className="page-heading-index" aria-hidden="true">
-          <span>
-            <b>No.{sheets[section] || "—"}</b> ROAST &amp; REVERB CUPPING SHEET
-          </span>
-          <span>{today()}</span>
-        </p>
+        <p className="page-heading-index" aria-hidden="true">{kickers[section] || "Roast & Reverb"}</p>
         <div>
           <h1>{title}</h1>
           {subtitle && <p className="subtitle">{subtitle}</p>}

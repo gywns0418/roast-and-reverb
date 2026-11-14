@@ -519,7 +519,9 @@ feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현�
 - 디자인 기준은 `frontend/src/styles/brand.css` 맨 위 주석. 새 화면은 이 토큰(`--rr-*`)과 서체 변수(`--rr-ui-font`, `--rr-display-font`)를 쓴다. 33개 이전 CSS 층은 그대로 남아 있으니 정리할 때 화면별로 확인한다.
 - 로딩 최소 표시 시간은 1초(`loadingController` minimum=1000).
 
-## 2026-11-14 — dev 전용 디자인 시안 (v1 커핑 테이블 → v2 잉크 노트)
+## 2026-11-14 — dev 전용 디자인 시안 (v1 커핑 테이블 → v2 잉크 노트 → v3 Resonance)
 
 - v1 `feature/redesign-cupping-table`에 이어 v2 `feature/redesign-ink-notes`(styles/ink.css)를 dev에만 병합했다. v1 cupping.css는 삭제됨. 운영(main)은 이전 디자인(고운바탕 제목 + 녹색 사이드바) 그대로다.
 - 다음 운영 반영 때 dev→main에 재디자인이 함께 포함된다. 사용자가 채택하지 않으면 dev에서 해당 병합을 되돌린 뒤(revert) 운영 반영을 진행한다.
+- v3 Resonance(`styles/resonance.css`, 설계 `docs/design-v3-resonance.md`, 프로토타입 `/prototype/resonance.html`)가 현재 dev 디자인이다. 2주 차 후보: 기록 세션 바텀시트 4단계, 페어링 상세 공명 차트, 사운드 스튜디오 오라 연동, 월간 리포트 좌표계 통일.
+- 월픽 원두 목록은 사용자 지시로 건드리지 않는다. 바꿀 때는 `.quiet-bean-grid` 고정 블록과 v2 대비 스타일 비교를 함께 갱신한다.

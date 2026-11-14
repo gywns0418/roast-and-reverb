@@ -1,4 +1,4 @@
-import JournalGuide from "../components/common/JournalGuide.jsx";
+import ResonanceAura from "../components/visual/ResonanceAura.jsx";
 import { Link } from "react-router-dom";
 import FirstCup from "../components/coffee/FirstCup.jsx";
 export default function HomePage() {
@@ -26,7 +26,7 @@ export default function HomePage() {
       <main>
         <section className="simple-intro">
           <div>
-            <p className="eyebrow">CUPPING NOTES FOR ONE</p>
+            <p className="eyebrow">Taste in resonance</p>
             <h1>
               마신 커피가 쌓이면,
               <br />
@@ -51,7 +51,10 @@ export default function HomePage() {
               <Link to="/monthly-pick">이달의 원두 둘러보기 →</Link>
             </div>
           </div>
-          <JournalGuide compact />
+          <figure className="home-aura-figure">
+            <ResonanceAura seedKey="home" label="아직 기록이 없어 윤곽만 보이는 오라" />
+            <figcaption>기록이 쌓이면 이 윤곽이 내가 다시 찾는 맛의 색으로 채워져요. 같은 기록은 언제나 같은 그림이에요.</figcaption>
+          </figure>
         </section>
         <div id="first-cup-start" className="simple-start">
           <FirstCup />
