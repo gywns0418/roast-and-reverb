@@ -1,0 +1,292 @@
+/* ─────────────────────────────────────────────────────────────
+   Cupping Table — Roast & Reverb redesign (dev only, 2026-11-14)
+
+   Subject: a cupping score sheet and a roastery bag label. People who take
+   coffee seriously fill in a sheet cup after cup; the app should feel like
+   that sheet — ruled, numbered, precise, quiet — so the beans and the
+   drinker's own words are the colour on the page.
+
+   Palette (6)
+     paper   #ECEAE3  stone table under the sheet
+     sheet   #FBFAF6  the sheet itself
+     ink     #151714  type and rules
+     graphite#5D6159  secondary type
+     rule    #D3D0C6  hairlines
+     cherry  #BF3A24  coffee cherry — the one accent (current state, focus, key action hover)
+     leaf    #2F5B3B  green-bean green — selected filters only
+   Type
+     Pretendard for everything, weight contrast does the hierarchy
+     (800 titles, 600 labels, 400 body). IBM Plex Mono only for numbers,
+     dates and sheet indexes — the "form" voice.
+   Signature
+     Each page opens with a heavy ink rule and a numbered sheet index, like
+     the header row of a cupping form. Nothing else is decorated.
+   ───────────────────────────────────────────────────────────── */
+@import "@fontsource/ibm-plex-mono/latin-400.css";
+@import "@fontsource/ibm-plex-mono/latin-500.css";
+
+:root {
+  --ct-paper: #eceae3;
+  --ct-sheet: #fbfaf6;
+  --ct-ink: #151714;
+  --ct-graphite: #5d6159;
+  --ct-rule: #d3d0c6;
+  --ct-cherry: #bf3a24;
+  --ct-leaf: #2f5b3b;
+  --ct-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --rr-display-font: var(--rr-ui-font);
+  --rr-paper: var(--ct-paper);
+  --rr-card: var(--ct-sheet);
+  --rr-ink: var(--ct-ink);
+  --rr-ink-soft: var(--ct-graphite);
+  --rr-forest: var(--ct-ink);
+  --rr-moss: var(--ct-cherry);
+  --rr-line: var(--ct-rule);
+  --rr-roast: var(--ct-cherry);
+}
+
+/* ── Ground ─────────────────────────────────────────────── */
+html body,
+html body .app-shell,
+html body .app-shell .main,
+html body .studio-home { background: var(--ct-paper); color: var(--ct-ink); }
+html body ::selection { background: #f2c9bf; }
+
+/* ── Navigation rail: a ruled index, not a dark slab ────── */
+html body .app-shell .sidebar {
+  background: var(--ct-sheet);
+  color: var(--ct-ink);
+  border-right: 1px solid var(--ct-rule);
+  counter-reset: sheet;
+}
+html body .app-shell .sidebar .brand { color: var(--ct-ink); padding-bottom: 18px; border-bottom: 3px solid var(--ct-ink); }
+html body .app-shell .sidebar .brand span { font-family: var(--rr-ui-font); font-weight: 800; font-size: 21px; letter-spacing: -0.035em; color: var(--ct-ink); }
+html body .app-shell .sidebar .brand span::after { content: ""; display: inline-block; width: 7px; height: 7px; margin-left: 4px; border-radius: 50%; background: var(--ct-cherry); vertical-align: 2px; }
+html body .app-shell .sidebar .brand small { color: var(--ct-graphite); opacity: 1; font-size: 12px; }
+html body .app-shell .sidebar nav > .nav-link,
+html body .app-shell .sidebar .nav-support .nav-link {
+  counter-increment: sheet;
+  position: relative;
+  color: var(--ct-graphite);
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid var(--ct-rule);
+  padding-left: 12px;
+  font-weight: 500;
+}
+html body .app-shell .sidebar nav > .nav-link::before,
+html body .app-shell .sidebar .nav-support .nav-link::before {
+  content: counter(sheet, decimal-leading-zero);
+  font-family: var(--ct-mono);
+  font-size: 11px;
+  color: #9a9d93;
+  width: 18px;
+}
+html body .app-shell .sidebar .nav-link svg { display: none; }
+html body .app-shell .sidebar .nav-link:hover { color: var(--ct-ink); background: transparent; }
+html body .app-shell .sidebar .nav-link.active { color: var(--ct-ink); background: transparent; font-weight: 700; box-shadow: inset 3px 0 0 var(--ct-cherry); }
+html body .app-shell .sidebar .nav-link.active::before { color: var(--ct-cherry); }
+html body .app-shell .sidebar .nav-support { border-top: 0; }
+html body .app-shell .sidebar .sidebar-foot { font-family: var(--rr-ui-font); color: var(--ct-graphite); opacity: 1; font-size: 13px; border-top: 1px solid var(--ct-rule); padding-top: 14px; }
+
+/* Top line and storage notice: quiet sheet margins */
+html body .app-shell .topbar { background: transparent; border-bottom: 1px solid var(--ct-rule); color: var(--ct-graphite); }
+html body .app-shell .topbar > span:first-child { font-size: 13px; font-weight: 600; }
+html body .app-shell .topbar a { color: var(--ct-ink); }
+html body .app-shell .demo-notice { background: transparent; border-bottom: 1px dashed var(--ct-rule); color: var(--ct-graphite); font-size: 12.5px; }
+
+/* ── Sheet header: heavy rule + index + title ───────────── */
+html body .app-shell .page { counter-reset: none; }
+html body .app-shell .page .page-heading,
+html body .app-shell .page.page-monthly-pick .page-heading {
+  position: relative;
+  display: block;
+  background: transparent;
+  border: 0;
+  border-top: 3px solid var(--ct-ink);
+  border-radius: 0;
+  padding: 20px 0 22px;
+  margin: 0 0 26px;
+}
+html body .app-shell .page .page-heading::after,
+html body .app-shell .page.page-monthly-pick .page-heading::after { display: none; }
+html body .app-shell .page .page-heading h1 {
+  font-family: var(--rr-ui-font);
+  font-weight: 800;
+  font-size: clamp(32px, 3.4vw, 46px);
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+  color: var(--ct-ink);
+}
+html body .app-shell .page .page-heading .subtitle { font-size: 15px; color: var(--ct-graphite); margin-top: 12px; }
+.page-heading-index {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 14px;
+  font-family: var(--ct-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--ct-graphite);
+}
+.page-heading-index b { font-weight: 500; color: var(--ct-cherry); }
+html body .app-shell .page-dashboard > .page-heading { position: absolute; width: 1px; height: 1px; padding: 0; margin: 0; overflow: hidden; clip-path: inset(50%); border: 0; }
+
+/* ── Sheets (cards) ─────────────────────────────────────── */
+html body .app-shell .workspace-content :is(
+  .panel, .taste-card, .taste-empty, .writing-desk-compose, .simple-recent,
+  .journal-welcome, .journal-overview, .quiet-section, .quiet-link-list, .quiet-details,
+  .consumer-monthly-guide, .monthly-library-filters, .compare-person, .first-cup-note
+),
+html body .studio-home .first-cup-note {
+  background: var(--ct-sheet);
+  border: 1px solid var(--ct-rule);
+  border-radius: 4px;
+  box-shadow: none;
+}
+html body .app-shell .workspace-content .compare-me { background: #f3f4ee; }
+html body .app-shell .workspace-content .compare-person::before { background: var(--ct-ink); height: 3px; }
+html body .app-shell .writing-desk .writing-desk-intro { background: transparent; border-bottom: 1px solid var(--ct-rule); border-radius: 0; }
+html body .app-shell .workspace-content .writing-desk-intro img { filter: saturate(0.85); }
+html body .app-shell .workspace-content .consumer-note-example { background: transparent; border-left: 3px solid var(--ct-cherry); border-radius: 0; color: var(--ct-graphite); }
+
+/* Section titles: sans, heavy, tight */
+html body .app-shell .workspace-content :is(h2, .simple-section-title h2, .writing-desk-intro h2):not(.monthly-bean-card *):not(.monthly-bean-open *) {
+  font-family: var(--rr-ui-font);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--ct-ink);
+}
+html body .app-shell .workspace-content .writing-desk-intro h2 { font-size: 32px; line-height: 1.2; }
+
+/* ── Numbers speak in the form voice ────────────────────── */
+html body .app-shell :is(
+  .taste-summary strong, .desk-month dd, .record-stats strong,
+  .monthly-price-list strong, .monthly-price-list b, .bean-number, .compare-meta,
+  .simple-records small, .monthly-editions small
+) {
+  font-family: var(--ct-mono);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+html body .app-shell .taste-summary { gap: 0; border: 1px solid var(--ct-rule); border-radius: 4px; background: var(--ct-sheet); }
+html body .app-shell .taste-summary > div { background: transparent; border: 0; border-radius: 0; border-right: 1px solid var(--ct-rule); align-items: flex-start; text-align: left; padding: 18px 20px; }
+html body .app-shell .taste-summary > div:last-child { border-right: 0; }
+html body .app-shell .taste-summary strong { font-size: 40px; line-height: 1; color: var(--ct-ink); }
+html body .app-shell .taste-summary span { font-size: 12.5px; color: var(--ct-graphite); }
+
+/* Dashboard month block: the one dark sheet */
+html body .app-shell .desk-month { background: var(--ct-ink); border-radius: 4px; }
+html body .app-shell .desk-month > p { font-family: var(--rr-ui-font); font-weight: 700; font-size: 13px; color: #c9ccc2; }
+html body .app-shell .desk-month dd { font-size: 40px; }
+html body .app-shell .workspace-content .desk-month a { color: #ff9f8a; }
+
+/* ── Controls ───────────────────────────────────────────── */
+html body :is(.app-shell .page .workspace-content, .studio-home) :is(.primary-button, .ghost-button) {
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  min-height: 46px;
+  padding: 11px 20px;
+  box-shadow: none;
+}
+html body :is(.app-shell .page .workspace-content, .studio-home) .primary-button { background: var(--ct-ink); border: 1px solid var(--ct-ink); color: #fff; }
+html body :is(.app-shell .page .workspace-content, .studio-home) .primary-button:hover:not(:disabled) { background: var(--ct-cherry); border-color: var(--ct-cherry); }
+html body :is(.app-shell .page .workspace-content, .studio-home) .ghost-button { background: transparent; border: 1px solid var(--ct-ink); color: var(--ct-ink); }
+html body :is(.app-shell .page .workspace-content, .studio-home) .ghost-button:hover:not(:disabled) { background: var(--ct-ink); color: #fff; }
+html body .app-shell .workspace-content :is(input:not([type=checkbox]):not([type=radio]), textarea, select) { border-radius: 3px; border-color: #bfbcb1; background: #fff; }
+html body .app-shell .workspace-content :is(input, textarea, select):focus { border-color: var(--ct-ink); }
+html body :is(a, button, input, textarea, select, summary):focus-visible { outline: 2px solid var(--ct-cherry); outline-offset: 2px; }
+
+/* Links inside copy */
+html body .app-shell .workspace-content :is(.taste-card-head a, .simple-section-title a, .desk-storage-note a, .monthly-section-heading a) {
+  color: var(--ct-ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--ct-cherry);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Taste chips: stamped labels */
+html body .app-shell .taste-chips li { border-radius: 3px; background: var(--ct-ink); color: #fff; font-weight: 700; }
+html body .app-shell .taste-chips li small { font-family: var(--ct-mono); color: #c9ccc2; font-weight: 400; }
+html body .app-shell .taste-chips-muted li { background: transparent; color: var(--ct-graphite); border: 1px solid #bfbcb1; }
+html body .app-shell .verdict-picker button { border-radius: 3px; }
+html body .app-shell .verdict-picker button[aria-pressed="true"] { background: var(--ct-ink); border-color: var(--ct-ink); color: #fff; }
+
+/* Taste matches: bean tags */
+html body .app-shell .workspace-content .taste-matches li { border-radius: 4px; background: var(--ct-sheet); }
+html body .app-shell .workspace-content .taste-matches em { color: var(--ct-cherry); }
+
+/* ── Monthly pick ───────────────────────────────────────── */
+html body .page-monthly-pick .monthly-bean-card { border-radius: 4px; border-color: var(--ct-rule); background: var(--ct-sheet); }
+html body .page-monthly-pick .monthly-bean-card:hover { border-color: var(--ct-ink); }
+html body .page-monthly-pick .monthly-badge { border-radius: 3px; }
+html body .page-monthly-pick .monthly-category-label { border-radius: 2px; }
+html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button[aria-pressed=true] { background: #e3e8dc; color: var(--ct-leaf); border-radius: 3px; }
+html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button[aria-pressed=true] .monthly-filter-check { color: var(--ct-cherry); }
+html body .page-monthly-pick .monthly-mine-toggle { border-radius: 4px; }
+html body .page-monthly-pick .monthly-section-heading { border-bottom: 1px solid var(--ct-ink); }
+html body .page-monthly-pick :is(.quiet-bean-dialog, .monthly-compare-dialog) { border-radius: 6px; background: var(--ct-sheet); }
+
+/* ── Mobile tab bar ─────────────────────────────────────── */
+html body .app-shell .mobile-tabbar { background: var(--ct-sheet); border-top: 1px solid var(--ct-ink); box-shadow: none; }
+html body .app-shell .mobile-tabbar .nav-link { color: var(--ct-graphite); border-radius: 0; background: transparent; }
+html body .app-shell .mobile-tabbar .nav-link.active { color: var(--ct-ink); background: transparent; font-weight: 800; box-shadow: inset 0 3px 0 var(--ct-cherry); }
+
+/* ── Landing page ───────────────────────────────────────── */
+html body .studio-home .first-home-nav { border-bottom: 3px solid var(--ct-ink); }
+html body .studio-home .first-home-brand { font-weight: 800; letter-spacing: -0.04em; color: var(--ct-ink); }
+html body .studio-home .simple-intro h1 { font-family: var(--rr-ui-font); font-weight: 800; font-size: clamp(38px, 5.4vw, 72px); line-height: 1.06; letter-spacing: -0.055em; color: var(--ct-ink); }
+html body .studio-home .simple-intro h1 em { font-style: normal; color: var(--ct-cherry); }
+html body .studio-home .simple-intro .eyebrow { font-family: var(--ct-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--ct-cherry); }
+html body .studio-home .simple-intro-lead { color: var(--ct-graphite); font-size: 16px; }
+html body .studio-home .journal-guide-picture { border-radius: 4px; background: #e4e1d8; }
+html body .studio-home :is(.first-home-footer, .rr-policy-footer) { background: transparent; }
+html body .home-loop { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 28px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--ct-ink); }
+html body .home-loop li { padding: 14px 16px 4px 0; font-size: 14px; color: var(--ct-graphite); line-height: 1.6; }
+html body .home-loop li + li { padding-left: 16px; border-left: 1px solid var(--ct-rule); }
+html body .home-loop b { display: block; font-family: var(--ct-mono); font-weight: 500; font-size: 12px; color: var(--ct-cherry); margin-bottom: 4px; }
+html body .home-loop strong { display: block; color: var(--ct-ink); font-size: 15px; }
+
+/* ── Overlays ───────────────────────────────────────────── */
+html body .ritual-loading { background: rgba(236, 234, 227, 0.92); color: var(--ct-ink); }
+html body .ritual-loading .eyebrow { font-family: var(--ct-mono); color: var(--ct-cherry); }
+html body :is(.rr-cookie-banner, .rr-privacy-dialog) { border-radius: 6px; border: 1px solid var(--ct-ink); box-shadow: 0 18px 40px rgba(21, 23, 20, 0.12); }
+html body :is(.rr-cookie-banner, .rr-privacy-dialog) button { border-radius: 4px; }
+html body .page-footer { border-top: 1px solid var(--ct-rule); color: var(--ct-graphite); }
+html body .page-footer span { font-family: var(--ct-mono); }
+
+@media (max-width: 760px) {
+  html body .app-shell .page .page-heading h1 { font-size: 32px; }
+  html body .app-shell .workspace-content .writing-desk-intro h2 { font-size: 25px; }
+  html body .app-shell .taste-summary { grid-template-columns: 1fr 1fr; }
+  html body .app-shell .taste-summary > div:nth-child(2) { border-right: 0; }
+  html body .app-shell .taste-summary > div:nth-child(-n + 2) { border-bottom: 1px solid var(--ct-rule); }
+  html body .app-shell .taste-summary strong { font-size: 32px; }
+  html body .home-loop { grid-template-columns: 1fr; }
+  html body .home-loop li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--ct-rule); }
+}
+
+/* Journal guide (landing + help): ruled rows instead of rounded cards */
+html body .journal-guide ol > li { border-radius: 0; border: 0; border-top: 1px solid var(--ct-rule); background: transparent; box-shadow: none; }
+html body .journal-guide ol > li:last-child { border-bottom: 1px solid var(--ct-rule); }
+html body .journal-guide h2 { font-weight: 800; letter-spacing: -0.035em; }
+html body .journal-guide .journal-guide-picture { border-radius: 2px; }
+html body .app-shell .sidebar nav > .nav-link::before,
+html body .app-shell .sidebar .nav-support .nav-link::before,
+html body .app-shell .sidebar nav > .nav-link.active::before { display: inline-block; position: static; top: auto; flex: 0 0 22px; }
+html body .app-shell .sidebar nav > .nav-link,
+html body .app-shell .sidebar .nav-support .nav-link { min-height: 48px; align-items: center; gap: 8px; margin: 0; }
+html body .app-shell .sidebar nav > .nav-link.active,
+html body .app-shell .sidebar .nav-support .nav-link.active { background: transparent; box-shadow: inset 3px 0 0 var(--ct-cherry); border-radius: 0; color: var(--ct-ink); }
+
+/* Older layers win on radius by specificity; sheets are always square-cornered. */
+html body .app-shell .workspace-content :is(
+  .panel, .quiet-section, .quiet-details, .quiet-link-list, .monthly-restored-filters,
+  .monthly-bean-card, .inventory-intro, .discovery-empty, .journal-welcome, .journal-overview,
+  .taste-card, .taste-empty, .writing-desk-compose, .simple-recent
+) { border-radius: 4px !important; box-shadow: none !important; }
+html body .app-shell .sidebar .nav-link::before { background: none !important; padding: 0 !important; border-radius: 0 !important; box-shadow: none !important; width: auto !important; height: auto !important; }
+html body .app-shell .skip-link { border-radius: 3px; background: var(--ct-ink); }
