@@ -215,7 +215,7 @@
       "roastery": "비로소커피",
       "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=944",
       "detailSourceUrl": "https://d22c6ea6lqg2pi.cloudfront.net/BIROSO2/BIROSO2.json",
-      "sourceCheckedAt": "2026-11-07T00:54:06.392Z",
+      "sourceCheckedAt": "2026-11-14T04:04:36.818Z",
       "items": [
         {
           "id": "944-b7d5272a1",
@@ -532,7 +532,7 @@
             }
           ],
           "openDate": "2026-11-09",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-26T14:26:45+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -606,7 +606,7 @@
           ],
           "openDate": "2026-11-01",
           "availability": "available",
-          "sourceUpdatedAt": "2026-10-27T12:03:03+09:00",
+          "sourceUpdatedAt": "2026-11-11T14:46:00+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": ""
@@ -1454,7 +1454,7 @@
             }
           ],
           "openDate": "2026-11-01",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-25T23:27:55+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -1899,8 +1899,8 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "available",
-          "sourceUpdatedAt": "2026-10-27T11:25:27+09:00",
+          "availability": "sold-out",
+          "sourceUpdatedAt": "2026-11-04T12:43:12+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Honduras · Catuai · Anaerobic Washed"
@@ -2075,11 +2075,15 @@
             {
               "label": "200g",
               "price": 18000
+            },
+            {
+              "label": "500g",
+              "price": 32000
             }
           ],
           "openDate": "2026-11-09",
-          "availability": "upcoming",
-          "sourceUpdatedAt": "2026-10-27T11:25:46+09:00",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-11-08T22:51:00+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Ethiopia · 74110, 74112, 74158 · Washed"
@@ -2166,7 +2170,7 @@
             }
           ],
           "openDate": "2026-11-09",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-25T23:27:56+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2251,7 +2255,7 @@
             }
           ],
           "openDate": "2026-11-09",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-27T11:26:02+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2885,7 +2889,7 @@
             }
           ],
           "openDate": "2026-11-01",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-29T21:29:15+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -2977,7 +2981,7 @@
             }
           ],
           "openDate": "2026-11-01",
-          "availability": "sold-out",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-27T11:29:06+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3627,7 +3631,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-27T11:29:44+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3718,7 +3722,7 @@
             }
           ],
           "openDate": "2026-11-04",
-          "availability": "available",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-11-03T18:37:50+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3900,7 +3904,7 @@
             }
           ],
           "openDate": "2026-11-09",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-25T23:27:58+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -3992,7 +3996,7 @@
             }
           ],
           "openDate": "2026-11-09",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-10-26T15:10:07+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4084,7 +4088,7 @@
             }
           ],
           "openDate": "2026-11-09",
-          "availability": "upcoming",
+          "availability": "available",
           "sourceUpdatedAt": "2026-11-02T10:04:38+09:00",
           "decaf": false,
           "darkRoast": false,
@@ -4176,11 +4180,201 @@
             }
           ],
           "openDate": "2026-11-09",
-          "availability": "upcoming",
+          "availability": "sold-out",
           "sourceUpdatedAt": "2026-10-27T11:18:21+09:00",
           "decaf": false,
           "darkRoast": false,
           "summary": "Panama · Geisha · Natural"
+        },
+        {
+          "id": "944-56",
+          "name": "#56 파나마 플라잉 퓨마 폭스 10.4 게이샤 애너로빅 워시드",
+          "originalName": "[11.9 오픈] #56 파나마 플라잉 퓨마 폭스 10.4 게이샤 애너로빅 워시드",
+          "nameEnglish": "Panama Flying Pumas Fox 10.4 Geisha Anaerobic Washed",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "Volcán, Chiriquí",
+          "variety": "Geisha",
+          "process": "Anaerobic Washed",
+          "roast": "Light #100",
+          "flavors": [
+            "자스민",
+            "베르가못",
+            "열대과일",
+            "금귤"
+          ],
+          "flavorColors": [
+            "#fdfcdc",
+            "#b5e48c",
+            "#ff9e00"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "자스민, 베르가못, 열대과일, 금귤"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #100"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "Volcán, Chiriquí"
+            },
+            {
+              "label": "농장",
+              "value": "Flying Pumas"
+            },
+            {
+              "label": "랏(구획 구분)",
+              "value": "Fox"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "10.4"
+            },
+            {
+              "label": "고도",
+              "value": "1,700m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Anaerobic Washed"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 4
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "20g",
+              "price": 32000
+            }
+          ],
+          "openDate": "2026-11-09",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-11-08T22:55:11+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Geisha · Anaerobic Washed"
+        },
+        {
+          "id": "944-57",
+          "name": "#57 파나마 플라잉 퓨마 아르마딜로 5.4 게이샤 애너로빅 내추럴",
+          "originalName": "[11.9 오픈] #57 파나마 플라잉 퓨마 아르마딜로 5.4 게이샤 애너로빅 내추럴",
+          "nameEnglish": "Panama Flying Pumas Armadillo 5.4 Geisha Anaerobic Natural",
+          "category": "special single",
+          "origin": "Panama",
+          "region": "Volcán, Chiriquí",
+          "variety": "Geisha",
+          "process": "Anaerobic Natural",
+          "roast": "Light #103",
+          "flavors": [
+            "파인애플",
+            "허니듀 멜론",
+            "적포도",
+            "자스민"
+          ],
+          "flavorColors": [
+            "#ffd60a",
+            "#d9ed92",
+            "#fdfcdc"
+          ],
+          "specs": [
+            {
+              "label": "컵 노트",
+              "value": "파인애플, 허니듀 멜론, 적포도, 자스민"
+            },
+            {
+              "label": "로스팅 포인트",
+              "value": "Light #103"
+            },
+            {
+              "label": "국가",
+              "value": "Panama"
+            },
+            {
+              "label": "지역",
+              "value": "Volcán, Chiriquí"
+            },
+            {
+              "label": "농장",
+              "value": "Flying Pumas"
+            },
+            {
+              "label": "가공소(스테이션)",
+              "value": "Creativa Coffee District (건조)"
+            },
+            {
+              "label": "농장주 / 프로듀서",
+              "value": "Flying Pumas"
+            },
+            {
+              "label": "랏(구획 구분)",
+              "value": "Armadillo"
+            },
+            {
+              "label": "랏(상품 단위)",
+              "value": "5.4"
+            },
+            {
+              "label": "고도",
+              "value": "1,760m"
+            },
+            {
+              "label": "품종",
+              "value": "Geisha"
+            },
+            {
+              "label": "가공 방식",
+              "value": "Anaerobic Natural"
+            }
+          ],
+          "gauges": [
+            {
+              "label": "산미",
+              "value": 3
+            },
+            {
+              "label": "바디감",
+              "value": 3
+            },
+            {
+              "label": "발효도",
+              "value": 3
+            }
+          ],
+          "prices": [
+            {
+              "label": "20g",
+              "price": 32000
+            }
+          ],
+          "openDate": "2026-11-09",
+          "availability": "available",
+          "sourceUpdatedAt": "2026-11-08T23:17:55+09:00",
+          "decaf": false,
+          "darkRoast": false,
+          "summary": "Panama · Geisha · Anaerobic Natural"
         },
         {
           "id": "944-50",
@@ -4983,7 +5177,7 @@
           "summary": ""
         }
       ],
-      "detailsCheckedAt": "2026-11-07T00:54:06.393Z"
+      "detailsCheckedAt": "2026-11-14T04:04:36.822Z"
     },
     {
       "schemaVersion": 1,
