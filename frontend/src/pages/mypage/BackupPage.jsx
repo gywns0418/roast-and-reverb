@@ -2,13 +2,13 @@ import {useState,useRef} from 'react';
 import {Link} from 'react-router-dom';
 import PageShell from '../../components/common/PageShell.jsx';
 import {deviceScope} from '../../store/discoveryStore.js';
-import {backupLabels,collectDeviceBackup,parseDeviceBackup,restoreDeviceBackup} from '../../utils/deviceBackup.js';
+import {backupLabels,parseDeviceBackup,restoreDeviceBackup} from '../../utils/deviceBackup.js';
+import {downloadDeviceBackup,downloadFile as download} from '../../utils/downloadBackup.js';
 import {DIARY_KEY} from '../../utils/diaryStorage.js';
-function download(content,name,type='application/json'){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 export default function BackupPage(){
   const [error,setError]=useState(''),[notice,setNotice]=useState(''),[preview,setPreview]=useState(null),[ack,setAck]=useState(false),[busy,setBusy]=useState(false);
   const picker=useRef(null);const local=import.meta.env.VITE_USE_REAL_API!=='true';
-  function exportBackup(){try{const value=collectDeviceBackup(localStorage,deviceScope(),local);if(!Object.keys(value.sections).length)throw new Error('이 브라우저에 저장한 자료가 없습니다.');download(JSON.stringify(value,null,2),'roast-reverb-device.json');setError('');setNotice('기기에 저장된 자료를 백업했어요. 로그인 정보와 파일 접근 권한은 포함하지 않습니다.');}catch(err){setError(err.message);}}
+  function exportBackup(){try{downloadDeviceBackup();setError('');setNotice('기기에 저장된 자료를 백업했어요. 로그인 정보와 파일 접근 권한은 포함하지 않습니다.');}catch(err){setError(err.message);}}
   async function inspect(event){const selected=event.target.files[0];event.target.value='';setPreview(null);setAck(false);setError('');if(!selected)return;setBusy(true);try{if(selected.size>5_000_000)throw new Error('5MB 이하의 기기 백업을 선택해 주세요.');const data=JSON.parse(await selected.text());const sections=parseDeviceBackup(data);if(!local&&sections.diary)throw new Error('기기 일지 백업은 기기 모드에서 복원해 주세요. 서버 기록은 변경하지 않습니다.');setPreview({...data,sections});}catch(err){setError(err.message);}finally{setBusy(false);}}
   function restore(){try{if(!preview||!ack)return;const count=restoreDeviceBackup(localStorage,preview,deviceScope(),local);setNotice(`${count}개 자료 항목을 복원했습니다. 다시 불러오면 반영됩니다.`);setPreview(null);setAck(false);window.dispatchEvent(new Event('rr-discovery-changed'));}catch(err){setError(err.message);}}
   return <PageShell title="백업·복구" eyebrow="KEEP YOUR MOMENTS" subtitle="기기를 바꾸기 전, 내 기록을 파일로 보관해두세요.">
