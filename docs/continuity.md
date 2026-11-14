@@ -505,3 +505,10 @@ feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현�
 - 서비스 중심을 "기록할수록 나만의 커피가 또렷해지는 곳"으로 정리(docs/taste-journey-plan.md). 월픽은 매달 다른 로스터리로 취향을 확인하는 무대.
 - 구현: 판단 3단계(utils/tasteProfile.js, components/coffee/VerdictPicker.jsx, api/verdictApi.js), 나의 취향 화면(pages/taste/TastePage.jsx), 월픽 내 취향 필터·배지. 근거는 사용자가 고른 판단과 직접 쓴 감상, 판매처 컵노트뿐이며 점수를 만들지 않음.
 - 다음 후보: 같은 원두의 "다음 잔에서 바꿔볼 것" 모아 보기(레시피 개선), 커뮤니티(서버·비용·개인정보 결정 필요), 기획 플러그인(Product Management, Design) 설치 후 사용자 여정 점검.
+
+## 2026-11-14 주간 점검
+- 한국 시각 11/14. 원본 checkout 미커밋 변경 없음, 개인 원본 스냅샷은 해시만 갱신(내용 비공개).
+- origin/main 01cca2f에서 feature/weekly-review-20261114 분기, origin/dev a6c4ce7 통합.
+- 정규 비로소커피 58→60종(스페셜 싱글 2종 추가, 15종 판매 상태·가격 등 갱신). 글로벌 11/13~ 회차와 11월 스몰은 자동 발견 목록에 없어 미수집. 이미지 검토 대기 0건.
+- 테스트 118/빌드/보안 소스/이미지 검사 통과. 로컬 미리보기 서버 실행은 이번 실행에서 승인되지 않아 dev 배포 후 주소에서 화면을 확인함(결과는 PR·dev 반영 후 기록 참고).
+- main 반영 안 함. 운영에 60종을 반영하려면 dev → main 승인 필요.
