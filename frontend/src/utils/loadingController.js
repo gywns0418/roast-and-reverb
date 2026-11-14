@@ -1,4 +1,4 @@
-export function createLoadingController({minimum=2000,now=Date.now,schedule=setTimeout,cancel=clearTimeout}={}) {
+export function createLoadingController({minimum=1000,now=Date.now,schedule=setTimeout,cancel=clearTimeout}={}) {
   const requests=new Map(),listeners=new Set();
   let snapshot={visible:false},started=0,timer=null;
   const emit=value=>{snapshot=value;listeners.forEach(listener=>listener());};

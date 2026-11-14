@@ -1,0 +1,188 @@
+/* Roast & Reverb brand system — the last style layer.
+   Design plan (2026-11-14):
+   - Subject: a cupping notebook for people serious about coffee.
+   - Type: Pretendard for reading and controls; Gowun Batang (a warm Korean
+     serif) only for page titles, section titles, numbers and the wordmark, so
+     headings read like handwriting in a coffee journal.
+   - Palette (kept from the chosen Writing Desk direction): paper, card,
+     ink, forest, moss, sage line, and one roast accent.
+   - One signature: the flavor band from the monthly bean cards, reused as a
+     thin strip under every page title. Everything else stays quiet. */
+@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+@import "@fontsource/gowun-batang/korean-400.css";
+@import "@fontsource/gowun-batang/korean-700.css";
+@import "@fontsource/gowun-batang/latin-400.css";
+@import "@fontsource/gowun-batang/latin-700.css";
+
+:root {
+  --rr-ui-font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --rr-display-font: "Gowun Batang", "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --rr-paper: #f7f5f0;
+  --rr-card: #fffdf8;
+  --rr-ink: #1f2a22;
+  --rr-ink-soft: #55634f;
+  --rr-forest: #23382b;
+  --rr-moss: #3d5a40;
+  --rr-line: #dfe3d6;
+  --rr-roast: #a24f35;
+  --rr-flavor-band: linear-gradient(90deg, #e9a28f 0 18%, #f2c75c 18% 34%, #9cb06b 34% 52%, #7d4b8a 52% 66%, #b07a4f 66% 84%, #5c3b2a 84% 100%);
+}
+
+/* One reading face everywhere; Korean words never break mid-word. */
+html body,
+html body :is(button, input, textarea, select, label, a, p, li, span, small, strong, em, dt, dd, h1, h2, h3, h4, th, td, summary, legend, small) {
+  font-family: var(--rr-ui-font);
+}
+html body { background: var(--rr-paper); color: var(--rr-ink); -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: anywhere; }
+html body :is(p, li, dd) { letter-spacing: -0.005em; }
+
+/* Wordmark */
+html body .sidebar .brand span { font-family: var(--rr-display-font); font-size: 23px; font-weight: 700; letter-spacing: -0.01em; }
+html body .sidebar .brand small { font-family: var(--rr-ui-font); font-size: 12px; letter-spacing: 0; text-transform: none; opacity: 0.75; }
+html body .sidebar .nav-link { font-size: 15px; letter-spacing: -0.01em; border-radius: 10px; }
+html body .sidebar .sidebar-foot { font-family: var(--rr-display-font); font-size: 14px; line-height: 1.7; opacity: 0.8; }
+
+/* Page title: a journal heading with the flavor band beneath it. */
+html body .app-shell .page .page-heading {
+  position: relative;
+  border-bottom: 0;
+  padding-bottom: 26px;
+  margin-bottom: 28px;
+}
+html body .app-shell .page .page-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(220px, 40%);
+  height: 4px;
+  border-radius: 4px;
+  background: var(--rr-flavor-band);
+}
+html body .app-shell .page .page-heading h1 {
+  font-family: var(--rr-display-font);
+  font-size: clamp(28px, 2.6vw, 36px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--rr-ink);
+  margin: 0;
+}
+html body .app-shell .page .page-heading .subtitle {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--rr-ink-soft);
+  margin: 10px 0 0;
+  max-width: 60ch;
+}
+/* The monthly page keeps its own boxed heading but shares the type. */
+html body .app-shell .page.page-monthly-pick .page-heading::after { left: 24px; bottom: 14px; }
+
+/* Section titles read as journal headings, not UI labels. */
+html body .app-shell .workspace-content :is(h2, .simple-section-title h2, .writing-desk-intro h2):not(.monthly-bean-card *):not(.monthly-bean-open *) {
+  font-family: var(--rr-display-font);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--rr-ink);
+}
+html body .app-shell .workspace-content h2 { font-size: 21px; line-height: 1.45; }
+html body .app-shell .workspace-content .writing-desk-intro h2 { font-size: 30px; line-height: 1.35; }
+html body .app-shell .workspace-content h3 { letter-spacing: -0.01em; }
+
+/* Numbers in summaries use the display face so counts feel collected, not computed. */
+html body .app-shell :is(.taste-summary strong, .desk-month dd, .journal-stat strong, .memory-summary span, .record-stats strong, .coffee-summary strong) {
+  font-family: var(--rr-display-font);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Body copy rhythm */
+html body .app-shell .workspace-content p { line-height: 1.75; }
+html body .app-shell .eyebrow { letter-spacing: 0.04em; text-transform: none; font-weight: 600; }
+
+/* Buttons: one shape, one weight. */
+html body .app-shell .page .workspace-content :is(.primary-button, .ghost-button) {
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 11px 20px;
+}
+html body .app-shell .page .workspace-content .primary-button { background: var(--rr-forest); border-color: var(--rr-forest); color: #fff; }
+html body .app-shell .page .workspace-content .primary-button:hover { background: var(--rr-moss); border-color: var(--rr-moss); }
+html body .app-shell .page .workspace-content .ghost-button { background: var(--rr-card); border: 1px solid #cfd6c4; color: var(--rr-forest); }
+html body .app-shell .page .workspace-content .ghost-button:hover { border-color: var(--rr-moss); }
+
+/* Cards: paper-like, flat, one border. */
+html body .app-shell .workspace-content :is(.panel, .taste-card, .writing-desk-compose, .simple-recent, .taste-empty) {
+  background: var(--rr-card);
+  border: 1px solid var(--rr-line);
+  border-radius: 16px;
+  box-shadow: none;
+}
+html body .app-shell .writing-desk .simple-recent { background: #faf8f2; }
+
+/* Links inside copy use the roast accent. */
+html body .app-shell .workspace-content :is(.taste-card-head a, .simple-section-title a, .desk-storage-note a, .desk-month a) { color: var(--rr-roast); font-weight: 600; }
+
+/* Focus is always visible. */
+html body :is(a, button, input, textarea, select, summary):focus-visible { outline: 2px solid var(--rr-roast); outline-offset: 2px; }
+
+/* Dashboard: this month's notebook */
+.desk-month { margin: 0 0 22px; padding: 18px 18px 14px; border-radius: 12px; background: var(--rr-forest); color: #f3f1e8; }
+.desk-month > p { margin: 0 0 10px; font-family: var(--rr-display-font); font-size: 15px; color: #dfe7d4; }
+.desk-month dl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 10px; }
+.desk-month dl div { display: flex; flex-direction: column-reverse; gap: 2px; }
+.desk-month dt { font-size: 12px; color: #c9d4bf; }
+.desk-month dd { margin: 0; font-size: 30px; line-height: 1.1; color: #fff; }
+html body .app-shell .workspace-content .desk-month a { display: block; padding: 8px 0 2px; color: #f6d3a8; font-size: 13px; }
+html body .app-shell .workspace-content .desk-month a.desk-backup-due { color: #fff; border-top: 1px solid #ffffff26; margin-top: 6px; padding-top: 10px; }
+
+/* Taste page additions */
+.taste-nickname { display: flex; flex-direction: column; gap: 6px; margin: 14px 0; font-size: 13px; color: var(--rr-ink-soft); max-width: 320px; }
+.taste-nickname small { color: #8a947f; }
+.taste-nickname input { min-height: 44px; padding: 10px 12px; font-size: 16px; border: 1px solid #cfd6c4; border-radius: 10px; background: #fff; }
+.taste-backup { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+.taste-backup > div:first-child { min-width: 0; flex: 1 1 260px; }
+.taste-backup h2 { margin: 0 0 4px; }
+.taste-backup p { margin: 0; }
+html body .app-shell .workspace-content .taste-backup.is-due { border-color: #e2b79f; background: #fff7f0; }
+
+/* Taste comparison */
+.compare-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.compare-person { position: relative; padding: 24px; border-radius: 16px; background: var(--rr-card); border: 1px solid var(--rr-line); min-width: 0; overflow: hidden; }
+.compare-person::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: var(--rr-flavor-band); }
+.compare-me { background: #f1f4ea; }
+.compare-who { margin: 0 0 6px; font-family: var(--rr-display-font); font-size: 26px; font-weight: 700; color: var(--rr-forest); }
+html body .app-shell .workspace-content .compare-person h2 { font-size: 15px; font-family: var(--rr-ui-font); font-weight: 600; color: var(--rr-ink-soft); margin: 14px 0 8px; }
+.compare-person h3 { font-size: 13px; font-weight: 600; color: #8a947f; margin: 14px 0 8px; }
+.compare-meta { font-size: 13px; color: var(--rr-ink-soft); margin: 16px 0 0; }
+.compare-result dl { display: grid; gap: 0; margin: 8px 0 12px; }
+.compare-result dl div { display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rr-line); }
+.compare-result dt { font-size: 14px; color: var(--rr-ink-soft); }
+.compare-result dd { margin: 0; font-size: 15px; font-weight: 600; color: var(--rr-ink); }
+.compare-privacy { font-size: 13px; color: #7a8571; margin: 20px 0 12px; }
+
+@media (max-width: 760px) {
+  html body .app-shell .page .page-heading { padding-bottom: 20px; margin-bottom: 22px; }
+  html body .app-shell .page .page-heading h1 { font-size: 28px; }
+  html body .app-shell .page .page-heading .subtitle { font-size: 14px; }
+  html body .app-shell .workspace-content .writing-desk-intro h2 { font-size: 24px; }
+  html body .app-shell .workspace-content h2 { font-size: 19px; }
+  .compare-pair { grid-template-columns: 1fr; }
+  .compare-result dl div { grid-template-columns: 1fr; gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body * { scroll-behavior: auto; }
+}
+
+/* Taste matches read like small bean tags from the monthly shelf. */
+html body .app-shell .workspace-content .taste-matches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+html body .app-shell .workspace-content .taste-matches li { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 20px 16px 14px; border: 1px solid var(--rr-line); border-radius: 12px; background: #fff; overflow: hidden; }
+html body .app-shell .workspace-content .taste-matches li + li { border-top: 1px solid var(--rr-line); }
+.taste-match-band { position: absolute; inset: 0 0 auto; height: 6px; }
+html body .app-shell .workspace-content .taste-matches strong { font-size: 15.5px; line-height: 1.5; }
+html body .app-shell .workspace-content .taste-matches em { font-style: normal; font-size: 13px; font-weight: 600; color: var(--rr-roast); }
+html body .app-shell .taste-summary strong { font-size: 30px; }
+@media (max-width: 760px) {
+  html body .app-shell .workspace-content .taste-matches { grid-template-columns: 1fr; }
+}

@@ -505,3 +505,9 @@ feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현�
 - 서비스 중심을 "기록할수록 나만의 커피가 또렷해지는 곳"으로 정리(docs/taste-journey-plan.md). 월픽은 매달 다른 로스터리로 취향을 확인하는 무대.
 - 구현: 판단 3단계(utils/tasteProfile.js, components/coffee/VerdictPicker.jsx, api/verdictApi.js), 나의 취향 화면(pages/taste/TastePage.jsx), 월픽 내 취향 필터·배지. 근거는 사용자가 고른 판단과 직접 쓴 감상, 판매처 컵노트뿐이며 점수를 만들지 않음.
 - 다음 후보: 같은 원두의 "다음 잔에서 바꿔볼 것" 모아 보기(레시피 개선), 커뮤니티(서버·비용·개인정보 결정 필요), 기획 플러그인(Product Management, Design) 설치 후 사용자 여정 점검.
+
+## 2026-11-14 — 취향 비교 링크와 브랜드 디자인
+
+- 서버 없이 GitHub Pages만 쓰는 방향 1단계 완료: 취향 비교 링크(`/taste/compare?t=`)와 백업 알림. 2단계 후보는 giscus 원두 후기(외부 콘텐츠 동의 뒤), 이슈 양식 + Actions 월간 통계.
+- 디자인 기준은 `frontend/src/styles/brand.css` 맨 위 주석. 새 화면은 이 토큰(`--rr-*`)과 서체 변수(`--rr-ui-font`, `--rr-display-font`)를 쓴다. 33개 이전 CSS 층은 그대로 남아 있으니 정리할 때 화면별로 확인한다.
+- 로딩 최소 표시 시간은 1초(`loadingController` minimum=1000).

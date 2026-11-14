@@ -10,6 +10,10 @@ import { monthlyCatalog } from "../../api/monthlyCatalog.js";
 import { listDiaryRecords } from "../../utils/diaryRecords.js";
 import { currentMonthlyCatalog } from "../../utils/currentMonthlyCatalog.js";
 import { buildTasteProfile, roasteryTried, tasteCardText, tasteMatch, verdictOf } from "../../utils/tasteProfile.js";
+import { encodeTaste, tasteLink } from "../../utils/tasteShare.js";
+import { backupDue, daysSince, lastBackupAt } from "../../utils/backupReminder.js";
+import { downloadDeviceBackup } from "../../utils/downloadBackup.js";
+import { flavorBandBackground } from "../../utils/flavorBand.js";
 import "../../styles/taste-journey.css";
 
 const editionLabel = { regular: "월픽", global: "글로벌 월픽", small: "스몰 월픽" };
@@ -21,7 +25,10 @@ export default function TastePage() {
     [error, setError] = useState(""),
     [saving, setSaving] = useState(""),
     [notice, setNotice] = useState(""),
-    [shareNotice, setShareNotice] = useState("");
+    [shareNotice, setShareNotice] = useState(""),
+    [nickname, setNickname] = useState(""),
+    [backupAt, setBackupAt] = useState(() => lastBackupAt(globalThis.localStorage)),
+    [backupNotice, setBackupNotice] = useState("");
   useEffect(() => {
     let live = true;
     Promise.allSettled([
@@ -67,18 +74,32 @@ export default function TastePage() {
       setSaving("");
     }
   }
+  const link = profile.judged > 0 ? tasteLink(encodeTaste(profile, nickname)) : "";
   async function share() {
-    const text = tasteCardText(profile);
+    const text = `${tasteCardText(profile)}
+
+내 취향과 견줘 보기 → ${link}`;
     try {
       if (navigator.share) await navigator.share({ title: "나의 커피 취향", text });
       else {
         await navigator.clipboard.writeText(text);
-        setShareNotice("취향 카드 문장을 복사했어요. 커피 모임이나 SNS에 붙여 넣어 보세요.");
+        setShareNotice("취향 카드와 비교 링크를 복사했어요. 친구에게 보내면 서로의 취향을 견줘 볼 수 있어요.");
       }
     } catch (e) {
-      if (e?.name !== "AbortError") setShareNotice("공유하지 못했어요. 위 문장을 직접 복사해 주세요.");
+      if (e?.name !== "AbortError") setShareNotice("공유하지 못했어요. 아래 링크를 직접 복사해 주세요.");
     }
   }
+  function backup() {
+    try {
+      downloadDeviceBackup();
+      setBackupAt(lastBackupAt(globalThis.localStorage) || Date.now());
+      setBackupNotice("백업 파일을 내려받았어요. 기기를 바꾸면 설정 → 백업·복구에서 불러오세요.");
+    } catch (e) {
+      setBackupNotice(e.message || "백업하지 못했어요.");
+    }
+  }
+  const backupAge = daysSince(backupAt);
+  const due = backupDue({ total: profile.total, last: backupAt });
 
   return (
     <PageShell title="나의 취향" subtitle="다시 마시고 싶었던 잔들이 모여, 나만의 커피가 보여요.">
@@ -151,6 +172,7 @@ export default function TastePage() {
             <ul className="taste-matches">
               {matches.map(({ bean, owner, match }) => (
                 <li key={owner.sourceUrl + bean.id}>
+                  <i className="taste-match-band" aria-hidden="true" style={{ background: flavorBandBackground(bean) }} />
                   <strong>{bean.name.replace(/\s*\((?:언스페셜티 블렌드|하우스 블렌드)\)\s*$/, "")}</strong>
                   <span>{owner.roastery} · {(bean.flavors || []).slice(0, 4).join(" · ")}</span>
                   <em>겹친 맛: {match.shared.join(", ")}</em>
@@ -187,11 +209,37 @@ export default function TastePage() {
 
       {profile.judged > 0 && (
         <section className="taste-card taste-share">
-          <h2>내 취향 카드</h2>
+          <div className="taste-card-head">
+            <h2>취향 비교 링크</h2>
+            <small>친구와 서로의 커피를 견줘 봐요</small>
+          </div>
           <pre>{tasteCardText(profile)}</pre>
-          <button type="button" className="primary-button" onClick={share}>취향 카드 공유하기</button>
-          <small>누를 때만 이 문장을 복사하거나 공유해요. 서버로 보내지 않아요.</small>
+          <label className="taste-nickname">
+            <span>링크에 보일 이름 <small>(선택, 12자)</small></span>
+            <input value={nickname} maxLength={12} onChange={(e) => setNickname(e.target.value)} placeholder="예: 민지" />
+          </label>
+          <div className="action-row">
+            <button type="button" className="primary-button" onClick={share}>취향 카드와 링크 공유</button>
+            <Link className="ghost-button" to={link.slice(link.indexOf("#") + 1)}>링크 미리 보기</Link>
+          </div>
+          <small>링크에는 맛 이름과 잔 수, 좋았던 추출 방법만 담겨요. 원두 이름·감상·날짜는 담지 않고, 서버로 보내지 않아요.</small>
           {shareNotice && <p role="status" className="taste-notice">{shareNotice}</p>}
+        </section>
+      )}
+
+      {profile.total > 0 && (
+        <section className={"taste-card taste-backup" + (due ? " is-due" : "")}>
+          <div>
+            <h2>{due ? "기록을 파일로 지켜 두세요" : "기록 보관"}</h2>
+            <p className="taste-muted">
+              기록은 이 브라우저에만 저장돼요. {backupAge === null ? "아직 백업한 적이 없어요." : backupAge === 0 ? "오늘 백업했어요." : `마지막 백업은 ${backupAge}일 전이에요.`}
+            </p>
+          </div>
+          <div className="action-row">
+            <button type="button" className={due ? "primary-button" : "ghost-button"} onClick={backup}>백업 파일 내려받기</button>
+            <Link className="ghost-button" to="/backup">불러오기</Link>
+          </div>
+          {backupNotice && <p role="status" className="taste-notice">{backupNotice}</p>}
         </section>
       )}
     </PageShell>
