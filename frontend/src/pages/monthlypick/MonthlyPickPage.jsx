@@ -251,7 +251,7 @@ export default function MonthlyPickPage() {
               {[["all","전체"],...Object.entries(monthlyGroups).map(([key,value])=>[key,value.label])].map(([key,label])=><button key={key} type="button" aria-pressed={category===key} onClick={()=>setCategory(key)}><span className="monthly-filter-check" aria-hidden="true">{category===key?"✓":""}</span>{label} <small>{key==='all'?candidates.length:candidates.filter(bean=>bean.category===key).length}종</small></button>)}
             </div></fieldset>
             <fieldset><legend>판매처 향미 색상</legend><div className="monthly-filter-chips">
-              <button type="button" aria-pressed={color==='all'} onClick={()=>setColor('all')}><span className="monthly-filter-check" aria-hidden="true">{color==='all'?"✓":""}</span>모든 색</button>
+              <button type="button" aria-pressed={color==='all'} onClick={()=>setColor('all')}><span className="monthly-filter-check" aria-hidden="true">{color==='all'?"✓":""}</span><i className="color-spectrum" aria-hidden="true"/>모든 색</button>
               {colorFamilies.map(([key,label,hex])=><button key={key} type="button" aria-pressed={color===key} onClick={()=>setColor(key)}><span className="monthly-filter-check" aria-hidden="true">{color===key?"✓":""}</span><i aria-hidden="true" style={{backgroundColor:hex}}/>{label}</button>)}
             </div></fieldset>
             <div className="monthly-filter-options">
