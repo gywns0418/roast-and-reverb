@@ -513,3 +513,8 @@ feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현�
 - 테스트 118/빌드/보안 소스/이미지 검사 통과. PR #114 Verify 성공 후 dev 병합(3efcae2), dev Verify·Pages 성공. dev 데이터에서 11월 정규 60종 확인.
 - 화면: 로컬 미리보기 서버 실행은 승인되지 않아 dev 주소에서 확인. 홈·기록·작성·나의 취향·월픽·설정·도움말을 1280px·390px로 열어 가로 넘침·깨진 이미지·콘솔 오류 없음, 월픽 60종과 신규 원두 표시 확인. 키보드 초점과 정책 페이지는 이번에 보지 않음.
 - main 반영 안 함. 운영에 60종을 반영하려면 dev → main 승인 필요.
+## 2026-11-14 — 취향 비교 링크와 브랜드 디자인
+
+- 서버 없이 GitHub Pages만 쓰는 방향 1단계 완료: 취향 비교 링크(`/taste/compare?t=`)와 백업 알림. 2단계 후보는 giscus 원두 후기(외부 콘텐츠 동의 뒤), 이슈 양식 + Actions 월간 통계.
+- 디자인 기준은 `frontend/src/styles/brand.css` 맨 위 주석. 새 화면은 이 토큰(`--rr-*`)과 서체 변수(`--rr-ui-font`, `--rr-display-font`)를 쓴다. 33개 이전 CSS 층은 그대로 남아 있으니 정리할 때 화면별로 확인한다.
+- 로딩 최소 표시 시간은 1초(`loadingController` minimum=1000).

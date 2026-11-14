@@ -9,6 +9,8 @@ import { coffeeApi } from "../../api/coffeeApi.js";
 import { adaptCoffeeLog } from "../../api/adapters.js";
 import { listDiaryRecords } from "../../utils/diaryRecords.js";
 import { useApiResource } from "../../hooks/useApiResource.js";
+import { verdictOf } from "../../utils/tasteProfile.js";
+import { backupDue, lastBackupAt } from "../../utils/backupReminder.js";
 export default function DashboardPage() {
   const [added, setAdded] = useState([]);
   const { data: stored, loading } = useApiResource(
@@ -23,6 +25,12 @@ export default function DashboardPage() {
       (row) => !added.some((x) => String(x.id) === String(row.id)),
     ),
   ].sort((a, b) => b.date.localeCompare(a.date) || Number(b.id) - Number(a.id));
+  const now = new Date();
+  const monthKey = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}`;
+  const monthCups = records.filter((row) => String(row.date || "").replace(/\D/g, "").startsWith(monthKey)).length;
+  const waiting = records.filter((row) => !verdictOf(row)).length;
+  const due = backupDue({ total: records.length, last: lastBackupAt(globalThis.localStorage) });
+  const heading = records.length ? `${now.getMonth() + 1}월의 ${monthCups + 1}번째 한 잔` : "첫 한 잔을 남겨 볼까요";
   if (loading)
     return (
       <PageShell title="오늘의 한 잔">
@@ -40,7 +48,7 @@ export default function DashboardPage() {
       <div className="writing-desk">
       <div className="writing-desk-compose" id="today-note">
       <div className="writing-desk-intro">
-        <div><h2>오늘의 한 잔</h2><p>커피를 마셨다면, 기억하고 싶은 느낌만 남겨주세요.</p></div>
+        <div><h2>{heading}</h2><p>커피를 마셨다면, 기억하고 싶은 느낌만 남겨주세요. 한 줄이면 충분해요.</p></div>
         <img src={import.meta.env.BASE_URL + "images/journal-entry.webp"} width="640" height="427" alt="" aria-hidden="true" />
       </div>
       <ol className="simple-steps" aria-label="한 잔을 남기는 순서">
@@ -55,6 +63,17 @@ export default function DashboardPage() {
       />
       </div>
         <section className="simple-recent">
+          {records.length > 0 && (
+            <div className="desk-month" aria-label="이번 달 기록">
+              <p>{now.getMonth() + 1}월의 커피 노트</p>
+              <dl>
+                <div><dt>이번 달 남긴 잔</dt><dd>{monthCups}</dd></div>
+                <div><dt>판단을 기다리는 잔</dt><dd>{waiting}</dd></div>
+              </dl>
+              {waiting > 0 && <Link to="/taste">다시 마실지 답하러 가기 →</Link>}
+              {due && <Link className="desk-backup-due" to="/taste">기록이 이 브라우저에만 있어요 · 백업하기 →</Link>}
+            </div>
+          )}
           <div className="simple-section-title">
             <h2>지난 한 잔</h2>
             <Link to="/coffee">모든 기록 보기 →</Link>
