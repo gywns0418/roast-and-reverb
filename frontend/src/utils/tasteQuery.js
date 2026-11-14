@@ -37,7 +37,7 @@ const traitRules = [
 const noteRules = [
   { key: "nutty", label: "고소한 노트", pattern: /고소\S*|견과\S*|너티\S*|nutty/gi, words: ["아몬드", "헤이즐넛", "땅콩", "피스타치오", "마카다미아", "견과", "토피넛", "누룽지", "강냉이", "코코넛", "피칸", "호두"] },
   { key: "chocolate", label: "초콜릿 노트", pattern: /초콜?릿\S*|초코\S*|코코아\S*|카카오\S*|모카\S*|쌉쌀\S*/g, words: ["초콜릿", "코코아", "카카오", "모카"] },
-  { key: "sweet", label: "달콤한 노트", pattern: /달콤\S*|달달\S*|단맛\S*|달큰\S*|스윗\S*|sweet/gi, words: ["꿀", "캐러멜", "바닐라", "슈거", "설탕", "시럽", "마시멜로", "캔디", "사탕", "연유", "버터스카치", "브륄레", "토피", "메이플", "단맛", "스윗", "달콤"] },
+  { key: "sweet", label: "달콤한 노트", pattern: /달콤\S*|달달\S*|단맛\S*|달큰\S*|스윗\S*|sweet/gi, words: ["꿀", "캐러멜", "바닐라", "슈거", "설탕", "시럽", "마시멜로", "캔디", "사탕", "연유", "버터스카치", "브륄레", "토피", "메이플", "단맛", "스윗", "달콤", "달게", "달았"] },
   { key: "berry", label: "베리 노트", pattern: /베리\S*|berry/gi, words: ["베리", "딸기", "커런트", "체리"] },
   { key: "citrus", label: "시트러스 노트", pattern: /시트러스\S*|감귤류\S*|citrus/gi, words: ["레몬", "라임", "오렌지", "자몽", "귤", "만다린", "유자", "시트러스", "베르가못", "포멜로", "텐저린"] },
   { key: "fruity", label: "과일 노트", pattern: /과일\S*|프루티\S*|과즙\S*|fruity/gi, words: ["과일", "베리", "딸기", "복숭아", "포도", "사과", "자두", "체리", "망고", "파인애플", "오렌지", "레몬", "자몽", "라임", "귤", "만다린", "유자", "키위", "살구", "무화과", "멜론", "수박", "리치", "구아바", "파파야", "바나나", "석류", "배", "핵과", "커런트", "패션프루트", "백향과", "머스캣", "머스켓", "피치", "텐저린", "참외", "용과", "스타프루트", "칸탈로프", "포멜로"] },
@@ -88,7 +88,24 @@ export function matchesTasteQuery(bean, parsed, searchableText) {
   );
 }
 
-export const tasteExamples = ["산미 적고 고소한", "꽃향 나는 가벼운", "초콜릿 같은 묵직한", "상큼한 베리", "디카페인"];
+// Which cup-note families a piece of text mentions. Used for the drinker's own words
+// (their record) and for vendor cup notes alike, so both sides use the same vocabulary.
+export const noteFamilies = noteRules.map(({ key, label }) => ({ key, label: label.replace(/ 노트$| 후미$/, "") }));
+export function familiesInText(text = "") {
+  const value = String(text).toLocaleLowerCase();
+  if (!value.trim()) return [];
+  return noteRules
+    .filter((rule) => {
+      rule.pattern.lastIndex = 0;
+      const hit = rule.pattern.test(value) || rule.words.some((word) => value.includes(word));
+      rule.pattern.lastIndex = 0;
+      return hit;
+    })
+    .map((rule) => rule.key);
+}
+export const familiesOfBean = (bean) => familiesInText((bean.flavors || []).join(" "));
+
+export const tasteExamples =["산미 적고 고소한", "꽃향 나는 가벼운", "초콜릿 같은 묵직한", "상큼한 베리", "디카페인"];
 
 export function roastBadge(bean) {
   const roast = String(bean.roast || "").trim();

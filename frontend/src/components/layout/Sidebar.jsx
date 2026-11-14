@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { Coffee, BookOpen, Settings, ShoppingBasket } from "lucide-react";
+import { Coffee, BookOpen, Settings, ShoppingBasket, Compass } from "lucide-react";
 const links = [
   ["/dashboard", Coffee, "오늘의 한 잔"],
   ["/coffee", BookOpen, "내 기록"],
+  ["/taste", Compass, "나의 취향"],
   ["/monthly-pick", ShoppingBasket, "이달의 월픽"],
 ];
 export default function Sidebar() {
@@ -35,6 +36,7 @@ export default function Sidebar() {
       <nav className="mobile-tabbar" aria-label="모바일 빠른 메뉴">
         {[
           ["/coffee", BookOpen, "기록"],
+          ["/taste", Compass, "취향"],
           ["/monthly-pick", ShoppingBasket, "월픽"],
           ["/mypage", Settings, "설정"],
         ].map(item)}

@@ -16,6 +16,7 @@ import { validateDraft } from "../../utils/draft.js";
 import { matchedSoundtrack } from "../../utils/coffeeSoundtrack.js";
 import AuthModal from "../auth/AuthModal.jsx";
 import BrewPlaylist from "../music/BrewPlaylist.jsx";
+import VerdictPicker from "./VerdictPicker.jsx";
 const real = import.meta.env.VITE_USE_REAL_API === "true";
 const blank = () => ({
   note: "",
@@ -24,6 +25,7 @@ const blank = () => ({
   brewMethod: "",
   tastes: [],
   soundtrack: null,
+  verdict: "",
 });
 function scope() {
   const user = authStore.user;
@@ -341,6 +343,12 @@ export default function FirstCup({
                 )}
               </details>
             )}
+            <VerdictPicker
+              compact
+              value={value.verdict || ""}
+              disabled={busy === "save"}
+              onChange={(verdict) => setValue((v) => ({ ...v, verdict }))}
+            />
             <button
               type="button"
               className="primary-button mobile-cup-save"
@@ -583,6 +591,13 @@ export default function FirstCup({
                       />
                     </label>
                   </details>
+                )}
+                {!saved && !example && (
+                  <VerdictPicker
+                    value={value.verdict || ""}
+                    disabled={busy === "save"}
+                    onChange={(verdict) => setValue((v) => ({ ...v, verdict }))}
+                  />
                 )}
                 {example ? (
                   <button

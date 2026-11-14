@@ -7,7 +7,11 @@ import "../../styles/monthly-taste.css";
 import "../../styles/monthly-library.css";
 import "../../styles/monthly-polish.css";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { coffeeApi } from "../../api/coffeeApi.js";
+import { adaptCoffeeLog } from "../../api/adapters.js";
+import { listDiaryRecords } from "../../utils/diaryRecords.js";
+import { buildTasteProfile, tasteMatch } from "../../utils/tasteProfile.js";
 import PageShell from "../../components/common/PageShell.jsx";
 import Loading from "../../components/common/Loading.jsx";
 import BeanArtwork from "../../components/beans/BeanArtwork.jsx";
@@ -39,6 +43,16 @@ function PriceRows({ bean }) {
 const displayDate = (value) =>
   value ? new Date(value).toLocaleDateString("ko-KR") : "확인 전";
 export default function MonthlyPickPage() {
+  const [searchParams] = useSearchParams();
+  const [profile, setProfile] = useState(null),
+    [mineOnly, setMineOnly] = useState(() => searchParams.get("mine") === "1");
+  useEffect(() => {
+    let live = true;
+    listDiaryRecords(coffeeApi.list)
+      .then((rows) => { if (live) setProfile(buildTasteProfile(rows.map(adaptCoffeeLog))); })
+      .catch(() => { if (live) setProfile(null); });
+    return () => { live = false; };
+  }, []);
   const [catalog, setCatalog] = useState([]),
     [filtersExpanded, setFiltersExpanded] = useState(false),
     [loading, setLoading] = useState(true),
@@ -101,10 +115,12 @@ export default function MonthlyPickPage() {
   const candidates = favoritesOnly
     ? allBeans.filter((b) => favorites.includes(String(b.id)))
     : allBeans.filter((b) => b.owner.sourceUrl === product?.sourceUrl);
-  const beans=filterMonthlyBeans(candidates,{query,category,color,available,hideDecaf});
+  const canMatch=!!profile?.likedFamilies?.length;
+  const filteredBeans=filterMonthlyBeans(candidates,{query,category,color,available,hideDecaf});
+  const beans=mineOnly&&canMatch?filteredBeans.filter(bean=>tasteMatch(bean,profile)):filteredBeans;
   const reading=parseTasteQuery(query.trim());
   const grouped=groupMonthlyBeans(beans);
-  function clearFilters(){setQuery("");setCategory("all");setColor("all");setAvailable(false);setHideDecaf(false);setFavoritesOnly(false);}
+  function clearFilters(){setQuery("");setCategory("all");setColor("all");setAvailable(false);setHideDecaf(false);setFavoritesOnly(false);setMineOnly(false);}
   const compared = allBeans.filter((b) => selected.includes(String(b.id)));
   function choose(p) {
     if (!p || !currentMonthlyCatalog([p]).length) return;
@@ -202,6 +218,13 @@ export default function MonthlyPickPage() {
               {allBeans.filter((b) => favorites.includes(String(b.id))).length}
             </button>
           </div>
+          {canMatch ? (
+            <button type="button" className="monthly-mine-toggle" aria-pressed={mineOnly} onClick={() => setMineOnly((v) => !v)}>
+              <span>♥ 내 취향 닮은 원두</span> <small>{candidates.filter((bean) => tasteMatch(bean, profile)).length}종</small>
+            </button>
+          ) : profile?.total > 0 ? (
+            <p className="monthly-mine-hint">기록에 "다시 마시고 싶어요"를 남기면 닮은 원두를 골라 드려요. <Link to="/taste">나의 취향 →</Link></p>
+          ) : null}
           <div className="monthly-taste-examples" role="group" aria-label="맛으로 찾기 예시">
             {tasteExamples.map((example) => (
               <button key={example} type="button" aria-pressed={query.trim() === example} onClick={() => setQuery(query.trim() === example ? "" : example)}>
@@ -237,7 +260,7 @@ export default function MonthlyPickPage() {
               <button type="button" className="ghost-button" onClick={clearFilters}>필터 초기화</button>
             </div>
             <p className="monthly-filter-caption">색상은 판매처 원두 팔레트의 비슷한 색끼리 묶은 분류예요. 맛을 측정한 값은 아니며, 검색·분류·색상·판매 조건을 함께 적용합니다.</p>
-            <p className="monthly-filter-results" role="status">조건에 맞는 원두 <strong>{beans.length}종</strong> / {candidates.length}종{favoritesOnly?' · 관심 원두에서 찾는 중':''}</p>
+            <p className="monthly-filter-results" role="status">조건에 맞는 원두 <strong>{beans.length}종</strong> / {candidates.length}종{favoritesOnly?' · 관심 원두에서 찾는 중':''}{mineOnly&&canMatch?' · 내 취향과 닮은 원두만':''}</p>
           </section>
           </aside>
           <div className="monthly-library-results">
@@ -323,6 +346,7 @@ export default function MonthlyPickPage() {
                       {roastBadge(bean) && <span className="monthly-badge">{roastBadge(bean)}</span>}
                       {bean.decaf && <span className="monthly-badge">디카페인</span>}
                       {favorites.includes(String(bean.id)) && <span className="monthly-badge monthly-badge-saved">♥ 관심</span>}
+                      {canMatch && tasteMatch(bean, profile) && <span className="monthly-badge monthly-badge-mine">내 취향과 닮음 · {tasteMatch(bean, profile).shared.join(", ")}</span>}
                     </span>
                     <h3>{bean.name.replace(/\s*\((?:언스페셜티 블렌드|하우스 블렌드)\)\s*$/, "")}</h3>
                     <p className="monthly-note-list">

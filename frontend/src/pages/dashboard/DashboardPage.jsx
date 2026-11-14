@@ -46,7 +46,7 @@ export default function DashboardPage() {
       <ol className="simple-steps" aria-label="한 잔을 남기는 순서">
         <li>1. 느낌을 적어요</li>
         <li>2. 원하면 음악을 골라요</li>
-        <li>3. 내 기록에 보관해요</li>
+        <li>3. 다시 마실지 고르면 취향이 쌓여요</li>
       </ol>
       <FirstCup
         onSaved={(row) =>
@@ -73,7 +73,7 @@ export default function DashboardPage() {
               </Link>
             ))}
           </div>
-          <div className="desk-storage-note"><strong>다음에 어떤 커피를 마실지 고민될 때</strong><p>지난 기록에서 좋았던 맛을 다시 읽어보세요. 월픽에서 비슷한 컵노트를 찾아볼 수 있어요.</p><Link to="/monthly-pick">다음 원두 살펴보기 →</Link></div>
+          <div className="desk-storage-note"><strong>다음에 어떤 커피를 마실지 고민될 때</strong><p>"다시 마시고 싶어요"를 남긴 잔이 모이면, 좋았던 맛과 이번 달 월픽에서 닮은 원두를 나의 취향에서 보여 드려요.</p><Link to="/taste">나의 취향 보기 →</Link></div>
         </section>
       </div>
       <JournalNextSteps omit="/dashboard" />

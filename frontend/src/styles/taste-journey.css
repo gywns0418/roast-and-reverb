@@ -1,0 +1,45 @@
+/* 나의 취향 page: Writing Desk palette (green / cream, small terracotta accents). */
+.taste-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 18px}
+.taste-summary>div{padding:14px 12px;border:1px solid #dce3d6;border-radius:12px;background:#fff;text-align:center}
+.taste-summary strong{display:block;color:#23382c;font-size:26px;line-height:1.2}
+.taste-summary span{display:block;margin-top:4px;color:#52624d;font-size:13px}
+.taste-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.taste-card,.taste-empty{min-width:0;margin-bottom:16px;padding:20px;border:1px solid #dce3d6;border-radius:14px;background:#fff}
+.taste-grid .taste-card{margin-bottom:0}
+.taste-card h2,.taste-empty h2{margin:0 0 12px;color:#23382c;font-size:19px}
+.taste-card h3{margin:16px 0 8px;color:#52624d;font-size:15px}
+.taste-card-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 12px;margin-bottom:10px}
+.taste-card-head h2{margin:0}
+.taste-card-head a,.taste-card-head small{color:#52624d;font-size:14px}
+.taste-empty{background:#f7f4ec;border-left:3px solid #a24f35}
+.taste-empty p{margin:0 0 12px;color:#33472f;line-height:1.6}
+.taste-muted{margin:10px 0 0;color:#52624d;font-size:14px;line-height:1.6}
+.taste-basis{display:block;margin-top:12px;color:#6a7864;font-size:12.5px;line-height:1.5}
+.taste-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.taste-chips li{padding:6px 12px;border-radius:999px;background:#294633;color:#fff;font-size:14px;font-weight:600}
+.taste-chips li small{margin-left:4px;opacity:.8;font-weight:500}
+.taste-chips-muted li{background:#f3ebe6;color:#8a3f29}
+.taste-list,.taste-unjudged,.taste-matches,.taste-roastery-check{margin:0;padding:0;list-style:none}
+.taste-list li+li,.taste-unjudged li+li,.taste-matches li+li{border-top:1px solid #edf0e9}
+.taste-list a,.taste-unjudged a{display:flex;flex-direction:column;gap:2px;min-height:44px;padding:10px 0;color:#23382c;text-decoration:none}
+.taste-list a:hover strong,.taste-unjudged a:hover strong{text-decoration:underline;text-underline-offset:4px}
+.taste-list span,.taste-unjudged span,.taste-matches span{color:#52624d;font-size:13.5px;overflow-wrap:anywhere}
+.taste-unjudged li{padding-bottom:12px}
+.taste-unjudged .verdict-picker{margin-top:4px}
+.taste-roastery-check{display:grid;gap:6px;margin-bottom:14px}
+.taste-roastery-check li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:10px 12px;border-radius:10px;background:#f7f7f2;font-size:14px}
+.taste-roastery-check em{font-style:normal;color:#8a3f29;font-weight:600}
+.taste-roastery-check li[data-tried=true] em{color:#294633}
+.taste-matches{margin:12px 0 14px}
+.taste-matches li{display:flex;flex-direction:column;gap:3px;padding:10px 0}
+.taste-matches em{font-style:normal;color:#294633;font-size:13.5px;font-weight:700}
+.taste-monthly .ghost-button{display:inline-flex;min-height:44px;align-items:center}
+.taste-share pre{margin:0 0 12px;padding:14px;border-radius:10px;background:#f7f4ec;color:#23382c;font:inherit;font-size:14px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.taste-share small{display:block;margin-top:8px;color:#6a7864;font-size:12.5px}
+.taste-notice{margin:0 0 16px;padding:10px 14px;border-radius:10px;background:#edf1df;color:#263f2d}
+@media(max-width:700px){
+ .taste-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .taste-grid{grid-template-columns:1fr}
+ .taste-card,.taste-empty{padding:16px}
+ .taste-summary strong{font-size:22px}
+}
