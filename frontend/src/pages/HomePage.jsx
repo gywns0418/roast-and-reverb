@@ -29,7 +29,7 @@ export default function HomePage() {
     <div className="studio-home simple-home">
       <header className="first-home-nav">
         <Link to="/" className="first-home-brand">
-          r&amp;r<span>ROAST &amp; REVERB</span>
+          R&amp;R<span>ROAST &amp; REVERB</span>
         </Link>
         <Link to="/coffee">내 기록 열기 →</Link>
       </header>
