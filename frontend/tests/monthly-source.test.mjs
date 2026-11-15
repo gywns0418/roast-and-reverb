@@ -132,3 +132,14 @@ test('discover all coffee editions, exclude old months and machines, respect act
  assert.equal(metadata.roastery,'비로소커피'); assert.equal(metadata.month,'2026-11');
  assert.equal(metadata.saleStart,'2026-11-01'); assert.equal(metadata.saleEnd,'2026-11-30');
  });
+
+test('special monthly picks are recognised by their own title and sale dates',()=>{
+ const now=new Date('2026-11-20T01:00:00Z');
+ for (const title of ['[11월 커피 스페셜 월픽] 어느 로스터리 (11/20~11/30)','[스페셜 월픽] 어느 로스터리 (11/20~11/30)','[11월 스페셜 커피 월픽] 어느 로스터리 (11/20~11/30)']) {
+  const e=monthlyEdition(title,now); assert.equal(e.edition,'special',title); assert.equal(e.month,'2026-11'); assert.equal(e.saleStart,'2026-11-20'); assert.equal(e.saleEnd,'2026-11-30');
+ }
+ assert.equal(monthlyEdition('[11월 커피 월픽] 정규 (11/1~11/30)',now).edition,'regular');
+ assert.throws(()=>monthlyEdition('[11월 스페셜 머신 월픽] 도구',now));
+ const html=['[11월 커피 월픽] 정규 (11/1~11/30)','[11월 커피 스페셜 월픽] 스페셜 (11/20~11/30)','[10월 커피 스페셜 월픽] 지난달 (10/20~10/31)'].map((t,i)=>`<a href="/product/detail.html?product_no=${950+i}"><span>${t}</span></a>`).join('');
+ assert.equal(discoverMonthlyUrls(html,now).length,2);
+});

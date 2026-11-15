@@ -27,6 +27,7 @@ const editions = [
   ["regular", "월픽"],
   ["global", "글로벌 월픽"],
   ["small", "스몰 월픽"],
+  ["special", "스페셜 월픽"],
 ];
 const stateLabel = {
   available: "구매 가능",
