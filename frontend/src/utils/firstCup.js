@@ -5,7 +5,7 @@ export const firstCupExamples=['오늘 커피는 고소하고 끝에 초콜릿 �
 const cupVerdicts=new Set(['again','okay','not-mine']);
 export function firstCupPayload({note,beanName='',roastery='',brewMethod='',tastes=[],soundtrack=null,verdict='',senses={}},date=new Date().toLocaleDateString('sv-SE')){
  const original=String(note||'').trim();if(!original||original.length>2000)throw Error('오늘의 커피를 1~2000자로 남겨 주세요.');
- return coffeePayload({...cleanSenses(senses),beanName:beanName.trim().slice(0,120)||'원두 미기록',roastery:roastery.trim().slice(0,100),brewMethod:brewMethod.trim().slice(0,60),drinkDate:date,tasteNote:tastes.filter(x=>typeof x==='string'&&original.includes(x)).join(', ').slice(0,500),memo:original,brewDetails:{quickNote:true,momentNote:original,...(cupVerdicts.has(verdict)?{verdict}:{}),...(readSoundtrack(soundtrack)?{soundtrack:readSoundtrack(soundtrack)}:{})}});
+ return coffeePayload({beanName:beanName.trim().slice(0,120)||'원두 미기록',roastery:roastery.trim().slice(0,100),brewMethod:brewMethod.trim().slice(0,60),drinkDate:date,tasteNote:tastes.filter(x=>typeof x==='string'&&original.includes(x)).join(', ').slice(0,500),memo:original,brewDetails:{quickNote:true,momentNote:original,...(Object.keys(cleanSenses(senses)).length?{senses:cleanSenses(senses)}:{}),...(cupVerdicts.has(verdict)?{verdict}:{}),...(readSoundtrack(soundtrack)?{soundtrack:readSoundtrack(soundtrack)}:{})}});
 }
 export function literalCupFields(value,note){
  if(!value||typeof value!=='object')throw Error('정리된 문장을 확인하지 못했어요. 입력한 문장은 그대로 남아 있어요.');
