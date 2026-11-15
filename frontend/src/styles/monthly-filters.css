@@ -22,3 +22,10 @@
 .monthly-filter-chips button:hover{color:#263b2d;border-bottom-color:#9aa98f}
 .monthly-filter-chips button[aria-pressed=true]:hover{border-bottom-color:#a24f35}
 .monthly-filter-chips button[aria-pressed=true] .monthly-filter-check{color:#a24f35}
+/* Every color option (including "all") fills its grid cell, so the selected
+   box and the keyboard focus ring are the same size for every choice. */
+.page-monthly-pick .monthly-library-filters fieldset:nth-child(2) .monthly-filter-chips button{width:100%;justify-self:stretch;justify-content:flex-start;padding:8px 6px;border-radius:8px;white-space:nowrap;min-width:0}
+.page-monthly-pick .monthly-library-filters .monthly-filter-chips button:focus-visible{outline:2px solid #3d5a40;outline-offset:-2px;border-radius:8px}
+.monthly-filter-chips .color-spectrum{display:inline-block;flex:0 0 18px;width:18px;height:18px;border-radius:50%;background:conic-gradient(#f03838,#ffdc32,#39d64c,#18d9cb,#3663ff,#a632ed,#f03838)}
+.page-monthly-pick .monthly-library-filters fieldset:nth-child(2) .monthly-filter-chips button:first-child{grid-column:auto}
+@media(max-width:700px){.page-monthly-pick .monthly-library-filters fieldset:nth-child(2) .monthly-filter-chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Loading from "../../components/common/Loading.jsx";
 import VerdictPicker from "../../components/coffee/VerdictPicker.jsx";
+import TasteMap from "../../components/taste/TasteMap.jsx";
 import { coffeeApi } from "../../api/coffeeApi.js";
 import { adaptCoffeeLog } from "../../api/adapters.js";
 import { saveCoffeeVerdict } from "../../api/verdictApi.js";
@@ -118,6 +119,8 @@ export default function TastePage() {
           {!profile.total && <Link className="primary-button" to="/dashboard">첫 한 잔 남기기</Link>}
         </section>
       ) : (
+        <>
+        <TasteMap profile={profile} />
         <div className="taste-grid">
           <section className="taste-card">
             <h2>다시 찾게 되는 맛</h2>
@@ -149,6 +152,7 @@ export default function TastePage() {
             ) : <p className="taste-muted">원두 이름이나 로스터리를 남긴 "다시 마실래요" 기록이 아직 없어요.</p>}
           </section>
         </div>
+        </>
       )}
 
       <section className="taste-card taste-monthly">

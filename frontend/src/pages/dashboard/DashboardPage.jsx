@@ -11,8 +11,18 @@ import { listDiaryRecords } from "../../utils/diaryRecords.js";
 import { useApiResource } from "../../hooks/useApiResource.js";
 import { verdictOf } from "../../utils/tasteProfile.js";
 import { backupDue, lastBackupAt } from "../../utils/backupReminder.js";
+import { familiesInText } from "../../utils/tasteQuery.js";
+import { familyColors } from "../../utils/resonanceAura.js";
+import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
+import TasteSpectrum from "../../components/visual/TasteSpectrum.jsx";
+import { useCupPalette } from "../../hooks/useCupPalette.js";
+import { cupPalette, spectrumOf } from "../../utils/cupColor.js";
+
+const cupText = (row) => [row.memo, row.raw?.tasteNote, row.brewDetails?.momentNote].filter(Boolean).join(" ");
+const cupColors = (rows) => [...new Set(rows.flatMap((row) => familiesInText(cupText(row))))].map((key) => familyColors[key]).filter(Boolean);
 export default function DashboardPage() {
   const [added, setAdded] = useState([]);
+  const palette = useCupPalette();
   const { data: stored, loading } = useApiResource(
     () =>
       listDiaryRecords(coffeeApi.list).then((rows) => rows.map(adaptCoffeeLog)),
@@ -30,6 +40,9 @@ export default function DashboardPage() {
   const monthCups = records.filter((row) => String(row.date || "").replace(/\D/g, "").startsWith(monthKey)).length;
   const waiting = records.filter((row) => !verdictOf(row)).length;
   const due = backupDue({ total: records.length, last: lastBackupAt(globalThis.localStorage) });
+  const monthRows = records.filter((row) => String(row.date || "").replace(/\D/g, "").startsWith(monthKey));
+  const monthColors = [...new Set(monthRows.flatMap((row) => cupPalette(row, palette)))];
+  const spectrum = spectrumOf(records, palette);
   const heading = records.length ? `${now.getMonth() + 1}월의 ${monthCups + 1}번째 한 잔` : "첫 한 잔을 남겨 볼까요";
   if (loading)
     return (
@@ -49,7 +62,15 @@ export default function DashboardPage() {
       <div className="writing-desk-compose" id="today-note">
       <div className="writing-desk-intro">
         <div><h2>{heading}</h2><p>커피를 마셨다면, 기억하고 싶은 느낌만 남겨주세요. 한 줄이면 충분해요.</p></div>
-        <img src={import.meta.env.BASE_URL + "images/journal-entry.webp"} width="640" height="427" alt="" aria-hidden="true" />
+        <ResonanceAura
+          className="desk-aura"
+          colors={monthColors}
+          energy={Math.min(10, monthCups)}
+          depth={Math.min(10, records.length)}
+          rings={monthCups ? 3 + monthCups : 0}
+          seedKey={monthKey}
+          label={monthColors.length ? `이번 달 기록에서 찾은 맛 ${monthColors.length}가지로 만든 오라` : "아직 이번 달 기록이 없어 윤곽만 보이는 오라"}
+        />
       </div>
       <ol className="simple-steps" aria-label="한 잔을 남기는 순서">
         <li>1. 느낌을 적어요</li>
@@ -63,6 +84,16 @@ export default function DashboardPage() {
       />
       </div>
         <section className="simple-recent">
+          {spectrum.length > 0 && (
+            <div className="desk-spectrum">
+              <TasteSpectrum spectrum={spectrum} label={`지금까지 마신 ${records.length}잔의 색 ${spectrum.length}가지를 합친 그림`} />
+              <div>
+                <p>나의 커피 색</p>
+                <strong>{spectrum.length}<small>가지 색</small></strong>
+                <span>{records.length}잔에서 모았어요. 자주 마신 색일수록 크게 번져요.</span>
+              </div>
+            </div>
+          )}
           {records.length > 0 && (
             <div className="desk-month" aria-label="이번 달 기록">
               <p>{now.getMonth() + 1}월의 커피 노트</p>
@@ -82,7 +113,7 @@ export default function DashboardPage() {
             {!records.length && <div className="desk-empty"><h3>아직 남긴 한 잔이 없어요.</h3><p>오늘의 느낌을 적으면 이곳에서 다시 만날 수 있어요.</p><button type="button" className="ghost-button" onClick={() => document.querySelector("#today-note textarea")?.focus()}>첫 한 잔 남기기 →</button></div>}
             {records.slice(0, 3).map((row) => (
               <Link key={row.id} to={`/coffee/${row.id}`}>
-                <img className="recent-cup-art" src={import.meta.env.BASE_URL + "images/coffee-editorial.webp"} alt="" aria-hidden="true" width="52" height="64" />
+                <ResonanceAura className="recent-cup-art" colors={cupPalette(row, palette)} seedKey={row.bean} rings={4} />
                 <div className="recent-cup-copy">
                 <small>{row.date}</small>
                 <h3>{row.bean}</h3>

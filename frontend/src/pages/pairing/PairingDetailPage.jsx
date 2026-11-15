@@ -1,4 +1,6 @@
-import { decodePairingEvidence, saveFeedback, readPreferences } from "../../utils/pairingEngine.js";
+import { decodePairingEvidence, saveFeedback, readPreferences, axes as pairAxes } from "../../utils/pairingEngine.js";
+import ResonanceChart from "../../components/visual/ResonanceChart.jsx";
+import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Coffee, Headphones, ArrowUpRight, Bookmark } from "lucide-react";
@@ -19,6 +21,10 @@ export default function PairingDetailPage() {
     [id],
   );
   const evidence = decodePairingEvidence(item.reason);
+  const unit = (v) => (typeof v === "number" && v >= 0 && v <= 1 ? v : null);
+  const vectors = evidence?.vectors && Array.isArray(evidence.vectors.coffee) && Array.isArray(evidence.vectors.music) && evidence.vectors.coffee.length === 4 && evidence.vectors.music.length === 4
+    ? { coffee: evidence.vectors.coffee.map(unit), music: evidence.vectors.music.map(unit) }
+    : null;
   const [feedback, setFeedback] = useState("");
   function rate(label) { try { const model=saveFeedback(item.id,evidence.features,label); setFeedback(`피드백을 반영했어요. 이 기기 학습 ${model.samples}건`); } catch(error) { setFeedback(error.message); } }
   const [archiving, setArchiving] = useState(false);
@@ -84,6 +90,36 @@ export default function PairingDetailPage() {
             </strong>
           </div>
         </div>
+        {evidence && (
+          <section className="pairing-resonance" aria-labelledby="pairing-resonance-title">
+            <div className="pairing-resonance-head">
+              <ResonanceAura
+                className="pairing-aura"
+                colors={["#B23E22", "#3446C9"].slice(0, 2)}
+                energy={Math.round((vectors?.coffee[0] ?? evidence.features[0] ?? 0.5) * 10)}
+                depth={Math.round((vectors?.coffee[1] ?? evidence.features[1] ?? 0.5) * 10)}
+                rings={3 + evidence.coverage}
+                seedKey={String(item.id)}
+                label="이 페어링의 단서 값으로 만든 오라"
+              />
+              <div>
+                <p className="taste-map-kicker">Resonance</p>
+                <h3 id="pairing-resonance-title">같은 좌표에 놓인 두 감각</h3>
+                <p>{vectors ? "커피와 음악에서 찾은 단서를 같은 네 축에 놓았어요." : "이 조합은 축별로 얼마나 닮았는지만 저장돼 있어요. 새로 만드는 조합부터 커피와 음악을 따로 겹쳐 보여 드려요."}</p>
+              </div>
+            </div>
+            <ResonanceChart
+              axes={pairAxes}
+              caption="페어링 공명 차트"
+              series={vectors
+                ? [
+                    { label: "커피", values: vectors.coffee, color: "var(--rs-coffee)", fill: "color-mix(in srgb, var(--rs-coffee) 20%, transparent)" },
+                    { label: "음악", values: vectors.music, color: "var(--rs-sound)", dashed: true },
+                  ]
+                : [{ label: "닮은 정도", values: evidence.features.map(unit), color: "var(--rs-coffee)", fill: "color-mix(in srgb, var(--rs-coffee) 20%, transparent)" }]}
+            />
+          </section>
+        )}
         {evidence ? <section className="pairing-evidence"><p className="eyebrow">R&R LOCAL / EXPLAINABLE PAIRING</p><h3>이 조합을 연결한 단서</h3><div className="evidence-columns"><div><strong>커피에서</strong><p>{evidence.coffee.join(" · ")}</p></div><div><strong>음악에서</strong><p>{evidence.music.join(" · ")}</p></div></div><div className="evidence-axes">{evidence.axes.map(axis => <div key={axis.label}><span>{axis.label}</span><progress max="1" value={axis.value} /><b>{Math.round(axis.value*100)}%</b></div>)}</div><p>비교 가능한 특성 {evidence.coverage}/4 · {evidence.scoreKind} · 분석 당시 피드백 {evidence.samples}건. 특성 유사도는 만족 확률이나 객관적 음악/커피 평점이 아닙니다.</p><h3>직접 느낀 조합은 어땠나요?</h3><div className="action-row"><button className="primary-button" onClick={() => rate(1)}>잘 어울려요</button><button className="ghost-button" onClick={() => rate(0)}>조금 아쉬워요</button></div><p role="status">{feedback || `이 기기 학습 ${readPreferences().samples}건 · 5건부터 개인 선호 추정 적용`}</p></section> : item.reason && <p className="session-reason">{item.reason}</p>}
         <footer>
           <Link className="ghost-button" to="/pairing/write">

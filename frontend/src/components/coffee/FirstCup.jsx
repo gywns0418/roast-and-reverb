@@ -17,6 +17,12 @@ import { matchedSoundtrack } from "../../utils/coffeeSoundtrack.js";
 import AuthModal from "../auth/AuthModal.jsx";
 import BrewPlaylist from "../music/BrewPlaylist.jsx";
 import VerdictPicker from "./VerdictPicker.jsx";
+import SenseSliders from "./SenseSliders.jsx";
+import SessionSteps from "./SessionSteps.jsx";
+import ResonanceAura from "../visual/ResonanceAura.jsx";
+import { cleanSenses, hasSenses } from "../../utils/senses.js";
+import { familiesInText } from "../../utils/tasteQuery.js";
+import { familyColors } from "../../utils/resonanceAura.js";
 const real = import.meta.env.VITE_USE_REAL_API === "true";
 const blank = () => ({
   note: "",
@@ -26,6 +32,7 @@ const blank = () => ({
   tastes: [],
   soundtrack: null,
   verdict: "",
+  senses: {},
 });
 function scope() {
   const user = authStore.user;
@@ -343,6 +350,11 @@ export default function FirstCup({
                 )}
               </details>
             )}
+            <SenseSliders
+              value={cleanSenses(value.senses)}
+              disabled={busy === "save"}
+              onChange={(senses) => setValue((v) => ({ ...v, senses }))}
+            />
             <VerdictPicker
               compact
               value={value.verdict || ""}
@@ -541,7 +553,27 @@ export default function FirstCup({
                   YOUR TASTING NOTE ·{" "}
                   {saved ? "보관한 카드" : example ? "체험 예시" : "저장 전"}
                 </span>
-                <h3>{value.beanName || "오늘의 한 잔"}</h3>
+                <div className="first-cup-preview-head">
+                  <ResonanceAura
+                    className="first-cup-aura"
+                    colors={familiesInText(value.note).map((k) => familyColors[k])}
+                    energy={(cleanSenses(value.senses).acidity ?? 50) / 10}
+                    depth={(cleanSenses(value.senses).body ?? 50) / 10}
+                    rings={3 + Object.keys(cleanSenses(value.senses)).length}
+                    seedKey={value.note.slice(0, 80)}
+                  />
+                  <h3>{value.beanName || "오늘의 한 잔"}</h3>
+                </div>
+                {!saved && !example && (
+                  <SessionSteps
+                    done={{
+                      note: !!value.note.trim(),
+                      senses: hasSenses(cleanSenses(value.senses)),
+                      music: !!value.soundtrack,
+                      verdict: !!value.verdict,
+                    }}
+                  />
+                )}
                 <p>{value.note}</p>
                 {value.tastes.length > 0 && (
                   <div className="first-cup-tags">
@@ -591,6 +623,13 @@ export default function FirstCup({
                       />
                     </label>
                   </details>
+                )}
+                {!saved && !example && (
+                  <SenseSliders
+                    value={cleanSenses(value.senses)}
+                    disabled={busy === "save"}
+                    onChange={(senses) => setValue((v) => ({ ...v, senses }))}
+                  />
                 )}
                 {!saved && !example && (
                   <VerdictPicker

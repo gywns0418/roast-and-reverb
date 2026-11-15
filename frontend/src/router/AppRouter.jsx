@@ -128,11 +128,7 @@ export default function AppRouter() {
           <Route path="/memories" element={<MemoriesPage />} />
           <Route
             path="/dashboard"
-            element={
-              <JournalStart>
-                <DashboardPage />
-              </JournalStart>
-            }
+            element={<DashboardPage />}
           />
 
           <Route

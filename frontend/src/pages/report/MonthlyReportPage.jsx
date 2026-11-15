@@ -3,7 +3,11 @@ import { listDiaryRecords } from "../../utils/diaryRecords.js";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
-import RecordArtwork from "../../components/common/RecordArtwork.jsx";
+import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
+import TasteMap from "../../components/taste/TasteMap.jsx";
+import { buildTasteProfile } from "../../utils/tasteProfile.js";
+import { familiesInText } from "../../utils/tasteQuery.js";
+import { familyColors } from "../../utils/resonanceAura.js";
 import { coffeeApi } from "../../api/coffeeApi.js";
 import { musicApi } from "../../api/musicApi.js";
 import { adaptCoffeeLog, adaptMusicLog } from "../../api/adapters.js";
@@ -29,11 +33,13 @@ export default function MonthlyReportPage() {
   const dayCount = new Date(year,mo,0).getDate();
   const counts = Array.from({length:dayCount},(_,index) => ({day:index+1,coffee:cups.filter(item => Number(item.date.slice(8,10)) === index+1).length,music:tracks.filter(item => Number(item.date.slice(8,10)) === index+1).length}));
   const max = Math.max(1,...counts.map(item => item.coffee+item.music));
-  return <PageShell title="기록이 들려주는 나의 취향" eyebrow="YOUR MONTH IN NOTES" subtitle="마신 커피와 들은 음악을 모아, 한 달의 리듬을 돌아봅니다.">
+  const monthProfile = buildTasteProfile(cups);
+  return <PageShell title="기록이 들려주는 나의 취향" subtitle="마신 커피와 들은 음악을 모아, 한 달의 리듬을 돌아봅니다.">
     <div className="report-month"><div className="month-controls"><button type="button" className="ghost-button" aria-label="이전 달" onClick={() => moveMonth(-1)}>←</button><label>돌아볼 달 <input type="month" aria-label="리포트 월" value={month} onChange={event => { if(event.target.value) setMonth(event.target.value); }}/></label><button type="button" className="ghost-button" aria-label="다음 달" onClick={() => moveMonth(1)}>→</button></div><span>커피와 직접 들었다고 남긴 음악 기준</span></div>
-    <div className="report-hero"><div><p className="eyebrow">{month.replace("-"," / ")} · MONTHLY JOURNAL</p><h2>나를 닮은 순간이<br/><em>{dates.size}일</em> 쌓였어요.</h2><p>기록이 남은 날을 기준으로 정리했어요.<br/>작은 감각이 모여 다음 취향의 힌트가 됩니다.</p></div><RecordArtwork kind="blend" seed={month}/></div>
+    <div className="report-hero"><div><p className="eyebrow">{month.replace("-"," / ")} · MONTHLY JOURNAL</p><h2>나를 닮은 순간이<br/><em>{dates.size}일</em> 쌓였어요.</h2><p>기록이 남은 날을 기준으로 정리했어요.<br/>작은 감각이 모여 다음 취향의 힌트가 됩니다.</p></div><ResonanceAura className="report-aura" colors={[...new Set(cups.flatMap(c=>familiesInText([c.memo,c.raw?.tasteNote].filter(Boolean).join(" "))))].map(k=>familyColors[k])} energy={Math.min(10,cups.length)} depth={Math.min(10,tracks.length)} rings={3+Math.min(6,dates.size)} seedKey={month} label={cups.length?`${month} 기록에서 찾은 맛으로 만든 오라`:"이 달에는 기록이 없어 윤곽만 보이는 오라"}/></div>
     <div className="metric-strip">{[["마신 커피",cups.length,"cups"],["들은 음악",tracks.length,"tracks"],["음악과 함께한 커피",cups.filter(cup=>cup.brewDetails?.soundtrack?.listened===true).length,"cups"],["기록한 날",dates.size,"days"]].map(([label,count,unit]) => <div className="metric" key={label}><span>{label}</span><strong>{count}<small>{unit}</small></strong></div>)}</div>
     <section className="panel activity-panel"><div className="section-heading"><div><p className="eyebrow">DAILY RHYTHM</p><h2>이번 달의 기록 리듬</h2></div><div className="chart-legend"><span>● 커피</span><span>● 음악</span></div></div><div className="activity-chart" role="img" aria-label={`${month} 일별 커피와 음악 기록: ${counts.map(item => `${item.day}일 커피 ${item.coffee}개 음악 ${item.music}개`).join(', ')}`}>{counts.map(item => <div className="activity-day" key={item.day} title={`${item.day}일 · 커피 ${item.coffee} / 음악 ${item.music}`}><div className="activity-bars"><i className="coffee-bar" style={{height:`${item.coffee/max*100}%`}}/><i className="music-bar" style={{height:`${item.music/max*100}%`}}/></div><span>{item.day === 1 || item.day % 5 === 0 || item.day === dayCount ? item.day : ""}</span></div>)}</div>{!dates.size && <p className="chart-empty">아직 이번 달 기록이 없어요. 기록을 남기면 이곳에 리듬이 쌓입니다.</p>}</section>
+    {monthProfile.judged>0&&<TasteMap profile={monthProfile} title="이달의 취향 지도"/>}
     <div className="panel-grid report-rankings"><Ranking title="자주 마신 원두" eyebrow="SIDE A / COFFEE" items={cups} field="bean" kind="coffee"/><Ranking title="자주 들은 아티스트" eyebrow="SIDE B / MUSIC" items={tracks} field="artist" kind="music"/></div>
   </PageShell>;
 }

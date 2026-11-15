@@ -12,6 +12,32 @@ import { readSoundtrack } from "../../utils/coffeeSoundtrack.js";
 import VerdictPicker from "../../components/coffee/VerdictPicker.jsx";
 import { saveCoffeeVerdict } from "../../api/verdictApi.js";
 import { verdictOf } from "../../utils/tasteProfile.js";
+import ResonanceChart from "../../components/visual/ResonanceChart.jsx";
+import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
+import { hasSenses, senseAxes, sensesOf } from "../../utils/senses.js";
+
+function SenseProfile({ cup }) {
+  const s = sensesOf(cup);
+  if (!hasSenses(s)) return null;
+  return (
+    <section className="quiet-section sense-profile" aria-labelledby="sense-profile-title">
+      <div className="pairing-resonance-head">
+        <ResonanceAura className="pairing-aura" colors={["#B23E22"]} energy={(s.acidity ?? 50) / 10} depth={(s.body ?? 50) / 10} rings={3 + Object.keys(s).length} seedKey={String(cup.id)} label="이 잔의 감각 점수로 만든 오라" />
+        <div>
+          <p className="taste-map-kicker">Senses</p>
+          <h2 id="sense-profile-title">이 잔의 감각</h2>
+          <p>기록할 때 남긴 점수만 그렸어요. 남기지 않은 축은 미기록으로 둬요.</p>
+        </div>
+      </div>
+      <ResonanceChart
+        axes={senseAxes.map((a) => a.label)}
+        caption="이 잔의 감각 점수(100점 만점)"
+        format={(v) => `${Math.round(v * 100)}점`}
+        series={[{ label: "이 잔", values: senseAxes.map(({ key }) => (Number.isInteger(s[key]) ? s[key] / 100 : null)), color: "var(--rs-coffee)", fill: "color-mix(in srgb, var(--rs-coffee) 20%, transparent)" }]}
+      />
+    </section>
+  );
+}
 function DetailVerdict({ id, cup }) {
   const [verdict, setVerdict] = useState(verdictOf(cup));
   const [state, setState] = useState({ busy: false, message: "", error: "" });
@@ -68,6 +94,7 @@ export default function CoffeeDetailPage() {
         </Link>
       </article>
       {cup.id !== undefined && <DetailVerdict key={id} id={id} cup={cup} />}
+      <SenseProfile cup={cup} />
       {song && (
         <section className="quiet-section">
           <h2>함께 남긴 음악</h2>

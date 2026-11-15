@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Resonance 프로토타입 · Roast &amp; Reverb</title>
+<meta name="description" content="Roast & Reverb 디자인 v3 'Resonance' 프로토타입. 홈과 페어링 상세, 라이트/다크 전환.">
+<style>
+@font-face{font-family:"Pretendard Variable";src:url(fonts/PretendardVariable.woff2) format("woff2-variations");font-weight:45 920;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(fonts/BricolageGrotesque-latin-standard.woff2) format("woff2-variations");font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+
+/* ── Tokens ─────────────────────────────────────────── */
+:root{
+  --font-ko:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-display:"Bricolage Grotesque","Pretendard Variable",sans-serif;
+  --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--s-9:96px;
+  --r-control:10px;--r-card:16px;--r-sheet:28px;--r-pill:999px;
+  --blur-glass:20px;
+  --ease-out:cubic-bezier(.2,.8,.2,1);--ease-reverb:cubic-bezier(.16,1,.3,1);
+  --d-fast:160ms;--d-base:240ms;--d-slow:420ms;--d-decay:900ms;
+  --t-xs:12px;--t-sm:14px;--t-md:16px;--t-lg:18px;--t-xl:22px;--t-2xl:28px;--t-3xl:36px;--t-4xl:52px;--t-5xl:76px;
+}
+:root,[data-theme=light]{
+  --bg:#F4F3EF;--surface:#FFFFFF;--surface-2:#EDECE7;--glass:rgba(255,255,255,.62);--glass-line:rgba(255,255,255,.7);
+  --text:#121318;--text-2:#474A54;--text-3:#62656F;--line:#DEDCD5;
+  --coffee:#B23E22;--sound:#3446C9;--on-accent:#FFFFFF;--focus:#3446C9;--danger:#B4232C;--ok:#1F7A4D;
+  --aura-ink:rgba(18,19,24,.16);
+  color-scheme:light;
+}
+[data-theme=dark]{
+  --bg:#0C0D11;--surface:#15161C;--surface-2:#1D1F27;--glass:rgba(21,22,28,.58);--glass-line:rgba(255,255,255,.08);
+  --text:#F3F2ED;--text-2:#B9BBC4;--text-3:#9497A2;--line:#2A2C35;
+  --coffee:#FF8A66;--sound:#9AAAFF;--on-accent:#0C0D11;--focus:#9AAAFF;--danger:#FF7A80;--ok:#5FD39A;
+  --aura-ink:rgba(255,255,255,.14);
+  color-scheme:dark;
+}
+
+/* ── Base ───────────────────────────────────────────── */
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:400 var(--t-md)/1.6 var(--font-ko);-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere;transition:background var(--d-slow) var(--ease-out),color var(--d-slow) var(--ease-out)}
+button,input{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.display{font-family:var(--font-display);font-variation-settings:"opsz" 96;letter-spacing:-.035em}
+
+/* ── Shell ──────────────────────────────────────────── */
+.shell{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100vh}
+.rail{position:sticky;top:0;height:100vh;padding:var(--s-5) var(--s-4);display:flex;flex-direction:column;gap:var(--s-5);border-right:1px solid var(--line)}
+.mark{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;font-size:20px;letter-spacing:-.04em;font-variation-settings:"opsz" 48,"wdth" 92}
+.mark i{width:22px;height:22px;border-radius:50%;background:conic-gradient(from 200deg,var(--coffee),var(--sound),var(--coffee));box-shadow:0 0 0 4px color-mix(in srgb,var(--coffee) 18%,transparent)}
+.nav{display:grid;gap:2px}
+.nav a{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:var(--r-control);text-decoration:none;color:var(--text-2);font-weight:560;transition:background var(--d-fast),color var(--d-fast)}
+.nav a svg{width:20px;height:20px;flex:none}
+.nav a:hover{background:var(--surface-2);color:var(--text)}
+.nav a[aria-current=page]{background:var(--text);color:var(--bg);font-weight:720}
+.rail-foot{margin-top:auto;font-size:var(--t-xs);color:var(--text-3);line-height:1.6}
+.main{min-width:0}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:var(--s-3);padding:var(--s-3) var(--s-6);background:var(--glass);backdrop-filter:blur(var(--blur-glass)) saturate(1.4);-webkit-backdrop-filter:blur(var(--blur-glass)) saturate(1.4);border-bottom:1px solid var(--line)}
+.topbar .crumb{font-size:var(--t-sm);color:var(--text-2);font-weight:600}
+.topbar .spacer{flex:1}
+.seg{display:inline-flex;padding:3px;border-radius:var(--r-pill);background:var(--surface-2);gap:2px}
+.seg button{min-height:36px;padding:0 14px;border:0;border-radius:var(--r-pill);background:transparent;color:var(--text-2);font-size:var(--t-sm);font-weight:640;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--surface);color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+.icon-btn{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.icon-btn svg{width:20px;height:20px}
+.page{padding:var(--s-6) var(--s-6) var(--s-9);max-width:1240px}
+.example-flag{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:var(--r-pill);font-size:var(--t-xs);font-weight:700;background:color-mix(in srgb,var(--sound) 14%,transparent);color:var(--sound)}
+.tabbar{display:none}
+
+/* ── Bento ──────────────────────────────────────────── */
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s-4)}
+.tile{position:relative;grid-column:span 4;min-width:0;padding:var(--s-5);border-radius:var(--r-card);background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.tile h2{margin:0 0 var(--s-2);font-size:var(--t-lg);line-height:1.4;font-weight:760;letter-spacing:-.02em}
+.tile .lead{margin:0;color:var(--text-2);font-size:var(--t-md)}
+.span-8{grid-column:span 8}.span-12{grid-column:span 12}.span-6{grid-column:span 6}
+.kicker{display:flex;align-items:center;gap:8px;margin:0 0 var(--s-3);font-size:var(--t-xs);font-weight:720;letter-spacing:.06em;color:var(--text-3);text-transform:uppercase}
+.kicker b{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;text-transform:none;font-size:13px}
+
+/* Hero tile */
+.hero{grid-column:span 8;min-height:420px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:var(--s-5);align-items:center;padding:var(--s-6)}
+.hero h1{margin:0 0 var(--s-3);font-family:var(--font-display);font-size:clamp(40px,4.6vw,var(--t-5xl));line-height:1;font-weight:720;letter-spacing:-.045em;font-variation-settings:"opsz" 96,"wdth" 88}
+.hero h1 span{display:block;font-family:var(--font-ko);font-size:.48em;letter-spacing:-.03em;font-weight:780;margin-top:14px;line-height:1.25}
+.hero .lead{max-width:34ch;font-size:var(--t-lg);line-height:1.6}
+.aura-wrap{position:relative;aspect-ratio:1;width:100%;max-width:360px;justify-self:center}
+.aura-wrap svg{width:100%;height:100%;display:block}
+.aura-caption{position:absolute;inset:auto 0 -6px;text-align:center;font-size:var(--t-xs);color:var(--text-3)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 22px;border-radius:var(--r-pill);border:1px solid transparent;font-weight:720;font-size:var(--t-md);cursor:pointer;text-decoration:none;transition:transform var(--d-fast) var(--ease-out),background var(--d-fast),opacity var(--d-fast)}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--text);color:var(--bg)}
+.btn-primary:hover{background:var(--coffee);color:var(--on-accent)}
+.btn-quiet{background:transparent;border-color:var(--line);color:var(--text)}
+.btn-quiet:hover{border-color:var(--text)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-5)}
+
+/* Waveform progress — session steps as an equaliser */
+.wave{display:flex;align-items:flex-end;gap:4px;height:34px;margin-top:var(--s-5)}
+.wave i{flex:1;max-width:10px;border-radius:3px;background:var(--line);transition:height var(--d-slow) var(--ease-reverb),background var(--d-base)}
+.wave i.on{background:var(--coffee)}
+.wave-label{margin-top:6px;font-size:var(--t-xs);color:var(--text-3)}
+
+/* Stat tile */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4) var(--s-3);margin-top:var(--s-3)}
+.stat strong{display:block;font-size:44px;line-height:1;font-weight:820;letter-spacing:-.04em}
+.stat span{display:block;margin-top:6px;font-size:var(--t-sm);color:var(--text-2)}
+.empty-invite{margin-top:var(--s-4);padding:var(--s-4);border-radius:var(--r-control);border:1px dashed var(--line);color:var(--text-2);font-size:var(--t-sm)}
+
+/* Pairing cards */
+.pair-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-3);margin-top:var(--s-3)}
+.pair{display:grid;grid-template-rows:auto 1fr;border-radius:var(--r-control);border:1px solid var(--line);background:var(--surface-2);overflow:hidden;text-decoration:none;transition:transform var(--d-base) var(--ease-out),border-color var(--d-base)}
+.pair:hover{transform:translateY(-3px);border-color:var(--text-3)}
+.pair .mini{aspect-ratio:16/10}
+.pair .mini svg{width:100%;height:100%;display:block}
+.pair div.copy{padding:var(--s-3) var(--s-4) var(--s-4)}
+.pair strong{display:block;font-size:var(--t-md);line-height:1.4}
+.pair small{display:block;margin-top:4px;color:var(--text-2);font-size:var(--t-sm)}
+.ghost-slot{display:grid;place-items:center;min-height:180px;border-radius:var(--r-control);border:1px dashed var(--line);color:var(--text-3);font-size:var(--t-sm);text-align:center;padding:var(--s-4)}
+
+/* Next list */
+.next{list-style:none;margin:var(--s-3) 0 0;padding:0}
+.next li{display:flex;align-items:center;gap:12px;min-height:56px;border-top:1px solid var(--line)}
+.next li:first-child{border-top:0}
+.next .dot{width:10px;height:10px;border-radius:50%;flex:none}
+.next a{font-weight:640;text-decoration:none}
+.next a:hover{text-decoration:underline;text-underline-offset:4px}
+.next small{margin-left:auto;color:var(--text-3);font-size:var(--t-sm)}
+
+/* Monthly teaser — vendor HEX shown exactly */
+.swatch-row{display:flex;gap:6px;margin-top:8px}
+.swatch{width:28px;height:28px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.teaser{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s-3);margin-top:var(--s-3)}
+.teaser div{padding:var(--s-3);border-radius:var(--r-control);background:var(--surface-2)}
+.teaser strong{font-size:var(--t-sm)}
+.teaser small{display:block;color:var(--text-2);font-size:var(--t-xs);margin-top:2px}
+.hex{font-size:11px;color:var(--text-3);margin-top:6px}
+
+/* ── Pairing detail ─────────────────────────────────── */
+.detail-hero{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--s-6);align-items:center;padding:var(--s-6);border-radius:var(--r-sheet);background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.detail-hero h1{margin:var(--s-2) 0 var(--s-3);font-size:clamp(32px,3.6vw,var(--t-4xl));line-height:1.12;font-weight:820;letter-spacing:-.04em}
+.detail-hero h1 em{font-style:normal;font-family:var(--font-display);font-weight:500;color:var(--text-3);margin:0 .12em}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--surface);font-size:var(--t-sm);font-weight:620;color:var(--text)}
+button.chip{cursor:pointer}
+button.chip[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.chip .c{width:10px;height:10px;border-radius:50%}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4);margin-top:var(--s-4)}
+.card{padding:var(--s-5);border-radius:var(--r-card);background:var(--surface);border:1px solid var(--line);min-width:0}
+.card h2{margin:0 0 var(--s-3);font-size:var(--t-xl);font-weight:780;letter-spacing:-.025em}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:10px var(--s-4);margin:0}
+.card dt{color:var(--text-3);font-size:var(--t-sm)}
+.card dd{margin:0;font-weight:600}
+.quote{margin:var(--s-4) 0 0;padding-left:var(--s-4);border-left:3px solid var(--coffee);color:var(--text-2)}
+.card.track .quote{border-color:var(--sound)}
+.score{display:flex;align-items:baseline;gap:6px;margin-top:var(--s-4)}
+.score strong{font-size:var(--t-4xl);line-height:1;font-weight:840;letter-spacing:-.05em}
+.score span{color:var(--text-2);font-size:var(--t-sm)}
+
+/* Resonance chart: one coordinate system for both senses */
+.resonance{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-6);align-items:center;margin-top:var(--s-4)}
+.resonance svg{width:100%;max-width:420px;justify-self:center;display:block}
+.axis-table{width:100%;border-collapse:collapse;font-size:var(--t-sm)}
+.axis-table th,.axis-table td{padding:12px 8px;border-bottom:1px solid var(--line);text-align:left}
+.axis-table th{color:var(--text-3);font-weight:600}
+.axis-table td.num{font-weight:720;text-align:right}
+.legend{display:flex;gap:var(--s-4);margin-bottom:var(--s-3);font-size:var(--t-sm);color:var(--text-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+
+/* Session sheet */
+.sheet-backdrop{position:fixed;inset:0;z-index:40;background:rgba(8,9,12,.36);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity var(--d-base)}
+.sheet{position:fixed;z-index:41;left:50%;bottom:0;width:min(640px,100%);max-height:92vh;overflow:auto;transform:translate(-50%,104%);padding:var(--s-5) var(--s-5) calc(var(--s-6) + env(safe-area-inset-bottom));border-radius:var(--r-sheet) var(--r-sheet) 0 0;background:var(--surface);border:1px solid var(--line);transition:transform var(--d-slow) var(--ease-reverb)}
+.sheet-open .sheet-backdrop{opacity:1;pointer-events:auto}
+.sheet-open .sheet{transform:translate(-50%,0)}
+.grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:0 auto var(--s-4)}
+.sheet h2{margin:0;font-size:var(--t-2xl);font-weight:800;letter-spacing:-.03em}
+.sheet .row{display:grid;grid-template-columns:1fr 132px;gap:var(--s-5);align-items:center;margin-top:var(--s-4)}
+.slider{display:grid;gap:6px;margin-top:var(--s-3)}
+.slider label{display:flex;justify-content:space-between;font-weight:640}
+.slider label output{font-weight:800}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--coffee) var(--p,50%),var(--surface-2) var(--p,50%))}
+input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:var(--surface-2)}
+input[type=range]::-moz-range-progress{height:8px;border-radius:4px;background:var(--coffee)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-10px;border-radius:50%;background:var(--surface);border:3px solid var(--coffee)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--surface);border:3px solid var(--coffee)}
+.draft{margin-top:var(--s-3);font-size:var(--t-xs);color:var(--text-3)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--s-3)}
+
+/* Toast */
+.toast{position:fixed;z-index:60;left:50%;bottom:24px;transform:translate(-50%,calc(100% + 48px));opacity:0;padding:12px 18px;border-radius:var(--r-pill);background:var(--text);color:var(--bg);font-weight:640;font-size:var(--t-sm);transition:transform var(--d-slow) var(--ease-reverb),opacity var(--d-base)}
+.toast.show{transform:translate(-50%,0);opacity:1}
+
+[hidden]{display:none!important}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width:1100px){
+  .hero{grid-column:span 12}
+  .tile{grid-column:span 6}.span-8,.span-12{grid-column:span 12}
+  .pair-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .shell{grid-template-columns:1fr}
+  .rail{display:none}
+  .topbar{padding:var(--s-2) var(--s-4)}
+  .page{padding:var(--s-4) var(--s-4) 120px}
+  .bento{gap:var(--s-3)}
+  .tile,.span-6,.span-8,.span-12,.hero{grid-column:span 12}
+  .hero{grid-template-columns:1fr;padding:var(--s-5);min-height:0}
+  .aura-wrap{max-width:260px;order:-1}
+  .pair-list,.teaser{grid-template-columns:1fr 1fr}
+  .detail-hero,.resonance,.duo{grid-template-columns:1fr}
+  .detail-hero{padding:var(--s-5)}
+  .sheet .row{grid-template-columns:1fr 96px}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;z-index:30;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));padding:6px;border-radius:22px;background:var(--glass);backdrop-filter:blur(var(--blur-glass)) saturate(1.4);-webkit-backdrop-filter:blur(var(--blur-glass)) saturate(1.4);border:1px solid var(--glass-line)}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;border-radius:16px;font-size:11px;font-weight:640;text-decoration:none;color:var(--text-2)}
+  .tabbar a svg{width:22px;height:22px}
+  .tabbar a[aria-current=page]{background:var(--text);color:var(--bg)}
+  .seg button{padding:0 10px}
+}
+@media (max-width:420px){.pair-list,.teaser{grid-template-columns:1fr}.topbar .crumb{display:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@keyframes breathe{50%{transform:scale(1.035)}}
+.breathe{transform-origin:50% 50%;animation:breathe 7s var(--ease-out) infinite}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-log" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h8M8 18h5"/></symbol>
+  <symbol id="i-find" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-taste" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6.5" opacity=".6"/><circle cx="12" cy="12" r="10" opacity=".3"/></symbol>
+  <symbol id="i-me" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.4-3.4 4-5 7-5s5.6 1.6 7 5"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+</svg>
+
+<div class="shell">
+  <aside class="rail" aria-label="주요 메뉴">
+    <div class="mark"><i aria-hidden="true"></i>Roast &amp; Reverb</div>
+    <nav class="nav" data-nav>
+      <a href="#home" data-screen="home"><svg aria-hidden="true"><use href="#i-home"/></svg>홈</a>
+      <a href="#pairing" data-screen="pairing"><svg aria-hidden="true"><use href="#i-log"/></svg>기록</a>
+      <a href="#home"><svg aria-hidden="true"><use href="#i-find"/></svg>발견</a>
+      <a href="#home"><svg aria-hidden="true"><use href="#i-taste"/></svg>취향</a>
+      <a href="#home"><svg aria-hidden="true"><use href="#i-me"/></svg>나</a>
+    </nav>
+    <p class="rail-foot">프로토타입 · 홈과 페어링 상세만 동작합니다.<br>기록은 어디에도 저장되지 않아요.</p>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <span class="crumb" data-crumb>홈</span>
+      <span class="spacer"></span>
+      <div class="seg" role="group" aria-label="보기 데이터">
+        <button type="button" data-data="empty" aria-pressed="true">빈 상태</button>
+        <button type="button" data-data="example" aria-pressed="false">예시 보기</button>
+      </div>
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="다크 모드로 전환"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+    </header>
+
+    <!-- ═══════════ HOME ═══════════ -->
+    <main class="page" id="home" data-view="home">
+      <h1 class="sr-only">홈</h1>
+      <div class="bento">
+        <section class="tile hero" aria-labelledby="hero-title">
+          <div>
+            <p class="kicker"><b>Today's session</b><span data-example-flag hidden class="example-flag">예시</span></p>
+            <h1 id="hero-title">Taste<br>in resonance<span data-hero-sub>한 잔과 한 곡이 만나면,<br>내 취향이 울리기 시작해요.</span></h1>
+            <p class="lead" data-hero-lead>커피의 산미·단맛·바디·여운을 음악의 밝기·템포·질감·공간감과 같은 좌표에 놓아요. 기록할수록 나만의 공명이 또렷해져요.</p>
+            <div class="actions">
+              <button class="btn btn-primary" type="button" data-open-sheet>세션 시작</button>
+              <a class="btn btn-quiet" href="#pairing" data-screen="pairing">페어링 보기</a>
+            </div>
+            <div class="wave" aria-hidden="true" data-wave></div>
+            <p class="wave-label" data-wave-label>오늘 세션 0 / 4단계</p>
+          </div>
+          <figure class="aura-wrap" style="margin:0">
+            <div data-aura="hero" class="breathe"></div>
+            <figcaption class="aura-caption" data-aura-caption>아직 기록이 없어 윤곽만 보여요</figcaption>
+          </figure>
+        </section>
+
+        <section class="tile" aria-labelledby="stat-title">
+          <p class="kicker">이번 달 <span data-example-flag hidden class="example-flag">예시</span></p>
+          <h2 id="stat-title">11월의 감각 노트</h2>
+          <div class="stat-grid" data-stats>
+            <div class="stat"><strong class="num">0</strong><span>기록한 잔</span></div>
+            <div class="stat"><strong class="num">0</strong><span>페어링</span></div>
+            <div class="stat"><strong class="num">0</strong><span>판단을 기다리는 잔</span></div>
+            <div class="stat"><strong class="num">0</strong><span>만난 로스터리</span></div>
+          </div>
+          <p class="empty-invite" data-stat-invite>첫 세션을 마치면 여기 숫자가 쌓여요. 비어 있는 숫자는 채워 넣지 않아요.</p>
+        </section>
+
+        <section class="tile span-8" aria-labelledby="recent-title">
+          <p class="kicker">최근 페어링 <span data-example-flag hidden class="example-flag">예시</span></p>
+          <h2 id="recent-title">울림이 남은 조합</h2>
+          <div class="pair-list" data-pairs>
+            <div class="ghost-slot">첫 페어링이 이 자리에<br>오라로 나타나요</div>
+            <div class="ghost-slot" aria-hidden="true"></div>
+            <div class="ghost-slot" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <section class="tile" aria-labelledby="next-title">
+          <p class="kicker">이어서 할 일</p>
+          <h2 id="next-title">다음 한 걸음</h2>
+          <ul class="next">
+            <li><span class="dot" style="background:var(--coffee)" aria-hidden="true"></span><a href="#home" data-open-sheet>첫 잔 기록하기</a><small>약 1분</small></li>
+            <li><span class="dot" style="background:var(--sound)" aria-hidden="true"></span><a href="#home">이달의 월픽 둘러보기</a><small>3개 시리즈</small></li>
+            <li><span class="dot" style="background:var(--text-3)" aria-hidden="true"></span><a href="#home">기록 백업하기</a><small>기기 저장</small></li>
+          </ul>
+        </section>
+
+        <section class="tile span-12" aria-labelledby="pick-title">
+          <p class="kicker">발견 · 이달의 월픽 <span class="example-flag">예시 원두</span></p>
+          <h2 id="pick-title">판매처가 정한 향미 색 그대로</h2>
+          <p class="lead">실제 앱에서는 이 자리에 판매처가 공개한 향미 HEX를 변형 없이 칠해요. 여기 색과 이름은 예시 값이에요. 실제 월픽 목록 디자인은 바꾸지 않아요.</p>
+          <div class="teaser" data-teaser></div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ═══════════ PAIRING DETAIL ═══════════ -->
+    <main class="page" id="pairing" data-view="pairing" hidden>
+      <section class="detail-hero" aria-labelledby="pair-title">
+        <div>
+          <p class="kicker"><b>Pairing</b><span class="example-flag">예시 페어링</span></p>
+          <h1 id="pair-title">복숭아 산미<em>×</em>느린 피아노</h1>
+          <p class="lead" style="color:var(--text-2);margin:0 0 var(--s-4)">예시 데이터로 만든 화면이에요. 실제 기록에서는 내가 남긴 값만 보여요.</p>
+          <div class="meta">
+            <span class="chip"><i class="c" style="background:#FFB199" aria-hidden="true"></i>#FFB199 복숭아</span>
+            <span class="chip"><i class="c" style="background:#F4D35E" aria-hidden="true"></i>#F4D35E 꿀</span>
+            <span class="chip"><i class="c" style="background:#E86A92" aria-hidden="true"></i>#E86A92 라즈베리</span>
+            <span class="chip num">72 BPM</span>
+          </div>
+        </div>
+        <figure class="aura-wrap" style="margin:0;max-width:400px">
+          <div data-aura="pair" class="breathe"></div>
+          <figcaption class="aura-caption">향미 HEX 3색 · 산미 7 · 바디 4 · 72 BPM에서 생성</figcaption>
+        </figure>
+      </section>
+
+      <section class="card" style="margin-top:var(--s-4)" aria-labelledby="res-title">
+        <h2 id="res-title">공명 차트 — 같은 좌표에 놓인 두 감각</h2>
+        <div class="legend"><span><i style="background:var(--coffee)"></i>커피</span><span><i style="background:var(--sound)"></i>음악</span></div>
+        <div class="resonance">
+          <div data-radar></div>
+          <table class="axis-table">
+            <caption class="sr-only">축별 커피와 음악 값(예시, 0–10)</caption>
+            <thead><tr><th scope="col">축</th><th scope="col">커피</th><th scope="col">음악</th><th scope="col" style="text-align:right">차이</th></tr></thead>
+            <tbody data-axis-rows></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="duo">
+        <article class="card" aria-labelledby="bean-title">
+          <p class="kicker">커피 <span class="example-flag">예시</span></p>
+          <h2 id="bean-title">예시 원두 · 복숭아 블렌드</h2>
+          <dl>
+            <dt>추출</dt><dd>핸드드립 · 15g / 240ml</dd>
+            <dt>분쇄·온도</dt><dd>중간 · 92°C</dd>
+            <dt>시간</dt><dd class="num">2:40</dd>
+          </dl>
+          <p class="quote">"식을수록 복숭아가 또렷해졌다."</p>
+          <div class="score"><strong class="num">8</strong><span>/ 10 · 다시 마시고 싶어요</span></div>
+        </article>
+        <article class="card track" aria-labelledby="track-title">
+          <p class="kicker">음악 <span class="example-flag">예시</span></p>
+          <h2 id="track-title">느린 피아노 소품 (예시 곡)</h2>
+          <dl>
+            <dt>아티스트</dt><dd>예시 아티스트</dd>
+            <dt>템포</dt><dd class="num">72 BPM</dd>
+            <dt>질감</dt><dd>부드러움 · 공간감 넓음</dd>
+          </dl>
+          <p class="quote">"한 모금마다 잔향이 길게 남았다."</p>
+          <div class="score"><strong class="num">7</strong><span>/ 10 · 이 조합 다시 듣기</span></div>
+        </article>
+      </div>
+    </main>
+  </div>
+</div>
+
+<nav class="tabbar" aria-label="하단 메뉴" data-nav>
+  <a href="#home" data-screen="home"><svg aria-hidden="true"><use href="#i-home"/></svg>홈</a>
+  <a href="#pairing" data-screen="pairing"><svg aria-hidden="true"><use href="#i-log"/></svg>기록</a>
+  <a href="#home"><svg aria-hidden="true"><use href="#i-find"/></svg>발견</a>
+  <a href="#home"><svg aria-hidden="true"><use href="#i-taste"/></svg>취향</a>
+  <a href="#home"><svg aria-hidden="true"><use href="#i-me"/></svg>나</a>
+</nav>
+
+<!-- Session bottom sheet -->
+<div class="sheet-backdrop" data-close-sheet></div>
+<section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" aria-hidden="true" data-sheet>
+  <div class="grab" aria-hidden="true"></div>
+  <p class="kicker">세션 1 / 4 · 맛 감각 <span class="example-flag">체험 · 저장 안 됨</span></p>
+  <h2 id="sheet-title">지금 잔은 어떤가요?</h2>
+  <div class="row">
+    <div>
+      <div class="slider"><label for="s-acid">산미 <output class="num" for="s-acid">5</output></label><input id="s-acid" type="range" min="0" max="10" value="5" data-axis="acid"></div>
+      <div class="slider"><label for="s-sweet">단맛 <output class="num" for="s-sweet">5</output></label><input id="s-sweet" type="range" min="0" max="10" value="5" data-axis="sweet"></div>
+      <div class="slider"><label for="s-body">바디 <output class="num" for="s-body">5</output></label><input id="s-body" type="range" min="0" max="10" value="5" data-axis="body"></div>
+      <div class="slider"><label for="s-finish">여운 <output class="num" for="s-finish">5</output></label><input id="s-finish" type="range" min="0" max="10" value="5" data-axis="finish"></div>
+    </div>
+    <div data-aura="sheet" aria-hidden="true"></div>
+  </div>
+  <div class="chips" role="group" aria-label="떠오르는 향">
+    <button class="chip" type="button" aria-pressed="false" data-chip="#FFB199"><i class="c" style="background:#FFB199"></i>복숭아</button>
+    <button class="chip" type="button" aria-pressed="false" data-chip="#E86A92"><i class="c" style="background:#E86A92"></i>베리</button>
+    <button class="chip" type="button" aria-pressed="false" data-chip="#8B5A3C"><i class="c" style="background:#8B5A3C"></i>초콜릿</button>
+    <button class="chip" type="button" aria-pressed="false" data-chip="#F4D35E"><i class="c" style="background:#F4D35E"></i>꿀</button>
+    <button class="chip" type="button" aria-pressed="false" data-chip="#9CC5A1"><i class="c" style="background:#9CC5A1"></i>허브</button>
+  </div>
+  <p class="draft" data-draft aria-live="polite">값을 움직이면 오라가 바로 바뀌어요. 같은 값은 언제나 같은 그림이에요.</p>
+  <div class="actions"><button class="btn btn-primary" type="button" data-next>다음: 음악 고르기</button><button class="btn btn-quiet" type="button" data-close-sheet>닫기</button></div>
+</section>
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+
+  /* Deterministic generator: same data -> same picture. */
+  function hash(str) { let h = 2166136261; for (const c of str) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function rng(seed) { return () => { seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  function aura({ colors = [], acid = 5, body = 5, bpm = 0, id = "aura", outline = false }) {
+    const seed = hash(JSON.stringify({ colors, acid, body, bpm })), r = rng(seed);
+    const rings = bpm ? Math.max(3, Math.round(bpm / 14)) : 5;
+    const blobs = (colors.length ? colors : ["#9497A2"]).map((c, i) => {
+      const a = r() * Math.PI * 2, d = 18 + r() * (10 + acid * 2.2);
+      return `<circle cx="${(100 + Math.cos(a) * d).toFixed(1)}" cy="${(100 + Math.sin(a) * d).toFixed(1)}" r="${(42 + body * 4 + r() * 16).toFixed(1)}" fill="${c}" opacity="${outline ? 0 : (0.78 - i * 0.08).toFixed(2)}"/>`;
+    }).join("");
+    const ringSvg = Array.from({ length: rings }, (_, i) => `<circle cx="100" cy="100" r="${(22 + i * (74 / rings)).toFixed(1)}" fill="none" stroke="var(--aura-ink)" stroke-width="${i % 3 === 0 ? 1.2 : 0.7}" ${outline && i % 2 ? 'stroke-dasharray="2 5"' : ""}/>`).join("");
+    return `<svg viewBox="0 0 200 200" role="img" aria-label="${outline ? "아직 기록이 없는 빈 오라 윤곽" : "기록 값으로 생성한 오라 그래픽"}">
+      <defs><filter id="${id}-b" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="${(14 + (10 - acid)).toFixed(1)}"/></filter>
+      <filter id="${id}-n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="${seed % 997}"/><feColorMatrix values="0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .22 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+      <clipPath id="${id}-c"><circle cx="100" cy="100" r="96"/></clipPath></defs>
+      <g clip-path="url(#${id}-c)"><g filter="url(#${id}-b)">${blobs}</g>${outline ? "" : `<circle cx="100" cy="100" r="96" fill="#fff" filter="url(#${id}-n)"/>`}</g>
+      ${ringSvg}<circle cx="100" cy="100" r="96" fill="none" stroke="var(--aura-ink)"/>
+    </svg>`;
+  }
+
+  /* Radar: coffee and music on one 4-axis coordinate system. */
+  const axes = [["산미", "밝기"], ["단맛", "템포"], ["바디", "질감"], ["여운", "공간감"]];
+  const pairCoffee = [7, 6, 4, 8], pairMusic = [6, 4, 3, 9];
+  function radar() {
+    const pt = (v, i) => { const a = -Math.PI / 2 + i * Math.PI / 2, rr = v / 10 * 80; return [100 + Math.cos(a) * rr, 100 + Math.sin(a) * rr]; };
+    const poly = (vals) => vals.map((v, i) => pt(v, i).map(n => n.toFixed(1)).join(",")).join(" ");
+    const grid = [2, 4, 6, 8, 10].map(v => `<polygon points="${poly([v, v, v, v])}" fill="none" stroke="var(--line)"/>`).join("");
+    const labels = axes.map(([c, m], i) => { const [x, y] = pt(11.6, i); return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="8.5" fill="var(--text-2)">${c} · ${m}</text>`; }).join("");
+    return `<svg viewBox="-46 -16 292 232" role="img" aria-label="공명 차트. 수치는 옆 표에 있어요.">${grid}
+      <polygon points="${poly(pairCoffee)}" fill="color-mix(in srgb,var(--coffee) 22%,transparent)" stroke="var(--coffee)" stroke-width="2"/>
+      <polygon points="${poly(pairMusic)}" fill="color-mix(in srgb,var(--sound) 18%,transparent)" stroke="var(--sound)" stroke-width="2" stroke-dasharray="5 3"/>${labels}</svg>`;
+  }
+
+  const examplePairs = [
+    { name: "복숭아 산미 × 느린 피아노", meta: "예시 · 산미 7 · 72 BPM", colors: ["#FFB199", "#F4D35E", "#E86A92"], acid: 7, body: 4, bpm: 72 },
+    { name: "카카오 바디 × 로파이 비트", meta: "예시 · 바디 8 · 86 BPM", colors: ["#FFF8DC", "#B8956A", "#8B4A2B"], acid: 3, body: 8, bpm: 86 },
+    { name: "포도 산미 × 신스팝", meta: "예시 · 산미 8 · 118 BPM", colors: ["#DDEB9C", "#E0304E", "#7A12B8"], acid: 8, body: 3, bpm: 118 },
+  ];
+  const teaser = [
+    { name: "예시 원두 1", roastery: "예시 로스터리", hex: ["#FFB199", "#F7708E", "#FF94AA"] },
+    { name: "예시 원두 2", roastery: "예시 로스터리", hex: ["#DDEB9C", "#E0304E", "#7A12B8"] },
+    { name: "예시 원두 3", roastery: "예시 로스터리", hex: ["#FFFBDC", "#FFD400", "#FFD1CC"] },
+    { name: "예시 원두 4", roastery: "예시 로스터리", hex: ["#FFFBDC", "#B8956A", "#8B4A2B"] },
+  ];
+
+  function renderData(mode) {
+    const ex = mode === "example";
+    $$("[data-data]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.data === mode)));
+    $$("[data-example-flag]").forEach(f => (f.hidden = !ex));
+    $("[data-aura=hero]").innerHTML = ex ? aura({ ...examplePairs[0], id: "hero" }) : aura({ id: "hero", outline: true });
+    $("[data-aura-caption]").textContent = ex ? "예시 페어링 값에서 생성한 오라" : "아직 기록이 없어 윤곽만 보여요";
+    const steps = ex ? 3 : 0;
+    $("[data-wave]").innerHTML = Array.from({ length: 24 }, (_, i) => `<i class="${i < steps * 6 ? "on" : ""}" style="height:${(8 + ((Math.sin(i * 1.7) + 1) * 12 + (i % 5) * 2)).toFixed(0)}px"></i>`).join("");
+    $("[data-wave-label]").textContent = `오늘 세션 ${steps} / 4단계${ex ? " · 예시" : ""}`;
+    const vals = ex ? [12, 5, 2, 4] : [0, 0, 0, 0];
+    $$("[data-stats] strong").forEach((s, i) => (s.textContent = vals[i]));
+    $("[data-stat-invite]").hidden = ex;
+    $("[data-pairs]").innerHTML = ex
+      ? examplePairs.map((p, i) => `<a class="pair" href="#pairing" data-screen="pairing"><div class="mini">${aura({ ...p, id: "p" + i })}</div><div class="copy"><strong>${p.name}</strong><small>${p.meta}</small></div></a>`).join("")
+      : `<div class="ghost-slot">첫 페어링이 이 자리에<br>오라로 나타나요</div><div class="ghost-slot" aria-hidden="true"></div><div class="ghost-slot" aria-hidden="true"></div>`;
+    bindScreens();
+  }
+
+  $("[data-teaser]").innerHTML = teaser.map(t => `<div><strong>${t.name}</strong><small>${t.roastery}</small><div class="swatch-row">${t.hex.map(h => `<span class="swatch" style="background:${h}" title="${h}"></span>`).join("")}</div><p class="hex num">${t.hex.join(" · ")}</p></div>`).join("");
+  $("[data-aura=pair]").innerHTML = aura({ ...examplePairs[0], id: "pair" });
+  $("[data-radar]").innerHTML = radar();
+  $("[data-axis-rows]").innerHTML = axes.map(([c, m], i) => `<tr><th scope="row">${c} ↔ ${m}</th><td class="num">${pairCoffee[i]}</td><td class="num">${pairMusic[i]}</td><td class="num">${Math.abs(pairCoffee[i] - pairMusic[i])}</td></tr>`).join("");
+
+  /* Screens */
+  function show(screen) {
+    $$("[data-view]").forEach(v => (v.hidden = v.dataset.view !== screen));
+    $$("[data-nav] a").forEach(a => { if (a.dataset.screen === screen) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    $("[data-crumb]").textContent = screen === "home" ? "홈" : "기록 · 페어링 상세";
+    window.scrollTo({ top: 0 });
+  }
+  function bindScreens() { $$("[data-screen]").forEach(a => (a.onclick = (e) => { e.preventDefault(); history.replaceState(null, "", "#" + a.dataset.screen); show(a.dataset.screen); })); }
+  $$("[data-data]").forEach(b => b.addEventListener("click", () => renderData(b.dataset.data)));
+
+  /* Theme */
+  const root = document.documentElement, toggle = $("[data-theme-toggle]");
+  function setTheme(t) { root.dataset.theme = t; toggle.setAttribute("aria-label", t === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환"); toggle.querySelector("use").setAttribute("href", t === "dark" ? "#i-sun" : "#i-moon"); store.set("rr-proto-theme", t); }
+  setTheme(store.get("rr-proto-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+  toggle.addEventListener("click", () => setTheme(root.dataset.theme === "dark" ? "light" : "dark"));
+
+  /* Session sheet */
+  const sheetState = { acid: 5, sweet: 5, body: 5, finish: 5, colors: [] };
+  let lastFocus = null;
+  function drawSheet() { $("[data-aura=sheet]").innerHTML = aura({ colors: sheetState.colors, acid: sheetState.acid, body: sheetState.body, bpm: 40 + sheetState.finish * 8, id: "sheet", outline: !sheetState.colors.length }); }
+  function openSheet() { lastFocus = document.activeElement; document.body.classList.add("sheet-open"); $("[data-sheet]").setAttribute("aria-hidden", "false"); drawSheet(); setTimeout(() => $("#s-acid").focus(), 50); }
+  function closeSheet() { document.body.classList.remove("sheet-open"); $("[data-sheet]").setAttribute("aria-hidden", "true"); lastFocus?.focus(); }
+  $$("[data-open-sheet]").forEach(b => b.addEventListener("click", (e) => { e.preventDefault(); openSheet(); }));
+  $$("[data-close-sheet]").forEach(b => b.addEventListener("click", closeSheet));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && document.body.classList.contains("sheet-open")) closeSheet(); });
+  $$("input[type=range]").forEach(inp => {
+    const sync = () => { inp.style.setProperty("--p", inp.value * 10 + "%"); inp.previousElementSibling.querySelector("output").textContent = inp.value; sheetState[inp.dataset.axis] = +inp.value; drawSheet(); $("[data-draft]").textContent = "임시 저장된 것처럼 보이지만, 체험이라 어디에도 저장하지 않아요."; };
+    inp.addEventListener("input", sync); sync();
+  });
+  $$("[data-chip]").forEach(c => c.addEventListener("click", () => { const on = c.getAttribute("aria-pressed") !== "true"; c.setAttribute("aria-pressed", String(on)); sheetState.colors = $$("[data-chip][aria-pressed=true]").map(x => x.dataset.chip); drawSheet(); }));
+  $("[data-next]").addEventListener("click", () => { closeSheet(); toast("체험 세션이에요. 실제 앱에서는 다음 단계로 음악을 골라요."); });
+  function toast(msg) { const t = $("[data-toast]"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 2600); }
+
+  renderData("empty");
+  show(location.hash === "#pairing" ? "pairing" : "home");
+})();
+</script>
+</body>
+</html>
