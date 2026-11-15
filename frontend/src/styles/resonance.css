@@ -213,7 +213,7 @@ html body :is(.app-shell, .studio-home) .ghost-button:not(.quiet-bean-grid *) { 
 html body :is(.app-shell, .studio-home) .ghost-button:not(.quiet-bean-grid *):hover:not(:disabled) { border-color: var(--rs-text) !important; }
 html body :is(.app-shell, .studio-home) :is(.primary-button, .ghost-button):not(.quiet-bean-grid *):active { transform: scale(.97); }
 html body :is(.app-shell, .studio-home) :is(.primary-button, .ghost-button):disabled { opacity: .45; }
-html body .app-shell .workspace-content :is(input:not([type=checkbox]):not([type=radio]), textarea, select, .library-search):not(.quiet-bean-grid *),
+html body .app-shell .workspace-content :is(input:not([type=checkbox]):not([type=radio]):not([type=range]), textarea, select, .library-search):not(.quiet-bean-grid *),
 html body .studio-home textarea {
   border-radius: var(--rs-r-control) !important; border: 1px solid var(--rs-line) !important; background: var(--rs-surface-2) !important; color: var(--rs-text) !important; box-shadow: none !important;
 }
@@ -363,3 +363,123 @@ html[data-theme="dark"] body .studio-home :is(.first-cup-note, .first-cup-note *
 html[data-theme="dark"] body .studio-home .first-cup-note { background: var(--rs-surface) !important; }
 html[data-theme="dark"] body .studio-home .first-cup-note .eyebrow { color: var(--rs-coffee); }
 html body .app-shell .workspace-content .compare-privacy { color: var(--rs-text-2); }
+
+/* ── Week 2: record session ─────────────────────────────── */
+.first-cup-preview-head { display: flex; align-items: center; gap: 14px; }
+.first-cup-preview-head h3 { margin: 0; }
+.first-cup-aura { width: 64px; height: 64px; flex: none; }
+.session-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 14px 0 6px; }
+.session-step { display: grid; gap: 6px; }
+.session-bars { display: flex; align-items: flex-end; gap: 3px; height: 30px; }
+.session-bars i { flex: 1; border-radius: 2px; background: var(--rs-line); transition: background var(--rs-base) var(--rs-ease-reverb), transform var(--rs-slow) var(--rs-ease-reverb); transform-origin: bottom; transform: scaleY(.6); }
+.session-step.is-done .session-bars i { background: var(--rs-coffee); transform: scaleY(1); }
+.session-step-label { font-size: 13px; font-weight: 640; color: var(--rs-text-3); }
+.session-step.is-done .session-step-label { color: var(--rs-text); }
+.session-step-label b { font-family: var(--rs-display); font-weight: 720; margin-right: 2px; }
+html body :is(.app-shell, .studio-home) .sense-sliders { margin: 16px 0 8px; padding: 0; border: 0; min-width: 0; }
+html body :is(.app-shell, .studio-home) .sense-sliders legend { font-weight: 760; font-size: 15px; color: var(--rs-text); margin-bottom: 4px; padding: 0; }
+html body :is(.app-shell, .studio-home) .sense-sliders legend small { font-weight: 500; font-size: 13px; color: var(--rs-text-3); margin-left: 6px; }
+.sense-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) 64px 52px; align-items: center; gap: 10px; min-height: 48px; }
+.sense-row label { font-weight: 680; color: var(--rs-text); font-size: 15px; }
+.sense-row output { font-size: 14px; font-weight: 720; color: var(--rs-text-3); text-align: right; }
+.sense-row.is-set output { color: var(--rs-text); }
+.sense-row input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; background: transparent; cursor: pointer; margin: 0; }
+.sense-row input[type=range]::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--rs-coffee) var(--p, 0%), var(--rs-surface-2) var(--p, 0%)); }
+.sense-row input[type=range]::-moz-range-track { height: 6px; border-radius: 3px; background: var(--rs-surface-2); }
+.sense-row input[type=range]::-moz-range-progress { height: 6px; border-radius: 3px; background: var(--rs-coffee); }
+.sense-row input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; margin-top: -10px; border-radius: 50%; background: var(--rs-surface); border: 3px solid var(--rs-text-3); }
+.sense-row.is-set input[type=range]::-webkit-slider-thumb { border-color: var(--rs-coffee); }
+.sense-row input[type=range]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--rs-surface); border: 3px solid var(--rs-coffee); }
+html body .sense-clear { min-height: 36px; padding: 0 8px; border: 1px solid var(--rs-line); border-radius: var(--rs-r-pill); background: transparent; color: var(--rs-text-2); font-size: 13px; cursor: pointer; }
+
+/* ── Week 2: resonance chart (pairing, any two senses) ──── */
+.resonance-chart { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: center; margin-top: 12px; }
+.resonance-chart svg { width: 100%; max-width: 420px; justify-self: center; display: block; }
+.resonance-legend { display: flex; gap: 16px; margin: 0 0 8px; padding: 0; list-style: none; font-size: 14px; color: var(--rs-text-2); }
+.resonance-legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; margin-right: 6px; vertical-align: 4px; }
+.resonance-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.resonance-table :is(th, td) { padding: 12px 8px; border-bottom: 1px solid var(--rs-line); text-align: left; }
+.resonance-table thead th { color: var(--rs-text-3); font-weight: 600; font-size: 13px; }
+.resonance-table tbody th { color: var(--rs-text); font-weight: 640; }
+.resonance-table td { color: var(--rs-text); font-weight: 760; }
+html body .app-shell .workspace-content .pairing-resonance { margin: 24px 0; padding: 24px; border: 1px solid var(--rs-line); border-radius: var(--rs-r-card); background: var(--rs-surface); }
+.pairing-resonance-head { display: flex; align-items: center; gap: 20px; }
+.pairing-aura { width: 96px; height: 96px; flex: none; }
+html body .app-shell .workspace-content .pairing-resonance h3 { margin: 0 0 4px; font-size: 22px; font-weight: 800; }
+.pairing-resonance-head p:last-child { margin: 0; color: var(--rs-text-2); }
+
+/* ── Week 2: sound studio aura ──────────────────────────── */
+html body .sound-stage .sound-aura { display: grid; place-items: center; width: min(320px, 80%); aspect-ratio: 1; margin: 12px auto; }
+html body .sound-stage .sound-aura .resonance-aura { width: 100%; height: 100%; --rs-aura-line: rgba(255, 255, 255, .22); }
+html body .sound-stage .sound-aura.is-playing .resonance-aura { animation: rs-pulse var(--pulse, 1s) var(--rs-ease) infinite; }
+@keyframes rs-pulse { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.035); } }
+html body .sound-mini-aura { display: grid; place-items: center; position: relative; background: var(--rs-panel) !important; }
+html body .sound-mini-aura .resonance-aura { width: 78%; height: auto; aspect-ratio: 1; --rs-aura-line: rgba(255, 255, 255, .2); }
+html body .sound-mini-aura small { position: absolute; bottom: 8px; left: 10px; color: var(--rs-panel-text-2); font-weight: 700; font-size: 12px; }
+
+/* ── Week 2: monthly report ─────────────────────────────── */
+html body .app-shell .report-aura { width: min(240px, 60vw); height: auto; aspect-ratio: 1; justify-self: center; }
+
+@media (max-width: 760px) {
+  .resonance-chart { grid-template-columns: 1fr; gap: 12px; }
+  .pairing-resonance-head { flex-direction: column; align-items: flex-start; }
+  .sense-row { grid-template-columns: 40px minmax(0, 1fr) 56px; }
+  .sense-row .sense-clear { grid-column: 3; justify-self: end; }
+  .session-step-label { font-size: 12px; }
+}
+html body :is(.app-shell, .studio-home) .sense-row input[type=range] { border: 0 !important; padding: 0 !important; box-shadow: none !important; background: transparent !important; border-radius: 0 !important; min-height: 44px; }
+
+/* ── Week 2: pairing detail shell ───────────────────────── */
+html body .app-shell .workspace-content .session-result { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; box-shadow: none !important; overflow: hidden; }
+html body .app-shell .workspace-content .session-result header { color: var(--rs-text-3); border-color: var(--rs-line) !important; }
+html body .app-shell .workspace-content .session-pair article svg { color: var(--rs-coffee); }
+html body .app-shell .workspace-content .session-pair article:last-child svg { color: var(--rs-sound); }
+html body .app-shell .workspace-content .session-pair :is(p) { color: var(--rs-text-3); letter-spacing: .06em; }
+html body .app-shell .workspace-content .session-pair h2 { font-size: 24px; }
+html body .app-shell .workspace-content .session-join { font-family: var(--rs-display) !important; font-weight: 600; font-style: normal !important; background: linear-gradient(135deg, var(--rs-coffee), var(--rs-sound)); -webkit-background-clip: text; background-clip: text; color: transparent !important; }
+html body .app-shell .workspace-content :is(.session-insight, .pairing-evidence) { background: var(--rs-surface-2) !important; border-color: var(--rs-line) !important; color: var(--rs-text); }
+html body .app-shell .workspace-content .session-insight :is(h3) { color: var(--rs-text); }
+html body .app-shell .workspace-content .session-insight p, html body .app-shell .workspace-content .pairing-evidence p { color: var(--rs-text-2); }
+html body .app-shell .workspace-content .session-score strong { font-family: var(--rs-font) !important; font-weight: 820 !important; letter-spacing: -0.045em; color: var(--rs-text) !important; }
+html body .app-shell .workspace-content .session-score :is(span, small) { color: var(--rs-text-2) !important; }
+html body .app-shell .workspace-content .pairing-evidence .evidence-columns > div { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-control) !important; }
+html body .app-shell .workspace-content .pairing-evidence progress { accent-color: var(--rs-coffee); }
+html body .app-shell .workspace-content .pairing-evidence progress::-webkit-progress-bar { background: var(--rs-line); border-radius: 4px; }
+html body .app-shell .workspace-content .pairing-evidence progress::-webkit-progress-value { background: var(--rs-coffee); border-radius: 4px; }
+html body .app-shell .workspace-content .pairing-evidence progress::-moz-progress-bar { background: var(--rs-coffee); }
+html body .app-shell .workspace-content .session-result footer { border-color: var(--rs-line) !important; }
+html body .app-shell .sound-stage { background: var(--rs-panel) !important; color: var(--rs-panel-text) !important; border: 1px solid var(--rs-panel-line); border-radius: var(--rs-r-sheet) !important; position: relative; overflow: hidden; isolation: isolate; }
+html body .app-shell .sound-stage::before { content: ""; position: absolute; z-index: -1; inset: -30% -20% auto auto; width: 80%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--sound-color, var(--rs-coffee)) 45%, transparent), transparent 62%); filter: blur(40px); opacity: .6; }
+html body .app-shell .sound-stage :is(p, span, small) { color: var(--rs-panel-text-2) !important; }
+html body .app-shell .sound-stage h2 { color: var(--rs-panel-text) !important; font-family: var(--rs-font) !important; font-weight: 800; letter-spacing: -0.035em; }
+html body .app-shell .sound-stage .primary-button { background: var(--rs-panel-text) !important; color: var(--rs-panel) !important; border-color: var(--rs-panel-text) !important; }
+html body .app-shell :is(.sound-slider, .sound-controls) input[type=range] { accent-color: var(--rs-coffee); }
+html body .app-shell .sound-controls { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; }
+html body .app-shell .sound-moods button { border-radius: var(--rs-r-control) !important; color: var(--rs-text) !important; background: transparent !important; border-color: var(--rs-line) !important; }
+html body .app-shell .sound-moods button[aria-pressed=true] { background: var(--rs-surface-2) !important; border-color: var(--rs-text) !important; font-weight: 720; }
+html body .app-shell .sound-layers input { accent-color: var(--rs-coffee); }
+
+/* ── Week 2: monthly report ─────────────────────────────── */
+html body .app-shell .workspace-content .report-hero { display: grid; align-items: center; background: var(--rs-panel) !important; color: var(--rs-panel-text) !important; border: 1px solid var(--rs-panel-line) !important; border-radius: var(--rs-r-card) !important; padding: 8px 28px 8px 0; position: relative; isolation: isolate; }
+html body .app-shell .workspace-content .report-hero :is(h2, em) { color: var(--rs-panel-text) !important; font-family: var(--rs-font) !important; font-weight: 820; letter-spacing: -0.04em; font-style: normal; }
+html body .app-shell .workspace-content .report-hero em { background: linear-gradient(90deg, var(--rs-panel-link), #A9B4FF); -webkit-background-clip: text; background-clip: text; color: transparent !important; }
+html body .app-shell .workspace-content .report-hero :is(p, .eyebrow) { color: var(--rs-panel-text-2) !important; }
+html body .app-shell .workspace-content .report-hero .report-aura { --rs-aura-line: rgba(255, 255, 255, .2); }
+html body .app-shell .workspace-content .metric-strip { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; overflow: hidden; }
+html body .app-shell .workspace-content .metric { border-color: var(--rs-line) !important; background: transparent !important; }
+html body .app-shell .workspace-content .metric span { color: var(--rs-text-2) !important; }
+html body .app-shell .workspace-content .metric strong { font-family: var(--rs-font) !important; font-weight: 820 !important; font-size: 36px !important; letter-spacing: -0.045em; color: var(--rs-text) !important; }
+html body .app-shell .workspace-content .metric strong small { font-size: 13px; font-weight: 600; letter-spacing: 0; color: var(--rs-text-3); margin-left: 4px; }
+html body .app-shell .workspace-content .activity-panel, html body .app-shell .workspace-content .ranking-panel { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; }
+html body .app-shell .workspace-content .activity-chart :is(.coffee, [class*=coffee]) { background: var(--rs-coffee) !important; }
+html body .app-shell .workspace-content .activity-chart :is(.music, [class*=music]) { background: var(--rs-sound) !important; }
+html body .app-shell .workspace-content .rank-row.coffee .rank-track i { background: var(--rs-coffee) !important; }
+html body .app-shell .workspace-content .rank-row.music .rank-track i { background: var(--rs-sound) !important; }
+html body .app-shell .workspace-content .rank-track { background: var(--rs-surface-2) !important; border-radius: 4px; }
+html body .app-shell .workspace-content .month-controls input[type=month] { min-height: 44px; }
+html body .app-shell .workspace-content .chart-legend { font-size: 13px; }
+html body .app-shell .workspace-content .chart-legend span:first-child { color: var(--rs-coffee) !important; }
+html body .app-shell .workspace-content .chart-legend span:last-child { color: var(--rs-sound) !important; }
+html body .app-shell .workspace-content .ranking-panel > div:not(.rank-row) { background: var(--rs-surface-2) !important; border-radius: var(--rs-r-control) !important; border: 0 !important; }
+html body .app-shell .page-report .workspace-content :is(label, .month-controls span, .report-month span, .activity-chart span, .rank-index, .rank-label span) { color: var(--rs-text-2) !important; }
+html body .app-shell .page-studio .workspace-content :is(.sound-footnote, .sound-footnote a, .sound-library-heading span, .sound-library-heading p) { color: var(--rs-text-2) !important; }

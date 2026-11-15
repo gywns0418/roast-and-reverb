@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 
 // English display word for each destination; the Korean title stays the real heading.
-const kickers = { dashboard: "Today", coffee: "Journal", "monthly-pick": "Discover", taste: "Taste", mypage: "Me", backup: "Me", help: "Me", music: "Journal", beans: "Me", archive: "Me" };
+const kickers = { dashboard: "Today", coffee: "Journal", "monthly-pick": "Discover", taste: "Taste", mypage: "Me", backup: "Me", help: "Me", music: "Journal", beans: "Me", archive: "Me", report: "Taste", pairing: "Journal", pairings: "Journal", ritual: "Studio", studio: "Studio", journey: "Taste", recommend: "Discover", collection: "Me", memories: "Me" };
 
 export default function PageShell({ title, subtitle, children }) {
   const { pathname } = useLocation();

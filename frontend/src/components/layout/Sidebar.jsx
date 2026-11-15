@@ -21,9 +21,9 @@ export default function Sidebar() {
         </NavLink>
         <nav aria-label="주요 메뉴">
           {links.map(([to, Icon, label, hint]) => (
-            <NavLink key={to} to={to} end={false} className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}>
+            <NavLink key={to} to={to} end={false} aria-label={`${label} · ${hint}`} className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}>
               <Icon size={20} aria-hidden="true" />
-              <span className="nav-label">
+              <span className="nav-label" aria-hidden="true">
                 {label}
                 <small>{hint}</small>
               </span>
