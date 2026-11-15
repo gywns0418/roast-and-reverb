@@ -5,7 +5,7 @@ import ResonanceAura from "../visual/ResonanceAura.jsx";
 // Taste map: every family the drinker marked, on one radial coordinate system.
 // Outer polygon = cups they want again, inner dashed = cups that were not theirs.
 // Counts are always readable as text in the table beside it.
-export default function TasteMap({ profile }) {
+export default function TasteMap({ profile, title = "나의 취향 지도" }) {
   const rows = noteFamilies.map((f) => {
     const hit = [...profile.likedFamilies, ...profile.dislikedFamilies].find((x) => x.key === f.key);
     return { ...f, again: hit?.again || 0, notMine: hit?.notMine || 0 };
@@ -33,7 +33,7 @@ export default function TasteMap({ profile }) {
         />
         <div>
           <p className="taste-map-kicker">Taste map</p>
-          <h2 id="taste-map-title">나의 취향 지도</h2>
+          <h2 id="taste-map-title">{title}</h2>
           <p>바깥 선은 다시 마시고 싶었던 잔, 점선은 내 취향이 아니었던 잔이에요. 맛마다 몇 잔이었는지 옆 표에 적어 두었어요.</p>
         </div>
       </div>

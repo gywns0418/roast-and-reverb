@@ -33,7 +33,8 @@ export function analyzePairing({coffee={},music={}}, model=null) {
   const prediction=personal ? 1/(1+Math.exp(-input.reduce((total,value,index)=>total+value*(model.weights[index] || 0),0))) : null;
   const score=personal ? Math.round(prediction*100) : semanticScore;
   const summary=`${ranked[0].label}에서 만나는 한 잔과 한 곡`;
-  const evidence={engine:VERSION,features,coffee:cup.evidence,music:track.evidence,axes:ranked,coverage:known.length,scoreKind:personal ? "개인 선호 추정" : "특성 유사도",samples:model?.samples || 0,summary};
+  const round=(v)=>v==null?null:Math.round(v*100)/100;
+  const evidence={engine:VERSION,features,vectors:{coffee:cup.vector.map(round),music:track.vector.map(round)},coffee:cup.evidence,music:track.evidence,axes:ranked,coverage:known.length,scoreKind:personal ? "개인 선호 추정" : "특성 유사도",samples:model?.samples || 0,summary};
   return {engine:VERSION,moodSummary:summary,moodTags:ranked.slice(0,2).map(item=>item.label).join(", "),pairingScore:score,
     pairingText:`커피 단서 「${cup.evidence.slice(0,3).join(" · ")}」와 음악 단서 「${track.evidence.slice(0,3).join(" · ")}」를 비교했어요. ${ranked[0].label}의 닮은 특성이 이 조합을 연결합니다. ${ranked.at(-1).label}의 차이도 직접 느껴보세요.`,
     aiReason:JSON.stringify(evidence),evidence};
