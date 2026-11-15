@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import GoogleSignIn from "../../components/auth/GoogleSignIn.jsx";
 import { authStore } from "../../store/authStore.js";
 import { authApi } from "../../api/authApi.js";
+import { applyTheme, clearTheme, saveTheme, storedTheme, systemTheme } from "../../utils/theme.js";
 import { ArrowRight, Music2, Coffee, Grid2X2, BookOpen, ShieldCheck, FolderDown } from "lucide-react";
 export default function MyPage() {
   const local = import.meta.env.VITE_USE_REAL_API !== "true",
@@ -12,6 +13,22 @@ export default function MyPage() {
     [error, setError] = useState(""),
     [linked, setLinked] = useState(false);
   const user = authStore.user || {};
+  const [themeChoice, setThemeChoice] = useState(() => storedTheme() || "system");
+  useEffect(() => {
+    const sync = () => setThemeChoice(storedTheme() || "system");
+    window.addEventListener("rr-theme-changed", sync);
+    return () => window.removeEventListener("rr-theme-changed", sync);
+  }, []);
+  function chooseTheme(choice) {
+    setThemeChoice(choice);
+    if (choice === "system") {
+      clearTheme();
+      applyTheme(systemTheme());
+    } else {
+      saveTheme(choice);
+      applyTheme(choice);
+    }
+  }
   async function logout() {
     if (busy) return;
     setBusy(true);
@@ -46,6 +63,19 @@ export default function MyPage() {
           내 자료 백업·복구
         </Link>
         {local && <div className="settings-storage-facts"><span>이 브라우저에 보관</span><span>백업 파일로 다른 기기에 이동</span><span>복원 전 바뀔 자료 확인</span></div>}
+      </section>
+      <section className="quiet-section theme-setting" aria-labelledby="theme-setting-title">
+        <div>
+          <h2 id="theme-setting-title">화면 테마</h2>
+          <p>이 브라우저에만 기억돼요. 시스템을 고르면 기기 설정을 따라가요.</p>
+        </div>
+        <div className="theme-choices" role="group" aria-label="화면 테마 선택">
+          {[["light", "라이트"], ["dark", "다크"], ["system", "시스템"]].map(([key, label]) => (
+            <button key={key} type="button" aria-pressed={themeChoice === key} onClick={() => chooseTheme(key)}>
+              {label}
+            </button>
+          ))}
+        </div>
       </section>
       <nav className="quiet-link-list" aria-label="기록장 설정과 도움말">
         {[{to:"/music",Icon:Music2,title:"함께 남긴 음악",text:"커피와 함께 듣고 기록한 곡을 살펴봐요."},{to:"/beans",Icon:Coffee,title:"내 원두 관리",text:"가진 원두와 남은 상태를 한곳에서 관리해요."},{to:"/archive",Icon:Grid2X2,title:"기록과 발견 도구",text:"취향, 추천, 청음실과 모든 기록 기능을 열어요."},{to:"/help",Icon:BookOpen,title:"기록장 이용 방법",text:"느낌 한 줄부터 음악 선택, 저장까지."}].map(({to,Icon,title,text})=><Link key={to} to={to}><Icon size={21} aria-hidden="true"/><div><strong>{title}</strong><small>{text}</small></div><ArrowRight size={17} aria-hidden="true"/></Link>)}

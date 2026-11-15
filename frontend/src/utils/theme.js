@@ -24,6 +24,11 @@ export function applyTheme(theme, root = globalThis.document?.documentElement) {
     root.dataset.theme = value;
     root.style.colorScheme = value;
   }
+  try {
+    globalThis.window?.dispatchEvent(new Event("rr-theme-changed"));
+  } catch {
+    /* no window in tests */
+  }
   return value;
 }
 export function saveTheme(theme, storage = globalThis.localStorage) {
@@ -31,5 +36,12 @@ export function saveTheme(theme, storage = globalThis.localStorage) {
     storage?.setItem(THEME_KEY, theme);
   } catch {
     /* storage blocked: the theme still applies for this visit */
+  }
+}
+export function clearTheme(storage = globalThis.localStorage) {
+  try {
+    storage?.removeItem(THEME_KEY);
+  } catch {
+    /* storage blocked */
   }
 }

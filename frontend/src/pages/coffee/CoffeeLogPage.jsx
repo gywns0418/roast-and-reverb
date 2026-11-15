@@ -10,6 +10,8 @@ import { listDiaryRecords } from "../../utils/diaryRecords.js";
 import { useApiResource } from "../../hooks/useApiResource.js";
 import { useCompactLayout } from "../../hooks/useCompactLayout.js";
 import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
+import { useCupPalette } from "../../hooks/useCupPalette.js";
+import { cupPalette } from "../../utils/cupColor.js";
 import { familiesInText } from "../../utils/tasteQuery.js";
 import { familyColors } from "../../utils/resonanceAura.js";
 const Editor = lazy(
@@ -83,6 +85,7 @@ function Entry({ row, onSaved }) {
   );
 }
 export default function CoffeeLogPage() {
+  const palette = useCupPalette();
   const compact = useCompactLayout(),
     [params] = useSearchParams();
   const [query, setQuery] = useState(""),
@@ -279,7 +282,7 @@ export default function CoffeeLogPage() {
               <div className="simple-records">
                 {visible.map((row) => (
                   <Link key={row.id} to={"/coffee/" + row.id}>
-                    <ResonanceAura className="record-cup-art" seedKey={String(row.id)} rings={4} colors={familiesInText([row.memo, row.raw?.tasteNote].filter(Boolean).join(" ")).map((k) => familyColors[k])} />
+                    <ResonanceAura className="record-cup-art" seedKey={row.bean} rings={4} colors={cupPalette(row, palette)} />
                     <small>{row.date}</small>
                     <h2>{row.bean}</h2>
                     <p>{row.memo || "이날의 한 잔 다시 보기"}</p>

@@ -269,14 +269,14 @@ html body .page-monthly-pick .quiet-bean-grid {
   --rr-roast: #C2402A; --rr-forest: #171916; --rr-moss: #C2402A; --rr-ui-font: var(--rs-font); --rr-display-font: var(--rs-font);
 }
 html body .page-monthly-pick .quiet-bean-grid { color: #171916; line-height: normal; }
-/* Dark: a paper backdrop drawn outside the box so the list keeps the same size. */
-html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid { background: #ECEAE3; border-radius: 4px; box-shadow: 0 0 0 16px #ECEAE3; }
-html body .page-monthly-pick .quiet-bean-grid .monthly-bean-card { background: #FBFAF7 !important; border: 1px solid #DAD7CD !important; border-radius: 6px !important; box-shadow: none !important; }
-html body .page-monthly-pick .quiet-bean-grid .monthly-bean-card:hover { border-color: #171916 !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid { color: var(--rs-text); color-scheme: dark; }
+
+html:not([data-theme="dark"]) body .page-monthly-pick .quiet-bean-grid .monthly-bean-card { background: #FBFAF7 !important; border: 1px solid #DAD7CD !important; border-radius: 6px !important; box-shadow: none !important; }
+html:not([data-theme="dark"]) body .page-monthly-pick .quiet-bean-grid .monthly-bean-card:hover { border-color: #171916 !important; }
 html body .page-monthly-pick .quiet-bean-grid .monthly-badge { border-radius: 4px; }
 html body .page-monthly-pick .quiet-bean-grid .monthly-category-label { border-radius: 3px; }
-html body .page-monthly-pick .quiet-bean-grid .monthly-section-heading { border-bottom: 1px solid #171916; }
-html body .page-monthly-pick .quiet-bean-grid .monthly-section-heading h2 { color: #171916 !important; font-family: var(--rs-font); font-size: 20px !important; font-weight: 800 !important; letter-spacing: -0.7px !important; line-height: 28px !important; }
+html:not([data-theme="dark"]) body .page-monthly-pick .quiet-bean-grid .monthly-section-heading { border-bottom: 1px solid #171916; }
+html:not([data-theme="dark"]) body .page-monthly-pick .quiet-bean-grid .monthly-section-heading h2 { color: #171916 !important; font-family: var(--rs-font); font-size: 20px !important; font-weight: 800 !important; letter-spacing: -0.7px !important; line-height: 28px !important; }
 
 /* ── Mobile tab bar: floating glass ─────────────────────── */
 html body .app-shell .mobile-tabbar {
@@ -571,3 +571,56 @@ html body .app-shell .page-journey .workspace-content :is(button span, a:not(.pr
   html body .sense-row:not(.is-set) .sense-clear { display: none; }
   html body .sense-row > label { align-self: center; }
 }
+
+/* Empty auras breathe gently so the landing never feels grey */
+@media (prefers-reduced-motion: no-preference) {
+  html body .resonance-aura .aura-base { transform-origin: 100px 100px; animation: rs-breathe 7s var(--rs-ease) infinite; }
+}
+@keyframes rs-breathe { 50% { transform: scale(1.06) rotate(8deg); opacity: .8; } }
+
+/* Theme switch on phones (the top bar is hidden there) and in settings */
+html body .app-shell .demo-notice { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+html body .app-shell .demo-notice .notice-theme { display: none; }
+@media (max-width: 760px) {
+  html body .app-shell .demo-notice .notice-theme { display: inline-grid; width: 44px; height: 44px; flex: none; }
+}
+html body .app-shell .workspace-content .theme-setting { display: flex !important; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px !important; }
+html body .app-shell .workspace-content .theme-setting h2 { margin: 0 0 4px; font-size: 18px; }
+html body .app-shell .workspace-content .theme-setting p { margin: 0; color: var(--rs-text-2); font-size: 14px; }
+.theme-choices { display: inline-flex; padding: 4px; gap: 4px; border-radius: var(--rs-r-pill); background: var(--rs-surface-2); }
+html body .app-shell .workspace-content .theme-choices button { min-height: 44px; padding: 0 18px; border: 0 !important; border-radius: var(--rs-r-pill) !important; background: transparent !important; color: var(--rs-text-2) !important; font-weight: 680; cursor: pointer; }
+html body .app-shell .workspace-content .theme-choices button[aria-pressed="true"] { background: var(--rs-text) !important; color: var(--rs-bg) !important; }
+
+/* Monthly bean list in dark mode: same layout, illustrations and vendor HEX;
+   only surfaces, text and lines follow the dark theme. Light mode is unchanged. */
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-section-heading { border-bottom: 1px solid var(--rs-text-3) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-section-heading :is(h2, span) { color: var(--rs-text) !important; font-size: 20px; font-weight: 800; letter-spacing: -0.7px; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-card { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: 6px !important; box-shadow: none !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-card:hover { border-color: var(--rs-text-3) !important; }
+/* The illustrations carry their own light paper; the art panel keeps it so they sit naturally. */
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-card-art { border-right: 1px solid var(--rs-line); }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy :is(h2, h3, strong, b) { color: var(--rs-text) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy :is(p, small, span, li, dd, dt):not([style*="background"]) { color: var(--rs-text-2) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-category-label { background: color-mix(in srgb, var(--group-tint, #F6E9DE) 22%, var(--rs-surface-2)) !important; color: var(--rs-text) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-badge { background: transparent !important; border-color: var(--rs-line) !important; color: var(--rs-text) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-badge-mine { background: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-price-list, html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-price-list * { border-color: var(--rs-line) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy button:not([style*="background"]) { background: transparent !important; border-color: var(--rs-line) !important; color: var(--rs-text) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy button[aria-pressed="true"] { background: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-open { color: var(--rs-text) !important; }
+
+/* My coffee colours (home + dashboard) */
+html body .studio-home .home-aura-figure .taste-spectrum { width: min(440px, 100%); height: auto; aspect-ratio: 1; }
+html body .taste-spectrum { display: block; }
+@media (prefers-reduced-motion: no-preference) {
+  html body .taste-spectrum .spectrum-swirl { transform-origin: 100px 100px; animation: rs-swirl 40s linear infinite; }
+}
+@keyframes rs-swirl { to { transform: rotate(360deg); } }
+html body .app-shell .workspace-content .desk-spectrum { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; align-items: center; margin: 0 0 16px; padding: 16px; border: 1px solid var(--rs-line); border-radius: var(--rs-r-card); background: var(--rs-surface); }
+html body .app-shell .workspace-content .desk-spectrum .taste-spectrum { width: 112px; height: 112px; }
+html body .app-shell .workspace-content .desk-spectrum p { margin: 0 0 4px; font-size: 13px; font-weight: 720; color: var(--rs-text-2); }
+html body .app-shell .workspace-content .desk-spectrum strong { display: block; font-size: 36px; font-weight: 820; letter-spacing: -0.045em; line-height: 1; color: var(--rs-text); }
+html body .app-shell .workspace-content .desk-spectrum strong small { font-size: 14px; font-weight: 640; letter-spacing: 0; margin-left: 4px; color: var(--rs-text-2); }
+html body .app-shell .workspace-content .desk-spectrum span { display: block; margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--rs-text-2); }
+html body .app-shell .mobile-journal-entry :is(small, .mobile-expand-label) { color: var(--rs-text-2) !important; }
+html body :is(.app-shell, .studio-home) .verdict-picker legend { color: var(--rs-text) !important; }

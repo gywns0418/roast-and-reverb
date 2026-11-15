@@ -1,7 +1,17 @@
 import ResonanceAura from "../components/visual/ResonanceAura.jsx";
+import TasteSpectrum from "../components/visual/TasteSpectrum.jsx";
+import { useApiResource } from "../hooks/useApiResource.js";
+import { useCupPalette } from "../hooks/useCupPalette.js";
+import { coffeeApi } from "../api/coffeeApi.js";
+import { adaptCoffeeLog } from "../api/adapters.js";
+import { listDiaryRecords } from "../utils/diaryRecords.js";
+import { spectrumOf } from "../utils/cupColor.js";
 import { Link } from "react-router-dom";
 import FirstCup from "../components/coffee/FirstCup.jsx";
 export default function HomePage() {
+  const { data: records } = useApiResource(() => listDiaryRecords(coffeeApi.list).then((rows) => rows.map(adaptCoffeeLog)), [], []);
+  const palette = useCupPalette();
+  const spectrum = spectrumOf(records || [], palette);
   function start() {
     document
       .getElementById("first-cup-start")
@@ -52,8 +62,17 @@ export default function HomePage() {
             </div>
           </div>
           <figure className="home-aura-figure">
-            <ResonanceAura seedKey="home" label="아직 기록이 없어 윤곽만 보이는 오라" />
-            <figcaption>기록이 쌓이면 이 윤곽이 내가 다시 찾는 맛의 색으로 채워져요. 같은 기록은 언제나 같은 그림이에요.</figcaption>
+            {spectrum.length ? (
+              <>
+                <TasteSpectrum spectrum={spectrum} label={`지금까지 마신 ${records.length}잔의 색 ${spectrum.length}가지를 합친 그림`} />
+                <figcaption>지금까지 마신 {records.length}잔에서 모은 {spectrum.length}가지 색이에요. 같은 원두는 언제나 같은 색, 자주 마신 색일수록 크게 번져요.</figcaption>
+              </>
+            ) : (
+              <>
+                <ResonanceAura seedKey="home" label="아직 기록이 없어 윤곽만 보이는 오라" />
+                <figcaption>기록이 쌓이면 이 윤곽이 내가 마신 커피의 색으로 채워져요. 같은 원두는 언제나 같은 색이에요.</figcaption>
+              </>
+            )}
           </figure>
         </section>
         <div id="first-cup-start" className="simple-start">
