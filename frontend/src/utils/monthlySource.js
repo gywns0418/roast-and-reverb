@@ -34,9 +34,9 @@ const unescapeHtml = (value) =>
     .replaceAll("&quot;", '"')
     .replaceAll("&#39;", "'");
 export function monthlyEdition(title, now = new Date()) {
-  const edition = /글로벌\s*(?:커피\s*)?월픽/.test(title) ? 'global' : /커피\s*스몰\s*월픽/.test(title) ? 'small' : /커피\s*월픽/.test(title) ? 'regular' : null;
+  const edition = /스페셜\s*(?:커피\s*)?월픽/.test(title) ? 'special' : /글로벌\s*(?:커피\s*)?월픽/.test(title) ? 'global' : /커피\s*스몰\s*월픽/.test(title) ? 'small' : /커피\s*월픽/.test(title) ? 'regular' : null;
   const period = title.match(/\((\d{1,2})\/(\d{1,2})\s*~\s*(\d{1,2})\/(\d{1,2})\)/);
-  const month = Number(title.match(/(\d{1,2})월\s*커피/)?.[1] || (edition === 'global' ? period?.[1] : 0));
+  const month = Number(title.match(/(\d{1,2})월\s*커피/)?.[1] || (edition === 'global' || edition === 'special' ? period?.[1] : 0));
   if (!edition || month < 1 || month > 12) throw new Error('지원하는 커피 월픽 제목이 아닙니다.');
   const year = new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',year:'numeric'}).format(now);
   const date = (m,d) => {const value=`${year}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;if(new Date(value+'T00:00:00Z').toISOString().slice(0,10)!==value)throw new Error('판매 날짜를 확인해 주세요.');return value;};

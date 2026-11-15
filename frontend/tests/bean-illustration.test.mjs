@@ -14,7 +14,7 @@ test('individual flavor art is limited to unspecialty blends; other categories s
 });
 test('new or changed blend notes require review for regular/global/small; never invent flavor imagery',()=>{
   const blend=catalog.products.find(p=>p.month==='2026-11'&&p.edition==='regular').items.find(b=>b.category==='unspecialty blend');
-  for(const edition of ['regular','global','small']){
+  for(const edition of ['regular','global','small','special']){
     assert.equal(needsBlendIllustration({...blend,edition,flavors:['changed source note']}),true);
     assert.equal(needsBlendIllustration({...blend,edition}),false);
     assert.equal(needsBlendIllustration({id:'new',category:'unspecialty blend',edition,flavors:['레몬']}),true);
