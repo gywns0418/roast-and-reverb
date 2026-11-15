@@ -6,6 +6,7 @@ import { authStore } from "../../store/authStore.js";
 import ResourceBoundary from "../common/ResourceBoundary.jsx";
 import Header from "./Header.jsx";
 import Sidebar from "./Sidebar.jsx";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 export default function Layout() {
   const location = useLocation();
@@ -54,6 +55,7 @@ export default function Layout() {
             <span className="notice-mobile">
               이 브라우저에 저장돼요 · 백업은 설정에서
             </span>
+            <ThemeToggle className="notice-theme" />
           </div>
         )}
         <ResourceBoundary key={location.pathname}>
