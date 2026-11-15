@@ -483,3 +483,91 @@ html body .app-shell .workspace-content .chart-legend span:last-child { color: v
 html body .app-shell .workspace-content .ranking-panel > div:not(.rank-row) { background: var(--rs-surface-2) !important; border-radius: var(--rs-r-control) !important; border: 0 !important; }
 html body .app-shell .page-report .workspace-content :is(label, .month-controls span, .report-month span, .activity-chart span, .rank-index, .rank-label span) { color: var(--rs-text-2) !important; }
 html body .app-shell .page-studio .workspace-content :is(.sound-footnote, .sound-footnote a, .sound-library-heading span, .sound-library-heading p) { color: var(--rs-text-2) !important; }
+
+/* ── Polish: 0–100 sense sliders, smooth and touch-first ── */
+html body :is(.app-shell, .studio-home) .sense-row { grid-template-columns: 44px minmax(0, 1fr) 92px 60px; gap: 12px; min-height: 56px; }
+.sense-track { position: relative; height: 44px; display: flex; align-items: center; }
+.sense-ticks { position: absolute; inset: 0 13px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+.sense-ticks i { width: 2px; height: 10px; border-radius: 1px; background: var(--rs-line); }
+html body .sense-row input[type=range] { position: relative; z-index: 1; touch-action: pan-y; }
+html body .sense-row input[type=range]::-webkit-slider-runnable-track {
+  height: 8px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--rs-coffee), color-mix(in srgb, var(--rs-coffee) 55%, var(--rs-sound)) var(--p, 0%), var(--rs-surface-2) var(--p, 0%));
+}
+html body .sense-row:not(.is-set) input[type=range]::-webkit-slider-runnable-track { background: var(--rs-surface-2); }
+html body .sense-row input[type=range]::-moz-range-track { height: 8px; border-radius: 999px; background: var(--rs-surface-2); }
+html body .sense-row input[type=range]::-moz-range-progress { height: 8px; border-radius: 999px; background: linear-gradient(90deg, var(--rs-coffee), color-mix(in srgb, var(--rs-coffee) 55%, var(--rs-sound))); }
+html body .sense-row:not(.is-set) input[type=range]::-moz-range-progress { background: transparent; }
+html body .sense-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 28px; height: 28px; margin-top: -10px; border-radius: 50%;
+  background: var(--rs-surface); border: 2px solid var(--rs-text-3);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--rs-coffee) 30%, transparent);
+  transition: transform var(--rs-base) var(--rs-ease-reverb), box-shadow var(--rs-base) var(--rs-ease), border-color var(--rs-fast);
+}
+html body .sense-row.is-set input[type=range]::-webkit-slider-thumb { border-color: var(--rs-coffee); border-width: 3px; }
+html body .sense-row input[type=range]:hover::-webkit-slider-thumb { box-shadow: 0 0 0 8px color-mix(in srgb, var(--rs-coffee) 14%, transparent); }
+html body .sense-row input[type=range]:active::-webkit-slider-thumb { transform: scale(1.18); box-shadow: 0 0 0 12px color-mix(in srgb, var(--rs-coffee) 18%, transparent); }
+html body .sense-row input[type=range]::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: var(--rs-surface); border: 3px solid var(--rs-coffee); transition: transform var(--rs-base) var(--rs-ease-reverb); }
+html body .sense-row input[type=range]:active::-moz-range-thumb { transform: scale(1.18); }
+html body .sense-row output { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.1; text-align: right; }
+html body .sense-row output b { font-size: 24px; font-weight: 820; letter-spacing: -0.04em; color: var(--rs-text); font-variant-numeric: tabular-nums; }
+html body .sense-row output small { font-size: 12px; font-weight: 600; color: var(--rs-text-2); margin-top: 2px; }
+html body .sense-clear:disabled { visibility: hidden; }
+@media (max-width: 760px) {
+  html body :is(.app-shell, .studio-home) .sense-row { grid-template-columns: 40px minmax(0, 1fr) 72px; grid-template-areas: "label track out" "label track clear"; row-gap: 0; min-height: 64px; }
+  html body .sense-row > label { grid-area: label; }
+  html body .sense-row .sense-track { grid-area: track; grid-row: 1 / span 2; }
+  html body .sense-row output { grid-area: out; }
+  html body .sense-row .sense-clear { grid-area: clear; justify-self: end; min-height: 32px; font-size: 12px; }
+  html body .sense-row output b { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body .sense-row input[type=range]::-webkit-slider-thumb { transition: none; }
+}
+
+/* ── Polish: screens that still carried older styles ────── */
+html body .app-shell .workspace-content *:not(.quiet-bean-grid *):not(svg *) { font-family: var(--rs-font); }
+html body .app-shell .workspace-content :is(.taste-map-kicker, .page-heading-index, .session-join, .session-step-label b) { font-family: var(--rs-display) !important; }
+html body .app-shell .workspace-content :is(
+  .ledger, .memory-summary, .engine-intro, .pairing-intro, .journey-teaser, .room-composer,
+  .discovery-summary, .journey-outcome, .journey-empty, .collection-shelf, .listening-room, .room-card
+) { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; box-shadow: none !important; color: var(--rs-text); }
+html body .app-shell .workspace-content :is(.journey-takeaway, .device-message) { background: var(--rs-surface-2) !important; border: 0 !important; border-radius: var(--rs-r-control) !important; color: var(--rs-text) !important; }
+html body .app-shell .workspace-content :is(.ledger-pick) { background: var(--rs-surface-2) !important; border: 1px solid var(--rs-line) !important; border-left: 3px solid var(--rs-coffee) !important; border-radius: var(--rs-r-control) !important; }
+html body .app-shell .workspace-content .ledger-pick.music { border-left-color: var(--rs-sound) !important; }
+html body .app-shell .workspace-content .journal-guide ol > li { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; box-shadow: none !important; }
+html body .app-shell .workspace-content .journal-guide-picture { background: var(--rs-surface-2) !important; border-radius: var(--rs-r-control) !important; }
+html body .app-shell .workspace-content .record-art.editorial-art { border-radius: var(--rs-r-control) !important; }
+html body .app-shell .page-journey .workspace-content button:not(.primary-button):not(.ghost-button),
+html body .app-shell .page-ritual .workspace-content button:not(.primary-button):not(.ghost-button),
+html body .app-shell .page-recommend .workspace-content span[class=""],
+html body .app-shell .page-recommend .workspace-content .workspace-content span:not([class]) { border-radius: var(--rs-r-pill) !important; }
+html body .app-shell :is(.page-journey, .page-ritual) .workspace-content button:not(.primary-button):not(.ghost-button):not([aria-pressed="true"]) { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; color: var(--rs-text) !important; }
+html body .app-shell :is(.page-journey, .page-ritual) .workspace-content button[aria-pressed="true"]:not(.primary-button):not(.ghost-button) { background: var(--rs-text) !important; border-color: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body .app-shell .page-recommend .workspace-content span:not([class]) { background: var(--rs-surface-2) !important; color: var(--rs-text) !important; }
+html body .app-shell .record-art.aura-art { display: grid; place-items: center; position: relative; background: var(--rs-panel) !important; border-radius: var(--rs-r-control) !important; overflow: hidden; min-height: 160px; }
+html body .app-shell .record-art.aura-art .resonance-aura { width: min(78%, 220px); height: auto; aspect-ratio: 1; --rs-aura-line: rgba(255, 255, 255, .2); }
+html body .app-shell .record-art.aura-art.art-small { min-height: 0; aspect-ratio: 1; }
+html body .app-shell .record-art.aura-art .editorial-title { position: absolute; left: 12px; right: 12px; bottom: 10px; color: var(--rs-panel-text) !important; font-weight: 720; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html body .app-shell .page-recommend .workspace-content span[class=""], html body .app-shell .page-recommend .workspace-content span:not([class]) { border-radius: var(--rs-r-pill) !important; }
+
+/* ── Polish: one orchestrated entrance per page ─────────── */
+@media (prefers-reduced-motion: no-preference) {
+  html body .app-shell .page > .page-heading,
+  html body .app-shell .page .workspace-content > :nth-child(-n + 4):not(.quiet-bean-grid) {
+    animation: rs-rise 520ms var(--rs-ease-reverb) both;
+  }
+  html body .app-shell .page .workspace-content > :nth-child(1) { animation-delay: 60ms; }
+  html body .app-shell .page .workspace-content > :nth-child(2) { animation-delay: 120ms; }
+  html body .app-shell .page .workspace-content > :nth-child(3) { animation-delay: 180ms; }
+  html body .app-shell .page .workspace-content > :nth-child(4) { animation-delay: 240ms; }
+}
+@keyframes rs-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+html body .rr-policy-footer { border-top: 1px solid var(--rs-line); font-size: 13px; }
+html body .rr-policy-footer a { text-decoration-color: var(--rs-line) !important; text-underline-offset: 3px; }
+html body .app-shell .page-journey .workspace-content :is(button span, a:not(.primary-button):not(.ghost-button)) { color: var(--rs-text-2); }
+@media (max-width: 760px) {
+  html body .sense-row:not(.is-set) output { grid-row: 1 / span 2; align-self: center; }
+  html body .sense-row:not(.is-set) .sense-clear { display: none; }
+  html body .sense-row > label { align-self: center; }
+}

@@ -557,8 +557,8 @@ export default function FirstCup({
                   <ResonanceAura
                     className="first-cup-aura"
                     colors={familiesInText(value.note).map((k) => familyColors[k])}
-                    energy={cleanSenses(value.senses).acidity * 2 || 5}
-                    depth={cleanSenses(value.senses).body * 2 || 5}
+                    energy={(cleanSenses(value.senses).acidity ?? 50) / 10}
+                    depth={(cleanSenses(value.senses).body ?? 50) / 10}
                     rings={3 + Object.keys(cleanSenses(value.senses)).length}
                     seedKey={value.note.slice(0, 80)}
                   />

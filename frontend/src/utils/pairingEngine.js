@@ -13,9 +13,13 @@ function profile(record, kind) {
   const values=axes.map(() => []),evidence=[];
   for(const [pattern,vector] of lexicon){const matches=text.match(new RegExp(pattern,"gi"));if(matches){evidence.push(...new Set(matches));vector.forEach((value,index)=>values[index].push(value));}}
   if(kind === "coffee") {
+    const session=(record.brewDetails ?? raw.brewDetails)?.senses || {};
     for(const [field,index] of [["acidity",0],["body",1],["sweetness",2],["aroma",3]]) {
+      const label=({acidity:"산미",body:"바디",sweetness:"단맛",aroma:"향"})[field];
+      const fine=session[field];
+      if(Number.isInteger(fine) && fine>=0 && fine<=100){values[index]=[fine/100];evidence.push(`${label} ${fine}/100`);continue;}
       const source=record[field] ?? raw[field]; const value=source === "" || source == null ? NaN : Number(source);
-      if(Number.isFinite(value) && value>=0 && value<=5){values[index]=[value/5];evidence.push(`${({acidity:"산미",body:"바디",sweetness:"단맛",aroma:"향"})[field]} ${value}/5`);}
+      if(Number.isFinite(value) && value>=0 && value<=5){values[index]=[value/5];evidence.push(`${label} ${value}/5`);}
     }
   }
   return {vector:values.map(items=>items.length ? items.reduce((a,b)=>a+b,0)/items.length : null),evidence:[...new Set(evidence)].slice(0,8)};
