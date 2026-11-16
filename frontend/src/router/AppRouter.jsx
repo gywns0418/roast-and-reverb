@@ -107,6 +107,7 @@ export default function AppRouter() {
     >
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<HomePage />} />
         <Route path="/login" element={<Navigate to="/auth/login" replace />} />
         <Route path="/join" element={<Navigate to="/auth/join" replace />} />
         <Route path="/signup" element={<Navigate to="/auth/join" replace />} />

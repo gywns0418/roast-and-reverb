@@ -76,6 +76,7 @@ export default function FirstCup({
   recordCount = 0,
 }) {
   const compact = useCompactLayout();
+  const [mstep, setMstep] = useState(0);
   const [, authRevision] = useState(0);
   const currentScope = scope(),
     draftKey = quickDraftKey(currentScope);
@@ -286,13 +287,26 @@ export default function FirstCup({
     !(previousScope.current === "guest" && loginRequested.current)
   )
     return <p role="status">기록 공간을 바꾸고 있어요…</p>;
+  // An empty note always starts the session from the first step.
+  const step = value.note.trim() ? mstep : 0;
   if (compact)
     return (
       <section className="mobile-cup" aria-labelledby={inputId + "-heading"}>
         <h2 id={inputId + "-heading"}>{saved ? "한 잔을 남겼어요." : title}</h2>
         {!saved ? (
           <>
-            <label htmlFor={inputId}>
+            <SessionSteps
+              current={step}
+              onSelect={(i) => value.note.trim() && setMstep(i)}
+              done={{
+                note: !!value.note.trim(),
+                senses: hasSenses(cleanSenses(value.senses)),
+                music: !!value.soundtrack,
+                verdict: !!value.verdict,
+              }}
+            />
+            {step === 0 && (
+              <label htmlFor={inputId}>
               오늘의 느낌
               <textarea
                 id={inputId}
@@ -304,19 +318,17 @@ export default function FirstCup({
                 placeholder="고소했어, 조금 낯설었어… 기억나는 만큼만."
               />
             </label>
-            {value.note.trim() && (
-              <details
-                className="mobile-music-choice"
-                open={musicOpen}
-                onToggle={(e) => setMusicOpen(e.currentTarget.open)}
-              >
-                <summary>
-                  {value.soundtrack
-                    ? "♫ " + value.soundtrack.track
-                    : "음악 추가"}{" "}
-                  <small>선택</small>
-                </summary>
-                {musicOpen && (
+            )}
+            {step === 1 && (
+              <SenseSliders
+                value={cleanSenses(value.senses)}
+                disabled={busy === "save"}
+                onChange={(senses) => setValue((v) => ({ ...v, senses }))}
+              />
+            )}
+            {step === 2 && (
+              <div className="mobile-music-choice session-music">
+                <p className="session-step-title">함께 들은 곡이 있나요? <small>선택</small></p>
                   <BrewPlaylist
                     tracks={brewPlaylist.slice(0, 3)}
                     title="함께 듣고 싶은 곡"
@@ -335,7 +347,6 @@ export default function FirstCup({
                             }))
                     }
                   />
-                )}{" "}
                 {value.soundtrack && (
                   <button
                     className="ghost-button"
@@ -348,27 +359,42 @@ export default function FirstCup({
                     음악 빼기
                   </button>
                 )}
-              </details>
+              </div>
             )}
-            <SenseSliders
-              value={cleanSenses(value.senses)}
-              disabled={busy === "save"}
-              onChange={(senses) => setValue((v) => ({ ...v, senses }))}
-            />
-            <VerdictPicker
-              compact
-              value={value.verdict || ""}
-              disabled={busy === "save"}
-              onChange={(verdict) => setValue((v) => ({ ...v, verdict }))}
-            />
-            <button
-              type="button"
-              className="primary-button mobile-cup-save"
-              disabled={!!busy || !value.note.trim()}
-              onClick={save}
-            >
-              {busy === "save" ? "저장 중…" : "이 한 잔 저장"}
-            </button>
+            {step === 3 && (
+              <VerdictPicker
+                compact
+                value={value.verdict || ""}
+                disabled={busy === "save"}
+                onChange={(verdict) => setValue((v) => ({ ...v, verdict }))}
+              />
+            )}
+            <div className="session-nav">
+              {step > 0 && (
+                <button type="button" className="ghost-button" disabled={!!busy} onClick={() => setMstep(step - 1)}>
+                  이전
+                </button>
+              )}
+              {step < 3 ? (
+                <button type="button" className="primary-button" disabled={!value.note.trim()} onClick={() => setMstep(step + 1)}>
+                  다음 · {["느낌", "감각", "음악", "판단"][step + 1]}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="primary-button mobile-cup-save"
+                  disabled={!!busy || !value.note.trim()}
+                  onClick={save}
+                >
+                  {busy === "save" ? "저장 중…" : "이 한 잔 저장"}
+                </button>
+              )}
+            </div>
+            {step < 3 && value.note.trim() && (
+              <button type="button" className="session-skip" disabled={!!busy} onClick={save}>
+                나머지는 건너뛰고 지금 저장
+              </button>
+            )}
           </>
         ) : (
           <>

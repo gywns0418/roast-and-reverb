@@ -17,7 +17,16 @@ export function systemTheme(win = globalThis.window) {
     return "light";
   }
 }
-export const initialTheme = () => storedTheme() || systemTheme();
+// Light unless the drinker chose otherwise ("system" in settings follows the OS).
+export const SYSTEM_KEY = "rr-theme-follow-system-v1";
+export function followsSystem(storage = globalThis.localStorage) {
+  try {
+    return storage?.getItem(SYSTEM_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+export const initialTheme = () => storedTheme() || (followsSystem() ? systemTheme() : "light");
 export function applyTheme(theme, root = globalThis.document?.documentElement) {
   const value = valid(theme) || "light";
   if (root) {
@@ -33,14 +42,17 @@ export function applyTheme(theme, root = globalThis.document?.documentElement) {
 }
 export function saveTheme(theme, storage = globalThis.localStorage) {
   try {
+    storage?.removeItem(SYSTEM_KEY);
     storage?.setItem(THEME_KEY, theme);
   } catch {
     /* storage blocked: the theme still applies for this visit */
   }
 }
-export function clearTheme(storage = globalThis.localStorage) {
+export function clearTheme(storage = globalThis.localStorage, followSystem = true) {
   try {
     storage?.removeItem(THEME_KEY);
+    if (followSystem) storage?.setItem(SYSTEM_KEY, "1");
+    else storage?.removeItem(SYSTEM_KEY);
   } catch {
     /* storage blocked */
   }
