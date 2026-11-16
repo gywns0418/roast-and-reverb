@@ -6,12 +6,16 @@ import { coffeeApi } from "../api/coffeeApi.js";
 import { adaptCoffeeLog } from "../api/adapters.js";
 import { listDiaryRecords } from "../utils/diaryRecords.js";
 import { spectrumOf } from "../utils/cupColor.js";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
+import { hasDiaryRecords } from "../utils/diaryStorage.js";
 import FirstCup from "../components/coffee/FirstCup.jsx";
 export default function HomePage() {
+  const { pathname } = useLocation();
+  const returning = pathname === "/" && hasDiaryRecords();
   const { data: records } = useApiResource(() => listDiaryRecords(coffeeApi.list).then((rows) => rows.map(adaptCoffeeLog)), [], []);
   const palette = useCupPalette();
   const spectrum = spectrumOf(records || [], palette);
+  if (returning) return <Navigate to="/dashboard" replace />;
   function start() {
     document
       .getElementById("first-cup-start")
@@ -31,7 +35,7 @@ export default function HomePage() {
         <Link to="/" className="first-home-brand">
           R&amp;R<span>ROAST &amp; REVERB</span>
         </Link>
-        <Link to="/coffee">내 기록 열기 →</Link>
+        <Link to="/dashboard">내 홈 열기 →</Link>
       </header>
       <main>
         <section className="simple-intro">

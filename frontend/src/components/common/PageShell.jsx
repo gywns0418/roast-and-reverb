@@ -20,7 +20,7 @@ export default function PageShell({ title, subtitle, children }) {
       </div>
       <footer className="page-footer">
         <span>ROAST &amp; REVERB</span>
-        <Link to="/">서비스 소개</Link>
+        <Link to="/about">서비스 소개</Link>
         <a href={import.meta.env.BASE_URL + "privacy.html"}>개인정보처리방침</a>
       </footer>
     </section>

@@ -10,3 +10,13 @@ export function validateDiary(value) {
   }
   return result;
 }
+
+// Synchronous check used for routing: does this browser already hold cups?
+export function hasDiaryRecords(storage = globalThis.localStorage) {
+  try {
+    const raw = storage?.getItem(DIARY_KEY);
+    return !!raw && JSON.parse(raw)?.coffeeLogs?.length > 0;
+  } catch {
+    return false;
+  }
+}

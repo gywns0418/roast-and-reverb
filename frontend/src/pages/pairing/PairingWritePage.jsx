@@ -3,13 +3,15 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Button from "../../components/common/Button.jsx";
-import CoffeeLogCard from "../../components/coffee/CoffeeLogCard.jsx";
-import MusicCard from "../../components/music/MusicCard.jsx";
+import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
+import ResonanceChart from "../../components/visual/ResonanceChart.jsx";
+import { useCupPalette } from "../../hooks/useCupPalette.js";
+import { cupPalette } from "../../utils/cupColor.js";
+import { analyzePairing, axes as pairAxes, readPreferences } from "../../utils/pairingEngine.js";
 import { coffeeApi } from "../../api/coffeeApi.js";
 import { musicApi } from "../../api/musicApi.js";
 import { pairingApi } from "../../api/pairingApi.js";
 import { adaptCoffeeLog, adaptMusicLog } from "../../api/adapters.js";
-import { coffeeLogs, musicLogs } from "../../data/sampleData.js";
 import { useApiResource } from "../../hooks/useApiResource.js";
 
 function readId(item, keys) {
@@ -23,12 +25,12 @@ export default function PairingWritePage() {
   const navigate = useNavigate();
   const { data: coffees } = useApiResource(
     () => listDiaryRecords(coffeeApi.list).then((items) => items.map(adaptCoffeeLog)),
-    coffeeLogs.map(adaptCoffeeLog),
+    [],
     []
   );
   const { data: musics } = useApiResource(
     () => listDiaryRecords(musicApi.list).then((items) => items.map(adaptMusicLog)),
-    musicLogs.map(adaptMusicLog),
+    [],
     []
   );
   const [engine, setEngine] = useState("local");
@@ -38,9 +40,20 @@ export default function PairingWritePage() {
   const [openPicker, setOpenPicker] = useState(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const palette = useCupPalette();
 
   const selectedCoffee = useMemo(() => coffees.find((item) => String(item.id) === String(coffeeId)) || coffees[0], [coffees, coffeeId]);
   const selectedMusic = useMemo(() => musics.find((item) => String(item.id) === String(musicId)) || musics[0], [musics, musicId]);
+
+  // Local, read-only preview of where the two senses meet, before anything is saved.
+  const preview = useMemo(() => {
+    if (!selectedCoffee || !selectedMusic) return null;
+    try {
+      return analyzePairing({ coffee: selectedCoffee, music: selectedMusic }, readPreferences()).evidence;
+    } catch (error) {
+      return { error: error.message };
+    }
+  }, [selectedCoffee, selectedMusic]);
 
   function pickCoffee(id) {
     setCoffeeId(id);
@@ -122,10 +135,46 @@ export default function PairingWritePage() {
           </div>
         )}
       </div>
-      <div className="compose-layout">
-        {selectedCoffee && <CoffeeLogCard item={selectedCoffee} />}
-        {selectedMusic && <MusicCard item={selectedMusic} />}
-      </div>
+      {selectedCoffee && selectedMusic && (
+        <section className="pair-compose" aria-label="고른 한 잔과 한 곡">
+          <article className="pair-side coffee">
+            <ResonanceAura colors={cupPalette(selectedCoffee, palette)} seedKey={selectedCoffee.bean} rings={4} />
+            <div>
+              <p className="pair-kind">Coffee</p>
+              <h2>{selectedCoffee.bean === "원두 미기록" ? "이날의 한 잔" : selectedCoffee.bean}</h2>
+              <small>{[selectedCoffee.roastery, selectedCoffee.date].filter(Boolean).join(" · ")}</small>
+              {preview?.coffee?.length > 0 && <p className="pair-clues">{preview.coffee.slice(0, 5).join(" · ")}</p>}
+            </div>
+          </article>
+          <span className="pair-join" aria-hidden="true">×</span>
+          <article className="pair-side music">
+            <ResonanceAura colors={["#3446C9", "#9AAAFF"]} seedKey={`${selectedMusic.artist}:${selectedMusic.track}`} rings={5} />
+            <div>
+              <p className="pair-kind">Music</p>
+              <h2>{selectedMusic.track}</h2>
+              <small>{[selectedMusic.artist, selectedMusic.date].filter(Boolean).join(" · ")}</small>
+              {preview?.music?.length > 0 && <p className="pair-clues">{preview.music.slice(0, 5).join(" · ")}</p>}
+            </div>
+          </article>
+        </section>
+      )}
+      {preview && (
+        <section className="pairing-resonance pair-preview" aria-labelledby="pair-preview-title">
+          <h3 id="pair-preview-title">저장 전 미리 보기 · 같은 좌표에 놓인 두 감각</h3>
+          {preview.error ? (
+            <p className="pair-preview-empty">{preview.error}</p>
+          ) : (
+            <ResonanceChart
+              axes={pairAxes}
+              caption="고른 커피와 음악의 공명 미리 보기"
+              series={[
+                { label: "커피", values: preview.vectors.coffee, color: "var(--rs-coffee)", fill: "color-mix(in srgb, var(--rs-coffee) 20%, transparent)" },
+                { label: "음악", values: preview.vectors.music, color: "var(--rs-sound)", dashed: true },
+              ]}
+            />
+          )}
+        </section>
+      )}
       <div className="action-row">
         <Button onClick={handleAnalyze} disabled={saving || !selectedCoffee || !selectedMusic} loading={saving}>{saving ? "분석 중" : "선택한 기록으로 분석"}</Button>
         {message && <span className="muted">{message}</span>}

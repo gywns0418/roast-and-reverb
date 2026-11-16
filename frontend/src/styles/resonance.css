@@ -580,9 +580,7 @@ html body .app-shell .page-journey .workspace-content :is(button span, a:not(.pr
 
 /* Theme switch on phones (the top bar is hidden there) and in settings */
 html body .app-shell .demo-notice { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-html body .app-shell .demo-notice .notice-theme { display: none; }
 @media (max-width: 760px) {
-  html body .app-shell .demo-notice .notice-theme { display: inline-grid; width: 44px; height: 44px; flex: none; }
 }
 html body .app-shell .workspace-content .theme-setting { display: flex !important; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px !important; }
 html body .app-shell .workspace-content .theme-setting h2 { margin: 0 0 4px; font-size: 18px; }
@@ -624,3 +622,87 @@ html body .app-shell .workspace-content .desk-spectrum strong small { font-size:
 html body .app-shell .workspace-content .desk-spectrum span { display: block; margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--rs-text-2); }
 html body .app-shell .mobile-journal-entry :is(small, .mobile-expand-label) { color: var(--rs-text-2) !important; }
 html body :is(.app-shell, .studio-home) .verdict-picker legend { color: var(--rs-text) !important; }
+
+/* ── Loading: the v1 coffee bean inside v3 resonance ripples ─────────── */
+html body .ritual-loading { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+html body .ritual-loading .ritual-loading-art { position: relative; width: 168px; height: 168px; margin: 0 auto 22px; display: grid; place-items: center; perspective: 420px; }
+html body .ritual-loading .loading-ripple { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid var(--rs-coffee); opacity: 0; }
+html body .ritual-loading .loading-ripple:nth-child(2) { border-color: var(--rs-sound); }
+html body .ritual-loading .loading-glow { position: absolute; inset: 26px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--rs-coffee) 38%, transparent), transparent 62%), radial-gradient(circle at 68% 66%, color-mix(in srgb, var(--rs-sound) 34%, transparent), transparent 60%); filter: blur(12px); }
+html body .ritual-loading .ritual-loading-bean { position: relative; z-index: 1; width: 64px; height: 80px; margin: 0; color: inherit; filter: drop-shadow(0 6px 8px rgba(40, 24, 14, .25)); }
+html body .ritual-loading .ritual-bean-shadow { left: 56px; bottom: 30px; width: 56px; }
+html body .ritual-loading h2 { font-family: var(--rs-font); font-weight: 800; letter-spacing: -0.03em; color: var(--rs-text); }
+html body .ritual-loading .eyebrow { font-family: var(--rs-display); font-weight: 640; letter-spacing: .02em; text-transform: none; color: var(--rs-coffee); }
+@media (prefers-reduced-motion: no-preference) {
+  html body .ritual-loading .loading-ripple { animation: rs-ripple 2.4s var(--rs-ease-reverb) infinite; }
+  html body .ritual-loading .loading-ripple:nth-child(2) { animation-delay: .8s; }
+  html body .ritual-loading .loading-ripple:nth-child(3) { animation-delay: 1.6s; }
+  html body .ritual-loading .loading-glow { animation: rs-breathe 2.4s var(--rs-ease) infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body .ritual-loading .loading-ripple { opacity: .35; transform: scale(.8); }
+  html body .ritual-loading .loading-ripple:nth-child(2) { transform: scale(.62); }
+  html body .ritual-loading .loading-ripple:nth-child(3) { transform: scale(.98); }
+}
+@keyframes rs-ripple { 0% { transform: scale(.42); opacity: .8; } 100% { transform: scale(1.05); opacity: 0; } }
+
+/* ── Colour legend for "my coffee colours" ─────────────── */
+html body .app-shell .workspace-content .desk-spectrum .spectrum-legend { grid-column: 1 / -1; margin-top: 4px; border-top: 1px solid var(--rs-line); padding-top: 10px; }
+html body .app-shell .workspace-content .spectrum-legend summary { min-height: 40px; display: flex; align-items: center; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--rs-text); }
+html body .app-shell .workspace-content .spectrum-legend ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 2px; max-height: 280px; overflow: auto; }
+html body .app-shell .workspace-content .spectrum-legend li { display: grid; grid-template-columns: 54px minmax(0, 1fr); column-gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--rs-line); }
+.spectrum-swatches { grid-row: span 2; display: flex; gap: 3px; }
+.spectrum-swatches i { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12); }
+html body .app-shell .workspace-content .spectrum-legend .spectrum-bean { font-size: 14px; font-weight: 680; color: var(--rs-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html body .app-shell .workspace-content .spectrum-legend li small { font-size: 12px; color: var(--rs-text-2); }
+html body .app-shell .workspace-content .spectrum-legend > p { margin: 8px 0 0; font-size: 12px; line-height: 1.6; color: var(--rs-text-2); }
+
+/* ── Mobile app bar (the desktop top bar is hidden on phones) ───────── */
+html body .app-shell .mobile-appbar { display: none; }
+@media (max-width: 760px) {
+  html body .app-shell .mobile-appbar {
+    position: sticky; top: 0; z-index: 25; display: flex; align-items: center; justify-content: space-between;
+    min-height: 56px; padding: 6px 12px 6px 16px; padding-top: calc(6px + env(safe-area-inset-top, 0px));
+    background: var(--rs-glass); border-bottom: 1px solid var(--rs-glass-line);
+    -webkit-backdrop-filter: blur(var(--rs-blur)) saturate(1.4); backdrop-filter: blur(var(--rs-blur)) saturate(1.4);
+  }
+  html body .app-shell .mobile-brand { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--rs-text); text-decoration: none; }
+  html body .app-shell .mobile-brand .brand-orb { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(from 210deg, var(--rs-coffee), var(--rs-sound), var(--rs-coffee)); box-shadow: 0 0 0 4px color-mix(in srgb, var(--rs-coffee) 16%, transparent); }
+  html body .app-shell .mobile-brand span { font-family: var(--rs-display); font-weight: 760; font-size: 19px; letter-spacing: -0.04em; }
+  html body .app-shell .demo-notice { justify-content: flex-start; }
+}
+
+/* ── One-hand record session (phones) ──────────────────── */
+html body .session-step.is-current .session-bars i { background: var(--rs-sound); transform: scaleY(1); }
+html body .session-step.is-current.is-done .session-bars i { background: var(--rs-coffee); }
+html body button.session-step-label { all: unset; display: inline-flex; align-items: center; gap: 4px; min-height: 36px; font-size: 13px; font-weight: 640; color: var(--rs-text-3); cursor: pointer; }
+html body .session-step.is-done button.session-step-label, html body .session-step.is-current button.session-step-label { color: var(--rs-text); }
+html body button.session-step-label:focus-visible { outline: 2px solid var(--rs-focus); outline-offset: 2px; border-radius: 6px; }
+html body .session-step.is-current button.session-step-label { text-decoration: underline; text-decoration-color: var(--rs-sound); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+html body .mobile-cup .session-nav { position: sticky; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); z-index: 3; display: flex; gap: 8px; margin-top: 16px; padding: 10px 0 4px; background: linear-gradient(to top, var(--rs-surface) 70%, transparent); }
+html body .mobile-cup .session-nav > * { flex: 1; min-height: 52px; }
+html body .mobile-cup .session-nav .ghost-button { flex: 0 0 96px; }
+html body .session-skip { display: block; width: 100%; min-height: 44px; margin-top: 4px; border: 0; background: transparent; color: var(--rs-text-2); font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+html body .session-music .session-step-title { margin: 8px 0 10px; font-weight: 760; color: var(--rs-text); }
+html body .session-music .session-step-title small { font-weight: 500; color: var(--rs-text-3); margin-left: 6px; }
+
+/* ── Pairing compose: two senses side by side ──────────── */
+.pair-compose { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: stretch; }
+html body .app-shell .workspace-content .pair-side { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: center; padding: 20px; border: 1px solid var(--rs-line); border-radius: var(--rs-r-card); background: var(--rs-surface); min-width: 0; }
+.pair-side .resonance-aura { width: 96px; height: 96px; }
+.pair-kind { margin: 0 0 2px; font-family: var(--rs-display); font-weight: 640; font-size: 14px; color: var(--rs-coffee); }
+.pair-side.music .pair-kind { color: var(--rs-sound); }
+html body .app-shell .workspace-content .pair-side h2 { margin: 0; font-size: 20px; line-height: 1.3; overflow-wrap: anywhere; }
+html body .app-shell .workspace-content .pair-side small { display: block; margin-top: 4px; color: var(--rs-text-2); font-size: 13px; }
+html body .app-shell .workspace-content .pair-clues { margin: 8px 0 0; font-size: 13px; color: var(--rs-text-2); }
+.pair-join { align-self: center; font-family: var(--rs-display); font-size: 32px; font-weight: 600; background: linear-gradient(135deg, var(--rs-coffee), var(--rs-sound)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+html body .app-shell .workspace-content .pair-preview h3 { margin: 0 0 4px; font-size: 18px; font-weight: 800; }
+html body .app-shell .workspace-content .pair-preview-empty { margin: 8px 0 0; color: var(--rs-text-2); }
+@media (max-width: 760px) {
+  .pair-compose { grid-template-columns: 1fr; gap: 8px; }
+  .pair-join { justify-self: center; font-size: 26px; }
+  html body .app-shell .workspace-content .pair-side { grid-template-columns: 72px minmax(0, 1fr); padding: 16px; }
+  .pair-side .resonance-aura { width: 72px; height: 72px; }
+}
+html body .app-shell .mobile-composer-top span { color: var(--rs-text-2) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy span.monthly-badge.monthly-badge-mine { background: var(--rs-text) !important; color: var(--rs-bg) !important; border-color: var(--rs-text) !important; }

@@ -1,7 +1,7 @@
 import Loading from "../common/Loading.jsx";
 import { Suspense, useEffect, useState } from "react";
 import { watchBeanFile } from "../../store/beanFileStore.js";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, NavLink, Outlet, useLocation } from "react-router-dom";
 import { authStore } from "../../store/authStore.js";
 import ResourceBoundary from "../common/ResourceBoundary.jsx";
 import Header from "./Header.jsx";
@@ -45,6 +45,13 @@ export default function Layout() {
       </a>
       <Sidebar />
       <main className="main" id="main-content" tabIndex={-1}>
+        <header className="mobile-appbar">
+          <NavLink className="mobile-brand" to="/dashboard" aria-label="Roast & Reverb 홈">
+            <i className="brand-orb" aria-hidden="true" />
+            <span>R&amp;R</span>
+          </NavLink>
+          <ThemeToggle />
+        </header>
         <Header />
         {local && (
           <div className="demo-notice" role="status">
@@ -55,7 +62,6 @@ export default function Layout() {
             <span className="notice-mobile">
               이 브라우저에 저장돼요 · 백업은 설정에서
             </span>
-            <ThemeToggle className="notice-theme" />
           </div>
         )}
         <ResourceBoundary key={location.pathname}>
