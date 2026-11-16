@@ -5181,6 +5181,106 @@
     },
     {
       "schemaVersion": 1,
+      "title": "[스페셜 월픽 (11/12~11/25)] 오페퍼",
+      "edition": "special",
+      "month": "2026-11",
+      "saleStart": "2026-11-12",
+      "saleEnd": "2026-11-25",
+      "roastery": "오페퍼",
+      "sourceUrl": "https://unspecialty.com/product/detail.html?product_no=1005",
+      "detailSourceUrl": "https://unspecialty-community-bucket.s3.ap-northeast-2.amazonaws.com/opepper_202611/opepper_202611.json",
+      "sourceCheckedAt": "2026-11-16T11:39:01.438Z",
+      "items": [],
+      "goods": [
+        {
+          "id": "1005-gc01539cc",
+          "name": "레드 팝 (언스페셜티 블렌드) (15g)",
+          "nameEnglish": "Red Pop blend",
+          "kind": "블렌드"
+        },
+        {
+          "id": "1005-g26661f33",
+          "name": "제스트 앤 차이 (언스페셜티 블렌드) (15g)",
+          "nameEnglish": "Zest & Chai blend",
+          "kind": "블렌드"
+        },
+        {
+          "id": "1005-ge3ccb48d",
+          "name": "언스페셜티 블렌드 세트 (15g x 2종)",
+          "nameEnglish": "Unspecialty Blend Set",
+          "kind": "블렌드"
+        },
+        {
+          "id": "1005-g46f4e06d",
+          "name": "언스페셜티 블렌드 박스(15g x 2종 x 3ea)",
+          "nameEnglish": "Unspecialty Blend Box",
+          "kind": "블렌드"
+        },
+        {
+          "id": "1005-g5ce04a4c",
+          "name": "캄폿 라운드 블랙 페퍼 (15g)",
+          "nameEnglish": "Kampot Round Black Pepper",
+          "kind": "통후추·싱글 오리진"
+        },
+        {
+          "id": "1005-g7764a5fa",
+          "name": "싱글 오리진 5종 캄폿 페퍼 세트 (15g x 5종)",
+          "nameEnglish": "Single Origin 5 Kampot Pepper Collection",
+          "kind": "통후추·싱글 오리진"
+        },
+        {
+          "id": "1005-g4c907a0",
+          "name": "싱글오리진 13종 디스커버리 세트 (총 87g)",
+          "nameEnglish": "13 Single Origin Minipack Set",
+          "kind": "통후추·싱글 오리진"
+        },
+        {
+          "id": "1005-g96f95d37",
+          "name": "싱글오리진 4종 향신료 세트 (3g x 4종)",
+          "nameEnglish": "4 Single Origin Minipack Set",
+          "kind": "통후추·싱글 오리진"
+        },
+        {
+          "id": "1005-g85016373",
+          "name": "치즈뿌추 (1.2g x 15ea)",
+          "nameEnglish": "Cheese bbuchü",
+          "kind": "뿌추"
+        },
+        {
+          "id": "1005-gb0919f54",
+          "name": "마라뿌추 (1.5g x 15ea)",
+          "nameEnglish": "Mala bbuchü",
+          "kind": "뿌추"
+        },
+        {
+          "id": "1005-g473b5c53",
+          "name": "톳뿌추 (1.5g x 15ea)",
+          "nameEnglish": "Tott bbuchü",
+          "kind": "뿌추"
+        },
+        {
+          "id": "1005-g191cf8c",
+          "name": "싱글오리진 4종 캄폿 뿌추 세트 (1.5g x 4종 x 6ea)",
+          "nameEnglish": "4 Kampot bbuchü",
+          "kind": "뿌추"
+        },
+        {
+          "id": "1005-gb9525918",
+          "name": "페퍼 크러셔",
+          "nameEnglish": "Pepper Crusher",
+          "kind": "도구"
+        },
+        {
+          "id": "1005-g169aa151",
+          "name": "전동 페퍼 그라인더",
+          "nameEnglish": "Electric Pepper Grinder",
+          "kind": "도구"
+        }
+      ],
+      "detailsCheckedAt": "2026-11-16T11:39:01.439Z"
+    },
+    {
+      "schemaVersion": 1,
       "title": "[글로벌 월픽] Loquat Coffee (10/12~10/18)",
       "edition": "global",
       "month": "2026-10",

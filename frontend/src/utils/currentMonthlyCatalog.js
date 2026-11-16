@@ -6,6 +6,6 @@ export function currentMonthlyCatalog(rows, today = koreaToday()) {
     /^\d{4}-\d{2}-\d{2}$/.test(product.saleStart || '') &&
     /^\d{4}-\d{2}-\d{2}$/.test(product.saleEnd || '') &&
     product.saleStart <= today && today <= product.saleEnd &&
-    product.items?.length > 0
+    (product.items?.length > 0 || product.goods?.length > 0)
   );
 }
