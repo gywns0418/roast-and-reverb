@@ -41,3 +41,10 @@ test("layout is deterministic, fills are softened, bad input is ignored", () => 
   assert.notEqual(spectrumLayout(rows)[0].fill, "#A0C060");
   assert.equal(Math.round(hexToHsl("#ff0000").h), 0);
 });
+
+test("each wash's area is proportional to how often that family was drunk", () => {
+  const layout = spectrumLayout([{ color: "#4B5EDD", weight: 12 }, { color: "#DD964B", weight: 3 }, { color: "#4BDD7E", weight: 1.5 }]);
+  const area = (b) => b.r * b.r;
+  assert.ok(Math.abs(area(layout[0]) / area(layout[1]) - 4) < 0.02);
+  assert.ok(Math.abs(area(layout[0]) / area(layout[2]) - 8) < 0.05);
+});

@@ -1,13 +1,13 @@
 import { useId } from "react";
-import { soften, spectrumLayout } from "../../utils/spectrumLayout.js";
+import { spectrumLayout } from "../../utils/spectrumLayout.js";
 
 // All the colours the drinker has had, gathered into a few soft washes by colour
 // family and laid out like a colour wheel (see utils/spectrumLayout.js).
 export default function TasteSpectrum({ spectrum = [], label, className = "" }) {
   const id = useId().replace(/:/g, "");
   const blobs = spectrumLayout(spectrum);
-  // A soft ground in the drinker's most frequent colour ties the field together.
-  const ground = blobs[0] ? soften(blobs[0].color, 0.78) : "#EFE7DC";
+  // Neutral cream ground, so no colour looks bigger than its share of the cups.
+  const ground = "#EFE7DC";
   return (
     <svg className={"taste-spectrum " + className} viewBox="0 0 200 200" role="img" aria-label={label}>
       <defs>
