@@ -14,7 +14,7 @@ export default function Sidebar() {
   return (
     <>
       <aside className="sidebar">
-        <NavLink className="brand" to="/" aria-label="Roast & Reverb 소개">
+        <NavLink className="brand" to="/dashboard" aria-label="Roast & Reverb 홈">
           <i className="brand-orb" aria-hidden="true" />
           <span>Roast &amp; Reverb</span>
           <small>커피 한 잔, 음악 한 곡</small>

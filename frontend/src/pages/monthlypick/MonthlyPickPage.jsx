@@ -15,6 +15,7 @@ import { buildTasteProfile, tasteMatch } from "../../utils/tasteProfile.js";
 import PageShell from "../../components/common/PageShell.jsx";
 import Loading from "../../components/common/Loading.jsx";
 import BeanArtwork from "../../components/beans/BeanArtwork.jsx";
+import GoodsArtwork, { goodsGroup } from "../../components/beans/GoodsArtwork.jsx";
 import { monthlyCatalog, importMonthlyUrl } from "../../api/monthlyCatalog.js";
 import { catalogAvailability } from "../../utils/catalogAvailability.js";
 import { currentMonthlyCatalog } from "../../utils/currentMonthlyCatalog.js";
@@ -69,7 +70,8 @@ export default function MonthlyPickPage() {
     [active, setActive] = useState(null),
     [message, setMessage] = useState(""),
     [url, setUrl] = useState(""),
-    [importing, setImporting] = useState(false);
+    [importing, setImporting] = useState(false),
+    [goodsFilter, setGoodsFilter] = useState("all");
   const [initialFavorites] = useState(() => {
     try {
       return { ids: readMonthlyFavorites(localStorage), error: "" };
@@ -121,6 +123,9 @@ export default function MonthlyPickPage() {
   const beans=mineOnly&&canMatch?filteredBeans.filter(bean=>tasteMatch(bean,profile)):filteredBeans;
   const reading=parseTasteQuery(query.trim());
   const grouped=groupMonthlyBeans(beans);
+  const goods = !favoritesOnly && !product?.items?.length ? product?.goods || [] : [];
+  const goodsMode = goods.length > 0;
+  const goodsKinds = [...new Set(goods.map((item) => item.kind))];
   function clearFilters(){setQuery("");setCategory("all");setColor("all");setAvailable(false);setHideDecaf(false);setFavoritesOnly(false);setMineOnly(false);}
   const compared = allBeans.filter((b) => selected.includes(String(b.id)));
   function choose(p) {
@@ -128,6 +133,7 @@ export default function MonthlyPickPage() {
     setSeries(p.sourceUrl);
     setUrl(p.sourceUrl);
     clearFilters();
+    setGoodsFilter("all");
   }
   function favorite(id) {
     try {
@@ -195,7 +201,19 @@ export default function MonthlyPickPage() {
         <>
           <details className="consumer-monthly-guide"><summary>처음이라면 · 원두 고르는 순서 보기</summary><p>좋아하는 맛을 검색 → 관심 원두 저장 → 비교 선택으로 나란히 보기</p><small>컵노트와 색상은 판매처의 설명이며, 내 취향에 맞는지는 직접 마신 기록과 함께 판단해 주세요.</small></details>
           <div className="monthly-library">
-          <aside className="monthly-library-filters" aria-label="월픽 검색과 필터" data-expanded={filtersExpanded}>
+          <aside className="monthly-library-filters" aria-label={goodsMode ? "스페셜 월픽 상품 분류" : "월픽 검색과 필터"} data-expanded={filtersExpanded}>
+          {goodsMode ? (
+            <div className="goods-aside">
+              <p className="goods-aside-kicker">커피가 아닌 스페셜 월픽</p>
+              <p className="goods-aside-copy">이번 스페셜 월픽은 {product.roastery}의 후추·향신료예요. 원두가 아니어서 취향 매칭·기록·비교에는 쓰지 않고, 판매처에 공개된 상품 이름만 보여 드려요.</p>
+              <section className="monthly-restored-filters goods-filters" aria-label="상품 분류">
+              <fieldset><legend>상품 분류</legend><div className="monthly-filter-chips">
+                {[["all", "전체", goods.length], ...goodsKinds.map((kind) => [kind, kind, goods.filter((item) => item.kind === kind).length])].map(([key, label, count]) => <button key={key} type="button" aria-pressed={goodsFilter === key} onClick={() => setGoodsFilter(key)}><span className="monthly-filter-check" aria-hidden="true">{goodsFilter === key ? "✓" : ""}</span>{label} <small>{count}개</small></button>)}
+              </div></fieldset>
+              </section>
+              <p className="monthly-filter-caption">가격·구성·재고는 판매처 원문에서 확인해 주세요. 그림은 상품 종류를 표현한 연출이에요.</p>
+            </div>
+          ) : (<>
           <div className="monthly-core-toolbar">
             <label className="monthly-core-search">
               맛이나 원두로 찾기
@@ -263,6 +281,7 @@ export default function MonthlyPickPage() {
             <p className="monthly-filter-caption">색상은 판매처 원두 팔레트의 비슷한 색끼리 묶은 분류예요. 맛을 측정한 값은 아니며, 검색·분류·색상·판매 조건을 함께 적용합니다.</p>
             <p className="monthly-filter-results" role="status">조건에 맞는 원두 <strong>{beans.length}종</strong> / {candidates.length}종{favoritesOnly?' · 관심 원두에서 찾는 중':''}{mineOnly&&canMatch?' · 내 취향과 닮은 원두만':''}</p>
           </section>
+          </>)}
           </aside>
           <div className="monthly-library-results">
           <div
@@ -283,7 +302,7 @@ export default function MonthlyPickPage() {
                 >
                   <strong>{label}</strong>
                   <small>
-                    {p ? p.roastery + " · " + p.items.length + "종" : "준비 중"}
+                    {p ? p.roastery + " · " + (p.items.length ? p.items.length + "종" : (p.goods?.length || 0) + "개 상품") : "준비 중"}
                   </small>
                 </button>
               );
@@ -296,7 +315,7 @@ export default function MonthlyPickPage() {
                 {favoritesOnly
                   ? "모든 시리즈의 관심 원두"
                   : product.month + " · " + product.roastery}{" "}
-                · {beans.length}종
+                · {goodsMode ? goods.length + "개 상품" : beans.length + "종"}
               </h2>
               {!favoritesOnly && (
                 <a href={product.sourceUrl} target="_blank" rel="noreferrer">
@@ -383,7 +402,38 @@ export default function MonthlyPickPage() {
               </article>
             ))}</Fragment>)}
           </div>
-          {!beans.length && (
+          {goodsMode && (
+            <div className="quiet-bean-grid goods-grid">
+              {goodsKinds.filter((kind) => goodsFilter === "all" || goodsFilter === kind).map((kind) => {
+                const group = goodsGroup(kind);
+                const rows = goods.filter((item) => item.kind === kind);
+                return <Fragment key={kind}>
+                  <div className="monthly-section-heading" style={{"--group-color": group.color, "--group-tint": group.tint}}><h2>{group.label}</h2><span>{rows.length}개</span></div>
+                  {rows.map((item) => (
+                    <article className="monthly-bean-card goods-card" style={{"--group-color": group.color, "--group-tint": group.tint}} key={item.id}>
+                      <div className="monthly-card-art"><GoodsArtwork item={item} /></div>
+                      <div className="monthly-bean-copy">
+                        <div className="monthly-bean-open">
+                          <small>{stateLabel[catalogAvailability(product, item)] || stateLabel.unknown} · {product.roastery}</small>
+                          <span className="monthly-card-badges">
+                            <span className="monthly-category-label">{group.label}</span>
+                            <span className="monthly-badge">커피 아님</span>
+                          </span>
+                          <h3>{item.name}</h3>
+                          <p className="monthly-note-list">{item.nameEnglish || "영문 이름 미공개"}</p>
+                          <span className="monthly-price-list"><span>판매처에서 가격 확인</span></span>
+                        </div>
+                        <div className="monthly-bean-actions">
+                          <a href={product.sourceUrl} target="_blank" rel="noreferrer" aria-label={item.name + " 판매처 원문에서 보기"}>판매처에서 보기 ↗</a>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </Fragment>;
+              })}
+            </div>
+          )}
+          {!beans.length && !goodsMode && (
             <p className="simple-empty">
               {favoritesOnly
                 ? "이 조건의 관심 원두가 없어요. 원두 카드에서 관심 저장을 눌러보세요."

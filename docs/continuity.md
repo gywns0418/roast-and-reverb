@@ -525,3 +525,16 @@ feature/consumer-value-review: 첫 방문→작성→월픽→내 기록을 현�
 - 다음 운영 반영 때 dev→main에 재디자인이 함께 포함된다. 사용자가 채택하지 않으면 dev에서 해당 병합을 되돌린 뒤(revert) 운영 반영을 진행한다.
 - v3 Resonance(`styles/resonance.css`, 설계 `docs/design-v3-resonance.md`, 프로토타입 `/prototype/resonance.html`)가 현재 dev 디자인이다. 2주 차 후보: 기록 세션 바텀시트 4단계, 페어링 상세 공명 차트, 사운드 스튜디오 오라 연동, 월간 리포트 좌표계 통일.
 - 월픽 원두 목록은 사용자 지시로 건드리지 않는다. 바꿀 때는 `.quiet-bean-grid` 고정 블록과 v2 대비 스타일 비교를 함께 갱신한다.
+
+## 2026-11-16 — 디자인 마무리 (dev)
+
+- 스타일 구조: `App.jsx`는 `styles/base.css`(예전 27개 층 통합본) → `styles/resonance.css`(v3 디자인 시스템) 순서로 불러온다. 새 스타일은 resonance.css에 쓰고, base.css는 줄이는 방향으로만 고친다.
+- 테마 기본은 라이트. "시스템" 선택은 `rr-theme-follow-system-v1`로 기억한다.
+- `/`는 기록이 있으면 `/dashboard`로 이동, 소개는 `/about`.
+- 월픽 원두 목록(`.quiet-bean-grid`)은 라이트에서 v2와 400/400 동일 상태를 유지할 것.
+- 남은 일: 음악·의식·여정·메모리·컬렉션 화면 구성 개선, 실제 휴대폰 확인.
+
+## 2026-11-16 — 비커피 스페셜 월픽
+
+- 스페셜 월픽이 원두가 아닐 수 있다(2026-11 오페퍼 후추). 이런 자료는 `product.goods`에 이름만 두고 `items`는 비운다. 원두 엔진(취향·추천·기록)은 `items`만 본다.
+- 가로 스크롤 영역은 마우스 끌기로 움직인다(`utils/dragScroll.js`, `main.jsx`에서 한 번 설치). 끌기가 필요 없는 영역은 `.no-drag-scroll`.

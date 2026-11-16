@@ -4,19 +4,6 @@ import { useEffect } from "react";
 import AppErrorBoundary from "./components/common/AppErrorBoundary.jsx";
 import AppRouter from "./router/AppRouter.jsx";
 import {LoadingHost} from './components/common/Loading.jsx';
-import "./styles/main.css";
-import "./styles/studio.css";
-import "./styles/interior.css";
-import "./styles/discovery.css";
-import "./styles/usability.css";
-import "./styles/editorial.css";
-import "./styles/discovery-flow.css";
-import "./styles/listening-room.css";
-import "./styles/journey.css";
-import "./styles/rhythm.css";
-import "./styles/loading.css";
-import "./styles/mobile.css";
-import "./styles/first-cup.css";
 
 function ScrollReset() {
   const { pathname } = useLocation();
@@ -35,26 +22,5 @@ export default function App() {
   );
 }
 
-import './styles/simple-flow.css';
-
-import './styles/complete-flow.css';
-
-import './styles/mobile-journal.css';
-
-import './styles/monthly-core.css';
-
-import './styles/content-density.css';
-
-import "./styles/privacy.css";
-
-import "./styles/accessibility.css";
-
-import "./styles/typography-refinements.css";
-
-import "./styles/design-consistency.css";
-import "./styles/writing-desk.css";
-import "./styles/interface-cohesion.css";
-import "./styles/visual-polish.css";
-import "./styles/card-entry-design.css";
-import "./styles/brand.css";
+import "./styles/base.css";
 import "./styles/resonance.css";

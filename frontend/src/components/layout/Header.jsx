@@ -11,7 +11,7 @@ export default function Header() {
         })}
       </span>
       <span className="topbar-actions">
-        <Link to="/">처음 이용하시나요?</Link>
+        <Link to="/about">처음 이용하시나요?</Link>
         <ThemeToggle />
       </span>
     </header>

@@ -27,14 +27,17 @@
   --rs-panel: #121318; --rs-panel-text: #F4F3EF; --rs-panel-text-2: #BFC1C9; --rs-panel-line: rgba(255, 255, 255, .14); --rs-panel-link: #FF9A7A;
   --rs-aura-line: rgba(18, 19, 24, .16);
   --rs-on-text-2: #C4C6CE;
+  --rs-ink: var(--rs-text); --rs-on-ink: var(--rs-bg); --rs-cta: var(--rs-text); --rs-on-cta: var(--rs-bg);
 }
 html[data-theme="dark"] {
-  --rs-bg: #0C0D11; --rs-surface: #15161C; --rs-surface-2: #1D1F27; --rs-glass: rgba(21, 22, 28, .62); --rs-glass-line: rgba(255, 255, 255, .08);
-  --rs-text: #F3F2ED; --rs-text-2: #B9BBC4; --rs-text-3: #9497A2; --rs-line: #2A2C35;
-  --rs-coffee: #FF8A66; --rs-sound: #9AAAFF; --rs-focus: #9AAAFF; --rs-on-accent: #0C0D11;
-  --rs-panel: #1D1F27; --rs-panel-text: #F3F2ED; --rs-panel-text-2: #B9BBC4; --rs-panel-line: rgba(255, 255, 255, .1); --rs-panel-link: #FF9A7A;
-  --rs-aura-line: rgba(255, 255, 255, .16);
-  --rs-on-text-2: #474A54;
+  /* Warm charcoal rather than near-black; cream text; white is kept for small accents only. */
+  --rs-bg: #1B1A18; --rs-surface: #242320; --rs-surface-2: #2D2B28; --rs-glass: rgba(36, 35, 32, .66); --rs-glass-line: rgba(236, 228, 214, .08);
+  --rs-text: #E7E1D6; --rs-text-2: #B5AEA2; --rs-text-3: #979084; --rs-line: #3A3733;
+  --rs-coffee: #EC9473; --rs-sound: #A3AEF2; --rs-focus: #A3AEF2; --rs-on-accent: #1B1A18;
+  --rs-panel: #2D2B28; --rs-panel-text: #E7E1D6; --rs-panel-text-2: #B5AEA2; --rs-panel-line: rgba(236, 228, 214, .1); --rs-panel-link: #F0A285;
+  --rs-aura-line: rgba(236, 228, 214, .14);
+  --rs-ink: #45403A; --rs-on-ink: #F2ECE2; --rs-on-text-2: #CFC6B8;
+  --rs-cta: #EC9473; --rs-on-cta: #1B1A18;
   color-scheme: dark;
 }
 /* Older layers read these names. */
@@ -73,7 +76,7 @@ html body .app-shell .sidebar nav > .nav-link svg { display: block; flex: none; 
 html body .app-shell .sidebar .nav-label { display: flex; flex-direction: column; line-height: 1.25; font-size: 15px; }
 html body .app-shell .sidebar .nav-label small { font-size: 12px; font-weight: 500; color: var(--rs-text-3); margin-top: 2px; }
 html body .app-shell .sidebar nav > .nav-link:hover { background: var(--rs-surface-2); color: var(--rs-text); }
-html body .app-shell .sidebar nav > .nav-link.active { background: var(--rs-text); color: var(--rs-bg); font-weight: 760; }
+html body .app-shell .sidebar nav > .nav-link.active { background: var(--rs-ink); color: var(--rs-on-ink); font-weight: 760; }
 html body .app-shell .sidebar nav > .nav-link.active .nav-label small { color: var(--rs-on-text-2); }
 html body .app-shell .sidebar .sidebar-foot { color: var(--rs-text-3); border-top: 1px solid var(--rs-line); padding-top: 14px; font-size: 13px; font-family: var(--rs-font); opacity: 1; }
 
@@ -207,7 +210,7 @@ html body :is(.app-shell, .studio-home) :is(.primary-button, .ghost-button):not(
   border-radius: var(--rs-r-pill) !important; min-height: 48px; padding: 11px 22px; font-weight: 720; letter-spacing: -0.015em; box-shadow: none !important;
   transition: background var(--rs-fast), color var(--rs-fast), border-color var(--rs-fast), transform var(--rs-fast) var(--rs-ease);
 }
-html body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *) { background: var(--rs-text) !important; border: 1px solid var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *) { background: var(--rs-cta) !important; border: 1px solid var(--rs-cta) !important; color: var(--rs-on-cta) !important; }
 html body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *):hover:not(:disabled) { background: var(--rs-coffee) !important; border-color: var(--rs-coffee) !important; color: var(--rs-on-accent) !important; }
 html body :is(.app-shell, .studio-home) .ghost-button:not(.quiet-bean-grid *) { background: transparent !important; border: 1px solid var(--rs-line) !important; color: var(--rs-text) !important; }
 html body :is(.app-shell, .studio-home) .ghost-button:not(.quiet-bean-grid *):hover:not(:disabled) { border-color: var(--rs-text) !important; }
@@ -222,11 +225,11 @@ html body .app-shell .workspace-content :is(input, textarea, select):focus { bor
 html body .app-shell input[type=checkbox], html body .app-shell input[type=radio] { accent-color: var(--rs-coffee); }
 
 /* Chips, verdicts, taste */
-html body .app-shell .taste-chips li { border-radius: var(--rs-r-pill); background: var(--rs-text); color: var(--rs-bg); font-weight: 720; }
+html body .app-shell .taste-chips li { border-radius: var(--rs-r-pill); background: var(--rs-ink); color: var(--rs-on-ink); font-weight: 720; }
 html body .app-shell .taste-chips li small { color: var(--rs-on-text-2); }
 html body .app-shell .taste-chips-muted li { background: transparent; color: var(--rs-text-2); border: 1px solid var(--rs-line); }
 html body .app-shell .verdict-picker button { border-radius: var(--rs-r-pill); background: var(--rs-surface); color: var(--rs-text); border: 1px solid var(--rs-line); min-height: 44px; }
-html body .app-shell .verdict-picker button[aria-pressed="true"] { background: var(--rs-text); border-color: var(--rs-text); color: var(--rs-bg); }
+html body .app-shell .verdict-picker button[aria-pressed="true"] { background: var(--rs-ink); border-color: var(--rs-ink); color: var(--rs-on-ink); }
 html body .app-shell .workspace-content .taste-matches li { border-radius: var(--rs-r-control); background: var(--rs-surface-2); border-color: var(--rs-line); }
 html body .app-shell .workspace-content .taste-matches em { color: var(--rs-coffee); }
 html body .app-shell .workspace-content .taste-roastery-check li { background: var(--rs-surface-2); border-radius: var(--rs-r-control); }
@@ -253,7 +256,7 @@ html body .app-shell .workspace-content .taste-map h2 { margin: 0 0 6px; font-si
 
 /* ── Monthly page around the frozen list ────────────────── */
 html body .page-monthly-pick .monthly-editions button { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; color: var(--rs-text) !important; }
-html body .page-monthly-pick .monthly-editions button[aria-pressed=true] { background: var(--rs-text) !important; border-color: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body .page-monthly-pick .monthly-editions button[aria-pressed=true] { background: var(--rs-ink) !important; border-color: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 html body .page-monthly-pick .monthly-editions button[aria-pressed=true] small { color: var(--rs-on-text-2) !important; }
 html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button { color: var(--rs-text-2); }
 html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button[aria-pressed=true] { background: var(--rs-surface-2) !important; color: var(--rs-text) !important; border-radius: var(--rs-r-control) !important; }
@@ -285,7 +288,7 @@ html body .app-shell .mobile-tabbar {
   -webkit-backdrop-filter: blur(var(--rs-blur)) saturate(1.4); backdrop-filter: blur(var(--rs-blur)) saturate(1.4);
 }
 html body .app-shell .mobile-tabbar .nav-link { color: var(--rs-text-2) !important; background: transparent !important; border-radius: 16px !important; box-shadow: none !important; font-weight: 640; font-size: 12px; }
-html body .app-shell .mobile-tabbar .nav-link.active { background: var(--rs-text) !important; color: var(--rs-bg) !important; font-weight: 760; }
+html body .app-shell .mobile-tabbar .nav-link.active { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; font-weight: 760; }
 
 /* ── Landing ────────────────────────────────────────────── */
 html body .studio-home .first-home-nav { border-bottom: 1px solid var(--rs-line); }
@@ -318,7 +321,7 @@ html body .rr-policy-footer { background: var(--rs-bg) !important; color: var(--
 html body .rr-policy-footer a { color: var(--rs-text) !important; }
 html body .app-shell .page-footer { border-top: 1px solid var(--rs-line); color: var(--rs-text-3); }
 html body .app-shell .page-footer a { color: var(--rs-text-2); }
-html body .app-shell .skip-link { border-radius: var(--rs-r-pill); background: var(--rs-text); color: var(--rs-bg); }
+html body .app-shell .skip-link { border-radius: var(--rs-r-pill); background: var(--rs-ink); color: var(--rs-on-ink); }
 
 /* ── Dark mode: older layers hard-code light colours ────── */
 html[data-theme="dark"] body .app-shell .workspace-content :is(p, li, small, span, label, dt, dd, summary, legend, td, th, em, figcaption, time, b):not(.quiet-bean-grid *):not(.resonance-aura *) { color: var(--rs-text-2); }
@@ -543,7 +546,7 @@ html body .app-shell .page-ritual .workspace-content button:not(.primary-button)
 html body .app-shell .page-recommend .workspace-content span[class=""],
 html body .app-shell .page-recommend .workspace-content .workspace-content span:not([class]) { border-radius: var(--rs-r-pill) !important; }
 html body .app-shell :is(.page-journey, .page-ritual) .workspace-content button:not(.primary-button):not(.ghost-button):not([aria-pressed="true"]) { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; color: var(--rs-text) !important; }
-html body .app-shell :is(.page-journey, .page-ritual) .workspace-content button[aria-pressed="true"]:not(.primary-button):not(.ghost-button) { background: var(--rs-text) !important; border-color: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body .app-shell :is(.page-journey, .page-ritual) .workspace-content button[aria-pressed="true"]:not(.primary-button):not(.ghost-button) { background: var(--rs-ink) !important; border-color: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 html body .app-shell .page-recommend .workspace-content span:not([class]) { background: var(--rs-surface-2) !important; color: var(--rs-text) !important; }
 html body .app-shell .record-art.aura-art { display: grid; place-items: center; position: relative; background: var(--rs-panel) !important; border-radius: var(--rs-r-control) !important; overflow: hidden; min-height: 160px; }
 html body .app-shell .record-art.aura-art .resonance-aura { width: min(78%, 220px); height: auto; aspect-ratio: 1; --rs-aura-line: rgba(255, 255, 255, .2); }
@@ -580,16 +583,14 @@ html body .app-shell .page-journey .workspace-content :is(button span, a:not(.pr
 
 /* Theme switch on phones (the top bar is hidden there) and in settings */
 html body .app-shell .demo-notice { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-html body .app-shell .demo-notice .notice-theme { display: none; }
 @media (max-width: 760px) {
-  html body .app-shell .demo-notice .notice-theme { display: inline-grid; width: 44px; height: 44px; flex: none; }
 }
 html body .app-shell .workspace-content .theme-setting { display: flex !important; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px !important; }
 html body .app-shell .workspace-content .theme-setting h2 { margin: 0 0 4px; font-size: 18px; }
 html body .app-shell .workspace-content .theme-setting p { margin: 0; color: var(--rs-text-2); font-size: 14px; }
 .theme-choices { display: inline-flex; padding: 4px; gap: 4px; border-radius: var(--rs-r-pill); background: var(--rs-surface-2); }
 html body .app-shell .workspace-content .theme-choices button { min-height: 44px; padding: 0 18px; border: 0 !important; border-radius: var(--rs-r-pill) !important; background: transparent !important; color: var(--rs-text-2) !important; font-weight: 680; cursor: pointer; }
-html body .app-shell .workspace-content .theme-choices button[aria-pressed="true"] { background: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body .app-shell .workspace-content .theme-choices button[aria-pressed="true"] { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 
 /* Monthly bean list in dark mode: same layout, illustrations and vendor HEX;
    only surfaces, text and lines follow the dark theme. Light mode is unchanged. */
@@ -603,10 +604,10 @@ html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-c
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy :is(p, small, span, li, dd, dt):not([style*="background"]) { color: var(--rs-text-2) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-category-label { background: color-mix(in srgb, var(--group-tint, #F6E9DE) 22%, var(--rs-surface-2)) !important; color: var(--rs-text) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-badge { background: transparent !important; border-color: var(--rs-line) !important; color: var(--rs-text) !important; }
-html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-badge-mine { background: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-badge-mine { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-price-list, html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-price-list * { border-color: var(--rs-line) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy button:not([style*="background"]) { background: transparent !important; border-color: var(--rs-line) !important; color: var(--rs-text) !important; }
-html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy button[aria-pressed="true"] { background: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy button[aria-pressed="true"] { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-open { color: var(--rs-text) !important; }
 
 /* My coffee colours (home + dashboard) */
@@ -624,3 +625,149 @@ html body .app-shell .workspace-content .desk-spectrum strong small { font-size:
 html body .app-shell .workspace-content .desk-spectrum span { display: block; margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--rs-text-2); }
 html body .app-shell .mobile-journal-entry :is(small, .mobile-expand-label) { color: var(--rs-text-2) !important; }
 html body :is(.app-shell, .studio-home) .verdict-picker legend { color: var(--rs-text) !important; }
+
+/* ── Loading: the v1 coffee bean inside v3 resonance ripples ─────────── */
+html body .ritual-loading { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+html body .ritual-loading .ritual-loading-art { position: relative; width: 168px; height: 168px; margin: 0 auto 22px; display: grid; place-items: center; perspective: 420px; }
+html body .ritual-loading .loading-ripple { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid var(--rs-coffee); opacity: 0; }
+html body .ritual-loading .loading-ripple:nth-child(2) { border-color: var(--rs-sound); }
+html body .ritual-loading .loading-glow { position: absolute; inset: 26px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--rs-coffee) 38%, transparent), transparent 62%), radial-gradient(circle at 68% 66%, color-mix(in srgb, var(--rs-sound) 34%, transparent), transparent 60%); filter: blur(12px); }
+html body .ritual-loading .ritual-loading-bean { position: relative; z-index: 1; width: 64px; height: 80px; margin: 0; color: inherit; filter: drop-shadow(0 6px 8px rgba(40, 24, 14, .25)); }
+html body .ritual-loading .ritual-bean-shadow { left: 56px; bottom: 30px; width: 56px; }
+html body .ritual-loading h2 { font-family: var(--rs-font); font-weight: 800; letter-spacing: -0.03em; color: var(--rs-text); }
+html body .ritual-loading .eyebrow { font-family: var(--rs-display); font-weight: 640; letter-spacing: .02em; text-transform: none; color: var(--rs-coffee); }
+@media (prefers-reduced-motion: no-preference) {
+  html body .ritual-loading .loading-ripple { animation: rs-ripple 2.4s var(--rs-ease-reverb) infinite; }
+  html body .ritual-loading .loading-ripple:nth-child(2) { animation-delay: .8s; }
+  html body .ritual-loading .loading-ripple:nth-child(3) { animation-delay: 1.6s; }
+  html body .ritual-loading .loading-glow { animation: rs-breathe 2.4s var(--rs-ease) infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body .ritual-loading .loading-ripple { opacity: .35; transform: scale(.8); }
+  html body .ritual-loading .loading-ripple:nth-child(2) { transform: scale(.62); }
+  html body .ritual-loading .loading-ripple:nth-child(3) { transform: scale(.98); }
+}
+@keyframes rs-ripple { 0% { transform: scale(.42); opacity: .8; } 100% { transform: scale(1.05); opacity: 0; } }
+
+/* ── Colour legend for "my coffee colours" ─────────────── */
+html body .app-shell .workspace-content .desk-spectrum .spectrum-legend { grid-column: 1 / -1; margin-top: 4px; border-top: 1px solid var(--rs-line); padding-top: 10px; }
+html body .app-shell .workspace-content .spectrum-legend summary { min-height: 40px; display: flex; align-items: center; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--rs-text); }
+html body .app-shell .workspace-content .spectrum-legend ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 2px; max-height: 280px; overflow: auto; }
+html body .app-shell .workspace-content .spectrum-legend li { display: grid; grid-template-columns: 54px minmax(0, 1fr); column-gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--rs-line); }
+.spectrum-swatches { grid-row: span 2; display: flex; gap: 3px; }
+.spectrum-swatches i { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12); }
+html body .app-shell .workspace-content .spectrum-legend .spectrum-bean { font-size: 14px; font-weight: 680; color: var(--rs-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html body .app-shell .workspace-content .spectrum-legend li small { font-size: 12px; color: var(--rs-text-2); }
+html body .app-shell .workspace-content .spectrum-legend > p { margin: 8px 0 0; font-size: 12px; line-height: 1.6; color: var(--rs-text-2); }
+
+/* ── Mobile app bar (the desktop top bar is hidden on phones) ───────── */
+html body .app-shell .mobile-appbar { display: none; }
+@media (max-width: 760px) {
+  html body .app-shell .mobile-appbar {
+    position: sticky; top: 0; z-index: 25; display: flex; align-items: center; justify-content: space-between;
+    min-height: 56px; padding: 6px 12px 6px 16px; padding-top: calc(6px + env(safe-area-inset-top, 0px));
+    background: var(--rs-glass); border-bottom: 1px solid var(--rs-glass-line);
+    -webkit-backdrop-filter: blur(var(--rs-blur)) saturate(1.4); backdrop-filter: blur(var(--rs-blur)) saturate(1.4);
+  }
+  html body .app-shell .mobile-brand { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--rs-text); text-decoration: none; }
+  html body .app-shell .mobile-brand .brand-orb { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(from 210deg, var(--rs-coffee), var(--rs-sound), var(--rs-coffee)); box-shadow: 0 0 0 4px color-mix(in srgb, var(--rs-coffee) 16%, transparent); }
+  html body .app-shell .mobile-brand span { font-family: var(--rs-display); font-weight: 760; font-size: 19px; letter-spacing: -0.04em; }
+  html body .app-shell .demo-notice { justify-content: flex-start; }
+}
+
+/* ── One-hand record session (phones) ──────────────────── */
+html body .session-step.is-current .session-bars i { background: var(--rs-sound); transform: scaleY(1); }
+html body .session-step.is-current.is-done .session-bars i { background: var(--rs-coffee); }
+html body button.session-step-label { all: unset; display: inline-flex; align-items: center; gap: 4px; min-height: 36px; font-size: 13px; font-weight: 640; color: var(--rs-text-3); cursor: pointer; }
+html body .session-step.is-done button.session-step-label, html body .session-step.is-current button.session-step-label { color: var(--rs-text); }
+html body button.session-step-label:focus-visible { outline: 2px solid var(--rs-focus); outline-offset: 2px; border-radius: 6px; }
+html body .session-step.is-current button.session-step-label { text-decoration: underline; text-decoration-color: var(--rs-sound); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+html body .mobile-cup .session-nav { position: sticky; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); z-index: 3; display: flex; gap: 8px; margin-top: 16px; padding: 10px 0 4px; background: linear-gradient(to top, var(--rs-surface) 70%, transparent); }
+html body .mobile-cup .session-nav > * { flex: 1; min-height: 52px; }
+html body .mobile-cup .session-nav .ghost-button { flex: 0 0 96px; }
+html body .session-skip { display: block; width: 100%; min-height: 44px; margin-top: 4px; border: 0; background: transparent; color: var(--rs-text-2); font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+html body .session-music .session-step-title { margin: 8px 0 10px; font-weight: 760; color: var(--rs-text); }
+html body .session-music .session-step-title small { font-weight: 500; color: var(--rs-text-3); margin-left: 6px; }
+
+/* ── Pairing compose: two senses side by side ──────────── */
+.pair-compose { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: stretch; }
+html body .app-shell .workspace-content .pair-side { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: center; padding: 20px; border: 1px solid var(--rs-line); border-radius: var(--rs-r-card); background: var(--rs-surface); min-width: 0; }
+.pair-side .resonance-aura { width: 96px; height: 96px; }
+.pair-kind { margin: 0 0 2px; font-family: var(--rs-display); font-weight: 640; font-size: 14px; color: var(--rs-coffee); }
+.pair-side.music .pair-kind { color: var(--rs-sound); }
+html body .app-shell .workspace-content .pair-side h2 { margin: 0; font-size: 20px; line-height: 1.3; overflow-wrap: anywhere; }
+html body .app-shell .workspace-content .pair-side small { display: block; margin-top: 4px; color: var(--rs-text-2); font-size: 13px; }
+html body .app-shell .workspace-content .pair-clues { margin: 8px 0 0; font-size: 13px; color: var(--rs-text-2); }
+.pair-join { align-self: center; font-family: var(--rs-display); font-size: 32px; font-weight: 600; background: linear-gradient(135deg, var(--rs-coffee), var(--rs-sound)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+html body .app-shell .workspace-content .pair-preview h3 { margin: 0 0 4px; font-size: 18px; font-weight: 800; }
+html body .app-shell .workspace-content .pair-preview-empty { margin: 8px 0 0; color: var(--rs-text-2); }
+@media (max-width: 760px) {
+  .pair-compose { grid-template-columns: 1fr; gap: 8px; }
+  .pair-join { justify-self: center; font-size: 26px; }
+  html body .app-shell .workspace-content .pair-side { grid-template-columns: 72px minmax(0, 1fr); padding: 16px; }
+  .pair-side .resonance-aura { width: 72px; height: 72px; }
+}
+html body .app-shell .mobile-composer-top span { color: var(--rs-text-2) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy span.monthly-badge.monthly-badge-mine { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; border-color: var(--rs-ink) !important; }
+
+/* ── Drag-to-scroll rails (mouse) ─────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  html body :is(.monthly-taste-examples, .keepsake-rack, .repeat-brew-table) { cursor: grab; }
+  html body :is(.monthly-taste-examples, .keepsake-rack, .repeat-brew-table) button { cursor: pointer; }
+}
+html body .is-drag-scrolling, html body .is-drag-scrolling * { cursor: grabbing !important; user-select: none; }
+html body .is-drag-scrolling { scroll-behavior: auto !important; scroll-snap-type: none !important; }
+
+/* ── Non-coffee special pick: same card language as the bean list ── */
+html body .page-monthly-pick .goods-grid .goods-still { background: var(--group-tint, #f1ece4); }
+html body .page-monthly-pick .goods-grid .goods-illustration { position: absolute; inset: 34px 6% 40px; width: 88%; height: calc(100% - 74px); }
+html body .page-monthly-pick .goods-grid .monthly-bean-open { cursor: default; }
+html body .page-monthly-pick .goods-grid .monthly-note-list { font-size: 14px; }
+html body .page-monthly-pick .goods-grid .monthly-bean-actions a { flex: 1; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 6px; border: 1px solid #74836d; border-radius: 8px; background: #fff; color: #355132; font-size: 12px; font-weight: 600; line-height: 1.5; text-decoration: none; transition: background-color .15s, border-color .15s; }
+html body .page-monthly-pick .goods-grid .monthly-bean-actions a:hover { background: #f1f5e9; border-color: #5c7353; }
+html body .page-monthly-pick .goods-grid .monthly-bean-actions a:focus-visible { outline: 3px solid var(--rs-coffee); outline-offset: 2px; }
+html[data-theme="dark"] body .page-monthly-pick .goods-grid .goods-still { background: color-mix(in srgb, var(--group-tint, #f1ece4) 14%, var(--rs-surface-2)); }
+html[data-theme="dark"] body .page-monthly-pick .goods-grid .goods-still :is(.bean-origin-type, .bean-number) { color: var(--rs-text-2) !important; }
+html[data-theme="dark"] body .page-monthly-pick .goods-grid .monthly-bean-actions a { background: transparent; border-color: var(--rs-line); color: var(--rs-text); }
+html body .page-monthly-pick .goods-aside-kicker { margin: 0 0 6px; font-size: 13px; font-weight: 750; color: var(--rs-coffee); }
+html body .page-monthly-pick .goods-aside-copy { margin: 0 0 18px; font-size: 14px; line-height: 1.65; color: var(--rs-text-2); }
+
+/* Series tabs: breathing room inside the pill, ring only for keyboard focus */
+html body .page-monthly-pick .monthly-library-results .monthly-editions { gap: 10px; }
+html body .page-monthly-pick .monthly-library-results .monthly-editions button { padding: 10px 18px !important; justify-content: flex-start; gap: 10px; }
+html body .page-monthly-pick .monthly-editions button:focus { outline: none; }
+html body .page-monthly-pick .monthly-editions button:focus-visible { outline: 3px solid var(--rs-coffee); outline-offset: 2px; }
+html body .page-monthly-pick .goods-grid .monthly-bean-actions { display: flex !important; }
+html body .page-monthly-pick .goods-grid .monthly-bean-actions a { width: 100%; white-space: nowrap; }
+html body .page-monthly-pick .goods-aside .monthly-restored-filters { display: block !important; margin: 0; padding: 0; border: 0; }
+@media (max-width: 700px) {
+  html body .page-monthly-pick .monthly-library-results .monthly-editions button { flex-direction: column !important; align-items: flex-start !important; justify-content: center; gap: 2px !important; padding: 10px 14px !important; }
+  html body .page-monthly-pick .monthly-library-results .monthly-editions :is(strong, small) { white-space: nowrap; }
+}
+html body .page-monthly-pick .monthly-editions button[aria-pressed=true] strong { color: var(--rs-on-ink) !important; }
+
+/* ── Dark: softer ground, white only as accent ─────────── */
+html[data-theme="dark"] body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *):hover:not(:disabled) { background: #F2A586 !important; border-color: #F2A586 !important; color: var(--rs-on-cta) !important; }
+html[data-theme="dark"] body .app-shell .workspace-content .settings-storage > .primary-button { background: var(--rs-cta) !important; color: var(--rs-on-cta) !important; }
+/* Bean art keeps its own colours but drops the glare of a bright paper block. */
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-card-art { filter: brightness(.84) saturate(.96); }
+html[data-theme="dark"] body .app-shell :is(.sidebar nav > .nav-link.active, .mobile-tabbar .nav-link.active) { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rs-coffee) 45%, transparent) !important; }
+html[data-theme="dark"] body .page-monthly-pick .monthly-editions button[aria-pressed=true] { border-color: color-mix(in srgb, var(--rs-coffee) 55%, var(--rs-ink)) !important; }
+html[data-theme="dark"] body .app-shell :is(.verdict-picker, .theme-choices) button[aria-pressed="true"] { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rs-coffee) 45%, transparent); }
+html[data-theme="dark"] body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *) * { color: inherit !important; }
+
+/* ── Loading bean v3: brand-gradient bean, crease drawn as a sound wave ── */
+html body .ritual-loading .ritual-loading-bean { width: 70px; height: 88px; filter: drop-shadow(0 10px 18px color-mix(in srgb, var(--rs-coffee) 28%, transparent)); transform-origin: 50% 60%; }
+html body .ritual-loading .bean-crease-pulse { stroke-dasharray: 18 82; stroke-dashoffset: 0; opacity: .85; }
+html body .ritual-loading .ritual-bean-shadow { left: 50%; bottom: 26px; width: 58px; height: 10px; margin-left: -29px; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--rs-text) 16%, transparent), transparent); }
+@media (prefers-reduced-motion: no-preference) {
+  html body .ritual-loading .ritual-loading-bean { animation: rs-bean-float 2.4s var(--rs-ease) infinite; }
+  html body .ritual-loading .bean-crease-pulse { animation: rs-crease-wave 1.2s linear infinite; }
+  html body .ritual-loading .ritual-bean-shadow { animation: rs-bean-shadow 2.4s var(--rs-ease) infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body .ritual-loading .bean-crease-pulse { opacity: 0; }
+}
+@keyframes rs-bean-float { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-7px) rotate(4deg); } }
+@keyframes rs-crease-wave { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+@keyframes rs-bean-shadow { 0%, 100% { transform: scaleX(1); opacity: 1; } 50% { transform: scaleX(.82); opacity: .6; } }

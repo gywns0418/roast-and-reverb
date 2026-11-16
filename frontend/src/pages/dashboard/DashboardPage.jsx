@@ -16,7 +16,7 @@ import { familyColors } from "../../utils/resonanceAura.js";
 import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
 import TasteSpectrum from "../../components/visual/TasteSpectrum.jsx";
 import { useCupPalette } from "../../hooks/useCupPalette.js";
-import { cupPalette, spectrumOf } from "../../utils/cupColor.js";
+import { beanSwatches, cupPalette, sourceLabel, spectrumOf } from "../../utils/cupColor.js";
 
 const cupText = (row) => [row.memo, row.raw?.tasteNote, row.brewDetails?.momentNote].filter(Boolean).join(" ");
 const cupColors = (rows) => [...new Set(rows.flatMap((row) => familiesInText(cupText(row))))].map((key) => familyColors[key]).filter(Boolean);
@@ -92,6 +92,21 @@ export default function DashboardPage() {
                 <strong>{spectrum.length}<small>가지 색</small></strong>
                 <span>{records.length}잔에서 모았어요. 자주 마신 색일수록 크게 번져요.</span>
               </div>
+              <details className="spectrum-legend">
+                <summary>어떤 원두가 어떤 색인지 보기</summary>
+                <ul>
+                  {beanSwatches(records, palette).slice(0, 24).map((row) => (
+                    <li key={row.bean + row.colors.join("")}>
+                      <span className="spectrum-swatches" aria-hidden="true">
+                        {row.colors.map((c) => <i key={c} style={{ background: c }} />)}
+                      </span>
+                      <span className="spectrum-bean">{row.bean}</span>
+                      <small>{sourceLabel[row.source]} · {row.count}잔</small>
+                    </li>
+                  ))}
+                </ul>
+                <p>판매처 향미 색은 바꾸지 않고 그대로 써요. 이름으로 정한 색은 원두를 구분하는 표시일 뿐, 맛을 뜻하지 않아요.</p>
+              </details>
             </div>
           )}
           {records.length > 0 && (

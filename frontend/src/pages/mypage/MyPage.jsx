@@ -4,7 +4,7 @@ import PageShell from "../../components/common/PageShell.jsx";
 import GoogleSignIn from "../../components/auth/GoogleSignIn.jsx";
 import { authStore } from "../../store/authStore.js";
 import { authApi } from "../../api/authApi.js";
-import { applyTheme, clearTheme, saveTheme, storedTheme, systemTheme } from "../../utils/theme.js";
+import { applyTheme, clearTheme, followsSystem, saveTheme, storedTheme, systemTheme } from "../../utils/theme.js";
 import { ArrowRight, Music2, Coffee, Grid2X2, BookOpen, ShieldCheck, FolderDown } from "lucide-react";
 export default function MyPage() {
   const local = import.meta.env.VITE_USE_REAL_API !== "true",
@@ -13,9 +13,9 @@ export default function MyPage() {
     [error, setError] = useState(""),
     [linked, setLinked] = useState(false);
   const user = authStore.user || {};
-  const [themeChoice, setThemeChoice] = useState(() => storedTheme() || "system");
+  const [themeChoice, setThemeChoice] = useState(() => storedTheme() || (followsSystem() ? "system" : "light"));
   useEffect(() => {
-    const sync = () => setThemeChoice(storedTheme() || "system");
+    const sync = () => setThemeChoice(storedTheme() || (followsSystem() ? "system" : "light"));
     window.addEventListener("rr-theme-changed", sync);
     return () => window.removeEventListener("rr-theme-changed", sync);
   }, []);
@@ -67,7 +67,7 @@ export default function MyPage() {
       <section className="quiet-section theme-setting" aria-labelledby="theme-setting-title">
         <div>
           <h2 id="theme-setting-title">화면 테마</h2>
-          <p>이 브라우저에만 기억돼요. 시스템을 고르면 기기 설정을 따라가요.</p>
+          <p>이 브라우저에만 기억돼요. 기본은 라이트이고, 시스템을 고르면 기기 설정을 따라가요.</p>
         </div>
         <div className="theme-choices" role="group" aria-label="화면 테마 선택">
           {[["light", "라이트"], ["dark", "다크"], ["system", "시스템"]].map(([key, label]) => (

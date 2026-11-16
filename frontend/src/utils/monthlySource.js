@@ -88,6 +88,9 @@ export function parseSourceHtml(html, url, now = new Date()) {
 }
 
 const cleanName = (name) => name.replace(/^\[[^\]]*오픈\]\s*/, "").trim();
+const COFFEE_TYPES = ["single origin", "special single", "blend", "unspecialty blend", "easy"];
+const GOODS_KINDS = { blend: "블렌드", whole: "통후추·싱글 오리진", bbuchu: "뿌추", tools: "도구" };
+export const goodsKind = (type = "") => GOODS_KINDS[String(type).split("-").pop()] || "기타 상품";
 export function normalizeMonthlySource(metadata, data, now = new Date()) {
   if (!Array.isArray(data.items))
     throw new Error("공개 원두 자료 형식이 바뀌었습니다.");
@@ -111,15 +114,7 @@ export function normalizeMonthlySource(metadata, data, now = new Date()) {
     day: "2-digit",
   }).format(now);
   const items = data.items
-    .filter((item) =>
-      [
-        "single origin",
-        "special single",
-        "blend",
-        "unspecialty blend",
-        "easy",
-      ].includes(item.type),
-    )
+    .filter((item) => COFFEE_TYPES.includes(item.type))
     .map((item, index) => {
       const specs = (item.details?.specs || [])
         .filter((spec) => spec.label && (spec.value || spec.entries))
@@ -212,7 +207,18 @@ export function normalizeMonthlySource(metadata, data, now = new Date()) {
           .join(" · "),
       };
     });
-  if (!items.length)
+  // A special pick can be non-coffee goods (e.g. pepper). Keep them apart from beans:
+  // names only, never matched to taste, recorded as coffee, or given a bean image.
+  const goods = items.length || metadata.edition !== "special" ? [] : data.items
+    .filter((item) => item?.name && !COFFEE_TYPES.includes(item.type))
+    .slice(0, 60)
+    .map((item) => ({
+      id: `${metadata.sourceUrl.split("=")[1]}-g${[...cleanName(item.name)].reduce((hash, char) => (Math.imul(hash, 31) + char.charCodeAt(0)) >>> 0, 0).toString(16)}`,
+      name: cleanName(item.name),
+      nameEnglish: String(item.nameEnglish || "").replace(/\s+/g, " ").trim(),
+      kind: goodsKind(item.type),
+    }));
+  if (!items.length && !goods.length)
     throw new Error("원두 항목이 없는 자료입니다. 기존 월픽을 유지합니다.");
   const { stock, ...publicMetadata } = metadata;
   return {
@@ -220,5 +226,6 @@ export function normalizeMonthlySource(metadata, data, now = new Date()) {
     ...publicMetadata,
     sourceCheckedAt: now.toISOString(),
     items,
+    ...(goods.length ? { goods } : {}),
   };
 }

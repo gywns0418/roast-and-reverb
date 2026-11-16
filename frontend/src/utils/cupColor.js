@@ -48,13 +48,29 @@ function lookup(index, name) {
 
 const cupText = (r) => [r.memo, r.raw?.tasteNote, r.brewDetails?.momentNote].filter(Boolean).join(" ");
 
-// Colours for one cup. Same bean name → same colours, wherever it appears.
-export function cupPalette(record, index = new Map()) {
+// Colours for one cup and where they came from. Same bean name → same colours.
+export function cupPaletteInfo(record, index = new Map()) {
   if (!unknown(record?.bean)) {
     const hit = lookup(index, record.bean);
-    return hit ? hit.colors : [nameColor(record.bean)];
+    return hit ? { colors: hit.colors, source: hit.source } : { colors: [nameColor(record.bean)], source: "name" };
   }
-  return [...new Set(familiesInText(cupText(record || {})).map((k) => familyColors[k]))];
+  return { colors: [...new Set(familiesInText(cupText(record || {})).map((k) => familyColors[k]))], source: "words" };
+}
+export const cupPalette = (record, index) => cupPaletteInfo(record, index).colors;
+export const sourceLabel = { vendor: "판매처 향미 색", notes: "내 원두 메모의 맛", name: "원두 이름으로 정한 색", words: "그 잔의 감상" };
+
+// One row per bean (or per "원두 미기록" cup group) for the colour legend.
+export function beanSwatches(records = [], index = new Map()) {
+  const rows = new Map();
+  for (const r of records) {
+    const info = cupPaletteInfo(r, index);
+    if (!info.colors.length) continue;
+    const key = unknown(r.bean) ? "원두 미기록 · " + info.colors.join("") : normalizeBean(r.bean);
+    const row = rows.get(key) || { bean: unknown(r.bean) ? "원두 미기록" : r.bean, colors: info.colors, source: info.source, count: 0 };
+    row.count++;
+    rows.set(key, row);
+  }
+  return [...rows.values()].sort((a, b) => b.count - a.count || a.bean.localeCompare(b.bean, "ko"));
 }
 
 // Every colour the drinker has had, weighted by how often (a cup with three
