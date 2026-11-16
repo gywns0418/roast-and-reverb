@@ -72,7 +72,8 @@ export function spectrumLayout(spectrum = [], { center = 100 } = {}) {
       members: f.members,
       cx: +(center + Math.cos(angle) * dist).toFixed(1),
       cy: +(center + Math.sin(angle) * dist).toFixed(1),
-      r: +(14 + 30 * share ** 0.8).toFixed(1),
+      // Area follows how often the family was drunk: r ∝ √share (the largest is r 44).
+      r: +Math.max(4, 44 * Math.sqrt(share)).toFixed(1),
     };
   });
 }
