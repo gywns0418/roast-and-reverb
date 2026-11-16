@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { auraModel, familyColors, hashString } from "../src/utils/resonanceAura.js";
-import { applyTheme, saveTheme, storedTheme, THEME_KEY } from "../src/utils/theme.js";
+import { applyTheme, clearTheme, followsSystem, saveTheme, storedTheme, THEME_KEY } from "../src/utils/theme.js";
 
 test("aura is deterministic: same data, same picture; different data, different picture", () => {
   const a = auraModel({ colors: ["#FFB199", "#E86A92"], energy: 7, depth: 4, rings: 5, key: "cup-1" });
@@ -24,7 +24,11 @@ test("aura keeps vendor HEX exactly and never invents colours for an empty journ
 
 test("theme choice is validated, stored per browser and survives blocked storage", () => {
   const store = new Map();
-  const storage = { getItem: (k) => store.get(k) ?? null, setItem: (k, v) => store.set(k, v) };
+  const storage = { getItem: (k) => store.get(k) ?? null, setItem: (k, v) => store.set(k, v), removeItem: (k) => store.delete(k) };
+  assert.equal(storedTheme(storage), null);
+  assert.equal(followsSystem(storage), false, "light by default, not the OS");
+  clearTheme(storage);
+  assert.equal(followsSystem(storage), true, "system only after choosing it");
   assert.equal(storedTheme(storage), null);
   saveTheme("dark", storage);
   assert.equal(store.get(THEME_KEY), "dark");
