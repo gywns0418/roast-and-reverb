@@ -27,14 +27,17 @@
   --rs-panel: #121318; --rs-panel-text: #F4F3EF; --rs-panel-text-2: #BFC1C9; --rs-panel-line: rgba(255, 255, 255, .14); --rs-panel-link: #FF9A7A;
   --rs-aura-line: rgba(18, 19, 24, .16);
   --rs-on-text-2: #C4C6CE;
+  --rs-ink: var(--rs-text); --rs-on-ink: var(--rs-bg); --rs-cta: var(--rs-text); --rs-on-cta: var(--rs-bg);
 }
 html[data-theme="dark"] {
-  --rs-bg: #0C0D11; --rs-surface: #15161C; --rs-surface-2: #1D1F27; --rs-glass: rgba(21, 22, 28, .62); --rs-glass-line: rgba(255, 255, 255, .08);
-  --rs-text: #F3F2ED; --rs-text-2: #B9BBC4; --rs-text-3: #9497A2; --rs-line: #2A2C35;
-  --rs-coffee: #FF8A66; --rs-sound: #9AAAFF; --rs-focus: #9AAAFF; --rs-on-accent: #0C0D11;
-  --rs-panel: #1D1F27; --rs-panel-text: #F3F2ED; --rs-panel-text-2: #B9BBC4; --rs-panel-line: rgba(255, 255, 255, .1); --rs-panel-link: #FF9A7A;
-  --rs-aura-line: rgba(255, 255, 255, .16);
-  --rs-on-text-2: #474A54;
+  /* Warm charcoal rather than near-black; cream text; white is kept for small accents only. */
+  --rs-bg: #1B1A18; --rs-surface: #242320; --rs-surface-2: #2D2B28; --rs-glass: rgba(36, 35, 32, .66); --rs-glass-line: rgba(236, 228, 214, .08);
+  --rs-text: #E7E1D6; --rs-text-2: #B5AEA2; --rs-text-3: #979084; --rs-line: #3A3733;
+  --rs-coffee: #EC9473; --rs-sound: #A3AEF2; --rs-focus: #A3AEF2; --rs-on-accent: #1B1A18;
+  --rs-panel: #2D2B28; --rs-panel-text: #E7E1D6; --rs-panel-text-2: #B5AEA2; --rs-panel-line: rgba(236, 228, 214, .1); --rs-panel-link: #F0A285;
+  --rs-aura-line: rgba(236, 228, 214, .14);
+  --rs-ink: #45403A; --rs-on-ink: #F2ECE2; --rs-on-text-2: #CFC6B8;
+  --rs-cta: #EC9473; --rs-on-cta: #1B1A18;
   color-scheme: dark;
 }
 /* Older layers read these names. */
@@ -73,7 +76,7 @@ html body .app-shell .sidebar nav > .nav-link svg { display: block; flex: none; 
 html body .app-shell .sidebar .nav-label { display: flex; flex-direction: column; line-height: 1.25; font-size: 15px; }
 html body .app-shell .sidebar .nav-label small { font-size: 12px; font-weight: 500; color: var(--rs-text-3); margin-top: 2px; }
 html body .app-shell .sidebar nav > .nav-link:hover { background: var(--rs-surface-2); color: var(--rs-text); }
-html body .app-shell .sidebar nav > .nav-link.active { background: var(--rs-text); color: var(--rs-bg); font-weight: 760; }
+html body .app-shell .sidebar nav > .nav-link.active { background: var(--rs-ink); color: var(--rs-on-ink); font-weight: 760; }
 html body .app-shell .sidebar nav > .nav-link.active .nav-label small { color: var(--rs-on-text-2); }
 html body .app-shell .sidebar .sidebar-foot { color: var(--rs-text-3); border-top: 1px solid var(--rs-line); padding-top: 14px; font-size: 13px; font-family: var(--rs-font); opacity: 1; }
 
@@ -207,7 +210,7 @@ html body :is(.app-shell, .studio-home) :is(.primary-button, .ghost-button):not(
   border-radius: var(--rs-r-pill) !important; min-height: 48px; padding: 11px 22px; font-weight: 720; letter-spacing: -0.015em; box-shadow: none !important;
   transition: background var(--rs-fast), color var(--rs-fast), border-color var(--rs-fast), transform var(--rs-fast) var(--rs-ease);
 }
-html body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *) { background: var(--rs-text) !important; border: 1px solid var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *) { background: var(--rs-cta) !important; border: 1px solid var(--rs-cta) !important; color: var(--rs-on-cta) !important; }
 html body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *):hover:not(:disabled) { background: var(--rs-coffee) !important; border-color: var(--rs-coffee) !important; color: var(--rs-on-accent) !important; }
 html body :is(.app-shell, .studio-home) .ghost-button:not(.quiet-bean-grid *) { background: transparent !important; border: 1px solid var(--rs-line) !important; color: var(--rs-text) !important; }
 html body :is(.app-shell, .studio-home) .ghost-button:not(.quiet-bean-grid *):hover:not(:disabled) { border-color: var(--rs-text) !important; }
@@ -222,11 +225,11 @@ html body .app-shell .workspace-content :is(input, textarea, select):focus { bor
 html body .app-shell input[type=checkbox], html body .app-shell input[type=radio] { accent-color: var(--rs-coffee); }
 
 /* Chips, verdicts, taste */
-html body .app-shell .taste-chips li { border-radius: var(--rs-r-pill); background: var(--rs-text); color: var(--rs-bg); font-weight: 720; }
+html body .app-shell .taste-chips li { border-radius: var(--rs-r-pill); background: var(--rs-ink); color: var(--rs-on-ink); font-weight: 720; }
 html body .app-shell .taste-chips li small { color: var(--rs-on-text-2); }
 html body .app-shell .taste-chips-muted li { background: transparent; color: var(--rs-text-2); border: 1px solid var(--rs-line); }
 html body .app-shell .verdict-picker button { border-radius: var(--rs-r-pill); background: var(--rs-surface); color: var(--rs-text); border: 1px solid var(--rs-line); min-height: 44px; }
-html body .app-shell .verdict-picker button[aria-pressed="true"] { background: var(--rs-text); border-color: var(--rs-text); color: var(--rs-bg); }
+html body .app-shell .verdict-picker button[aria-pressed="true"] { background: var(--rs-ink); border-color: var(--rs-ink); color: var(--rs-on-ink); }
 html body .app-shell .workspace-content .taste-matches li { border-radius: var(--rs-r-control); background: var(--rs-surface-2); border-color: var(--rs-line); }
 html body .app-shell .workspace-content .taste-matches em { color: var(--rs-coffee); }
 html body .app-shell .workspace-content .taste-roastery-check li { background: var(--rs-surface-2); border-radius: var(--rs-r-control); }
@@ -253,7 +256,7 @@ html body .app-shell .workspace-content .taste-map h2 { margin: 0 0 6px; font-si
 
 /* ── Monthly page around the frozen list ────────────────── */
 html body .page-monthly-pick .monthly-editions button { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; color: var(--rs-text) !important; }
-html body .page-monthly-pick .monthly-editions button[aria-pressed=true] { background: var(--rs-text) !important; border-color: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body .page-monthly-pick .monthly-editions button[aria-pressed=true] { background: var(--rs-ink) !important; border-color: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 html body .page-monthly-pick .monthly-editions button[aria-pressed=true] small { color: var(--rs-on-text-2) !important; }
 html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button { color: var(--rs-text-2); }
 html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button[aria-pressed=true] { background: var(--rs-surface-2) !important; color: var(--rs-text) !important; border-radius: var(--rs-r-control) !important; }
@@ -285,7 +288,7 @@ html body .app-shell .mobile-tabbar {
   -webkit-backdrop-filter: blur(var(--rs-blur)) saturate(1.4); backdrop-filter: blur(var(--rs-blur)) saturate(1.4);
 }
 html body .app-shell .mobile-tabbar .nav-link { color: var(--rs-text-2) !important; background: transparent !important; border-radius: 16px !important; box-shadow: none !important; font-weight: 640; font-size: 12px; }
-html body .app-shell .mobile-tabbar .nav-link.active { background: var(--rs-text) !important; color: var(--rs-bg) !important; font-weight: 760; }
+html body .app-shell .mobile-tabbar .nav-link.active { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; font-weight: 760; }
 
 /* ── Landing ────────────────────────────────────────────── */
 html body .studio-home .first-home-nav { border-bottom: 1px solid var(--rs-line); }
@@ -318,7 +321,7 @@ html body .rr-policy-footer { background: var(--rs-bg) !important; color: var(--
 html body .rr-policy-footer a { color: var(--rs-text) !important; }
 html body .app-shell .page-footer { border-top: 1px solid var(--rs-line); color: var(--rs-text-3); }
 html body .app-shell .page-footer a { color: var(--rs-text-2); }
-html body .app-shell .skip-link { border-radius: var(--rs-r-pill); background: var(--rs-text); color: var(--rs-bg); }
+html body .app-shell .skip-link { border-radius: var(--rs-r-pill); background: var(--rs-ink); color: var(--rs-on-ink); }
 
 /* ── Dark mode: older layers hard-code light colours ────── */
 html[data-theme="dark"] body .app-shell .workspace-content :is(p, li, small, span, label, dt, dd, summary, legend, td, th, em, figcaption, time, b):not(.quiet-bean-grid *):not(.resonance-aura *) { color: var(--rs-text-2); }
@@ -543,7 +546,7 @@ html body .app-shell .page-ritual .workspace-content button:not(.primary-button)
 html body .app-shell .page-recommend .workspace-content span[class=""],
 html body .app-shell .page-recommend .workspace-content .workspace-content span:not([class]) { border-radius: var(--rs-r-pill) !important; }
 html body .app-shell :is(.page-journey, .page-ritual) .workspace-content button:not(.primary-button):not(.ghost-button):not([aria-pressed="true"]) { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; color: var(--rs-text) !important; }
-html body .app-shell :is(.page-journey, .page-ritual) .workspace-content button[aria-pressed="true"]:not(.primary-button):not(.ghost-button) { background: var(--rs-text) !important; border-color: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body .app-shell :is(.page-journey, .page-ritual) .workspace-content button[aria-pressed="true"]:not(.primary-button):not(.ghost-button) { background: var(--rs-ink) !important; border-color: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 html body .app-shell .page-recommend .workspace-content span:not([class]) { background: var(--rs-surface-2) !important; color: var(--rs-text) !important; }
 html body .app-shell .record-art.aura-art { display: grid; place-items: center; position: relative; background: var(--rs-panel) !important; border-radius: var(--rs-r-control) !important; overflow: hidden; min-height: 160px; }
 html body .app-shell .record-art.aura-art .resonance-aura { width: min(78%, 220px); height: auto; aspect-ratio: 1; --rs-aura-line: rgba(255, 255, 255, .2); }
@@ -587,7 +590,7 @@ html body .app-shell .workspace-content .theme-setting h2 { margin: 0 0 4px; fon
 html body .app-shell .workspace-content .theme-setting p { margin: 0; color: var(--rs-text-2); font-size: 14px; }
 .theme-choices { display: inline-flex; padding: 4px; gap: 4px; border-radius: var(--rs-r-pill); background: var(--rs-surface-2); }
 html body .app-shell .workspace-content .theme-choices button { min-height: 44px; padding: 0 18px; border: 0 !important; border-radius: var(--rs-r-pill) !important; background: transparent !important; color: var(--rs-text-2) !important; font-weight: 680; cursor: pointer; }
-html body .app-shell .workspace-content .theme-choices button[aria-pressed="true"] { background: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html body .app-shell .workspace-content .theme-choices button[aria-pressed="true"] { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 
 /* Monthly bean list in dark mode: same layout, illustrations and vendor HEX;
    only surfaces, text and lines follow the dark theme. Light mode is unchanged. */
@@ -601,10 +604,10 @@ html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-c
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy :is(p, small, span, li, dd, dt):not([style*="background"]) { color: var(--rs-text-2) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-category-label { background: color-mix(in srgb, var(--group-tint, #F6E9DE) 22%, var(--rs-surface-2)) !important; color: var(--rs-text) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-badge { background: transparent !important; border-color: var(--rs-line) !important; color: var(--rs-text) !important; }
-html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-badge-mine { background: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-badge-mine { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-price-list, html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-price-list * { border-color: var(--rs-line) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy button:not([style*="background"]) { background: transparent !important; border-color: var(--rs-line) !important; color: var(--rs-text) !important; }
-html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy button[aria-pressed="true"] { background: var(--rs-text) !important; color: var(--rs-bg) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy button[aria-pressed="true"] { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-open { color: var(--rs-text) !important; }
 
 /* My coffee colours (home + dashboard) */
@@ -705,7 +708,7 @@ html body .app-shell .workspace-content .pair-preview-empty { margin: 8px 0 0; c
   .pair-side .resonance-aura { width: 72px; height: 72px; }
 }
 html body .app-shell .mobile-composer-top span { color: var(--rs-text-2) !important; }
-html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy span.monthly-badge.monthly-badge-mine { background: var(--rs-text) !important; color: var(--rs-bg) !important; border-color: var(--rs-text) !important; }
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy span.monthly-badge.monthly-badge-mine { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; border-color: var(--rs-ink) !important; }
 
 /* ── Drag-to-scroll rails (mouse) ─────────────────────── */
 @media (hover: hover) and (pointer: fine) {
@@ -741,4 +744,14 @@ html body .page-monthly-pick .goods-aside .monthly-restored-filters { display: b
   html body .page-monthly-pick .monthly-library-results .monthly-editions button { flex-direction: column !important; align-items: flex-start !important; justify-content: center; gap: 2px !important; padding: 10px 14px !important; }
   html body .page-monthly-pick .monthly-library-results .monthly-editions :is(strong, small) { white-space: nowrap; }
 }
-html body .page-monthly-pick .monthly-editions button[aria-pressed=true] strong { color: var(--rs-bg) !important; }
+html body .page-monthly-pick .monthly-editions button[aria-pressed=true] strong { color: var(--rs-on-ink) !important; }
+
+/* ── Dark: softer ground, white only as accent ─────────── */
+html[data-theme="dark"] body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *):hover:not(:disabled) { background: #F2A586 !important; border-color: #F2A586 !important; color: var(--rs-on-cta) !important; }
+html[data-theme="dark"] body .app-shell .workspace-content .settings-storage > .primary-button { background: var(--rs-cta) !important; color: var(--rs-on-cta) !important; }
+/* Bean art keeps its own colours but drops the glare of a bright paper block. */
+html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-card-art { filter: brightness(.84) saturate(.96); }
+html[data-theme="dark"] body .app-shell :is(.sidebar nav > .nav-link.active, .mobile-tabbar .nav-link.active) { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rs-coffee) 45%, transparent) !important; }
+html[data-theme="dark"] body .page-monthly-pick .monthly-editions button[aria-pressed=true] { border-color: color-mix(in srgb, var(--rs-coffee) 55%, var(--rs-ink)) !important; }
+html[data-theme="dark"] body .app-shell :is(.verdict-picker, .theme-choices) button[aria-pressed="true"] { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rs-coffee) 45%, transparent); }
+html[data-theme="dark"] body :is(.app-shell, .studio-home) .primary-button:not(.quiet-bean-grid *) * { color: inherit !important; }
