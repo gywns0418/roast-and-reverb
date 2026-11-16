@@ -771,3 +771,70 @@ html body .ritual-loading .ritual-bean-shadow { left: 50%; bottom: 26px; width: 
 @keyframes rs-bean-float { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-7px) rotate(4deg); } }
 @keyframes rs-crease-wave { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
 @keyframes rs-bean-shadow { 0%, 100% { transform: scaleX(1); opacity: 1; } 50% { transform: scaleX(.82); opacity: .6; } }
+
+/* ── Design polish 2 (2026-11-16) ──────────────────────── */
+/* Home: the three-step loop sits on the page instead of a dark slab. */
+html body .home-loop { background: color-mix(in srgb, var(--rs-surface) 70%, transparent); border: 1px solid var(--rs-line); color: var(--rs-text); }
+html body .home-loop li { color: var(--rs-text-2); word-break: keep-all; padding: 18px 20px 18px; }
+html body .home-loop li + li { border-left-color: var(--rs-line); }
+html body .home-loop b { color: var(--rs-coffee); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+html body .home-loop strong { color: var(--rs-text); text-wrap: balance; }
+html[data-theme="dark"] body .studio-home .home-loop li { color: var(--rs-text-2); }
+html[data-theme="dark"] body .studio-home .home-loop strong { color: var(--rs-text); }
+@media (max-width: 760px) {
+  html body .home-loop li { display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 4px; padding: 14px 16px; }
+  html body .home-loop li b { grid-row: span 2; margin: 3px 0 0; }
+  html body .home-loop li + li { border-top-color: var(--rs-line); }
+}
+
+/* Cookie notice: a slim strip at the bottom edge, not a card over the content. */
+html body .rr-cookie-banner.rr-cookie-strip { display: flex; align-items: center; gap: 12px 24px; max-width: 960px; max-height: none; padding: 14px 18px; font-size: 13px; line-height: 1.6; bottom: calc(16px + env(safe-area-inset-bottom)); box-shadow: 0 12px 36px rgba(0, 0, 0, .12); }
+html body .rr-cookie-strip .rr-cookie-copy { display: block; flex: 1; min-width: 0; }
+html body .rr-cookie-strip h2 { display: inline; font-size: 13px; font-weight: 800; margin: 0 6px 0 0; }
+html body .rr-cookie-strip p { display: inline; margin: 0; }
+html body .rr-cookie-strip .rr-cookie-actions { flex: 0 0 auto; flex-wrap: nowrap; gap: 8px; }
+html body .rr-cookie-strip .rr-cookie-actions button { min-height: 40px; padding: 8px 14px; font-size: 13px; white-space: nowrap; }
+html body .rr-cookie-strip .rr-cookie-actions button:first-child { background: var(--rs-cta); border-color: var(--rs-cta); color: var(--rs-on-cta); font-weight: 700; }
+html body .rr-cookie-strip > p[role=alert] { flex-basis: 100%; }
+@media (max-width: 760px) {
+  html body .rr-cookie-banner.rr-cookie-strip { flex-wrap: wrap; left: 12px; right: 12px; padding: 12px 14px; font-size: 12px; bottom: calc(86px + env(safe-area-inset-bottom)); }
+  html body .rr-cookie-strip .rr-cookie-actions { width: 100%; }
+  html body:has(.studio-home) .rr-cookie-banner.rr-cookie-strip { bottom: calc(12px + env(safe-area-inset-bottom)); }
+  html body .rr-cookie-strip .rr-cookie-actions button { flex: 1; min-height: 44px; }
+}
+
+/* Storage notice: one quiet line with a direct way to back up. */
+html body .app-shell .demo-notice .notice-backup { margin-left: auto; white-space: nowrap; color: var(--rs-text-2); font-weight: 650; text-decoration: none; }
+html body .app-shell .demo-notice .notice-backup:hover { color: var(--rs-coffee); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 760px) { html body .app-shell .demo-notice { justify-content: space-between; } }
+
+/* Writing desk: a calmer, less empty note field. */
+html body .app-shell .writing-desk .first-cup-input textarea { min-height: 120px; }
+html body .app-shell .writing-desk .first-cup-input textarea:focus { border-color: var(--rs-coffee); }
+@media (min-width: 761px) and (max-width: 1050px) {
+  html body .app-shell .writing-desk { max-width: 760px; }
+}
+
+/* Monthly taste chips: wrap in the sidebar; on phones they scroll with a fade hint. */
+@media (min-width: 701px) {
+  html body .page-monthly-pick .monthly-library-filters .monthly-taste-examples { flex-wrap: wrap; overflow: visible; gap: 6px; }
+  html body .page-monthly-pick .monthly-library-filters .monthly-taste-examples button { min-height: 36px; padding: 6px 12px; font-size: 13px; }
+}
+@media (max-width: 700px) {
+  html body .page-monthly-pick .monthly-taste-examples { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); padding-right: 28px; }
+
+  /* Phones: series tabs first, then search with favourites + filters on one row. */
+  html body .page-monthly-pick .monthly-library { display: flex; flex-direction: column; gap: 14px; }
+  html body .page-monthly-pick .monthly-library-results { display: contents; }
+  html body .page-monthly-pick .monthly-library-results > .monthly-editions { order: -1; margin: 0; width: 100%; align-self: stretch; }
+  html body .page-monthly-pick .monthly-library-filters { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; align-items: stretch; }
+  html body .page-monthly-pick .monthly-library-filters > * { grid-column: 1 / -1; min-width: 0; margin-top: 0; }
+  html body .page-monthly-pick .monthly-library-filters .monthly-core-toolbar { display: contents; }
+  html body .page-monthly-pick .monthly-library-filters .monthly-core-search { grid-column: 1 / -1; order: 1; }
+  html body .page-monthly-pick .monthly-library-filters .monthly-core-toolbar > button { grid-column: 1; order: 2; min-height: 44px; margin: 0; }
+  html body .page-monthly-pick .monthly-library .monthly-library-filters .monthly-filter-toggle { grid-column: 2; order: 3; margin: 0; min-height: 44px; }
+  html body .page-monthly-pick .monthly-library-filters .monthly-taste-examples { order: 4; margin: 0; }
+  html body .page-monthly-pick .monthly-library-filters :is(.monthly-mine-toggle, .monthly-mine-hint) { order: 5; }
+  html body .page-monthly-pick .monthly-library-filters .monthly-taste-reading { order: 6; }
+  html body .page-monthly-pick .monthly-library-filters .monthly-restored-filters { order: 7; }
+}

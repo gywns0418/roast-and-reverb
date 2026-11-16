@@ -56,12 +56,10 @@ export default function Layout() {
         {local && (
           <div className="demo-notice" role="status">
             <span className="notice-desktop">
-              기기 기록은 이 브라우저에 저장돼요. 기기를 바꾸기 전 설정에서
-              백업해 주세요.
+              기기 기록은 이 브라우저에 저장돼요. 기기를 바꾸기 전에 백업해 주세요.
             </span>
-            <span className="notice-mobile">
-              이 브라우저에 저장돼요 · 백업은 설정에서
-            </span>
+            <span className="notice-mobile">이 브라우저에 저장돼요</span>
+            <NavLink className="notice-backup" to="/mypage">백업하기 →</NavLink>
           </div>
         )}
         <ResourceBoundary key={location.pathname}>

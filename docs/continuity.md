@@ -28,6 +28,8 @@ Roast & Reverb는 **커피 기록 × 음악 청취 기록을 연결하는 취향
 
 ## 현재 구현
 
+- 2026-11-16 디자인 다듬기 2: 홈 3단계 안내는 밝은 면, 쿠키 안내는 아래쪽 얇은 띠(`.rr-cookie-strip`), 저장 안내 줄에 백업 바로가기, 모바일 월픽은 시리즈 탭 → 검색 → 관심·필터 한 줄 순서(`resonance.css` 끝 "Design polish 2" 블록, 700px 이하에서 `.monthly-library-results`를 `display: contents`로 풀어 순서 조정).
+
 React 19/Vite 프론트와 Spring Boot/MyBatis/H2 서버를 유지한다. 기존 대시보드, 커피·음악 로그, 페어링, 취향 리포트, 추천, 컬렉션, 월픽 페이지가 있다.
 
 - 홈과 공통 UI는 밝은 회백색·짙은 녹색·청록 디자인. CSS 아트워크는 자체 제작이고 외부 디자인 에셋을 복제하지 않았다.
