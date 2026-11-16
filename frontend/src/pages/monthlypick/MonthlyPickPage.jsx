@@ -121,6 +121,8 @@ export default function MonthlyPickPage() {
   const beans=mineOnly&&canMatch?filteredBeans.filter(bean=>tasteMatch(bean,profile)):filteredBeans;
   const reading=parseTasteQuery(query.trim());
   const grouped=groupMonthlyBeans(beans);
+  const goods = !favoritesOnly && !product?.items?.length ? product?.goods || [] : [];
+  const goodsMode = goods.length > 0;
   function clearFilters(){setQuery("");setCategory("all");setColor("all");setAvailable(false);setHideDecaf(false);setFavoritesOnly(false);setMineOnly(false);}
   const compared = allBeans.filter((b) => selected.includes(String(b.id)));
   function choose(p) {
@@ -194,7 +196,7 @@ export default function MonthlyPickPage() {
       ) : (
         <>
           <details className="consumer-monthly-guide"><summary>처음이라면 · 원두 고르는 순서 보기</summary><p>좋아하는 맛을 검색 → 관심 원두 저장 → 비교 선택으로 나란히 보기</p><small>컵노트와 색상은 판매처의 설명이며, 내 취향에 맞는지는 직접 마신 기록과 함께 판단해 주세요.</small></details>
-          <div className="monthly-library">
+          <div className="monthly-library" data-goods={goodsMode || undefined}>
           <aside className="monthly-library-filters" aria-label="월픽 검색과 필터" data-expanded={filtersExpanded}>
           <div className="monthly-core-toolbar">
             <label className="monthly-core-search">
@@ -283,7 +285,7 @@ export default function MonthlyPickPage() {
                 >
                   <strong>{label}</strong>
                   <small>
-                    {p ? p.roastery + " · " + p.items.length + "종" : "준비 중"}
+                    {p ? p.roastery + " · " + (p.items.length ? p.items.length + "종" : (p.goods?.length || 0) + "개 상품") : "준비 중"}
                   </small>
                 </button>
               );
@@ -296,7 +298,7 @@ export default function MonthlyPickPage() {
                 {favoritesOnly
                   ? "모든 시리즈의 관심 원두"
                   : product.month + " · " + product.roastery}{" "}
-                · {beans.length}종
+                · {goodsMode ? goods.length + "개 상품" : beans.length + "종"}
               </h2>
               {!favoritesOnly && (
                 <a href={product.sourceUrl} target="_blank" rel="noreferrer">
@@ -383,7 +385,25 @@ export default function MonthlyPickPage() {
               </article>
             ))}</Fragment>)}
           </div>
-          {!beans.length && (
+          {goodsMode && (
+            <section className="special-goods" aria-labelledby="special-goods-title">
+              <div className="special-goods-head">
+                <p className="special-goods-kicker">커피가 아닌 스페셜 월픽</p>
+                <h2 id="special-goods-title">{product.roastery}의 상품 {goods.length}개</h2>
+                <p>이번 스페셜 월픽은 원두가 아니라서 취향 매칭·기록·비교에는 쓰지 않고, 판매처에 공개된 상품 이름만 보여 드려요. 가격·구성·재고는 판매처 원문에서 확인해 주세요.</p>
+              </div>
+              {Object.entries(goods.reduce((rows, item) => ({ ...rows, [item.kind]: [...(rows[item.kind] || []), item] }), {})).map(([kind, rows]) => (
+                <div className="special-goods-group" key={kind}>
+                  <h3>{kind} <span>{rows.length}개</span></h3>
+                  <ul>
+                    {rows.map((item) => <li key={item.id}><strong>{item.name}</strong>{item.nameEnglish && <small>{item.nameEnglish}</small>}</li>)}
+                  </ul>
+                </div>
+              ))}
+              <a className="ghost-button" href={product.sourceUrl} target="_blank" rel="noreferrer">판매처 원문에서 보기 ↗</a>
+            </section>
+          )}
+          {!beans.length && !goodsMode && (
             <p className="simple-empty">
               {favoritesOnly
                 ? "이 조건의 관심 원두가 없어요. 원두 카드에서 관심 저장을 눌러보세요."

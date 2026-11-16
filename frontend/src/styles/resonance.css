@@ -706,3 +706,27 @@ html body .app-shell .workspace-content .pair-preview-empty { margin: 8px 0 0; c
 }
 html body .app-shell .mobile-composer-top span { color: var(--rs-text-2) !important; }
 html[data-theme="dark"] body .page-monthly-pick .quiet-bean-grid .monthly-bean-copy span.monthly-badge.monthly-badge-mine { background: var(--rs-text) !important; color: var(--rs-bg) !important; border-color: var(--rs-text) !important; }
+
+/* ── Drag-to-scroll rails (mouse) ─────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  html body :is(.monthly-taste-examples, .keepsake-rack, .repeat-brew-table) { cursor: grab; }
+  html body :is(.monthly-taste-examples, .keepsake-rack, .repeat-brew-table) button { cursor: pointer; }
+}
+html body .is-drag-scrolling, html body .is-drag-scrolling * { cursor: grabbing !important; user-select: none; }
+html body .is-drag-scrolling { scroll-behavior: auto !important; scroll-snap-type: none !important; }
+
+/* ── Non-coffee special pick ─────────────────────────── */
+html body .page-monthly-pick .special-goods { margin: 8px 0 24px; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--rs-line); border-radius: var(--rs-r-lg, 18px); background: var(--rs-surface); color: var(--rs-text); }
+html body .page-monthly-pick .special-goods-kicker { margin: 0 0 6px; font-size: 13px; font-weight: 700; color: var(--rs-coffee); letter-spacing: 0; }
+html body .page-monthly-pick .special-goods-head h2 { margin: 0 0 8px; font-size: 21px; }
+html body .page-monthly-pick .special-goods-head p:last-child { margin: 0; color: var(--rs-text-2); font-size: 14px; line-height: 1.6; max-width: 62ch; }
+html body .page-monthly-pick .special-goods-group { margin-top: 20px; }
+html body .page-monthly-pick .special-goods-group h3 { display: flex; gap: 8px; align-items: baseline; margin: 0 0 8px; font-size: 15px; }
+html body .page-monthly-pick .special-goods-group h3 span { color: var(--rs-text-2); font-size: 13px; font-weight: 500; }
+html body .page-monthly-pick .special-goods-group ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+html body .page-monthly-pick .special-goods-group li { display: grid; gap: 2px; padding: 12px 14px; border: 1px solid var(--rs-line); border-radius: 12px; background: var(--rs-bg); }
+html body .page-monthly-pick .special-goods-group li strong { font-size: 14px; font-weight: 650; line-height: 1.45; overflow-wrap: anywhere; }
+html body .page-monthly-pick .special-goods-group li small { color: var(--rs-text-2); font-size: 12px; }
+html body .page-monthly-pick .special-goods > .ghost-button { display: inline-flex; margin-top: 20px; text-decoration: none; }
+html body .page-monthly-pick .monthly-library[data-goods] { grid-template-columns: minmax(0, 1fr) !important; }
+html body .page-monthly-pick .monthly-library[data-goods] > .monthly-library-filters { display: none !important; }
