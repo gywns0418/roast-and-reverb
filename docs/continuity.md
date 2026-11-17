@@ -26,6 +26,12 @@ Roast & Reverb는 **커피 기록 × 음악 청취 기록을 연결하는 취향
 - 원본 checkout에는 월픽 관련 미커밋 변경 5개가 있다. 이 checkout의 파일이나 브랜치를 덮어쓰지 않는다. 별도 checkout을 계속 사용한다.
 - 작업 단위마다 `main`에서 새 feature 브랜치를 만든다. `feature → dev` PR과 병합은 기존 사용자 승인 범위에서 진행할 수 있다. `main` PR·병합은 현재 사용자 지시와 원본 AGENTS 규칙을 함께 확인하며, `dev` 전체를 무조건 승격하지 않는다.
 
+## CSS 규칙 (2026-11-17 사용자 요청)
+
+- PC 전용은 `frontend/src/styles/pc.css`(761px 이상), 모바일 전용은 `frontend/src/styles/mobile.css`(760px 이하)에 쓴다. 공통 파일에 폭 조건 @media를 새로 만들지 않는다.
+- 크기는 px로 쓴다. 비율 단위(%, vw, vh, clamp, em)를 크기에 쓰지 않는다. 예외: 전체 폭 100%, 원형 50%, 그리드 fr.
+- 두 파일은 `App.jsx`에서 마지막에 불러온다(공통 → 페이지 CSS → pc → mobile).
+
 ## 현재 구현
 
 - 2026-11-16 디자인 다듬기 2: 홈 3단계 안내는 밝은 면, 쿠키 안내는 아래쪽 얇은 띠(`.rr-cookie-strip`), 저장 안내 줄에 백업 바로가기, 모바일 월픽은 시리즈 탭 → 검색 → 관심·필터 한 줄 순서(`resonance.css` 끝 "Design polish 2" 블록, 700px 이하에서 `.monthly-library-results`를 `display: contents`로 풀어 순서 조정).

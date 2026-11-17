@@ -45,12 +45,10 @@ export default function CoffeeEditPage() {
   return (
     <PageShell
       title="기록 수정"
+      back={{ to: `/coffee/${id}`, label: "수정 취소" }}
       eyebrow="Edit coffee"
       subtitle="그날의 느낌을 다듬고, 기억나는 내용을 더해보세요."
     >
-      <Link className="quiet-back" to={`/coffee/${id}`}>
-        ← 수정 취소
-      </Link>
       <section className="panel">
         <fieldset className="coffee-fields" disabled={loading}>
           <label className="quiet-field">

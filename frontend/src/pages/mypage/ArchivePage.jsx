@@ -28,11 +28,9 @@ export default function ArchivePage() {
   return (
     <PageShell
       title="기록과 도구"
+      back={{ to: "/mypage", label: "설정" }}
       subtitle="음악과 원두, 취향을 이어가는 기능을 한곳에서 찾아보세요."
     >
-      <Link className="quiet-back" to="/mypage">
-        ← 설정
-      </Link>
       <div className="tool-directory">
       {groups.map(([title, links]) => (
         <details className="quiet-details" key={title} open>

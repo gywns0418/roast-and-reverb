@@ -15,7 +15,6 @@ import { encodeTaste, tasteLink } from "../../utils/tasteShare.js";
 import { backupDue, daysSince, lastBackupAt } from "../../utils/backupReminder.js";
 import { downloadDeviceBackup } from "../../utils/downloadBackup.js";
 import { flavorBandBackground } from "../../utils/flavorBand.js";
-import "../../styles/taste-journey.css";
 
 const editionLabel = { regular: "월픽", global: "글로벌 월픽", small: "스몰 월픽", special: "스페셜 월픽" };
 

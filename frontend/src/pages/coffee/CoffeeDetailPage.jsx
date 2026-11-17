@@ -79,10 +79,8 @@ export default function CoffeeDetailPage() {
     <PageShell
       title={cup.bean === "원두 미기록" ? "이날의 한 잔" : cup.bean}
       subtitle={cup.date}
+      back={{ to: "/coffee", label: "내 기록" }}
     >
-      <Link className="quiet-back" to="/coffee">
-        ← 내 기록
-      </Link>
       <article className="quiet-note">
         <p className="quiet-note-copy">
           {cup.brewDetails?.momentNote ||
