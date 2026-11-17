@@ -62,3 +62,15 @@ test('device save cannot overwrite unreadable inventory with an empty recovered 
   assert.throws(()=>saveDevice('beans',[]),/백업/);
   assert.equal(storage.getItem(key),'{"broken":true}');
 });
+test('a restored diary shows up on the next read without reloading the page',async()=>{
+  const storage=store();globalThis.localStorage=storage;
+  const {mockRequest}=await import('../src/api/mockApi.js?quality=restore');
+  assert.deepEqual(await mockRequest('/coffee'),[]);
+  const restored={coffeeLogs:[{coffeeLogId:7,beanName:'복원한 원두',drinkDate:'2026-10-22'}],musicLogs:[],pairings:[],collections:[],monthlyPicks:[]};
+  storage.setItem('roast-reverb-demo-v1',JSON.stringify(restored));
+  const rows=await mockRequest('/coffee');
+  assert.equal(rows.length,1);assert.equal(rows[0].beanName,'복원한 원두');
+  const created=await mockRequest('/coffee',{method:'POST',body:JSON.stringify({beanName:'새 잔'})});
+  assert.equal(created.coffeeLogId,8);
+  assert.equal(JSON.parse(storage.getItem('roast-reverb-demo-v1')).coffeeLogs.length,2);
+});
