@@ -184,21 +184,29 @@ const monthlyPicks = [];
 const storageKey = "roast-reverb-demo-v1";
 const tables = { coffeeLogs, musicLogs, pairings, collections, monthlyPicks };
 let storageError,persistedDiary;
-try {
+// Reads the stored diary into memory. Runs at start-up and again whenever the
+// stored copy changed underneath this page (a backup restore, another tab), so
+// the journal never shows an out-of-date view after a restore.
+function loadFromStorage() {
  const raw = localStorage.getItem(DIARY_KEY);
  persistedDiary=raw;
- if (raw !== null) {
-   const saved = validateDiary(JSON.parse(raw));
-   for (const [key, items] of Object.entries(tables)) items.splice(0,items.length,...saved[key]);
- } else {
-   // A new notebook starts empty; never claim that the visitor tasted or listened to seed examples.
-   for(const rows of [coffeeLogs,musicLogs,pairings,collections])rows.splice(0,rows.length);
- }
-} catch { storageError=new Error('이 브라우저의 기록 자료를 읽지 못했습니다. 마이페이지에서 원본 자료를 백업하거나 이전 백업으로 복구해 주세요. 예시 기록으로 덮어쓰지 않습니다.'); }
-coffeeSeq = Math.max(0,...coffeeLogs.map(x=>x.coffeeLogId))+1;
-musicSeq = Math.max(0,...musicLogs.map(x=>x.musicLogId))+1;
-pairingSeq = Math.max(0,...pairings.map(x=>x.pairingId))+1;
-collectionSeq = Math.max(0,...collections.map(x=>x.collectionId))+1;
+ try {
+  if (raw !== null) {
+    const saved = validateDiary(JSON.parse(raw));
+    for (const [key, items] of Object.entries(tables)) items.splice(0,items.length,...saved[key]);
+  } else {
+    // A new notebook starts empty; never claim that the visitor tasted or listened to seed examples.
+    for(const rows of [coffeeLogs,musicLogs,pairings,collections])rows.splice(0,rows.length);
+  }
+  storageError=undefined;
+ } catch { storageError=new Error('이 브라우저의 기록 자료를 읽지 못했습니다. 마이페이지에서 원본 자료를 백업하거나 이전 백업으로 복구해 주세요. 예시 기록으로 덮어쓰지 않습니다.'); }
+ coffeeSeq = Math.max(0,...coffeeLogs.map(x=>x.coffeeLogId))+1;
+ musicSeq = Math.max(0,...musicLogs.map(x=>x.musicLogId))+1;
+ pairingSeq = Math.max(0,...pairings.map(x=>x.pairingId))+1;
+ collectionSeq = Math.max(0,...collections.map(x=>x.collectionId))+1;
+}
+try { loadFromStorage(); } catch { storageError=new Error('이 브라우저의 기록 자료를 읽지 못했습니다.'); }
+function syncFromStorage() { try { if (localStorage.getItem(DIARY_KEY) !== persistedDiary) loadFromStorage(); } catch { /* keep the current view */ } }
 async function executeRequest(path, options={}) {
  const method=(options.method||"GET").toUpperCase();
  const route=pathOnly(path);
@@ -231,9 +239,10 @@ async function executeRequest(path, options={}) {
 let pendingWrite=Promise.resolve();
 export function localRequest(path,options={}) {
  if(pathOnly(path).startsWith("/auth/")||pathOnly(path)==="/members/me")return Promise.reject(Error("GitHub 기록장은 가입 없이 사용합니다. 계정과 비밀번호를 수집하지 않습니다."));
- if(storageError)return Promise.reject(storageError);
  const method=(options.method||'GET').toUpperCase();
- if(method==='GET')return pendingWrite.then(()=>executeRequest(path,options));
+ // Reads pick up a restored or changed diary; writes keep refusing to overwrite a changed copy.
+ if(method==='GET')return pendingWrite.then(()=>{syncFromStorage();if(storageError)throw storageError;return executeRequest(path,options);});
+ if(storageError)return Promise.reject(storageError);
  const write=async()=>{
    if(localStorage.getItem(storageKey)!==persistedDiary)throw Error("다른 탭이나 복구 작업에서 기록이 변경됐습니다. 현재 초안을 보관하고 새로고침한 뒤 다시 저장해 주세요.");
    const before=JSON.parse(JSON.stringify(tables));
