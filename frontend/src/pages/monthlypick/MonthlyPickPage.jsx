@@ -44,6 +44,8 @@ function PriceRows({ bean }) {
 }
 const displayDate = (value) =>
   value ? new Date(value).toLocaleDateString("ko-KR") : "확인 전";
+const MOBILE_PEEK = 4;
+
 export default function MonthlyPickPage() {
   const [searchParams] = useSearchParams();
   const [profile, setProfile] = useState(null),
@@ -57,6 +59,7 @@ export default function MonthlyPickPage() {
   }, []);
   const [catalog, setCatalog] = useState([]),
     [filtersExpanded, setFiltersExpanded] = useState(false),
+    [openGroups, setOpenGroups] = useState([]),
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
     [series, setSeries] = useState(""),
@@ -126,10 +129,13 @@ export default function MonthlyPickPage() {
   const goods = !favoritesOnly && !product?.items?.length ? product?.goods || [] : [];
   const goodsMode = goods.length > 0;
   const goodsKinds = [...new Set(goods.map((item) => item.kind))];
+  // Phones show the first few beans of each group; filters and search always show every match.
+  const foldable = !query.trim() && category === "all" && color === "all" && !available && !hideDecaf && !favoritesOnly && !mineOnly;
   function clearFilters(){setQuery("");setCategory("all");setColor("all");setAvailable(false);setHideDecaf(false);setFavoritesOnly(false);setMineOnly(false);}
   const compared = allBeans.filter((b) => selected.includes(String(b.id)));
   function choose(p) {
     if (!p || !currentMonthlyCatalog([p]).length) return;
+    setOpenGroups([]);
     setSeries(p.sourceUrl);
     setUrl(p.sourceUrl);
     clearFilters();
@@ -343,10 +349,10 @@ export default function MonthlyPickPage() {
           )}
           {message && <p role="status">{message}</p>}
           <div className="quiet-bean-grid">
-            {grouped.map(({key,group,items})=><Fragment key={key||'unknown'}>
+            {grouped.map(({key,group,items})=>{const folded=foldable&&items.length>MOBILE_PEEK+2&&!openGroups.includes(key||'unknown');return <Fragment key={key||'unknown'}>
               <div className="monthly-section-heading" style={{"--group-color":group.color,"--group-tint":group.tint}}><h2>{group.label}</h2><span>{items.length}종</span></div>
-              {items.map((bean) => (
-              <article className="monthly-bean-card" style={{"--group-color":group.color,"--group-tint":group.tint}} key={bean.id}>
+              {items.map((bean, index) => (
+              <article className={"monthly-bean-card"+(folded&&index>=MOBILE_PEEK?" is-mobile-folded":"")} style={{"--group-color":group.color,"--group-tint":group.tint}} key={bean.id}>
                 <div className="monthly-card-art">
                   <BeanArtwork item={bean} />
                 </div>
@@ -400,7 +406,9 @@ export default function MonthlyPickPage() {
                   </div>
                 </div>
               </article>
-            ))}</Fragment>)}
+            ))}
+              {folded&&<button type="button" className="monthly-group-more" onClick={()=>setOpenGroups(list=>[...list,key||'unknown'])}>{group.label} {items.length-MOBILE_PEEK}종 더 보기</button>}
+            </Fragment>;})}
           </div>
           {goodsMode && (
             <div className="quiet-bean-grid goods-grid">
