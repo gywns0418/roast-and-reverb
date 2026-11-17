@@ -838,3 +838,28 @@ html body .app-shell .writing-desk .first-cup-input textarea:focus { border-colo
   html body .page-monthly-pick .monthly-library-filters .monthly-taste-reading { order: 6; }
   html body .page-monthly-pick .monthly-library-filters .monthly-restored-filters { order: 7; }
 }
+
+/* ── Mobile pass (2026-11-17): one footer, finger-sized links, readable small text ── */
+html body .page-monthly-pick .monthly-group-more { display: none; }
+html body .rr-policy-footer .policy-about { display: none; }
+@media (max-width: 760px) { html body .rr-policy-footer .policy-about { display: inline-flex; font-weight: 700; } }
+@media (max-width: 700px) {
+  /* Monthly list: first four beans per group, the rest one tap away. */
+  html body .page-monthly-pick .quiet-bean-grid .monthly-bean-card.is-mobile-folded { display: none; }
+  html body .page-monthly-pick .monthly-group-more { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin: 2px 0 10px; border: 1px solid var(--rs-line); border-radius: var(--rs-r-pill); background: var(--rs-surface); color: var(--rs-text); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+  html body .page-monthly-pick .monthly-group-more:hover { border-color: var(--rs-coffee); }
+  html body .page-monthly-pick .monthly-library-results .monthly-editions small { font-size: 12px; }
+}
+@media (max-width: 760px) {
+  /* One footer on phones: the policy footer carries the about link too. */
+  html body .app-shell > .main { padding-bottom: 0; }
+  html body .app-shell .page-footer { display: none; }
+  html body .rr-policy-footer { gap: 4px 16px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rs-line); font-size: 13px; }
+  /* Finger-sized tap areas for the small text links. */
+  html body .app-shell :is(.demo-notice .notice-backup, .quiet-back, .simple-section-title a, .monthly-library-results .quiet-source > a, .mobile-record-tools button) { display: inline-flex; align-items: center; min-height: 40px; }
+  html body .app-shell .demo-notice { padding-block: 0; min-height: 40px; }
+  html body .rr-policy-footer :is(a, button) { display: inline-flex; align-items: center; min-height: 36px; }
+  /* Small labels no smaller than 12px. */
+  html body .app-shell .mobile-journal-entry summary small,
+  html body .app-shell .mobile-journal-entry .mobile-expand-label { font-size: 12px; }
+}
