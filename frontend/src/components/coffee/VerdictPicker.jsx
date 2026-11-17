@@ -1,5 +1,4 @@
 import { verdicts } from "../../utils/tasteProfile.js";
-import "../../styles/verdict.css";
 
 // Optional three-way judgement. Pressing the chosen one again clears it.
 export default function VerdictPicker({ value = "", onChange, disabled = false, compact = false, legend = "이 한 잔, 다시 마시고 싶나요?" }) {

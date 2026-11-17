@@ -1,5 +1,4 @@
 import { beanIllustration } from "../../utils/beanIllustration.js";
-import "../../styles/bean-illustrations.css";
 
 export default function BeanArtwork({ item={}, compact=false, decorative=false }) {
   const illustration=beanIllustration(item);

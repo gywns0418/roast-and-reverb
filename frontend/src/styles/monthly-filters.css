@@ -15,7 +15,6 @@
 .monthly-section-heading h2{font-size:20px;margin:0;line-height:1.5}
 .monthly-section-heading span{font-size:14px;color:#344b33}
 .monthly-category-label{display:inline-block;margin:0 0 4px;padding:3px 8px;border-radius:4px;color:#263b2d;background:var(--group-tint);font-size:12px;font-weight:600}
-@media(max-width:600px){.monthly-restored-filters{padding:14px}.monthly-filter-options{gap:8px 14px}.monthly-filter-options button{margin-left:0}.monthly-section-heading h2{font-size:18px}.monthly-filter-chips button{font-size:13px;padding:8px 10px}}
 
 .monthly-filter-check{display:inline-block;width:12px;flex:0 0 12px;font-size:14px;font-weight:700;line-height:1;color:inherit}
 
@@ -28,4 +27,3 @@
 .page-monthly-pick .monthly-library-filters .monthly-filter-chips button:focus-visible{outline:2px solid #3d5a40;outline-offset:-2px;border-radius:8px}
 .monthly-filter-chips .color-spectrum{display:inline-block;flex:0 0 18px;width:18px;height:18px;border-radius:50%;background:conic-gradient(#f03838,#ffdc32,#39d64c,#18d9cb,#3663ff,#a632ed,#f03838)}
 .page-monthly-pick .monthly-library-filters fieldset:nth-child(2) .monthly-filter-chips button:first-child{grid-column:auto}
-@media(max-width:700px){.page-monthly-pick .monthly-library-filters fieldset:nth-child(2) .monthly-filter-chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}}
