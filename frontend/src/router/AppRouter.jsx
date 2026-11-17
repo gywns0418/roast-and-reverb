@@ -1,6 +1,3 @@
-import { journalStartDestination } from "../utils/journalStart.js";
-import { useCompactLayout } from "../hooks/useCompactLayout.js";
-import { useLocation } from "react-router-dom";
 import Loading from "../components/common/Loading.jsx";
 import { lazy, Suspense } from "react";
 const ArchivePage = lazy(() => import("../pages/mypage/ArchivePage.jsx"));
@@ -86,16 +83,6 @@ const AdminStatisticsPage = lazy(
   () => import("../pages/admin/AdminStatisticsPage.jsx"),
 );
 
-function JournalStart({ children }) {
-  const compact = useCompactLayout(),
-    location = useLocation();
-  const destination = journalStartDestination(
-    compact,
-    location.pathname,
-    location.state,
-  );
-  return destination ? <Navigate to={destination} replace /> : children;
-}
 export default function AppRouter() {
   return (
     <Suspense
@@ -148,11 +135,7 @@ export default function AppRouter() {
           <Route path="/coffee/import" element={<CoffeeImportPage />} />
           <Route
             path="/coffee/write"
-            element={
-              <JournalStart>
-                <CoffeeWritePage />
-              </JournalStart>
-            }
+            element={<CoffeeWritePage />}
           />
           <Route
             path="/coffee/new"
