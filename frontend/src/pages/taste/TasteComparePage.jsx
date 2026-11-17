@@ -10,7 +10,6 @@ import { currentMonthlyCatalog } from "../../utils/currentMonthlyCatalog.js";
 import { buildTasteProfile, tasteMatch } from "../../utils/tasteProfile.js";
 import { compareTaste, decodeTaste, withParticle } from "../../utils/tasteShare.js";
 import { flavorBandBackground } from "../../utils/flavorBand.js";
-import "../../styles/taste-journey.css";
 
 const plainName = (name) => name.replace(/\s*\((?:언스페셜티 블렌드|하우스 블렌드)\)\s*$/, "");
 const Chips = ({ list, muted }) => (

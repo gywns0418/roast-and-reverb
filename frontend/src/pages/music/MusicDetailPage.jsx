@@ -16,14 +16,12 @@ export default function MusicDetailPage() {
     <PageShell
       title={loading ? "음악 기록" : music.track}
       subtitle={music.artist}
+      back={{ to: "/music", label: "함께 남긴 음악" }}
     >
       {loading ? (
         <Loading title="음악 기록을 펼치고 있어요." />
       ) : (
         <>
-          <Link className="quiet-back" to="/music">
-            ← 함께 남긴 음악
-          </Link>
           <article className="quiet-note">
             <small>{music.date}</small>
             <p className="quiet-note-copy">

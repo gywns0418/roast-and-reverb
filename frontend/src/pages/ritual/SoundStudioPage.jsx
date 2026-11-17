@@ -7,7 +7,6 @@ import SoundCompanion from '../../components/ritual/SoundCompanion.jsx';
 import {readDevice,saveDevice} from '../../store/discoveryStore.js';
 import {freshSoundTitle,freshSoundSeed,SOUND_VERSION,soundMoods,soundSettings,settingsForCoffee,soundCommands,applySoundCommand,validateSoundRecipe,parseSoundBackup} from '../../utils/soundStudio.js';
 import {renderSound} from '../../utils/soundRenderer.js';
-import '../../styles/sound-studio.css';
 import ResonanceAura from '../../components/visual/ResonanceAura.jsx';
 
 function loadStudio(coffee) {

@@ -57,13 +57,7 @@
 .monthly-library .bean-symbol{width:100%;max-width:130px;right:0}
 .monthly-library .bean-number{left:14px;bottom:20px;font-size:12px}
 .monthly-library button:focus-visible,.monthly-library input:focus-visible{outline:3px solid #546c42;outline-offset:3px}
-@media(min-width:1600px){.page-monthly-pick .monthly-library{grid-template-columns:290px minmax(0,1fr)}}
-@media(max-width:1200px){.page-monthly-pick .monthly-library{grid-template-columns:240px minmax(0,1fr);gap:16px}.monthly-library-filters{padding:16px}.monthly-library .monthly-bean-card{grid-template-columns:26% minmax(0,1fr)}.monthly-library .monthly-bean-copy{padding:12px}.monthly-library .monthly-bean-open h3{font-size:16px}}
-@media(max-width:1020px){.page-monthly-pick .monthly-library .quiet-bean-grid{grid-template-columns:1fr}.monthly-library .monthly-bean-card{grid-template-columns:28% minmax(0,1fr);min-height:240px}.monthly-library .monthly-bean-card>.bean-still{min-height:240px}}
-@media(max-width:700px){.page-monthly-pick .monthly-library{grid-template-columns:1fr}.page-monthly-pick .page-heading{display:block;padding:16px}.page-monthly-pick .page-heading .subtitle{margin-top:8px}.monthly-library-filters{padding:16px}.monthly-library-filters fieldset:first-child .monthly-filter-chips{flex-direction:row;flex-wrap:wrap;gap:4px 12px}.monthly-library-filters fieldset:first-child button{width:auto;gap:5px}.monthly-library-filters fieldset:nth-child(2) .monthly-filter-chips{display:flex;flex-wrap:wrap;gap:2px 8px}.monthly-library-filters .monthly-filter-options{flex-direction:row;flex-wrap:wrap;gap:4px 12px}.monthly-library-filters .monthly-filter-options button{width:auto;margin:0}.monthly-library .monthly-bean-card{grid-template-columns:25% minmax(0,1fr)}.monthly-library-results .quiet-source h2{font-size:21px}.monthly-library .monthly-bean-actions button{min-height:44px}.monthly-library .bean-origin-type{left:8px;font-size:9px}.monthly-library .bean-number{left:8px}}
 .monthly-filter-toggle{display:none}
 .page-monthly-pick .monthly-library .monthly-section-heading{padding:6px 0 0;margin:0}
 .page-monthly-pick .monthly-library-filters fieldset:nth-child(2) button{min-height:40px}
-@media(max-width:700px){.monthly-filter-toggle{display:block;width:100%;margin-top:12px;min-height:44px}.monthly-library-filters[data-expanded=false] .monthly-restored-filters{display:none}.monthly-library-filters fieldset:first-child button,.monthly-library-filters fieldset:nth-child(2) button{min-height:44px}.monthly-library .monthly-card-art>.bean-still{min-height:240px}}
 .page-monthly-pick .monthly-library .monthly-filter-toggle{display:none}
-@media(max-width:700px){.page-monthly-pick .monthly-library .monthly-filter-toggle{display:block}}
