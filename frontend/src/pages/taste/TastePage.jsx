@@ -4,6 +4,9 @@ import PageShell from "../../components/common/PageShell.jsx";
 import Loading from "../../components/common/Loading.jsx";
 import VerdictPicker from "../../components/coffee/VerdictPicker.jsx";
 import TasteMap from "../../components/taste/TasteMap.jsx";
+import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
+import { usePhone } from "../../hooks/usePhone.js";
+import { openSession } from "../../utils/ripple.js";
 import { coffeeApi } from "../../api/coffeeApi.js";
 import { adaptCoffeeLog } from "../../api/adapters.js";
 import { saveCoffeeVerdict } from "../../api/verdictApi.js";
@@ -19,6 +22,7 @@ import { flavorBandBackground } from "../../utils/flavorBand.js";
 const editionLabel = { regular: "월픽", global: "글로벌 월픽", small: "스몰 월픽", special: "스페셜 월픽" };
 
 export default function TastePage() {
+  const phone = usePhone();
   const [records, setRecords] = useState([]),
     [catalog, setCatalog] = useState([]),
     [loading, setLoading] = useState(true),
@@ -104,18 +108,24 @@ export default function TastePage() {
   return (
     <PageShell title="나의 취향" subtitle="다시 마시고 싶었던 잔들이 모여, 나만의 커피가 보여요.">
       {error && <p role="alert" className="resource-error">{error}</p>}
-      <section className="taste-summary" aria-label="취향 요약">
+      {profile.judged > 0 && (
+        <section className="taste-summary" aria-label="취향 요약">
         <div><strong>{profile.total}</strong><span>남긴 한 잔</span></div>
         <div><strong>{profile.judged}</strong><span>판단한 한 잔</span></div>
         <div><strong>{profile.againCount}</strong><span>다시 마시고 싶은 잔</span></div>
         <div><strong>{profile.roasteries.length}</strong><span>만나 본 로스터리</span></div>
-      </section>
+        </section>
+      )}
+
 
       {profile.judged === 0 ? (
-        <section className="taste-empty">
-          <h2>아직 판단을 남긴 잔이 없어요</h2>
-          <p>한 잔마다 "다시 마시고 싶나요?"에 답하면, 좋았던 맛과 덜 맞았던 맛이 여기 쌓여요. 지난 기록에도 바로 답할 수 있어요.</p>
-          {!profile.total && <Link className="primary-button" to="/dashboard">첫 한 잔 남기기</Link>}
+        <section className="taste-empty taste-invite">
+          <ResonanceAura className="taste-invite-aura" seedKey="taste-invite" />
+          <h2>다시 마실지 세 번만 답하면<br />취향이 보이기 시작해요</h2>
+          <p>{profile.total ? `남긴 ${profile.total}잔 중 아직 답한 잔이 없어요. 아래 지난 기록에 바로 답할 수 있어요.` : "숫자는 판단이 쌓인 뒤에 보여 드려요. 한 잔마다 \"다시 마시고 싶나요?\"에 답해 주세요."}</p>
+          {!profile.total && (phone
+            ? <button type="button" className="primary-button" onClick={openSession}>첫 한 잔 남기기</button>
+            : <Link className="primary-button" to="/dashboard">첫 한 잔 남기기</Link>)}
         </section>
       ) : (
         <>
