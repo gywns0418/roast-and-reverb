@@ -258,9 +258,6 @@ html body .app-shell .workspace-content .taste-map h2 { margin: 0 0 6px; font-si
 html body .page-monthly-pick .monthly-editions button { background: var(--rs-surface) !important; border: 1px solid var(--rs-line) !important; border-radius: var(--rs-r-card) !important; color: var(--rs-text) !important; }
 html body .page-monthly-pick .monthly-editions button[aria-pressed=true] { background: var(--rs-ink) !important; border-color: var(--rs-ink) !important; color: var(--rs-on-ink) !important; }
 html body .page-monthly-pick .monthly-editions button[aria-pressed=true] small { color: var(--rs-on-text-2) !important; }
-html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button { color: var(--rs-text-2); }
-html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button[aria-pressed=true] { background: var(--rs-surface-2) !important; color: var(--rs-text) !important; border-radius: var(--rs-r-control) !important; }
-html body .page-monthly-pick .monthly-library-filters .monthly-filter-chips button[aria-pressed=true] .monthly-filter-check { color: var(--rs-coffee); }
 html body .page-monthly-pick :is(.monthly-mine-toggle, .monthly-taste-examples button) { border-radius: var(--rs-r-pill) !important; }
 html body .page-monthly-pick :is(.quiet-bean-dialog, .monthly-compare-dialog) { border-radius: var(--rs-r-sheet); background: var(--rs-surface); color: var(--rs-text); border: 1px solid var(--rs-line); }
 
@@ -748,3 +745,35 @@ html body .app-shell .page-heading .page-back:hover { color: var(--rs-coffee); }
 /* Ripple phone shell: hidden on PC, shown by mobile.css */
 html body :is(.rr-tabbar, .rr-appbar, .rr-invite, .rr-start, .rr-toast, .rr-cookie-short) { display: none; }
 @keyframes rr-pulse { from { transform: scale(1); opacity: .9; } to { transform: scale(90); opacity: 0; } }
+
+/* ── Filter chips (2026-11-18): every option is a visible chip, not floating text ── */
+:root { --rs-line-strong: #8A877F; }
+html[data-theme="dark"] { --rs-line-strong: #7A746B; }
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 8px !important; }
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips.monthly-filter-chips button {
+  display: inline-flex !important; align-items: center; gap: 6px; width: auto !important; min-height: 40px; padding: 0 14px !important;
+  border: 1px solid var(--rs-line-strong) !important; border-radius: 999px !important; background: var(--rs-surface) !important;
+  color: var(--rs-text) !important; font-size: 14px; font-weight: 650; line-height: 20px; white-space: nowrap; box-shadow: none !important; text-decoration: none !important;
+}
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips.monthly-filter-chips button:hover { border-color: var(--rs-text-2) !important; }
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips.monthly-filter-chips button[aria-pressed=true] { background: var(--rs-ink) !important; color: var(--rs-on-ink) !important; border-color: var(--rs-ink) !important; }
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips.monthly-filter-chips button small { color: inherit !important; opacity: .72; font-size: 12px; font-weight: 600; }
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips.monthly-filter-chips .monthly-filter-check { display: none; }
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips.monthly-filter-chips button:focus-visible { outline: 3px solid var(--rs-coffee) !important; outline-offset: 2px !important; }
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips.monthly-filter-chips button i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--rs-line); box-shadow: none; }
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips.monthly-filter-chips button::after { content: none !important; }
+html body :is(.page-monthly-pick, .monthly-filter-sheet) .monthly-filter-chips.monthly-filter-chips button small { margin-left: 0 !important; }
+html body .monthly-filter-sheet .monthly-restored-filters { border: 0; padding: 0; margin: 0; background: transparent; color: var(--rs-text); }
+html body .monthly-filter-sheet .monthly-restored-filters legend { font-size: 14px; font-weight: 800; margin-bottom: 8px; color: var(--rs-text-2); }
+html body .monthly-filter-sheet .monthly-restored-filters fieldset { border: 0; padding: 0; margin: 0 0 20px; min-width: 0; }
+html body .monthly-filter-sheet .monthly-filter-options { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 12px; }
+html body .monthly-filter-sheet .monthly-filter-options label { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 15px; }
+html body .monthly-filter-sheet .monthly-filter-options .ghost-button { display: none; }
+html body .monthly-filter-sheet :is(.monthly-filter-caption, .monthly-filter-results) { font-size: 13px; line-height: 20px; color: var(--rs-text-3); margin: 0 0 8px; }
+
+/* Taste: an invitation until judgements exist (numbers appear after the first answer) */
+html body .app-shell .workspace-content .taste-invite { display: grid; justify-items: center; gap: 12px; text-align: center; padding: 32px 24px; }
+html body .app-shell .workspace-content .taste-invite .taste-invite-aura { width: 144px; height: 144px; }
+html body .app-shell .workspace-content .taste-invite h2 { margin: 0; font-size: 22px; line-height: 31px; }
+html body .app-shell .workspace-content .taste-invite p { margin: 0; max-width: 520px; color: var(--rs-text-2); }
+@keyframes rr-sheet-up { from { transform: translateY(1200px); } to { transform: translateY(0); } }
