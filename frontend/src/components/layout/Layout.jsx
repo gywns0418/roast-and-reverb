@@ -6,7 +6,8 @@ import { authStore } from "../../store/authStore.js";
 import ResourceBoundary from "../common/ResourceBoundary.jsx";
 import Header from "./Header.jsx";
 import Sidebar from "./Sidebar.jsx";
-import ThemeToggle from "./ThemeToggle.jsx";
+import RecordSession from "../mobile/RecordSession.jsx";
+import { RippleAppbar, RippleToaster } from "../mobile/RippleChrome.jsx";
 
 export default function Layout() {
   const location = useLocation();
@@ -45,13 +46,7 @@ export default function Layout() {
       </a>
       <Sidebar />
       <main className="main" id="main-content" tabIndex={-1}>
-        <header className="mobile-appbar">
-          <NavLink className="mobile-brand" to="/dashboard" aria-label="Roast & Reverb 홈">
-            <i className="brand-orb" aria-hidden="true" />
-            <span>R&amp;R</span>
-          </NavLink>
-          <ThemeToggle />
-        </header>
+        <RippleAppbar />
         <Header />
         {local && (
           <div className="demo-notice" role="status">
@@ -74,6 +69,8 @@ export default function Layout() {
           </Suspense>
         </ResourceBoundary>
       </main>
+      <RippleToaster />
+      <RecordSession />
     </div>
   );
 }

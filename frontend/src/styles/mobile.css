@@ -2072,4 +2072,155 @@ html body .app-shell .page .page-heading h1 { font-size: 32px; }
 html body .app-shell .workspace-content .writing-desk-intro h2 { font-size: 26px; }
 html body .studio-home .simple-intro h1 { font-size: 40px; }
 html body .app-shell .report-aura { width: 234px; }
+
+/* ════ Ripple · week 1 (2026-11-18): phone-only shell, sheets, record session. Sizes in px. ════ */
+:root {
+  --rs-line-strong: #8A877F;          /* 3.23:1 on bg: input and chip edges */
+  --rs-tabbar-h: 64px;
+  --rs-safe-b: env(safe-area-inset-bottom, 0px);
+  --rs-safe-t: env(safe-area-inset-top, 0px);
+  --rs-bottom-reserve: calc(var(--rs-tabbar-h) + var(--rs-safe-b));
+  --rs-sheet-full-top: 48px;
+  --rs-sheet-peek-max: 360px;
+  --rs-scrim: rgba(18, 19, 24, .42);
+  --rs-ease: cubic-bezier(.2, .8, .2, 1);
+  --rs-ease-sheet: cubic-bezier(.32, .72, 0, 1);
+  --rs-t-quick: 120ms; --rs-t-base: 220ms; --rs-t-sheet: 320ms; --rs-t-fly: 560ms;
+}
+html[data-theme="dark"] { --rs-line-strong: #7A746B; --rs-scrim: rgba(0, 0, 0, .55); }
+@media (prefers-reduced-motion: reduce) { :root { --rs-t-quick: 0ms; --rs-t-base: 0ms; --rs-t-sheet: 0ms; --rs-t-fly: 0ms; } }
+
+/* Top bar: brand, storage dot, 나 */
+html body .app-shell .rr-appbar { position: sticky; top: 0; z-index: 80; display: flex; align-items: center; gap: 8px; height: calc(56px + var(--rs-safe-t)); padding: var(--rs-safe-t) 16px 0; background: var(--rs-bg); border-bottom: 1px solid var(--rs-line); }
+html body .app-shell .rr-brand { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--rs-text); text-decoration: none; font-family: var(--rs-display); font-size: 19px; font-weight: 800; letter-spacing: -0.5px; }
+html body .app-shell .rr-brand .brand-orb { width: 20px; height: 20px; border-radius: 50%; background: conic-gradient(from 210deg, var(--rs-coffee), var(--rs-sound), var(--rs-coffee)); }
+html body .app-shell .rr-grow { flex: 1; }
+html body .app-shell .rr-status { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: var(--rs-text-2); font-size: 13px; font-weight: 700; cursor: pointer; }
+html body .app-shell .rr-status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #2F6B3E; }
+html[data-theme="dark"] body .app-shell .rr-status::before { background: #8FC79C; }
+html body .app-shell .rr-status.due::before { background: var(--rs-coffee); }
+html body :is(.app-shell, .rr-sheet) .rr-icon-btn { width: 44px; height: 44px; flex: none; border-radius: 50%; border: 1px solid var(--rs-line); background: var(--rs-surface); color: var(--rs-text); display: grid; place-items: center; cursor: pointer; text-decoration: none; }
+html body .app-shell .rr-icon-btn.active { border-color: var(--rs-coffee); }
+html body .app-shell .demo-notice { display: none !important; }
+
+/* Tab bar: fixed to the bottom edge on an opaque ground, record button in the middle */
+html body .app-shell .rr-tabbar { position: fixed; z-index: 90; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 1fr 1fr 72px 1fr 1fr; align-items: center; height: var(--rs-bottom-reserve); padding: 0 8px var(--rs-safe-b); background: var(--rs-bg); border-top: 1px solid var(--rs-line); }
+html body .app-shell .rr-tab { position: relative; display: grid; justify-items: center; align-content: center; gap: 2px; height: 56px; min-width: 44px; border-radius: 16px; color: var(--rs-text-3); font-size: 12px; font-weight: 700; line-height: 16px; text-decoration: none; }
+html body .app-shell .rr-tab.active { color: var(--rs-text); }
+html body .app-shell .rr-tab.active::after { content: ""; position: absolute; bottom: 2px; width: 4px; height: 4px; border-radius: 50%; background: var(--rs-coffee); }
+html body .app-shell .rr-badge { position: absolute; top: 4px; left: 44px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--rs-coffee); color: var(--rs-on-cta); font-size: 11px; line-height: 18px; font-weight: 800; text-align: center; }
+html body .app-shell .rr-fab { position: relative; justify-self: center; width: 56px; height: 56px; border: 0; border-radius: 50%; background: var(--rs-cta); color: var(--rs-on-cta); display: grid; place-items: center; cursor: pointer; transform: translateY(-12px); box-shadow: 0 0 0 4px var(--rs-bg), 0 8px 20px rgba(0, 0, 0, .18); transition: transform var(--rs-t-quick) var(--rs-ease); }
+html body .app-shell .rr-fab:active { transform: translateY(-12px) scale(.94); }
+html body .app-shell .rr-fab-dot { position: absolute; top: 0; right: 0; width: 14px; height: 14px; border-radius: 50%; background: var(--rs-coffee); border: 3px solid var(--rs-bg); }
+html body .app-shell :is(.rr-tab, .rr-fab, .rr-status, .rr-icon-btn, .rr-brand):focus-visible { outline: 3px solid var(--rs-coffee); outline-offset: 2px; }
+
+/* Content clears the tab bar; home also clears its thumb-zone button */
+html body:has(.app-shell) .rr-policy-footer { padding-bottom: calc(var(--rs-bottom-reserve) + 24px); }
+html body .app-shell .page-dashboard { padding-bottom: 88px; }
+
+/* Home: an invitation instead of the long form */
+html body .app-shell .workspace-content .writing-desk .writing-desk-compose { display: none; }
+html body .app-shell .workspace-content .rr-invite { display: grid; justify-items: center; gap: 12px; margin: 0 0 16px; padding: 24px 16px; border-radius: 18px; background: var(--rs-surface); border: 1px solid var(--rs-line); text-align: center; }
+html body .app-shell .workspace-content .rr-invite .rr-invite-aura { width: 144px; height: 144px; }
+html body .app-shell .workspace-content .rr-invite h2:not(.quiet-bean-grid *) { margin: 0; font-size: 22px; line-height: 31px; }
+html body .app-shell .workspace-content .rr-invite p { margin: 0; font-size: 16px; line-height: 26px; color: var(--rs-text-2); word-break: keep-all; }
+html body .app-shell .workspace-content .rr-invite .rr-example { justify-self: stretch; text-align: left; font-size: 14px; line-height: 22px; color: var(--rs-text-3); border-left: 3px solid var(--rs-coffee); padding-left: 12px; }
+html body .app-shell .rr-example b { color: var(--rs-coffee); margin-right: 6px; }
+html body .app-shell .rr-start { display: flex; position: fixed; z-index: 85; left: 16px; right: 16px; bottom: calc(var(--rs-bottom-reserve) + 12px); }
+html body .app-shell .rr-start .rr-btn { flex: 1; box-shadow: 0 8px 24px rgba(0, 0, 0, .14); }
+
+/* Buttons */
+html body .rr-btn { min-height: 52px; padding: 0 24px; border-radius: 999px; border: 1px solid transparent; display: inline-flex; flex: 1; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 800; line-height: 22px; text-decoration: none; cursor: pointer; transition: transform var(--rs-t-quick) var(--rs-ease); }
+html body .rr-btn:active { transform: scale(.97); }
+html body .rr-btn-cta { background: var(--rs-cta); color: var(--rs-on-cta); }
+html body .rr-btn-ghost { background: var(--rs-surface); color: var(--rs-text); border-color: var(--rs-line-strong); }
+html body .rr-btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+html body .rr-btn:focus-visible { outline: 3px solid var(--rs-coffee); outline-offset: 2px; }
+html body .rr-draft-pill { min-width: 22px; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--rs-coffee); color: var(--rs-on-cta); font-size: 12px; line-height: 22px; }
+
+/* Bottom sheets */
+html body .rr-sheet-layer { position: fixed; inset: 0; z-index: 200; pointer-events: none; }
+html body .rr-sheet-layer .rr-scrim { position: absolute; inset: 0; background: var(--rs-scrim); opacity: 0; transition: opacity var(--rs-t-sheet) var(--rs-ease); }
+html body .rr-sheet-layer.is-open .rr-scrim { opacity: 1; pointer-events: auto; }
+html body .rr-sheet { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; background: var(--rs-bg); color: var(--rs-text); border-radius: 28px 28px 0 0; box-shadow: 0 -12px 40px rgba(0, 0, 0, .18); transform: translateY(1200px); transition: transform var(--rs-t-sheet) var(--rs-ease-sheet); pointer-events: auto; outline: none; font-size: 16px; line-height: 26px; word-break: keep-all; }
+html body .rr-sheet-layer.is-open .rr-sheet { transform: translateY(0); }
+html body .rr-sheet-full { top: calc(var(--rs-safe-t) + var(--rs-sheet-full-top)); }
+html body .rr-sheet-peek { max-height: var(--rs-sheet-peek-max); }
+html body .rr-sheet-handle { flex: none; height: 28px; display: grid; place-items: center; cursor: grab; touch-action: none; }
+html body .rr-sheet-handle i { width: 40px; height: 5px; border-radius: 999px; background: var(--rs-line-strong); }
+html body .rr-sheet-head { flex: none; display: flex; align-items: center; gap: 8px; padding: 0 16px 8px; }
+html body .rr-sheet-head h2 { margin: 0; flex: 1; font-size: 18px; line-height: 26px; font-weight: 800; outline: none; }
+html body .rr-sheet-body { flex: 1; min-height: 0; overflow-y: auto; padding: 8px 16px 16px; touch-action: pan-y; }
+html body .rr-sheet-foot { flex: none; display: flex; gap: 8px; padding: 12px 16px calc(12px + var(--rs-safe-b)); border-top: 1px solid var(--rs-line); background: var(--rs-bg); }
+html body .rr-text { margin: 0; color: var(--rs-text-2); }
+
+/* Record session */
+html body .rr-session-progress { flex: 1; display: grid; gap: 4px; }
+html body .rr-sheet-head .rr-session-progress h2 { font-size: 13px; line-height: 20px; color: var(--rs-text-3); font-weight: 700; }
+html body .rr-steps { display: flex; gap: 6px; }
+html body .rr-steps i { width: 22px; height: 6px; border-radius: 999px; background: var(--rs-line); transition: width var(--rs-t-base) var(--rs-ease), background-color var(--rs-t-base) var(--rs-ease); }
+html body .rr-steps i.on { width: 34px; background: var(--rs-coffee); }
+html body .rr-steps i.done { background: var(--rs-text-3); }
+html body .rr-draft-note { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; line-height: 20px; color: var(--rs-text-3); }
+html body .rr-draft-note::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--rs-coffee); }
+html body .rr-q { margin: 8px 0 16px; font-size: 22px; line-height: 31px; font-weight: 800; letter-spacing: -0.3px; }
+html body .rr-label { margin: 0 0 8px; font-size: 13px; line-height: 20px; font-weight: 700; color: var(--rs-text-3); }
+html body .rr-q .rr-label { margin: 0 0 0 4px; }
+html body .rr-field { display: grid; gap: 6px; margin-bottom: 16px; }
+html body .rr-field label { font-size: 14px; line-height: 22px; font-weight: 700; color: var(--rs-text-2); }
+html body .rr-field :is(input, textarea) { width: 100%; min-height: 52px; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--rs-line-strong); background: var(--rs-surface); color: var(--rs-text); font: inherit; font-size: 16px; line-height: 26px; box-sizing: border-box; }
+html body .rr-field textarea { min-height: 132px; resize: none; }
+html body .rr-field :is(input, textarea)::placeholder { color: var(--rs-text-3); opacity: 1; }
+html body .rr-field :is(input, textarea):focus-visible { outline: 3px solid var(--rs-coffee); outline-offset: 1px; }
+html body .rr-count { font-size: 13px; line-height: 20px; color: var(--rs-text-3); text-align: right; font-variant-numeric: tabular-nums; }
+html body :is(.rr-count.over, .rr-hint-error, .rr-error) { color: #B42318; font-weight: 700; }
+html[data-theme="dark"] body :is(.rr-count.over, .rr-hint-error, .rr-error) { color: #F08A7E; }
+html body .rr-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+html body .rr-chip { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--rs-line-strong); background: var(--rs-surface); color: var(--rs-text); display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; transition: transform var(--rs-t-quick) var(--rs-ease); }
+html body .rr-chip:active { transform: scale(.96); }
+html body .rr-chip[aria-pressed="true"] { background: var(--rs-ink); color: var(--rs-on-ink); border-color: var(--rs-ink); }
+html body .rr-chip:focus-visible { outline: 3px solid var(--rs-coffee); outline-offset: 2px; }
+html body .rr-sw { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--rs-line); }
+html body .rr-hint { margin: 8px 0 0; font-size: 14px; line-height: 22px; color: var(--rs-text-3); }
+html body .rr-error { margin: 12px 0 0; font-size: 15px; line-height: 24px; }
+html body .rr-verdicts { display: grid; gap: 12px; }
+html body .rr-verdict { position: relative; overflow: hidden; display: flex; align-items: center; gap: 16px; min-height: 72px; padding: 0 20px; border-radius: 18px; border: 2px solid var(--rs-line); background: var(--rs-surface); color: var(--rs-text); font: inherit; font-size: 18px; line-height: 26px; font-weight: 800; text-align: left; cursor: pointer; transition: border-color var(--rs-t-base) var(--rs-ease), transform var(--rs-t-quick) var(--rs-ease); }
+html body .rr-verdict:active { transform: scale(.98); }
+html body .rr-verdict small { display: block; font-size: 14px; line-height: 22px; font-weight: 500; color: var(--rs-text-2); }
+html body .rr-verdict .rr-mark { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--rs-surface-2); font-size: 18px; }
+html body .rr-verdict[aria-checked="true"] { border-color: var(--rs-coffee); }
+html body .rr-verdict[aria-checked="true"] .rr-mark { background: var(--rs-coffee); color: var(--rs-on-cta); }
+html body .rr-verdict:focus-visible { outline: 3px solid var(--rs-coffee); outline-offset: 2px; }
+html body .rr-pulse { position: absolute; left: 36px; top: 34px; width: 4px; height: 4px; border-radius: 50%; border: 2px solid var(--rs-coffee); opacity: 0; pointer-events: none; }
+html body .rr-verdict.pulsing .rr-pulse { animation: rr-pulse 420ms var(--rs-ease); }
+html body .rr-card { border-radius: 18px; background: var(--rs-surface); border: 1px solid var(--rs-line); overflow: hidden; }
+html body .rr-card-art { position: relative; height: 160px; display: grid; place-items: center; background: var(--rs-surface-2); }
+html body .rr-card-art .rr-card-aura { width: 136px; height: 136px; }
+html body .rr-card-wave { position: absolute; right: 12px; top: 12px; color: var(--rs-sound); }
+html body .rr-card-who { position: absolute; left: 12px; bottom: 8px; font-size: 12px; line-height: 18px; font-weight: 700; color: var(--rs-text-2); }
+html body .rr-card-body { display: grid; gap: 8px; padding: 16px; }
+html body .rr-card-meta { margin: 0; font-size: 13px; line-height: 20px; color: var(--rs-text-3); }
+html body .rr-card-note { margin: 0; font-size: 16px; line-height: 26px; white-space: pre-wrap; }
+html body .rr-vtag { width: fit-content; min-height: 28px; display: inline-flex; align-items: center; padding: 0 10px; border-radius: 999px; background: var(--rs-surface-2); font-size: 13px; line-height: 20px; font-weight: 800; }
+html body .rr-vtag.again { color: var(--rs-coffee); }
+html body .rr-card-music { margin: 0; font-size: 14px; line-height: 22px; font-weight: 700; color: var(--rs-sound); }
+html body .rr-fly { position: fixed; z-index: 400; margin: 0; pointer-events: none; transform-origin: 0 0; transition: transform var(--rs-t-fly) var(--rs-ease), opacity var(--rs-t-fly) var(--rs-ease); }
+
+/* Toast above the tab bar */
+html body .app-shell .rr-toast { display: flex; position: fixed; z-index: 300; left: 16px; right: 16px; bottom: calc(var(--rs-bottom-reserve) + 12px); min-height: 52px; padding: 12px 8px 12px 16px; border-radius: 12px; background: var(--rs-ink); color: var(--rs-on-ink); align-items: center; gap: 12px; font-size: 15px; line-height: 22px; font-weight: 700; transform: translateY(16px); opacity: 0; pointer-events: none; transition: transform var(--rs-t-base) var(--rs-ease), opacity var(--rs-t-base) var(--rs-ease); }
+html body .app-shell .rr-toast.on { transform: translateY(0); opacity: 1; pointer-events: auto; }
+html body .app-shell .rr-toast button { margin-left: auto; min-height: 44px; padding: 0 12px; border: 0; background: transparent; color: var(--rs-on-ink); font: inherit; font-weight: 800; text-decoration: underline; cursor: pointer; }
+
+/* Cookie notice: one short line above the tab bar */
+html body .rr-cookie-banner.rr-cookie-strip { left: 12px; right: 12px; bottom: calc(var(--rs-bottom-reserve) + 8px); flex-wrap: nowrap; gap: 8px; padding: 6px 6px 6px 16px; border-radius: 999px; }
+html body:has(.rr-start) .rr-cookie-banner.rr-cookie-strip { bottom: calc(var(--rs-bottom-reserve) + 76px); }
+html body .rr-cookie-strip .rr-cookie-copy :is(h2, p) { display: none; }
+html body .rr-cookie-strip .rr-cookie-copy .rr-cookie-short { display: inline; font-size: 13px; line-height: 20px; }
+html body .rr-cookie-strip .rr-cookie-actions { width: auto; }
+html body .rr-cookie-strip .rr-cookie-actions button + button { display: none; }
+html body .rr-cookie-strip .rr-cookie-actions button { flex: none; min-height: 44px; }
+html body :is(.rr-q, .rr-card):focus { outline: none; }
+html body:has(.rr-start) .app-shell .rr-toast { bottom: calc(var(--rs-bottom-reserve) + 76px); }
+/* the start button lives inside the page, where a dark-mode rule paints every button as a surface */
+html body .app-shell .rr-start .rr-btn-cta { background: var(--rs-cta) !important; color: var(--rs-on-cta) !important; border-color: transparent !important; }
 }

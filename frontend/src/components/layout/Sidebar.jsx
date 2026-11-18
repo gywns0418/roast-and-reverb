@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { RippleTabbar } from "../mobile/RippleChrome.jsx";
 import { House, NotebookPen, Search, Orbit, CircleUserRound } from "lucide-react";
 
 // Five destinations: 홈 · 기록 · 발견 · 취향 · 나. The small line keeps the
@@ -32,14 +33,7 @@ export default function Sidebar() {
         </nav>
         <div className="sidebar-foot">하루 한 줄이면 충분해요.</div>
       </aside>
-      <nav className="mobile-tabbar" aria-label="모바일 빠른 메뉴">
-        {links.map(([to, Icon, label]) => (
-          <NavLink key={to} to={to} end={false} className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}>
-            <Icon size={20} aria-hidden="true" />
-            <span>{label}</span>
-          </NavLink>
-        ))}
-      </nav>
+      <RippleTabbar />
     </>
   );
 }

@@ -16,6 +16,8 @@ import { familyColors } from "../../utils/resonanceAura.js";
 import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
 import TasteSpectrum from "../../components/visual/TasteSpectrum.jsx";
 import { useCupPalette } from "../../hooks/useCupPalette.js";
+import { RippleStart } from "../../components/mobile/RippleChrome.jsx";
+import { useLiveCups } from "../../utils/ripple.js";
 import { beanSwatches, cupPalette, sourceLabel, spectrumOf } from "../../utils/cupColor.js";
 
 const cupText = (row) => [row.memo, row.raw?.tasteNote, row.brewDetails?.momentNote].filter(Boolean).join(" ");
@@ -29,9 +31,10 @@ export default function DashboardPage() {
     [],
     [],
   );
+  const live = useLiveCups(stored);
   const records = [
     ...added,
-    ...stored.filter(
+    ...live.filter(
       (row) => !added.some((x) => String(x.id) === String(row.id)),
     ),
   ].sort((a, b) => b.date.localeCompare(a.date) || Number(b.id) - Number(a.id));
@@ -58,6 +61,13 @@ export default function DashboardPage() {
       title="오늘의 한 잔"
       subtitle="커피를 마셨다면, 기억하고 싶은 느낌만 남겨주세요."
     >
+      <section className="rr-invite" aria-labelledby="rr-invite-title">
+        <ResonanceAura className="rr-invite-aura" colors={monthColors} energy={Math.min(10, monthCups)} depth={Math.min(10, records.length)} rings={monthCups ? 3 + monthCups : 0} seedKey={monthKey} />
+        <h2 id="rr-invite-title">{records.length ? "오늘 한 잔도 남겨 볼까요" : "첫 잔을 남겨 볼까요"}</h2>
+        <p>원두 이름을 몰라도 괜찮아요. 기억나는 느낌부터 한 줄이면 돼요.</p>
+        <p className="rr-example"><b>예시</b>고소하고 끝맛이 달았어. 내일 또 마시고 싶어.</p>
+      </section>
+      <RippleStart />
       <div className="writing-desk">
       <div className="writing-desk-compose" id="today-note">
       <div className="writing-desk-intro">

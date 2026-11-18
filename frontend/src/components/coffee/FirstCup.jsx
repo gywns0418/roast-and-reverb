@@ -12,6 +12,7 @@ import {
   quickDraftKey,
 } from "../../utils/firstCup.js";
 import { validateDraft } from "../../utils/draft.js";
+import { draftChanged } from "../../utils/ripple.js";
 import { matchedSoundtrack } from "../../utils/coffeeSoundtrack.js";
 import AuthModal from "../auth/AuthModal.jsx";
 import BrewPlaylist from "../music/BrewPlaylist.jsx";
@@ -145,6 +146,7 @@ export default function FirstCup({
           ),
         ),
       );
+      draftChanged();
     } catch {
       setStorageError(
         "초안을 이 기기에 보관하지 못했어요. 화면의 문장은 유지됩니다.",
