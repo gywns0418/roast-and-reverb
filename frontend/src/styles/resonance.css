@@ -777,3 +777,4 @@ html body .app-shell .workspace-content .taste-invite .taste-invite-aura { width
 html body .app-shell .workspace-content .taste-invite h2 { margin: 0; font-size: 22px; line-height: 31px; }
 html body .app-shell .workspace-content .taste-invite p { margin: 0; max-width: 520px; color: var(--rs-text-2); }
 @keyframes rr-sheet-up { from { transform: translateY(1200px); } to { transform: translateY(0); } }
+html body .app-shell .simple-records .record-verdict { display: none; }
