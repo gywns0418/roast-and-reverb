@@ -11,6 +11,7 @@ import { buildTasteProfile, tasteMatch } from "../../utils/tasteProfile.js";
 import PageShell from "../../components/common/PageShell.jsx";
 import BottomSheet from "../../components/mobile/BottomSheet.jsx";
 import { usePhone } from "../../hooks/usePhone.js";
+import { showWithBack } from "../../utils/dialogBack.js";
 import Loading from "../../components/common/Loading.jsx";
 import BeanArtwork from "../../components/beans/BeanArtwork.jsx";
 import GoodsArtwork, { goodsGroup } from "../../components/beans/GoodsArtwork.jsx";
@@ -162,11 +163,11 @@ export default function MonthlyPickPage() {
   function openDetail(bean, event) {
     detailOpener.current = event.currentTarget;
     setActive(bean);
-    detailDialog.current.showModal();
+    showWithBack(detailDialog.current);
   }
   function openCompare(event) {
     compareOpener.current = event.currentTarget;
-    compareDialog.current.showModal();
+    showWithBack(compareDialog.current);
   }
   async function refresh(event) {
     event.preventDefault();

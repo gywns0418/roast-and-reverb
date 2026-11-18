@@ -2233,4 +2233,16 @@ html body .page-monthly-pick :is(.quiet-bean-dialog, .monthly-compare-dialog)[op
 html body .page-monthly-pick :is(.quiet-bean-dialog, .monthly-compare-dialog)[open]::before { content: ""; display: block; width: 40px; height: 5px; margin: 0 auto 16px; border-radius: 999px; background: var(--rs-line-strong); }
 html body .page-monthly-pick :is(.quiet-bean-dialog, .monthly-compare-dialog)::backdrop { background: var(--rs-scrim); }
 html body .monthly-filter-sheet .monthly-filter-chips button { min-height: 44px; }
+
+/* ════ Ripple · week 2b (2026-11-18): record sheet, swipe to judge, restore sheet ════ */
+html body .app-shell .page-coffee .workspace-content .simple-records > a { touch-action: pan-y; transition: transform var(--rs-t-base) var(--rs-ease); }
+html body .app-shell .page-coffee .workspace-content .simple-records > a .record-verdict { display: inline-flex; grid-column: 2; width: fit-content; min-height: 24px; align-items: center; padding: 0 8px; margin-top: 4px; border-radius: 999px; background: var(--rs-surface-2); color: var(--rs-text-2); font-size: 12px; line-height: 18px; font-style: normal; font-weight: 700; }
+html body .rr-q.rr-q-small { margin: 20px 0 12px; font-size: 18px; line-height: 26px; }
+html body .rr-verdict.rr-verdict-compact { min-height: 56px; font-size: 16px; line-height: 24px; padding: 0 16px; gap: 12px; }
+html body .rr-verdict.rr-verdict-compact .rr-mark { width: 32px; height: 32px; font-size: 16px; }
+html body .rr-verdict[disabled] { opacity: .6; cursor: progress; }
+html body .rr-restore-list { margin: 12px 0 16px; padding: 0; list-style: none; display: grid; gap: 8px; }
+html body .rr-restore-list li { min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 12px; background: var(--rs-surface); border: 1px solid var(--rs-line); font-size: 16px; line-height: 24px; }
+html body .rr-check { display: flex; align-items: flex-start; gap: 12px; min-height: 44px; font-size: 15px; line-height: 24px; color: var(--rs-text); }
+html body .rr-check input { flex: none; width: 22px; height: 22px; margin-top: 1px; accent-color: var(--rs-coffee); }
 }
