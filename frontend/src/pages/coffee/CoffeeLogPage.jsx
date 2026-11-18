@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import PageShell from "../../components/common/PageShell.jsx";
 import Loading from "../../components/common/Loading.jsx";
@@ -11,17 +11,22 @@ import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
 import { useCupPalette } from "../../hooks/useCupPalette.js";
 import { cupPalette } from "../../utils/cupColor.js";
 import { useLiveCups } from "../../utils/ripple.js";
+import { usePhone } from "../../hooks/usePhone.js";
+import RecordSheet from "../../components/mobile/RecordSheet.jsx";
+import { verdicts, verdictOf } from "../../utils/tasteProfile.js";
 export default function CoffeeLogPage() {
   const palette = useCupPalette();
   // Phones show the same journal as the desktop, in one column.
   const [query, setQuery] = useState("");
+  const phone = usePhone();
+  const [sheet, setSheet] = useState({ row: null, open: false, focus: "" }), [updates, setUpdates] = useState({});
   const { data: logs, loading } = useApiResource(
     () =>
       listDiaryRecords(coffeeApi.list).then((rows) => rows.map(adaptCoffeeLog)),
     [],
     [],
   );
-  const rows = useLiveCups(logs);
+  const rows = useLiveCups(logs).map((row) => updates[String(row.id)] || row);
   const visible = rows
     .filter((row) =>
       [row.bean, row.roastery, row.memo, row.date]
@@ -33,6 +38,22 @@ export default function CoffeeLogPage() {
     .sort(
       (a, b) => b.date.localeCompare(a.date) || Number(b.id) - Number(a.id),
     );
+  // Phones: tap a cup to read it in a sheet; slide it left to jump straight to
+  // the verdict. The full record page stays one tap away inside the sheet.
+  const drag = useRef(null);
+  function swipeable(row) {
+    return {
+      onClick: (e) => { if (e.currentTarget.dataset.swiped) { delete e.currentTarget.dataset.swiped; e.preventDefault(); return; } e.preventDefault(); setSheet({ row, open: true, focus: "" }); },
+      onPointerDown: (e) => { drag.current = { x: e.clientX, y: e.clientY, el: e.currentTarget }; },
+      onPointerMove: (e) => { const d = drag.current; if (!d) return; const dx = Math.min(0, e.clientX - d.x); if (Math.abs(e.clientY - d.y) < 24) d.el.style.transform = `translateX(${Math.max(-72, dx)}px)`; },
+      onPointerUp: (e) => {
+        const d = drag.current; drag.current = null; if (!d) return;
+        d.el.style.transform = "";
+        if (d.x - e.clientX > 56 && Math.abs(e.clientY - d.y) < 40) { d.el.dataset.swiped = "1"; setSheet({ row, open: true, focus: "verdict" }); }
+      },
+      onPointerCancel: () => { if (drag.current) drag.current.el.style.transform = ""; drag.current = null; },
+    };
+  }
   return (
     <PageShell
       title="내 기록"
@@ -67,11 +88,12 @@ export default function CoffeeLogPage() {
               )}
               <div className="simple-records">
                 {visible.map((row) => (
-                  <Link key={row.id} to={"/coffee/" + row.id}>
+                  <Link key={row.id} to={"/coffee/" + row.id} {...(phone ? swipeable(row) : {})}>
                     <ResonanceAura className="record-cup-art" seedKey={row.bean} rings={4} colors={cupPalette(row, palette)} />
                     <small>{row.date}</small>
                     <h2>{row.bean}</h2>
                     <p>{row.memo || "이날의 한 잔 다시 보기"}</p>
+                    <em className="record-verdict">{verdicts.find((v) => v.key === verdictOf(row))?.short || "판단 전"}</em>
                     <span aria-hidden="true">→</span>
                   </Link>
                 ))}
@@ -95,6 +117,9 @@ export default function CoffeeLogPage() {
           </>
         </>
       )}
+      <RecordSheet row={sheet.row} open={sheet.open} focus={sheet.focus} colors={sheet.row ? cupPalette(sheet.row, palette) : []}
+        onClose={() => setSheet((s) => ({ ...s, open: false }))}
+        onUpdated={(row) => { setUpdates((u) => ({ ...u, [String(row.id)]: row })); setSheet((s) => ({ ...s, row })); }} />
     </PageShell>
   );
 }

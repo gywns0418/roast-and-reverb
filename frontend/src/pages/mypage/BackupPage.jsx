@@ -1,11 +1,14 @@
 import {useState,useRef} from 'react';
 import {Link} from 'react-router-dom';
 import PageShell from '../../components/common/PageShell.jsx';
+import BottomSheet from '../../components/mobile/BottomSheet.jsx';
+import {usePhone} from '../../hooks/usePhone.js';
 import {deviceScope} from '../../store/discoveryStore.js';
 import {backupLabels,parseDeviceBackup,restoreDeviceBackup} from '../../utils/deviceBackup.js';
 import {downloadDeviceBackup,downloadFile as download} from '../../utils/downloadBackup.js';
 import {DIARY_KEY} from '../../utils/diaryStorage.js';
 export default function BackupPage(){
+  const phone=usePhone();
   const [error,setError]=useState(''),[notice,setNotice]=useState(''),[preview,setPreview]=useState(null),[ack,setAck]=useState(false),[busy,setBusy]=useState(false);
   const picker=useRef(null);const local=import.meta.env.VITE_USE_REAL_API!=='true';
   function exportBackup(){try{downloadDeviceBackup();setError('');setNotice('기기에 저장된 자료를 백업했어요. 로그인 정보와 파일 접근 권한은 포함하지 않습니다.');}catch(err){setError(err.message);}}
@@ -14,7 +17,16 @@ export default function BackupPage(){
   return <PageShell title="백업·복구" eyebrow="KEEP YOUR MOMENTS" subtitle="기기를 바꾸기 전, 내 기록을 파일로 보관해두세요.">
     {error&&<p className="resource-error" role="alert">{error}</p>}{notice&&<p className="device-message" role="status">{notice}</p>}
     <section className="panel"><h2>1. 먼저 현재 기록을 백업해요</h2><p>원두 선반, 음악 후보, 감각의 기억, 취향 여정의 발견 노트, 작성 중인 초안과 사운드 선반을 하나의 파일에 담습니다.{local?' 직접 저장한 커피·음악 일지와 컬렉션도 포함합니다.':' 서버 일지와 계정은 포함하지 않습니다.'}</p><p>백업에는 개인 취향과 기록이 들어 있습니다. 안전한 곳에 보관해 주세요. 원본 파일 연결 권한은 새 브라우저에서 다시 허용해야 합니다.</p><div className="action-row"><button className="primary-button" onClick={exportBackup}>백업 파일 내려받기</button><button className="ghost-button" disabled={busy} onClick={()=>picker.current.click()}>{busy?'백업 확인 중…':'2. 복원할 파일 선택'}</button><input ref={picker} type="file" accept=".json,application/json,text/plain,application/octet-stream" hidden onChange={inspect}/></div></section>
-    {preview&&<section className="panel" style={{marginTop:20}}><h2>3. 바뀔 자료를 확인하고 복원해요</h2><ul>{Object.keys(preview.sections).map(name=><li key={name}>{backupLabels[name]}</li>)}</ul><p>위 항목은 백업 내용으로 교체됩니다. 파일에 없는 항목은 유지합니다. 복원 전 현재 자료를 먼저 백업해 주세요.</p><label><input type="checkbox" checked={ack} onChange={e=>setAck(e.target.checked)}/> 현재 자료를 백업했고, 위 항목의 교체를 확인했습니다.</label><div className="action-row" style={{marginTop:15}}><button className="primary-button" disabled={!ack} onClick={restore}>확인한 자료 복원</button><button className="ghost-button" onClick={()=>{setPreview(null);setAck(false);}}>취소</button></div></section>}
+    {preview&&!phone&&<section className="panel" style={{marginTop:20}}><h2>3. 바뀔 자료를 확인하고 복원해요</h2><ul>{Object.keys(preview.sections).map(name=><li key={name}>{backupLabels[name]}</li>)}</ul><p>위 항목은 백업 내용으로 교체됩니다. 파일에 없는 항목은 유지합니다. 복원 전 현재 자료를 먼저 백업해 주세요.</p><label><input type="checkbox" checked={ack} onChange={e=>setAck(e.target.checked)}/> 현재 자료를 백업했고, 위 항목의 교체를 확인했습니다.</label><div className="action-row" style={{marginTop:15}}><button className="primary-button" disabled={!ack} onClick={restore}>확인한 자료 복원</button><button className="ghost-button" onClick={()=>{setPreview(null);setAck(false);}}>취소</button></div></section>}
+    {phone&&<BottomSheet open={!!preview} onClose={()=>{setPreview(null);setAck(false);}} labelledBy="restore-sheet-title" size="half" className="rr-restore-sheet"
+      footer={<><button type="button" className="rr-btn rr-btn-ghost" onClick={()=>{setPreview(null);setAck(false);}}>취소</button><button type="button" className="rr-btn rr-btn-cta" disabled={!ack} onClick={restore}>복원하기</button></>}>
+      <div className="rr-sheet-head"><h2 id="restore-sheet-title" tabIndex={-1} data-autofocus>바뀔 자료를 확인해요</h2></div>
+      <div className="rr-sheet-body">{preview&&<>
+        <p className="rr-text">아래 항목이 백업 파일 내용으로 바뀌어요. 파일에 없는 항목은 그대로 남아요.</p>
+        <ul className="rr-restore-list">{Object.keys(preview.sections).map(name=><li key={name}>{backupLabels[name]}</li>)}</ul>
+        <label className="rr-check"><input type="checkbox" checked={ack} onChange={e=>setAck(e.target.checked)}/> 현재 자료를 백업했고, 위 항목이 바뀌는 것을 확인했어요.</label>
+      </>}</div>
+    </BottomSheet>}
     <div className="action-row" style={{marginTop:22}}><button className="ghost-button" onClick={()=>window.location.reload()}>복원한 자료 다시 불러오기</button><Link className="ghost-button" to="/coffee">내 기록으로</Link><Link className="ghost-button" to="/mypage">설정으로</Link></div>
     {local&&<details className="panel" style={{marginTop:22}}><summary>기록장 자료가 손상되어 열리지 않을 때</summary><p>손상된 자료를 덮어쓰기 전에 원문을 파일로 보존할 수 있어요. 이 원문은 자동 복원용 백업이 아닙니다.</p><button className="ghost-button" onClick={()=>{try{const raw=localStorage.getItem(DIARY_KEY);if(raw===null)throw new Error('기록장 원문이 없습니다.');download(raw,'roast-reverb-diary-recovery.txt','text/plain');}catch(err){setError(err.message);}}}>기록장 원문 보존</button></details>}
   </PageShell>;
