@@ -768,3 +768,7 @@ html body .app-shell .workspace-content .taste-invite h2 { margin: 0; font-size:
 html body .app-shell .workspace-content .taste-invite p { margin: 0; max-width: 520px; color: var(--rs-text-2); }
 @keyframes rr-sheet-up { from { transform: translateY(1200px); } to { transform: translateY(0); } }
 html body .app-shell .simple-records .record-verdict { display: none; }
+
+/* Loading fills the whole screen and centres its content (no percent offsets) */
+html body .ritual-loading { position: fixed; inset: 0; width: auto; height: auto; margin: 0; padding: 24px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+html body .ritual-loading .ritual-loading-content { position: static; transform: none; width: 100%; max-width: 400px; margin: 0; text-align: center; }
