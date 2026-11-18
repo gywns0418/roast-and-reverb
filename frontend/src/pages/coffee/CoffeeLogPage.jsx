@@ -10,6 +10,7 @@ import { useApiResource } from "../../hooks/useApiResource.js";
 import ResonanceAura from "../../components/visual/ResonanceAura.jsx";
 import { useCupPalette } from "../../hooks/useCupPalette.js";
 import { cupPalette } from "../../utils/cupColor.js";
+import { useLiveCups } from "../../utils/ripple.js";
 export default function CoffeeLogPage() {
   const palette = useCupPalette();
   // Phones show the same journal as the desktop, in one column.
@@ -20,7 +21,7 @@ export default function CoffeeLogPage() {
     [],
     [],
   );
-  const rows = logs;
+  const rows = useLiveCups(logs);
   const visible = rows
     .filter((row) =>
       [row.bean, row.roastery, row.memo, row.date]
